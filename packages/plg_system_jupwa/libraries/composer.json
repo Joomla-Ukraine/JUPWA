@@ -1,0 +1,44 @@
+{
+  "name": "joomla-ua/jupwa",
+  "homepage": "https://joomla-ua.org",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Denys Nosov",
+      "email": "denys@joomla-ua.org",
+      "homepage": "https://joomla-ua.org",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "denys@joomla-ua.org",
+    "issues": "https://github.com/Joomla-Ukraine/JUPWA/issues",
+    "forum": "https://github.com/Joomla-Ukraine/JUPWA/issues",
+    "source": "https://github.com/Joomla-Ukraine/JUPWA",
+    "docs": "https://github.com/Joomla-Ukraine/JUPWA/blob/master/README.md"
+  },
+  "autoload": {
+    "psr-4": {
+      "JUPWA\\": "src/"
+    }
+  },
+  "minimum-stability": "stable",
+  "config": {
+    "optimize-autoloader": true,
+    "use-include-path": false,
+    "prepend-autoloader": true,
+    "prefer-dist": true,
+    "no-dev": true,
+    "sort-packages": true,
+    "archive-format": "zip",
+    "platform": {
+      "php": "7.4"
+    }
+  },
+  "prefer-stable": true,
+  "require": {
+    "php": ">=7.4",
+    "marc1706/fast-image-size": "1.*"
+  }
+}

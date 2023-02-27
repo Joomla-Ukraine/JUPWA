@@ -1,0 +1,98 @@
+<project name="jupwa" default="dist" basedir=".">
+
+    <property name="VERSION" value="8.0"/>
+    <property name="juimage" value="5.12"/>
+    <property name="JOOMLA" value="4.2"/>
+
+    <tstamp>
+        <format property="DATE" pattern="%d.%m.%Y" />
+    </tstamp>
+
+    <property name="build" value="build"/>
+    <property name="temp" value="temp"/>
+    <property name="dist" value="dist"/>
+
+    <property name="filename" value="pkg_jupwa_v${VERSION}.zip"/>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${temp}"/>
+        <mkdir dir="${dist}"/>
+    </target>
+
+    <target name="temp">
+
+        <copy todir="${temp}">
+            <fileset dir="packages">
+                <include name="**"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+    <target name="replace">
+
+        <copy file="pkg_jupwa.xml" todir="${build}">
+            <filterchain>
+                <replacetokens>
+                    <token key="version" value="${VERSION}" />
+                    <token key="date" value="${DATE}" />
+                    <token key="juimage" value="${juimage}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <!---->
+
+        <copy file="packages/plg_jupwa/jupwa.xml" todir="${temp}/temp/plg_jupwa">
+            <filterchain>
+                <replacetokens>
+                    <token key="version" value="${VERSION}" />
+                    <token key="date" value="${DATE}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <delete file="${temp}/plg_jupwa/jupwa.xml"/>
+        <copy file="${temp}/temp/plg_jupwa/jupwa.xml" todir="${temp}/plg_jupwa"/>
+
+
+    </target>
+
+    <target name="pack-plugins">
+
+        <mkdir dir="${build}/packages"/>
+
+        <zip destfile="${build}/packages/plg_jupwa.zip" description="plg_jupwa">
+            <fileset dir="${temp}/plg_jupwa"/>
+        </zip>
+
+        <copy file="../JUImage/dist/pkg_juimage_v${juimage}.zip" todir="${build}/packages"/>
+
+        <copy file="pkg_jupwa.xml" todir="${build}"/>
+
+        <copy file="script.php" todir="${build}"/>
+
+    </target>
+
+    <target name="dist" depends="init, temp, replace, pack-plugins">
+        <zip destfile="${dist}/${filename}">
+            <fileset dir="${build}/">
+                <include name="**/**"/>
+            </fileset>
+        </zip>
+
+        <echo msg="Removing old files..."/>
+        <delete dir="${build}"/>
+        <delete dir="${temp}"/>
+
+    </target>
+
+    <target name="clean" description="clean up">
+
+        <delete dir="${build}"/>
+        <delete dir="${temp}"/>
+
+    </target>
+
+</project>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+
+    <field
+            name="url"
+            type="text"
+            label="URL"
+            required="true"
+    />
+
+    <field
+            name="as"
+            type="list"
+            label="as"
+            required="true"
+    >
+        <option value="">JSELECT</option>
+        <option value="style">style</option>
+        <option value="script">script</option>
+        <option value="image">image</option>
+        <option value="font">font</option>
+        <option value="fetch">fetch</option>
+        <option value="audio">audio</option>
+        <option value="video">video</option>
+        <option value="document">document</option>
+        <option value="embed">embed</option>
+        <option value="object">object</option>
+        <option value="track">track</option>
+        <option value="worker">worker</option>
+    </field>
+
+    <field
+            name="type"
+            type="list"
+            label="type"
+    >
+        <option value="">JSELECT</option>
+        <option value="video/mp4">video/mp4</option>
+        <option value="video/ogg">video/ogg</option>
+        <option value="video/webm">video/webm</option>
+        <option value="font/woff2">font/woff2</option>
+        <option value="font/woff">font/woff</option>
+        <option value="font/ttf">font/ttf</option>
+        <option value="image/svg+xml">image/svg+xml</option>
+        <option value="application/vnd.ms-fontobject">application/vnd.ms-fontobject</option>
+    </field>
+
+    <field
+            name="crossorigin"
+            type="list"
+            label="crossorigin"
+    >
+        <option value="">JSELECT</option>
+        <option value="anonymous">anonymous</option>
+    </field>
+
+    <field
+            name="media"
+            type="text"
+            label="media"
+    />
+</form>

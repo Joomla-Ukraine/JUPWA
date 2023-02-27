@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+
+    <field
+            name="id"
+            type="text"
+            label="PLG_JUPWA_FBADMIN_ID"
+            required="true"
+    />
+
+</form>
