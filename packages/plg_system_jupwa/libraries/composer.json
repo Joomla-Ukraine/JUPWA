@@ -39,6 +39,7 @@
   "prefer-stable": true,
   "require": {
     "php": ">=7.4",
+    "intervention/image": "^2.7",
     "marc1706/fast-image-size": "1.*"
   }
 }
