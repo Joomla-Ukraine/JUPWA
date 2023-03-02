@@ -12,8 +12,35 @@
 
 namespace JUPWA\Utils;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Layout\FileLayout;
+
 class Util
 {
+	/**
+	 * @param          $name
+	 * @param   array  $variables
+	 *
+	 * @return string
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function tmpl($name, array $variables = []): string
+	{
+		$template = Factory::getApplication()->getTemplate();
+		$search   = JPATH_SITE . '/templates/' . $template . '/html/jupwa/';
+		$tmpl     = JPATH_SITE . '/plugins/system/jupwa/tmpl/';
+		$filename = $search . '/' . $name . '.php';
+
+		if(file_exists($filename))
+		{
+			return (new FileLayout($name, $search))->render($variables);
+		}
+
+		return (new FileLayout($name, $tmpl))->render($variables);
+	}
+
 	/**
 	 * @param   array  $json
 	 *

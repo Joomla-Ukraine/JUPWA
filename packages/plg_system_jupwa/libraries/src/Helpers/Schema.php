@@ -10,8 +10,11 @@
 namespace JUPWA\Helpers;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\StringHelper;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Utils\Util;
+
+defined('_JEXEC') or die();
 
 class Schema
 {
@@ -103,6 +106,64 @@ class Schema
 		return true;
 	}
 
+	public static function article_news(array $option = []): void
+	{
+		$app = Factory::getApplication();
+
+		if(in_array($option[ 'itemid' ], $option[ 'params' ]->get('schema_news_article') ? : []))
+		{
+			$sitename = '';
+			if($option[ 'params' ]->get('news_article_logo'))
+			{
+				$news_article_logo = Uri::base() . $option[ 'params' ]->get('news_article_logo');
+				$sitename          = $app->get('sitename');
+			}
+
+			$url = str_replace('[id]', $option[ 'article' ]->created_by, $option[ 'params' ]->get('schema_article_person', ''));
+
+			$json = [
+				'@context'         => 'https://schema.org',
+				'@type'            => 'NewsArticle',
+				'headline'         => $option[ 'title' ],
+				'name'             => $option[ 'title' ],
+				'description'      => $option[ 'description' ],
+				'articleBody'      => StringHelper::substr(strip_tags($option[ 'intro' ]), 0, 260),
+				'mainEntityOfPage' => [
+					'@type' => 'WebPage',
+					'@id'   => Uri::current()
+				],
+				'thumbnailUrl'     => $image,
+				'image'            => [
+					'@type'  => 'ImageObject',
+					'url'    => $image,
+					'height' => $imageSize[ 'height' ],
+					'width'  => $imageSize[ 'width' ]
+				],
+				'dateCreated'      => date('c', strtotime($option[ 'article' ]->created)),
+				'dateModified'     => date('c', strtotime($option[ 'article' ]->modified)),
+				'datePublished'    => date('c', strtotime($option[ 'article' ]->publish_up)),
+				'interactionCount' => $option[ 'article' ]->hits,
+				'author'           => [
+					'@type' => 'Person',
+					'name'  => $option[ 'article' ]->author,
+					'url'   => $url,
+				],
+				'publisher'        => [
+					'@type' => 'Organization',
+					'name'  => $sitename,
+					'logo'  => [
+						'@type'  => 'ImageObject',
+						'url'    => $news_article_logo,
+						'height' => 60,
+						'width'  => 600
+					],
+				]
+			];
+
+			$option[ 'doc' ]->addCustomTag(Util::LD($json));
+		}
+	}
+
 	/**
 	 * @param   array  $option
 	 *
@@ -111,7 +172,7 @@ class Schema
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function schema(array $option = [])
+	public static function schema(array $option = []): bool
 	{
 		$doc  = Factory::getDocument();
 		$lang = Factory::getLanguage();

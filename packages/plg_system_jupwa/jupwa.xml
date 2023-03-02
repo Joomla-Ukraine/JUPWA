@@ -1,0 +1,1186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="4.2"
+           type="plugin"
+           group="system"
+           method="upgrade">
+    <name>plg_system_jupwa</name>
+    <creationDate>01.05.2019</creationDate>
+    <author>Denys Nosov</author>
+    <authorEmail>denys@joomla-ua.org</authorEmail>
+    <authorUrl>https://joomla-ua.org</authorUrl>
+    <version>1.0</version>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <copyright>(C) 2023 Joomla! Ukraine. All rights reserved.</copyright>
+    <description>PLG_JUPWA_INFO</description>
+
+    <files>
+        <filename plugin="jupwa">jupwa.php</filename>
+        <folder>forms</folder>
+        <folder>libs</folder>
+        <folder>integration</folder>
+    </files>
+
+    <languages>
+        <language tag="en-GB">language/en-GB.plg_system_jupwa.ini</language>
+        <language tag="en-GB">language/en-GB.plg_system_jupwa.sys.ini</language>
+        <language tag="en-GB">language/en-GB.plg_evopublisher_push.ini</language>
+    </languages>
+
+     <config>
+        <fields name="params">
+
+            <fieldset name="Basic">
+
+	            <fieldset name="SETTING">
+
+	                <field name="jgenerator"
+	                       type="radio"
+	                       layout="joomla.form.field.radio.switcher"
+	                       default="1"
+	                       label="PLG_JUPWA_JGENERATOR_LABEL">
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+	                <field name="htmlcompress"
+	                       type="radio"
+	                       layout="joomla.form.field.radio.switcher"
+	                       default="0"
+	                       label="PLG_JUPWA_COMPRESS_LABEL">
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+	            </fieldset>
+
+	            <fieldset name="META">
+
+	                <field name="jauthor"
+	                       type="radio"
+	                       layout="joomla.form.field.radio.switcher"
+	                       default="1"
+	                       label="PLG_JUPWA_JAUTHOR_LABEL">
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+	                <field name="usemeta"
+	                       type="radio"
+	                       layout="joomla.form.field.radio.switcher"
+	                       default="1"
+	                       label="PLG_JUPWA_USEMETA"
+	                >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+	                <field
+			                name="keywords"
+			                type="radio"
+			                layout="joomla.form.field.radio.switcher"
+			                default="1"
+			                label="PLG_JUPWA_KEYWORDS_REMOVE_LABEL">
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+            </fieldset>
+
+	             <fieldset name="CACHE">
+
+					<field name="brawser_cache"
+					       type="radio"
+					       layout="joomla.form.field.radio.switcher"
+					       default="0"
+					       label="PLG_JUPWA_CACHE_USE"
+					>
+						<option value="0">JNO</option>
+					    <option value="1">JYES</option>
+					</field>
+
+	                <field name="pragma"
+	                       type="radio"
+	                       layout="joomla.form.field.radio.switcher"
+	                       default="0"
+	                       label="PLG_JUPWA_CACHE_PRAGMA"
+	                       showon="brawser_cache:1"
+	                >
+						<option value="0">JNO</option>
+					    <option value="1">JYES</option>
+	                </field>
+
+	                <field name="cachecontrol"
+	                       type="radio"
+	                       layout="joomla.form.field.radio.switcher"
+	                       default="0"
+	                       label="PLG_JUPWA_CACHE_CONTROL"
+	                       showon="brawser_cache:1"
+	                >
+						<option value="0">JNO</option>
+					    <option value="1">JYES</option>
+	                </field>
+
+	                <field name="expires"
+	                       type="radio"
+	                       layout="joomla.form.field.radio.switcher"
+	                       default="0"
+	                       label="PLG_JUPWA_CACHE_EXPIRIES"
+	                       showon="brawser_cache:1"
+	                >
+						<option value="0">JNO</option>
+					    <option value="1">JYES</option>
+	                </field>
+
+	                <field name="expirestime"
+	                       type="text"
+	                       default="900"
+	                       label="PLG_JUPWA_CACHE_EXPIRIES_TIME"
+	                       showon="brawser_cache:1"
+	                />
+
+			        <field
+					        name="cache_exclusion"
+					        type="textarea"
+					        rows="10"
+					        cols="20"
+					        label="PLG_JUPWA_CACHE_EXCLUSION"
+					        showon="brawser_cache:1"
+			        />
+
+	            </fieldset>
+
+            </fieldset>
+
+            <fieldset name="PRECNCT">
+
+	            <field name="precnct_title"
+	                   type="note"
+	                   label="PLG_JUPWA_PRECONNECT_TITLE" />
+
+                <field name="precnct-google"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_GOOGLE_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="precnct-google-analytics"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_GOOGLE_ANALYTICS_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="precnct-google-fonts"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_GOOGLE_FONTS_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="precnct-google-ads"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_GOOGLE_ADS_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="precnct-google-cse"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_GOOGLE_CSE_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="precnct-google-maps"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_GOOGLE_MAPS_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="precnct-google-cloudflare"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_GOOGLE_CLOUDFLARE_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="precnct-youtube"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_YOUTUBE_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="precnct-facebook"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_FACEBOOK_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="precnct-twitter"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_PRECNCT_TWITTER_TITLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+		                name="preconnect"
+		                type="subform"
+		                formsource="plugins/system/jupwa/forms/preconnect.xml"
+		                multiple="true"
+		                class="span6"
+		                label="PLG_JUPWA_PRECONNECT_CUSTOM_TITLE_LABEL"
+		                layout="joomla.form.field.subform.repeatable-table"
+                />
+
+                <field type="note"
+                       name="preloads_title"
+                       label="PLG_JUPWA_PRELOAD_TITLE" />
+
+                <field
+		                name="preloads"
+		                type="subform"
+		                formsource="plugins/system/jupwa/forms/preloads.xml"
+		                multiple="true"
+		                class="span6"
+		                label="PLG_JUPWA_PRELOAD_CUSTOM_TITLE_LABEL"
+		                layout="joomla.form.field.subform.repeatable-table"
+                />
+
+            </fieldset>
+
+	        <fieldset name="INTEGRATION">
+
+                <field type="note"
+                       name="integration0"
+                       label="PLG_JUPWA_INTEGRATION" />
+
+                <field name="int_seblod"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_COMS_INT_SEBLOD"
+                       description="PLG_JUPWA_INTEGRATION_SEBLOD"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="seblod_images"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_IMAGES"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_intro"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_INTRO"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_gallery"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_GALLERY"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_video"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_VIDEO"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_place"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_PLACE"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_address"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_ADDRESS"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_city"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_CITY"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_region"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_REGION"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_country"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_COUNTRY"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_zip"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_ZIP"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_price"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_PRICE"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_currency"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_CURRENCY"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_brand"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_BRAND"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_startdate"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_STARTDATE"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_enddate"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_ENDDATE"
+                       showon="int_seblod:1"
+                />
+
+                <field type="note"
+                       name="integration_event"
+                       label="PLG_JUPWA_INTEGRATION_SEBLOD_EVENTS"
+                       showon="int_seblod:1"
+                />
+
+                <field name="seblod_performer"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SEBLOD_PERFORMER"
+                       showon="int_seblod:1"
+                />
+
+                <field name="int_jshopping"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_COMS_INT_JSHOPPING"
+                       description="PLG_JUPWA_INTEGRATION_JSHOPPING"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+		                name="int_k2"
+		                type="radio"
+		                layout="joomla.form.field.radio.switcher"
+		                default="0"
+		                label="PLG_JUPWA_COMS_INT_K2"
+		                description="PLG_JUPWA_INTEGRATION_K2"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+            </fieldset>
+
+            <fieldset name="SCHEMA">
+
+                <!-- Schema Search -->
+
+	            <field type="note"
+	                   name="schema9"
+	                   label="PLG_JUPWA_SCHEMA_SEARCH"
+	            />
+
+                <field name="schema_search"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_SCHEMA_USE_SEARCH"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="schema_search_query"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SCHEMA_SEARCH_QUERY"
+                       showon="schema_search:1"
+                />
+
+	            <!-- Schema Site name -->
+
+	            <field type="note"
+	                   name="schema5"
+	                   label="PLG_JUPWA_SCHEMA_SITENAME"
+	            />
+
+                <field name="schema_sitename"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_SCHEMA_USE_SITENAME"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="schema_sitename_alt"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SCHEMA_SITENAME_ALT"
+                       showon="schema_sitename:1"
+                />
+
+	            <!-- Schema Speakable -->
+
+	            <field type="note"
+	                   name="schema10"
+	                   label="PLG_JUPWA_SCHEMA_SPEAKABLE"
+	            />
+
+                <field name="use_speakable"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_SCHEMA_USE_SPEAKABLE"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+	            <!-- Schema logo -->
+
+	            <field type="note"
+	                   name="schema4"
+	                   label="PLG_JUPWA_SCHEMA_LOGO"
+	            />
+
+                <field name="schema_logo"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_SCHEMA_USE_LOGO"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="schema_logo_img"
+                       type="media"
+                       directory="jupwa/logos"
+                       label="PLG_JUPWA_SCHEMA_LOGO_IMG"
+                       showon="schema_logo:1"
+                />
+
+	            <!-- Schema article and news -->
+
+	            <field type="note"
+	                   name="schema1"
+	                   label="PLG_JUPWA_SCHEMA_DESC"
+	            />
+
+	            <!-- Schema article -->
+
+	            <field type="note"
+	                   name="schema2"
+	                   label="PLG_JUPWA_SCHEMA_SELECT_ARICLE"
+	            />
+
+                <field name="article_logo"
+                       type="media"
+                       directory="jupwa/logos"
+                       label="PLG_JUPWA_ARTICLE_LOGO"
+                />
+
+	            <field name="schema_article"
+	                   type="menuitem"
+	                   multiple="true"
+	                   size="15"
+	                   state="1"
+	                   label="PLG_JUPWA_MENU_ITEM"
+	            />
+
+	            <field name="schema_article_person"
+	                   type="text"
+	                   label="PLG_JUPWA_SCHEMA_ARTICLE_PERSON"
+	            />
+
+	            <!-- Schema news -->
+
+	            <field type="note"
+	                   name="schema3"
+	                   label="PLG_JUPWA_SCHEMA_SELECT_NEWS"
+	            />
+
+                <field name="news_article_logo"
+                       type="media"
+                       directory="jupwa/logos"
+                       label="PLG_JUPWA_NEWS_ARTICLE_LOGO"
+                />
+
+	            <field name="schema_news_article"
+	                   type="menuitem"
+	                   multiple="true"
+	                   size="15"
+	                   state="1"
+	                   label="PLG_JUPWA_MENU_ITEM"
+	            />
+
+	            <field name="schema_news_article_person"
+	                   type="text"
+	                   label="PLG_JUPWA_SCHEMA_ARTICLE_PERSON"
+	            />
+
+	            <!-- Schema event -->
+
+	            <field type="note"
+	                   name="schema8"
+	                   label="PLG_JUPWA_SCHEMA_EVENT"
+	            />
+
+	            <field name="schema_event"
+	                   type="menuitem"
+	                   multiple="true"
+	                   size="15"
+	                   state="1"
+	                   label="PLG_JUPWA_MENU_ITEM"
+	            />
+
+	            <!-- Schema product -->
+
+	            <field type="note"
+	                   name="schema11"
+	                   label="PLG_JUPWA_SCHEMA_PRODUCT"
+	            />
+
+	           <field name="schema_product"
+	                  type="menuitem"
+	                  multiple="true"
+	                  size="15"
+	                  state="1"
+	                  label="PLG_JUPWA_MENU_ITEM"
+	           />
+
+	            <field type="note"
+	                   name="schema7"
+	                   label="PLG_JUPWA_SCHEMA_RATING"
+	            />
+
+                <field name="use_rating"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_SCHEMA_USE_RATING"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+	            <!-- Schema Social -->
+
+	            <field type="note"
+	                   name="schema6"
+	                   label="PLG_JUPWA_SCHEMA_SOCIAL"
+	            />
+
+                <field name="schema_social"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_SCHEMA_USE_SOCIAL"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="schema_social_type"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="Organization"
+                       label="PLG_JUPWA_SCHEMA_SOCIAL_TYPE"
+                       showon="schema_social:1"
+                >
+                    <option value="Organization">Organization</option>
+                    <option value="Person">Person</option>
+                </field>
+
+                <field name="schema_social_person"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_SCHEMA_SOCIAL_PERSON"
+                       showon="schema_social:1[AND]schema_social_type:Person"
+                />
+
+	            <field
+			            name="schema_social_link"
+			            label="PLG_JUPWA_SCHEMA_SOCIAL_LINKS"
+			            type="subform"
+			            formsource="plugins/system/jupwa/forms/link.xml"
+			            multiple="true"
+			            min="1"
+			            max="3"
+			            buttons="add,remove,move"
+			            layout="joomla.form.field.subform.repeatable-table"
+			            showon="schema_social:1"
+	            />
+
+            </fieldset>
+
+            <fieldset name="OG">
+
+				<fieldset name="JUPWA_OG">
+
+                <field type="note"
+                       name="s121"
+                       label="PLG_JUPWA_OPEN_GRAGH" />
+
+                <field name="og"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="1"
+                       label="PLG_JUPWA_OG"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field type="note"
+                       name="s122"
+                       label="PLG_JUPWA_COVER_DEFAULT"
+                       showon="og:1"
+                />
+
+                <field name="imagemain"
+                       class=""
+                       type="media"
+                       directory="jupwa/logos"
+                       label="PLG_JUPWA_IMAGE_MAIN"
+                       showon="og:1"
+                />
+
+                <field name="selectimg"
+                       type="list"
+                       default="1"
+                       label="PLG_JUPWA_SELECTIMG"
+                       showon="og:1"
+                >
+                    <option value="0">PLG_JUPWA_SELECTIMG01</option>
+                    <option value="1">PLG_JUPWA_SELECTIMG02</option>
+                </field>
+
+                <field name="image"
+                       class=""
+                       type="media"
+                       directory="jupwa/logos"
+                       label="PLG_JUPWA_IMAGE"
+                       showon="og:1[AND]selectimg:0"
+                />
+
+                <field name=""
+                       class=""
+                       type="media"
+                       directory="jupwa/images"
+                       preview="none"
+                       label="PLG_JUPWA_UPLOADIMAGES"
+                       showon="og:1[AND]selectimg:1"
+                />
+
+                <field type="note"
+                       name="s124"
+                       label="PLG_JUPWA_COVER_GENERIC_WATERMARK"
+                       showon="og:1"
+                />
+
+                <field name="usecover_wm"
+                       type="radio"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
+                       label="PLG_JUPWA_USE_COVER_WATERMARK"
+                       showon="og:1"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="cover_wm"
+                       class=""
+                       type="media"
+                       directory="jupwa/watermark"
+                       label="PLG_JUPWA_COVER_WATERMARK"
+                       showon="og:1[AND]usecover_wm:1"
+                />
+
+                <field name="cover_wmposition"
+                       type="list"
+                       default="BR"
+                       label="PLG_JUPWA_WATERMARK_POS"
+                       showon="og:1[AND]usecover_wm:1"
+                >
+                    <option value="T">PLG_JUPWA_WATERMARK_POS_T</option>
+                    <option value="B">PLG_JUPWA_WATERMARK_POS_B</option>
+                    <option value="L">PLG_JUPWA_WATERMARK_POS_L</option>
+                    <option value="R">PLG_JUPWA_WATERMARK_POS_R</option>
+                    <option value="C">PLG_JUPWA_WATERMARK_POS_C</option>
+                    <option value="TL">PLG_JUPWA_WATERMARK_POS_TL</option>
+                    <option value="TR">PLG_JUPWA_WATERMARK_POS_TR</option>
+                    <option value="BL">PLG_JUPWA_WATERMARK_POS_BL</option>
+                    <option value="BR">PLG_JUPWA_WATERMARK_POS_BR</option>
+                </field>
+
+                <field name="cover_wmopst"
+                       type="text"
+                       default="75"
+                       size="4"
+                       label="PLG_JUPWA_WATERMARK_OPAC"
+                       showon="og:1[AND]usecover_wm:1"
+                />
+
+                <field name="cover_wmx"
+                       type="text"
+                       default="15"
+                       size="4"
+                       label="PLG_JUPWA_WATERMARK_XMARGIN"
+                       showon="og:1[AND]usecover_wm:1"
+                />
+
+                <field name="cover_wmy"
+                       type="text"
+                       default="15"
+                       size="4"
+                       label="PLG_JUPWA_WATERMARK_YMARGIN"
+                       showon="og:1[AND]usecover_wm:1"
+                />
+
+					<!--                <field type="note"
+										   name="s123"
+
+										   label="PLG_JUPWA_COVER_GENERIC" />
+
+									<field name="usecover"
+										   type="radio"
+										   layout="joomla.form.field.radio.switcher"
+										   default="0"
+										   label="PLG_JUPWA_USE_COVER_GENERIC">
+										   <option value="0">JNO</option>
+										   <option value="1">JYES</option>
+									</field>
+
+									<field name="@toggler_choose_settings001_a"
+										   type="nn_toggler"
+										   param="usecover"
+										   value="1" />
+
+									<field name="cover_img"
+										   class=""
+										   type="media"
+										   directory="jupwa/images"
+										   label="PLG_JUPWA_COVER_IMAGE" />
+
+									<field name="cover_img_pos"
+										   type="list"
+										   default="C"
+										   label="PLG_JUPWA_COVER_IMAGE_POS"
+									>
+										<option value="T">PLG_JUPWA_WATERMARK_POS_T</option>
+										<option value="B">PLG_JUPWA_WATERMARK_POS_B</option>
+										<option value="L">PLG_JUPWA_WATERMARK_POS_L</option>
+										<option value="R">PLG_JUPWA_WATERMARK_POS_R</option>
+										<option value="C">PLG_JUPWA_WATERMARK_POS_C</option>
+										<option value="TL">PLG_JUPWA_WATERMARK_POS_TL</option>
+										<option value="TR">PLG_JUPWA_WATERMARK_POS_TR</option>
+										<option value="BL">PLG_JUPWA_WATERMARK_POS_BL</option>
+										<option value="BR">PLG_JUPWA_WATERMARK_POS_BR</option>
+									</field>
+
+									<field name="cover_img_opst"
+										   type="text"
+										   default="100"
+										   size="4"
+										   label="PLG_JUPWA_COVER_IMAGE_OPAC"
+									/>
+
+									<field name="cover_img_margin"
+										   type="text"
+										   default="0"
+										   size="4"
+										   label="PLG_JUPWA_COVER_IMAGE_MARGIN"
+									/>
+
+									<field name="cover_img_angle"
+										   type="text"
+										   default="0"
+										   size="4"
+										   label="PLG_JUPWA_COVER_IMAGE_ANGLE"
+									/>
+
+									<field name="cover_fonts"
+										   type="filelist"
+										   default=""
+										   label="PLG_JUPWA_COVER_FONTS"
+										   directory="images/jupwa/fonts"
+										   filter="\.ttf$"
+										   hide_none="1"
+										   hide_default="1" />
+
+									<field name="cover_fonts_size"
+										   type="text"
+										   default="28"
+										   size="4"
+										   label="PLG_JUPWA_COVER_FONT_SIZE"
+									/>
+
+									<field name="cover_fonts_pos"
+										   type="list"
+										   default="C"
+										   label="PLG_JUPWA_COVER_FONT_POS"
+									>
+										<option value="T">PLG_JUPWA_WATERMARK_POS_T</option>
+										<option value="B">PLG_JUPWA_WATERMARK_POS_B</option>
+										<option value="L">PLG_JUPWA_WATERMARK_POS_L</option>
+										<option value="R">PLG_JUPWA_WATERMARK_POS_R</option>
+										<option value="C">PLG_JUPWA_WATERMARK_POS_C</option>
+										<option value="TL">PLG_JUPWA_WATERMARK_POS_TL</option>
+										<option value="TR">PLG_JUPWA_WATERMARK_POS_TR</option>
+										<option value="BL">PLG_JUPWA_WATERMARK_POS_BL</option>
+										<option value="BR">PLG_JUPWA_WATERMARK_POS_BR</option>
+									</field>
+
+									<field
+											name="cover_fonts_color"
+											type="color"
+											default="333333"
+											label="PLG_JUPWA_FONT_COLOR"
+									/>
+
+									<field name="cover_fonts_opst"
+										   type="text"
+										   default="100"
+										   size="4"
+										   label="PLG_JUPWA_COVER_FONT_OPST"
+									/>
+
+									<field name="cover_fonts_margin"
+										   type="text"
+										   default="100"
+										   size="4"
+										   label="PLG_JUPWA_COVER_FONT_OPST"
+									/>
+
+									<field name="cover_fonts_angle"
+										   type="text"
+										   default="0"
+										   size="4"
+										   label="PLG_JUPWA_COVER_FONT_ANGLE"
+									/>
+
+									<field name="@toggler_showsuccessmessage001_b"
+										   type="nn_toggler" />-->
+
+
+					<!--
+					<field type="note" name="s125" label="PLG_JUPWA_COVER_CACHE"/>
+
+					<field name="cover_cache" type="folderlist" default="img" label="PLG_JUPWA_COVER_FOLDER" description="PLG_JUMULTITHUMB_IMAGE_FOLDER_DESC" directory="" exclude="administrator|bin|cli|components|community|includes|files|forum|layouts|log|logs|language|libraries|logs|images|modules|min|plugins|templates|tmp|temp" hide_none="1" hide_default="1" />
+					-->
+
+					<field name="ogvideo_youtube"
+					       type="radio"
+					       layout="joomla.form.field.radio.switcher"
+					       default="1"
+					       label="PLG_JUPWA_OGVIDEO_YOUTUBE"
+					       showon="og:1"
+					>
+						<option value="0">JNO</option>
+						<option value="1">JYES</option>
+					</field>
+
+	            </fieldset>
+
+	            <fieldset name="JUPWA_OG_TW">
+
+		            <field name="tw"
+		                   type="radio"
+		                   layout="joomla.form.field.radio.switcher"
+		                   default="0"
+		                   label="PLG_JUPWA_TW"
+		            >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+	                <field name="twsite"
+	                       type="text"
+	                       label="PLG_JUPWA_TWSITE"
+	                       showon="tw:1"
+	                />
+
+	                <field name="twcreator"
+	                       type="text"
+	                       label="PLG_JUPWA_TWCREATOR"
+	                       showon="tw:1"
+	                />
+
+	            </fieldset>
+
+	             <fieldset name="JUPWA_OG_FB">
+
+		             <field name="fb"
+		                    type="radio"
+		                    layout="joomla.form.field.radio.switcher"
+		                    default="0"
+		                    label="PLG_JUPWA_FB"
+		             >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+		             <field name="fbpage"
+		                    type="text"
+		                    label="PLG_JUPWA_FBPAGE"
+		                    showon="fb:1"
+		             />
+
+	                <field name="fbapp"
+	                       type="text"
+	                       label="PLG_JUPWA_FBAPP"
+	                       showon="fb:1"
+	                />
+
+		            <field
+				            name="fbadmin"
+				            type="subform"
+				            formsource="plugins/system/jupwa/forms/fbadmin.xml"
+				            multiple="true"
+				            class="span2"
+				            label="PLG_JUPWA_FBADMIN"
+				            layout="joomla.form.field.subform.repeatable-table"
+				            showon="fb:1"
+		            />
+
+	            </fieldset>
+
+            </fieldset>
+
+
+            <fieldset name="FAVICON_MANIFEST">
+
+                <field
+		                name="usefavicon"
+		                layout="joomla.form.field.radio.switcher"
+		                type="radio"
+		                default="0"
+		                label="PLG_JUPWA_USEFAVICON">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="manifest_name"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_MANIFEST_NAME"
+                       showon="usefavicon:1"
+                />
+
+                <field name="manifest_sname"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_MANIFEST_SNAME"
+                       showon="usefavicon:1"
+                />
+
+                <field name="manifest_desc"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_MANIFEST_DESC"
+                       showon="usefavicon:1"
+                />
+
+                <field name="manifest_scope"
+                       size="50"
+                       type="text"
+                       label="PLG_JUPWA_MANIFEST_SCOPE"
+                       showon="usefavicon:1"
+                />
+
+	            <field name="manifest_start_url"
+	                   size="50"
+	                   type="text"
+	                   label="PLG_JUPWA_MANIFEST_START_URL"
+	                   showon="usefavicon:1"
+	            />
+
+                <field
+		                name="manifest_display"
+		                type="list"
+		                default="standalone"
+		                label="PLG_JUPWA_MANIFEST_DISPLAY"
+		                showon="usefavicon:1"
+                >
+                    <option value="">JNO</option>
+                    <option value="fullscreen">PLG_JUPWA_MANIFEST_FULLSCREEN</option>
+                    <option value="standalone">PLG_JUPWA_MANIFEST_STANDALONE</option>
+                    <option value="minimal-ui">PLG_JUPWA_MANIFEST_MINIMALUI</option>
+                    <option value="browser">PLG_JUPWA_MANIFEST_BROWSER</option>
+                </field>
+
+	             <field
+			             name="usepwa"
+			             layout="joomla.form.field.radio.switcher"
+			             type="radio"
+			             default="0"
+			             label="PLG_JUPWA_USEPWA"
+			             showon="usefavicon:1"
+	             >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+	            <field
+			            name="pwa_version"
+			            type="text"
+			            default="0"
+			            label="PLG_JUPWA_PWA_VERSION"
+			            showon="usefavicon:1[AND]usepwa:1"
+	            />
+
+	            <field
+			            name="pwa_dirs"
+			            type="subform"
+			            multiple="true"
+			            min="0"
+			            layout="joomla.form.field.subform.repeatable-table"
+			            label="PLG_JUPWA_MANIFEST_PWA_DIRS"
+			            showon="usefavicon:1[AND]usepwa:1"
+	            >
+					<form>
+						<field
+								name="folder"
+								type="text"
+								default=""
+								label="PLG_JUPWA_PWA_FOLDER"
+						/>
+						<field
+								name="type"
+								type="list"
+								default="0"
+								label="PLG_JUPWA_PWA_FOLDER_TYPE"
+						>
+		                    <option value="0">PLG_JUPWA_PWA_FOLDER_SIMPLE</option>
+		                    <option value="1">PLG_JUPWA_PWA_FOLDER_RECURSIVE</option>
+		                </field>
+						<field
+								name="extensions"
+								type="list"
+								default="0"
+								label="PLG_JUPWA_PWA_EXTENSIONS"
+						>
+		                    <option value="0">PLG_JUPWA_PWA_ALL</option>
+		                    <option value="1">PLG_JUPWA_PWA_CSS</option>
+		                    <option value="2">PLG_JUPWA_PWA_JS</option>
+		                    <option value="3">PLG_JUPWA_PWA_IMAGES</option>
+		                    <option value="4">PLG_JUPWA_PWA_CSS_JS</option>
+		                    <option value="5">PLG_JUPWA_PWA_CSS_JS_IMAGES</option>
+		                </field>
+					</form>
+				</field>
+
+                <field
+		                name="theme_color"
+		                type="color"
+		                label="PLG_JUPWA_THEME_COLOR"
+		                showon="usefavicon:1"
+                />
+
+                <field
+		                name="meta_background_color"
+		                type="color"
+		                label="PLG_JUPWA_META_BG_COLOR_COLOR"
+		                showon="usefavicon:1"
+                />
+
+                <field
+		                name="faviconfolder"
+		                type="folderlist"
+		                default="/"
+		                label="PLG_JUPWA_FAVICONFOLDER"
+		                directory=""
+		                filter=""
+		                exclude="administrator|app|api|bin|cache|cli|components|includes|images|img|language|layouts|libraries|log|logs|media|modules|min|plugins|templates|tmp"
+		                hide_none="1"
+		                hide_default="1"
+		                showon="usefavicon:1"
+                >
+                    <option value="/">JROOT</option>
+                </field>
+
+                <field
+		                name="maskiconcolor"
+		                type="color"
+		                label="PLG_JUPWA_MASKICONCOLOR"
+		                showon="usefavicon:1"
+                />
+
+                <field
+		                name="msapplication_tilecolor"
+		                type="color"
+		                label="PLG_JUPWA_MSAPPLICATION_TILECOLOR"
+		                showon="usefavicon:1"
+                />
+
+            </fieldset>
+
+        </fields>
+    </config>
+</extension>

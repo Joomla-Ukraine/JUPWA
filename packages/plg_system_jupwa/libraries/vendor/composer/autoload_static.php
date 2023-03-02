@@ -56,6 +56,8 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
         'JUPWA\\Helpers\\Schema' => __DIR__ . '/../..' . '/src/Helpers/Schema.php',
         'JUPWA\\Helpers\\URL' => __DIR__ . '/../..' . '/src/Helpers/URL.php',
         'JUPWA\\Helpers\\Video' => __DIR__ . '/../..' . '/src/Helpers/Video.php',
+        'JUPWA\\Joomla\\Integration' => __DIR__ . '/../..' . '/src/Joomla/Integration.php',
+        'JUPWA\\Joomla\\com_k2' => __DIR__ . '/../..' . '/src/Joomla/com_k2.php',
         'JUPWA\\Utils\\Util' => __DIR__ . '/../..' . '/src/Utils/Util.php',
     );
 

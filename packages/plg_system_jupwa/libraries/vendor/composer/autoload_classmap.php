@@ -33,5 +33,7 @@ return array(
     'JUPWA\\Helpers\\Schema' => $baseDir . '/src/Helpers/Schema.php',
     'JUPWA\\Helpers\\URL' => $baseDir . '/src/Helpers/URL.php',
     'JUPWA\\Helpers\\Video' => $baseDir . '/src/Helpers/Video.php',
+    'JUPWA\\Joomla\\Integration' => $baseDir . '/src/Joomla/Integration.php',
+    'JUPWA\\Joomla\\com_k2' => $baseDir . '/src/Joomla/com_k2.php',
     'JUPWA\\Utils\\Util' => $baseDir . '/src/Utils/Util.php',
 );
