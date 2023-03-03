@@ -16,7 +16,15 @@ use Joomla\CMS\Uri\Uri;
 
 class META
 {
-
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function facebook(array $option = []): bool
 	{
 		if($option[ 'params' ]->get('fbpage') !== '')
@@ -43,6 +51,15 @@ class META
 		return true;
 	}
 
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function preconnect(array $option = []): bool
 	{
 		if($option[ 'params' ]->get('precnct-google') == 1 || $option[ 'params' ]->get('precnct-google-ads') == 1 || $option[ 'params' ]->get('precnct-google-cse') == 1)
@@ -167,6 +184,15 @@ class META
 		return true;
 	}
 
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function favicons(array $option = []): bool
 	{
 		if($option[ 'params' ]->get('usefavicon') == '1')
@@ -273,6 +299,15 @@ class META
 		return true;
 	}
 
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function tags(array $option = []): bool
 	{
 		if($option[ 'params' ]->get('theme_color') != '')
@@ -283,6 +318,15 @@ class META
 		return true;
 	}
 
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function pwa(array $option = []): bool
 	{
 		if($option[ 'params' ]->get('usepwa', 0) == 1)

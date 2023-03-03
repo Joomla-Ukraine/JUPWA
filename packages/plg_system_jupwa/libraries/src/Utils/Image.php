@@ -27,10 +27,10 @@ class Image
 		$height = $option[ 'height' ];
 
 		$icon_width = 512;
-		if($width > $icon_width)
+		/*if($width > $icon_width)
 		{
 			$icon_width = $width / 1.4;
-		}
+		}*/
 
 		IImage::configure([ 'driver' => $option[ 'imagick' ] ?? 'imagick' ]);
 

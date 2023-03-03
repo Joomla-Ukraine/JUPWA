@@ -1033,6 +1033,22 @@
 	                    <option value="browser">PLG_JUPWA_MANIFEST_BROWSER</option>
 	                </field>
 
+		            <field
+				            name="manifest_orientation"
+				            type="list"
+				            default="any"
+				            label="PLG_JUPWA_MANIFEST_ORIENTATION"
+		            >
+	                    <option value="any">any</option>
+	                    <option value="natural">natural</option>
+	                    <option value="portrait">portrait</option>
+	                    <option value="landscape">landscape</option>
+	                    <option value="portrait-primary">portrait-primary</option>
+	                    <option value="portrait-secondary">portrait-secondary</option>
+	                    <option value="landscape-primary">landscape-primary</option>
+	                    <option value="landscape-secondary">landscape-secondary</option>
+	                </field>
+
 	            </fieldset>
 
 	            <fieldset name="PWAAPP">
@@ -1183,20 +1199,6 @@
 							/>
 						</form>
 					</field>
-
-		            <field
-				            name="faviconfolder"
-				            type="folderlist"
-				            default="/"
-				            label="PLG_JUPWA_FAVICONFOLDER"
-				            directory=""
-				            filter=""
-				            exclude="administrator|app|api|bin|cache|cli|components|includes|images|img|language|layouts|libraries|log|logs|media|modules|min|plugins|templates|tmp"
-				            hide_none="1"
-				            hide_default="1"
-		            >
-	                    <option value="/">JROOT</option>
-	                </field>
 
                 </fieldset>
 

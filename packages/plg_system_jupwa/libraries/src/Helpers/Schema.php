@@ -18,6 +18,15 @@ defined('_JEXEC') or die();
 
 class Schema
 {
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function global(array $option = []): bool
 	{
 		$app = Factory::getApplication();
@@ -106,6 +115,15 @@ class Schema
 		return true;
 	}
 
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function article_news(array $option = []): void
 	{
 		$app = Factory::getApplication();

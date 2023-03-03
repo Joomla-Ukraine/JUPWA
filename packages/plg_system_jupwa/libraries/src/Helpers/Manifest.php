@@ -12,52 +12,48 @@
 
 namespace JUPWA\Helpers;
 
-use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Language\Text;
+use JUPWA\Data\Data;
 
 class Manifest
 {
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function create(array $option = [])
 	{
-		$option[ 'json' ]->{'name'}       = ($option[ 'param' ][ 'manifest_name' ] ? : $option[ 'site' ]);
-		$option[ 'json' ]->{'short_name'} = ($option[ 'param' ][ 'manifest_sname' ] ? : str_replace(' ', '', $option[ 'site' ]));
+		$app = Factory::getApplication();
 
-		if($option[ 'param' ][ 'manifest_desc' ])
+		$manifest      = '/manifest.webmanifest';
+		$file_manifest = JPATH_SITE . $manifest;
+
+		$data                       = Data::$manifest;
+		$data[ 'name' ]             = ($option[ 'param' ][ 'manifest_name' ] ? : $option[ 'site' ]);
+		$data[ 'short_name' ]       = ($option[ 'param' ][ 'manifest_sname' ] ? : $option[ 'site' ]);
+		$data[ 'description' ]      = $option[ 'param' ][ 'manifest_desc' ];
+		$data[ 'scope' ]            = $option[ 'param' ][ 'manifest_scope' ];
+		$data[ 'display' ]          = $option[ 'param' ][ 'manifest_display' ];
+		$data[ 'orientation' ]      = $option[ 'param' ][ 'manifest_orientation' ];
+		$data[ 'start_url' ]        = $option[ 'param' ][ 'manifest_start_url' ];
+		$data[ 'background_color' ] = $option[ 'param' ][ 'meta_background_color' ];
+		$data[ 'theme_color' ]      = $option[ 'param' ][ 'theme_color' ];
+
+		$data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+		if(File::write($file_manifest, $data))
 		{
-			$option[ 'json' ]->{'description'} = $option[ 'param' ][ 'manifest_desc' ];
+			$app->enqueueMessage(Text::sprintf('PLG_JUPWA_OS_NOT_UPDATE', '<code>' . $manifest . '</code>'), 'notice');
 		}
-
-		if($option[ 'param' ][ 'manifest_scope' ])
+		else
 		{
-			$option[ 'json' ]->{'scope'} = $option[ 'param' ][ 'manifest_scope' ];
+			$app->enqueueMessage(JText::sprintf('PLG_JUPWA_OS_NOT_SAVE', '<code>' . $manifest . '</code>'), 'error');
 		}
-
-		if($option[ 'param' ][ 'manifest_display' ])
-		{
-			$option[ 'json' ]->{'display'} = $option[ 'param' ][ 'manifest_display' ];
-		}
-
-		$option[ 'json' ]->{'start_url'} = $option[ 'param' ][ 'manifest_start_url' ] ? : Uri::root(true);
-
-		//if($option['param'][ 'usepush' ] == 1)
-		//{
-		$option[ 'json' ]->{'gcm_sender_id'} = '482941778795';
-		//}
-
-		if($option[ 'param' ][ 'meta_background_color' ] !== '')
-		{
-			$option[ 'json' ]->{'background_color'} = $option[ 'param' ][ 'meta_background_color' ];
-		}
-
-		if($option[ 'param' ][ 'theme_color' ] !== '')
-		{
-			$option[ 'json' ]->{'theme_color'} = $option[ 'param' ][ 'theme_color' ];
-		}
-
-		if($option[ 'pwa_icons' ] === true)
-		{
-			$option[ 'json' ]->{'icons'} = $option[ 'json_icons' ]->icons;
-		}
-
-		return json_encode($option[ 'json' ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 	}
 }
