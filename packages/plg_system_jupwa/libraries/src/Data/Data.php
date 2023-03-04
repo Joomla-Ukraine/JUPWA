@@ -14,13 +14,35 @@ namespace JUPWA\Data;
 
 class Data
 {
+	public static $icons_sm = [
+		16,
+		32,
+		48
+	];
+
+	public static $icons = [
+		72,
+		76,
+		96,
+		120,
+		144,
+		152,
+		150,
+		168,
+		192,
+		310,
+		512
+	];
+
 	public static $splash = [
-		[ 2048, 2732 ],
-		[ 1668, 2388 ],
-		[ 1668, 2224 ],
+		[ 640, 1136 ],
+		[ 750, 1294 ],
+		[ 1125, 2436 ],
+		[ 1242, 2148 ],
 		[ 1536, 2048 ],
-		[ 1620, 2160 ],
-		[ 1290, 2796 ]
+		[ 1668, 2224 ],
+		[ 1668, 2388 ],
+		[ 2048, 2732 ]
 	];
 
 	public static $manifest = [
@@ -35,25 +57,25 @@ class Data
 		'screenshots'      => [],
 		'icons'            => [
 			[
-				'src'     => 'icon-192.png',
+				'src'     => '',
 				'sizes'   => '192x192',
 				'type'    => 'image/png',
 				'purpose' => 'any'
 			],
 			[
-				'src'     => 'icon-192.png',
+				'src'     => '',
 				'sizes'   => '192x192',
 				'type'    => 'image/png',
 				'purpose' => 'maskable'
 			],
 			[
-				'src'     => 'icon-512.png',
+				'src'     => '',
 				'sizes'   => '512x512',
 				'type'    => 'image/png',
 				'purpose' => 'any'
 			],
 			[
-				'src'     => 'icon-512.png',
+				'src'     => '',
 				'sizes'   => '512x512',
 				'type'    => 'image/png',
 				'purpose' => 'maskable'

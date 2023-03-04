@@ -37,7 +37,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="1"
-	                       label="PLG_JUPWA_JGENERATOR_LABEL">
+	                       label="PLG_JUPWA_JGENERATOR">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -46,7 +46,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_COMPRESS_LABEL">
+	                       label="PLG_JUPWA_COMPRESS">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -1115,71 +1115,89 @@
 
 	            </fieldset>
 
-	            <fieldset name="PWACOLORS">
+            </fieldset>
 
-	                <field
-			                name="theme_color"
-			                type="color"
-			                label="PLG_JUPWA_THEME_COLOR"
-	                />
+	        <fieldset name="COLORS">
 
-	                <field
-			                name="meta_background_color"
-			                type="color"
-			                label="PLG_JUPWA_META_BG_COLOR_COLOR"
-	                />
+		        <field
+				        name="theme_color"
+				        type="color"
+				        label="PLG_JUPWA_THEME_COLOR"
+		        />
 
-	                <field
-			                name="maskiconcolor"
-			                type="color"
-			                label="PLG_JUPWA_MASKICONCOLOR"
-	                />
+		        <field
+				        name="meta_background_color"
+				        type="color"
+				        label="PLG_JUPWA_META_BG_COLOR_COLOR"
+		        />
 
-	                <field
-			                name="msapplication_tilecolor"
-			                type="color"
-			                label="PLG_JUPWA_MSAPPLICATION_TILECOLOR"
-	                />
+		        <field
+				        name="maskiconcolor"
+				        type="color"
+				        label="PLG_JUPWA_MASKICONCOLOR"
+		        />
 
-	            </fieldset>
+		        <field
+				        name="msapplication_tilecolor"
+				        type="color"
+				        label="PLG_JUPWA_MSAPPLICATION_TILECOLOR"
+		        />
 
-	            <fieldset name="PWAEXT">
+	        </fieldset>
 
-		            <field name="source_icon"
-		                   type="media"
-		                   preview_width="100"
-		                   preview_height="100"
-		                   directory="jupwa/screenshots"
-		                   label="PLG_JUPWA_SOURCE_ICON"
-		            />
+	        <fieldset name="ICONS">
 
-		            <field
-				            name="shortcuts"
-				            type="subform"
-				            multiple="true"
-				            min="0"
-				            layout="joomla.form.field.subform.repeatable-table"
-				            label="PLG_JUPWA_MANIFEST_SHOTCUTS"
-		            >
-						<form>
-							<field
-									name="item"
-									type="menuitem"
-									default="0"
-									label="PLG_JUPWA_PWA_MENUITEM"
-							>
+		        <field name="source_icon_sm"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON_SM"
+		        />
+
+		        <field name="source_icon"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON"
+		        />
+
+	        </fieldset>
+
+	        <fieldset name="SHOTCUTS">
+
+		        <field
+				        name="shortcuts"
+				        type="subform"
+				        multiple="true"
+				        min="0"
+				        layout="joomla.form.field.subform.repeatable-table"
+				        label="PLG_JUPWA_MANIFEST_SHOTCUTS"
+		        >
+			        <form>
+				        <field
+						        name="item"
+						        type="menuitem"
+						        default="0"
+						        label="PLG_JUPWA_PWA_MENUITEM"
+				        >
 			                    <option value="">JDEFAULT</option>
 			                </field>
 
-							<field name="icons"
-							       type="media"
-							       preview_width="100"
-							       preview_height="100"
-							       directory="jupwa/icons"
-							       label="PLG_JUPWA_PWA_MENUITEM_ICON"
-							/>
-						</form>
-					</field>
+				        <field name="icons"
+				               type="media"
+				               preview_width="100"
+				               preview_height="100"
+				               directory="jupwa/icons"
+				               label="PLG_JUPWA_PWA_MENUITEM_ICON"
+				        />
+			        </form>
+		        </field>
+
+	        </fieldset>
+
+	        <fieldset name="SCREENSHOTS">
 
 		            <field
 				            name="screenshots"
@@ -1192,17 +1210,13 @@
 						<form>
 							<field name="screen"
 							       type="media"
-							       preview_width="100"
-							       preview_height="100"
 							       directory="jupwa/screenshots"
 							       label="PLG_JUPWA_MANIFEST_SCREEN"
 							/>
 						</form>
 					</field>
 
-                </fieldset>
-
-            </fieldset>
+	        </fieldset>
 
         </fields>
     </config>

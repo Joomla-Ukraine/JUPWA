@@ -11,7 +11,7 @@ namespace JUPWA\Helpers;
 
 class Folders
 {
-	public static function files($path)
+	public static function files($path): array
 	{
 		$files = [];
 		$dir   = opendir(JPATH_BASE . $path);
@@ -22,7 +22,7 @@ class Folders
 				continue;
 			}
 
-			if(preg_match('/\.(jpg|jpeg|png|gif)/', mb_strtolower($currentFile)))
+			if(preg_match('/\.(jpg|jpeg|png|gif)/', strtolower($currentFile)))
 			{
 				$file    = $path . '/' . $currentFile;
 				$files[] = trim($file, '/');

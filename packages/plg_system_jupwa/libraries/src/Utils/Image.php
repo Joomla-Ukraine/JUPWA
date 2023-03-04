@@ -1,11 +1,14 @@
 <?php
 /**
- * @package     JUPWA\Utils
- * @subpackage
+ * JUPWA plugin
  *
- * @copyright   A copyright
- * @license     A "Slug" license name e.g. GPL2
- */
+ * @version       1.x
+ * @package       JUPWA\Utils
+ * @author        Denys D. Nosov (denys@joomla-ua.org)
+ * @copyright (C) 2023 by Denys D. Nosov (https://joomla-ua.org)
+ * @license       GNU General Public License version 2 or later; see LICENSE.md
+ *
+ **/
 
 namespace JUPWA\Utils;
 
@@ -17,30 +20,18 @@ class Image
 	 *
 	 * @param   array  $option
 	 *
-	 * @return void
+	 * @return string
 	 *
 	 * @since 1.0
 	 */
-	public static function render($image, array $option = []): void
+	public static function render($image, $image_out, array $option = []): string
 	{
 		$width  = $option[ 'width' ];
 		$height = $option[ 'height' ];
 
-		$icon_width = 512;
-		/*if($width > $icon_width)
-		{
-			$icon_width = $width / 1.4;
-		}*/
-
 		IImage::configure([ 'driver' => $option[ 'imagick' ] ?? 'imagick' ]);
 
-		$img = IImage::make(JPATH_SITE . '/images/jupwa/logo.png');
-		/*
-		 ->resize($icon_width, null, static function ($constraint)
-		{
-			$constraint->aspectRatio();
-		})
-		 */
+		$img = IImage::make(JPATH_SITE . '/' . $image);
 
 		if($img->width() > $width)
 		{
@@ -58,7 +49,9 @@ class Image
 			});
 		}
 
-		$img->resizeCanvas($width, $height, 'center', false, '#FAFAFA');
-		$img->save(JPATH_SITE . '/out2.png');
+		$img->resizeCanvas($width, $height, 'center', false, isset($option[ 'color' ]) ? $option[ 'color' ] : null);
+		$img->save(JPATH_SITE . '/' . $image_out);
+
+		return $image_out;
 	}
 }
