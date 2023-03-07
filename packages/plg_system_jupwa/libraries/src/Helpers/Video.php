@@ -17,14 +17,15 @@ use JUPWA\Utils\Util;
 class Video
 {
 	/**
-	 * @param $article
+	 * @param         $article
 	 *
+	 * @param   bool  $scheme
 	 *
 	 * @return string
 	 *
 	 * @since 1.0
 	 */
-	public static function YouTube($article, bool $scheme = true)
+	public static function YouTube($article, bool $scheme = true): string
 	{
 		$youtube = str_replace([
 			'//www.youtube.com',
@@ -112,7 +113,7 @@ class Video
 
 		if($vid)
 		{
-			$vimeoObject = json_decode(file_get_contents('http://vimeo.com/api/v2/video/' . $vid . '.json'));
+			$vimeoObject = json_decode(file_get_contents('http://vimeo.com/api/v2/video/' . $vid . '.json'), false);
 
 			if(!empty($vimeoObject))
 			{

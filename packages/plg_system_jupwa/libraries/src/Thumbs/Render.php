@@ -20,17 +20,26 @@ use JUPWA\Utils\Image;
 
 class Render
 {
-	public static function create(array $option = [])
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function create(array $option = []): void
 	{
 		Folder::create(JPATH_SITE . '/favicons');
 
-		$favicon = Render::ico([ 'source_icon_sm' => $option[ 'source_icon_sm' ] ]);
+		$favicon = self::ico([ 'source_icon_sm' => $option[ 'source_icon_sm' ] ]);
 
-		$icons_s = Render::icons([
+		$icons_s = self::icons([
 			'size' => Data::$icons_sm,
 			'icon' => $option[ 'source_icon_sm' ]
 		]);
-		$icons_b = Render::icons([
+		$icons_b = self::icons([
 			'size' => Data::$icons,
 			'icon' => $option[ 'source_icon' ]
 		]);
@@ -39,6 +48,8 @@ class Render
 			'favicon_root'     => $favicon->root,
 			'favicon_favicons' => $favicon->favicons,
 			'icons'            => array_merge($icons_s, $icons_b),
+			'shortcuts'        => self::shortcuts($option),
+			'splash'           => self::splash($option),
 		];
 
 		$json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
@@ -67,7 +78,46 @@ class Render
 		return $image[ 0 ];
 	}
 
-	public static function icons(array $option = [])
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function splash(array $option = []): array
+	{
+		$icons  = Data::$splash;
+		$source = self::image($option[ 'icon' ]);
+
+		$image = [];
+		foreach($icons as $icon)
+		{
+			$width  = $icon[ 0 ];
+			$height = $icon[ 1 ];
+			$out    = 'favicons/splash_' . $width . 'x' . $height . '.png';
+
+			$image[] = Image::render($source, $out, [
+				'width'  => $width,
+				'height' => $height
+			]);
+		}
+
+		return $image;
+	}
+
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function icons(array $option = []): array
 	{
 		$icons  = $option[ 'size' ];
 		$source = self::image($option[ 'icon' ]);
@@ -90,8 +140,40 @@ class Render
 	 *
 	 * @param   array  $option
 	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function shortcuts(array $option = []): array
+	{
+		$image     = [];
+		$shortcuts = $option[ 'shortcuts' ] ?? [];
+
+		if($shortcuts)
+		{
+			foreach($shortcuts as $key => $val)
+			{
+				$source = self::image($val[ 'icons' ]);
+				$out    = 'favicons/shortcut_' . $val[ 'item' ] . '.png';
+
+				$image[] = Image::render($source, $out, [
+					'width'  => 192,
+					'height' => 192
+				]);
+			}
+		}
+
+		return $image;
+	}
+
+	/**
+	 *
+	 * @param   array  $option
+	 *
 	 * @return object
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public static function ico(array $option = []): object

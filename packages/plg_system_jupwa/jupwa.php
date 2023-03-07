@@ -30,11 +30,9 @@ use JUPWA\Joomla\Integration;
 use JUPWA\Thumbs\Render;
 
 require_once __DIR__ . '/libraries/vendor/autoload.php';
-require_once __DIR__ . '/integration/Init.php';
-JLoader::register('JUImage', JPATH_LIBRARIES . '/juimage/JUImage.php');
 
 /**
- * JURSSPublisher System Plugin.
+ * JUPWA System Plugin.
  *
  * @since  1.0
  */
@@ -78,7 +76,7 @@ class plgSystemJUPWA extends CMSPlugin
 
 			Manifest::create([
 				'param' => $post_param,
-				'site'  => $app->get('sitename'),
+				'site'  => $app->get('sitename')
 			]);
 
 			ServiceWorker::create([ 'param' => $post_param ]);
@@ -86,8 +84,6 @@ class plgSystemJUPWA extends CMSPlugin
 	}
 
 	/**
-	 * Convert the site URL to fit to the HTTP request.
-	 *
 	 * @return void
 	 *
 	 * @throws \Exception
@@ -264,6 +260,7 @@ class plgSystemJUPWA extends CMSPlugin
 		$app  = Factory::getApplication();
 		$doc  = Factory::getDocument();
 		$lang = Factory::getLanguage();
+		
 		$view = $app->input->get('view');
 
 		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl'))
@@ -303,7 +300,6 @@ class plgSystemJUPWA extends CMSPlugin
 
 				OG::tag([
 					'params'       => $this->params,
-					'app'          => $app,
 					'type'         => 'website',
 					'title'        => $title,
 					'image'        => $img->image,
@@ -314,7 +310,6 @@ class plgSystemJUPWA extends CMSPlugin
 
 				OG::twitter([
 					'params'      => $this->params,
-					'doc'         => $doc,
 					'title'       => $title,
 					'image'       => $image,
 					'description' => $description
@@ -324,37 +319,18 @@ class plgSystemJUPWA extends CMSPlugin
 
 		if($view === 'article')
 		{
-			META::facebook([
-				'params' => $this->params,
-				'doc'    => $doc
-			]);
+			META::facebook([ 'params' => $this->params ]);
 		}
 
-		META::preconnect([
-			'params' => $this->params,
-			'doc'    => $doc
-		]);
+		META::preconnect([ 'params' => $this->params ]);
 
-		META::favicons([
-			'params' => $this->params,
-			'doc'    => $doc
-		]);
+		META::favicons([ 'params' => $this->params ]);
 
-		META::tags([
-			'params' => $this->params,
-			'doc'    => $doc
-		]);
+		META::tags([ 'params' => $this->params ]);
 
-		META::pwa([
-			'params' => $this->params,
-			'doc'    => $doc
-		]);
+		META::pwa([ 'params' => $this->params ]);
 
-		Schema::global([
-			'app'    => $app,
-			'params' => $this->params,
-			'doc'    => $doc
-		]);
+		Schema::global([ 'params' => $this->params ]);
 	}
 
 	/**

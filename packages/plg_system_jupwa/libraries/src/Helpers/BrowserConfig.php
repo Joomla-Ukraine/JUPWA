@@ -21,7 +21,7 @@ class BrowserConfig
 	 *
 	 * @param   array  $option
 	 *
-	 * @return mixed
+	 * @return bool
 	 *
 	 * @throws \Exception
 	 * @since 1.0

@@ -232,6 +232,7 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
         'Intervention\\Image\\Size' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Size.php',
         'JUPWA\\Classes\\Minify' => __DIR__ . '/../..' . '/src/Classes/Minify.php',
         'JUPWA\\Classes\\PHP_ICO' => __DIR__ . '/../..' . '/src/Classes/PHP_ICO.php',
+        'JUPWA\\Classes\\SeblodAPI' => __DIR__ . '/../..' . '/src/Classes/SeblodAPI.php',
         'JUPWA\\Data\\Data' => __DIR__ . '/../..' . '/src/Data/Data.php',
         'JUPWA\\Helpers\\BrowserConfig' => __DIR__ . '/../..' . '/src/Helpers/BrowserConfig.php',
         'JUPWA\\Helpers\\Facebook' => __DIR__ . '/../..' . '/src/Helpers/Facebook.php',

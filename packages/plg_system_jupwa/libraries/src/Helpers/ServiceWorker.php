@@ -25,7 +25,7 @@ class ServiceWorker
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function create(array $option = [])
+	public static function create(array $option = []): void
 	{
 		$app = Factory::getApplication();
 

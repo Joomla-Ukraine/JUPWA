@@ -18,6 +18,8 @@ class Image
 {
 	/**
 	 *
+	 * @param          $image
+	 * @param          $image_out
 	 * @param   array  $option
 	 *
 	 * @return string
@@ -49,7 +51,7 @@ class Image
 			});
 		}
 
-		$img->resizeCanvas($width, $height, 'center', false, isset($option[ 'color' ]) ? $option[ 'color' ] : null);
+		$img->resizeCanvas($width, $height, 'center', false, $option[ 'color' ] ?? null);
 		$img->save(JPATH_SITE . '/' . $image_out);
 
 		return $image_out;

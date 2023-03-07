@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="4.2"
+<extension version="3.10"
            type="plugin"
            group="system"
            method="upgrade">
     <name>plg_system_jupwa</name>
-    <creationDate>01.05.2019</creationDate>
+    <creationDate>@date@</creationDate>
     <author>Denys Nosov</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
     <authorUrl>https://joomla-ua.org</authorUrl>
-    <version>1.0</version>
+    <version>@version@</version>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <copyright>(C) 2023 Joomla! Ukraine. All rights reserved.</copyright>
     <description>PLG_JUPWA_INFO</description>
 
     <files>
         <filename plugin="jupwa">jupwa.php</filename>
-        <folder>forms</folder>
-        <folder>libs</folder>
-        <folder>integration</folder>
+        <folder>libraries</folder>
+        <folder>tmpl</folder>
     </files>
 
     <languages>
         <language tag="en-GB">language/en-GB.plg_system_jupwa.ini</language>
         <language tag="en-GB">language/en-GB.plg_system_jupwa.sys.ini</language>
-        <language tag="en-GB">language/en-GB.plg_evopublisher_push.ini</language>
     </languages>
 
      <config>
@@ -252,12 +250,20 @@
 	                <field
 			                name="preconnect"
 			                type="subform"
-			                formsource="plugins/system/jupwa/forms/preconnect.xml"
 			                multiple="true"
 			                class="span6"
 			                label="PLG_JUPWA_PRECONNECT_CUSTOM_TITLE_LABEL"
 			                layout="joomla.form.field.subform.repeatable-table"
-	                />
+	                >
+		                <form>
+						    <field
+								    name="url"
+								    type="text"
+								    label="URL"
+								    required="true"
+						    />
+						</form>
+	                </field>
 
 	            </fieldset>
 
@@ -270,12 +276,72 @@
 	                <field
 			                name="preloads"
 			                type="subform"
-			                formsource="plugins/system/jupwa/forms/preloads.xml"
 			                multiple="true"
 			                class="span6"
 			                label="PLG_JUPWA_PRELOAD_CUSTOM_TITLE_LABEL"
 			                layout="joomla.form.field.subform.repeatable-table"
-	                />
+	                >
+		                <form>
+						    <field
+								    name="url"
+								    type="text"
+								    label="URL"
+								    required="true"
+						    />
+
+						    <field
+								    name="as"
+								    type="list"
+								    label="as"
+								    required="true"
+						    >
+						        <option value="">JSELECT</option>
+						        <option value="style">style</option>
+						        <option value="script">script</option>
+						        <option value="image">image</option>
+						        <option value="font">font</option>
+						        <option value="fetch">fetch</option>
+						        <option value="audio">audio</option>
+						        <option value="video">video</option>
+						        <option value="document">document</option>
+						        <option value="embed">embed</option>
+						        <option value="object">object</option>
+						        <option value="track">track</option>
+						        <option value="worker">worker</option>
+						    </field>
+
+						    <field
+								    name="type"
+								    type="list"
+								    label="type"
+						    >
+						        <option value="">JSELECT</option>
+						        <option value="video/mp4">video/mp4</option>
+						        <option value="video/ogg">video/ogg</option>
+						        <option value="video/webm">video/webm</option>
+						        <option value="font/woff2">font/woff2</option>
+						        <option value="font/woff">font/woff</option>
+						        <option value="font/ttf">font/ttf</option>
+						        <option value="image/svg+xml">image/svg+xml</option>
+						        <option value="application/vnd.ms-fontobject">application/vnd.ms-fontobject</option>
+						    </field>
+
+						    <field
+								    name="crossorigin"
+								    type="list"
+								    label="crossorigin"
+						    >
+						        <option value="">JSELECT</option>
+						        <option value="anonymous">anonymous</option>
+						    </field>
+
+						    <field
+								    name="media"
+								    type="text"
+								    label="media"
+						    />
+						</form>
+	                </field>
 
 	            </fieldset>
 
@@ -638,14 +704,22 @@
 				            name="schema_social_link"
 				            label="PLG_JUPWA_SCHEMA_SOCIAL_LINKS"
 				            type="subform"
-				            formsource="plugins/system/jupwa/forms/link.xml"
 				            multiple="true"
 				            min="1"
 				            max="3"
 				            buttons="add,remove,move"
 				            layout="joomla.form.field.subform.repeatable-table"
 				            showon="schema_social:1"
-		            />
+		            >
+			            <form>
+						    <field
+								    name="link"
+								    type="text"
+								    default=""
+								    label="PLG_JUPWA_SCHEMA_SOCIAL_LINK"
+						    />
+						</form>
+		            </field>
 
 	            </fieldset>
 
@@ -974,13 +1048,21 @@
 		            <field
 				            name="fbadmin"
 				            type="subform"
-				            formsource="plugins/system/jupwa/forms/fbadmin.xml"
 				            multiple="true"
 				            class="span2"
 				            label="PLG_JUPWA_FBADMIN"
 				            layout="joomla.form.field.subform.repeatable-table"
 				            showon="fb:1"
-		            />
+		            >
+			            <form>
+						    <field
+								    name="id"
+								    type="text"
+								    label="PLG_JUPWA_FBADMIN_ID"
+								    required="true"
+						    />
+						</form>
+		            </field>
 
 	            </fieldset>
 
@@ -1019,6 +1101,43 @@
 		                   type="text"
 		                   label="PLG_JUPWA_MANIFEST_START_URL"
 		            />
+
+		            <field
+				            name="manifest_categories"
+				            type="tag"
+				            mode="nested"
+				            multiple="true"
+				            label="PLG_JUPWA_MANIFEST_CATEGORIES"
+		            >
+						<option value="books">books</option>
+						<option value="business">business</option>
+						<option value="education">education</option>
+						<option value="entertainment">entertainment</option>
+						<option value="finance">finance</option>
+						<option value="fitness">fitness</option>
+						<option value="food">food</option>
+						<option value="games">games</option>
+						<option value="government">government</option>
+						<option value="health">health</option>
+						<option value="kids">kids</option>
+						<option value="lifestyle">lifestyle</option>
+						<option value="magazines">magazines</option>
+						<option value="medical">medical</option>
+						<option value="music">music</option>
+						<option value="navigation">navigation</option>
+						<option value="news">news</option>
+						<option value="personalization">personalization</option>
+						<option value="photo">photo</option>
+						<option value="politics">politics</option>
+						<option value="productivity">productivity</option>
+						<option value="security">security</option>
+						<option value="shopping">shopping</option>
+						<option value="social">social</option>
+						<option value="sports">sports</option>
+						<option value="travel">travel</option>
+						<option value="utilities">utilities</option>
+						<option value="weather">weather</option>
+	                </field>
 
 	                <field
 			                name="manifest_display"

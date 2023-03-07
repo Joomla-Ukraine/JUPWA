@@ -21,12 +21,14 @@ namespace JUPWA\Classes;
  *
  * A test suite is available.
  *
- * @package Minify
+ * @since   1.0
  * @author  Stephen Clay <steve@mrclay.org>
+ * @package Minify
  */
 class Minify
 {
 	/**
+	 * @since 1.0
 	 * @var boolean
 	 */
 	protected $_jsCleanComments = true;
@@ -53,6 +55,7 @@ class Minify
 	 * unset, minify will sniff for an XHTML doctype.
 	 *
 	 * @return string
+	 * @since 1.0
 	 */
 	public static function minify(string $html, array $options = []): string
 	{
@@ -76,6 +79,8 @@ class Minify
 	 *
 	 * 'xhtml' : (optional boolean) should content be treated as XHTML1.0? If
 	 * unset, minify will sniff for an XHTML doctype.
+	 *
+	 * @since 1.0
 	 */
 	public function __construct(string $html, array $options = [])
 	{
@@ -102,6 +107,7 @@ class Minify
 	 * Minify the markeup given in the constructor
 	 *
 	 * @return string
+	 * @since 1.0
 	 */
 	public function process(): string
 	{

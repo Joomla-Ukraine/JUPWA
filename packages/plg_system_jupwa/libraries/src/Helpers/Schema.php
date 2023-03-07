@@ -30,6 +30,7 @@ class Schema
 	public static function global(array $option = []): bool
 	{
 		$app = Factory::getApplication();
+		$doc = Factory::getDocument();
 
 		if($option[ 'params' ]->get('schema_search') == 1 && $option[ 'params' ]->get('schema_search_query'))
 		{
@@ -45,7 +46,7 @@ class Schema
 				]
 			]);
 
-			$option[ 'doc' ]->addCustomTag($json);
+			$doc->addCustomTag($json);
 		}
 
 		if($option[ 'params' ]->get('schema_sitename') == 1 && $option[ 'params' ]->get('schema_search') != 1)
@@ -60,7 +61,7 @@ class Schema
 				'url'           => Uri::base()
 			]);
 
-			$option[ 'doc' ]->addCustomTag($json);
+			$doc->addCustomTag($json);
 		}
 
 		if($option[ 'params' ]->get('schema_logo') == 1 && $option[ 'params' ]->get('schema_logo_img'))
@@ -74,7 +75,7 @@ class Schema
 				'logo'     => $option_logo_img
 			]);
 
-			$option[ 'doc' ]->addCustomTag($json);
+			$doc->addCustomTag($json);
 		}
 
 		if($option[ 'params' ]->get('schema_social') == 1)
@@ -109,7 +110,7 @@ class Schema
 				]
 			]);
 
-			$option[ 'doc' ]->addCustomTag($json);
+			$doc->addCustomTag($json);
 		}
 
 		return true;
@@ -127,6 +128,7 @@ class Schema
 	private static function article_news(array $option = []): void
 	{
 		$app    = Factory::getApplication();
+		$doc    = Factory::getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
 		if(in_array($Itemid, $option[ 'params' ]->get('schema_news_article') ? : [], true))
@@ -179,7 +181,7 @@ class Schema
 				]
 			];
 
-			$option[ 'doc' ]->addCustomTag(Util::LD($json));
+			$doc->addCustomTag(Util::LD($json));
 		}
 	}
 
@@ -195,6 +197,7 @@ class Schema
 	private static function article(array $option = []): void
 	{
 		$app    = Factory::getApplication();
+		$doc    = Factory::getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
 		if(in_array($Itemid, $option[ 'params' ]->get('schema_article') ? : [], true))
@@ -246,7 +249,7 @@ class Schema
 				'headline'         => $option[ 'title' ]
 			];
 
-			$option[ 'doc' ]->addCustomTag(Util::LD($json));
+			$doc->addCustomTag(Util::LD($json));
 		}
 	}
 
@@ -290,6 +293,7 @@ class Schema
 	private static function product(array $rating = [], array $option = []): void
 	{
 		$app    = Factory::getApplication();
+		$doc    = Factory::getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
 		if(in_array($Itemid, isset($option[ 'schema_product' ]) && $option[ 'schema_product' ] ? : [], true))
@@ -347,7 +351,7 @@ class Schema
 				$json = array_merge($json, $rating);
 			}
 
-			$option[ 'doc' ]->addCustomTag(Util::LD($json));
+			$doc->addCustomTag(Util::LD($json));
 		}
 	}
 
@@ -364,6 +368,7 @@ class Schema
 	private static function event(array $rating = [], array $option = []): void
 	{
 		$app    = Factory::getApplication();
+		$doc    = Factory::getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
 		if(in_array($Itemid, isset($option[ 'schema_event' ]) && $option[ 'schema_event' ] ? : [], true))
@@ -425,7 +430,7 @@ class Schema
 				$json = array_merge($json, $rating);
 			}
 
-			$option[ 'doc' ]->addCustomTag(Util::LD($json));
+			$doc->addCustomTag(Util::LD($json));
 		}
 	}
 
@@ -440,6 +445,7 @@ class Schema
 	 */
 	private static function youtube(array $option = []): void
 	{
+		$doc = Factory::getDocument();
 		if(isset($option[ 'yt' ]))
 		{
 			$json = Util::LD([
@@ -453,7 +459,7 @@ class Schema
 				'embedUrl'     => str_replace('/watch?v=', '/embed/', $option[ 'youtube' ])
 			]);
 
-			$option[ 'doc' ]->addCustomTag($json);
+			$doc->addCustomTag($json);
 		}
 	}
 

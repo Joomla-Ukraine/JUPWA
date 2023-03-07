@@ -12,6 +12,7 @@
 
 namespace JUPWA\Helpers;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 
 class META
@@ -25,16 +26,18 @@ class META
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function facebook(array $option = []): bool
+	public static function facebook(array $option = []): void
 	{
+		$doc = Factory::getDocument();
+
 		if($option[ 'params' ]->get('fbpage') !== '')
 		{
-			$option[ 'doc' ]->setMetaData('article:publisher', $option[ 'params' ]->get('fbpage'), 'property');
+			$doc->setMetaData('article:publisher', $option[ 'params' ]->get('fbpage'), 'property');
 		}
 
 		if($option[ 'params' ]->get('fbapp') !== '')
 		{
-			$option[ 'doc' ]->setMetaData('fb:app_id', $option[ 'params' ]->get('fbapp'), 'property');
+			$doc->setMetaData('fb:app_id', $option[ 'params' ]->get('fbapp'), 'property');
 		}
 
 		$fbadmins = (array) $option[ 'params' ]->get('fbadmin');
@@ -43,12 +46,10 @@ class META
 		{
 			if($fbadmin->id)
 			{
-				$option[ 'doc' ]->setMetaData('fb:admins_' . ($i + 1), $fbadmin->id, 'property');
+				$doc->setMetaData('fb:admins_' . ($i + 1), $fbadmin->id, 'property');
 			}
 			$i++;
 		}
-
-		return true;
 	}
 
 	/**
@@ -60,85 +61,75 @@ class META
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function preconnect(array $option = []): bool
+	public static function preconnect(array $option = []): void
 	{
+		$doc = Factory::getDocument();
+
 		if($option[ 'params' ]->get('precnct-google') == 1 || $option[ 'params' ]->get('precnct-google-ads') == 1 || $option[ 'params' ]->get('precnct-google-cse') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://www.google.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://www.google.com', 'dns-prefetch preconnect', 'rel');
 		}
 
 		if($option[ 'params' ]->get('precnct-google-analytics') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://www.google-analytics.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://www.googletagmanager.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://www.google-analytics.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://www.googletagmanager.com', 'dns-prefetch preconnect', 'rel');
 
 		}
 
 		if($option[ 'params' ]->get('precnct-google-fonts') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://fonts.googleapis.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://fonts.googleapis.com', 'dns-prefetch preconnect', 'rel');
 		}
 
 		if($option[ 'params' ]->get('precnct-google-ads') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://pagead2.googlesyndication.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://googleads.g.doubleclick.net', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://tpc.googlesyndication.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://adservice.google.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://partner.googleadservices.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://fonts.googleapis.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://pagead2.googlesyndication.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://googleads.g.doubleclick.net', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://tpc.googlesyndication.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://adservice.google.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://partner.googleadservices.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://fonts.googleapis.com', 'dns-prefetch preconnect', 'rel');
 		}
 
 		if($option[ 'params' ]->get('precnct-google-cse') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://cse.google.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://ssl.gstatic.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://clients1.google.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://www.googleapis.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://cse.google.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://ssl.gstatic.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://clients1.google.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://www.googleapis.com', 'dns-prefetch preconnect', 'rel');
 		}
 
 		if($option[ 'params' ]->get('precnct-google-maps') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://maps.gstatic.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://maps.googleapis.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://fonts.gstatic.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://fonts.googleapis.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://maps.gstatic.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://maps.googleapis.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://fonts.gstatic.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://fonts.googleapis.com', 'dns-prefetch preconnect', 'rel');
 		}
 
 		if($option[ 'params' ]->get('precnct-google-cloudflare') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://cdnjs.cloudflare.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://cdnjs.cloudflare.com', 'dns-prefetch preconnect', 'rel');
 		}
 
 		if($option[ 'params' ]->get('precnct-youtube') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://www.youtube.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://i.ytimg.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://s.ytimg.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://yt3.ggpht.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://fonts.gstatic.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://www.youtube.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://i.ytimg.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://s.ytimg.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://yt3.ggpht.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://fonts.gstatic.com', 'dns-prefetch preconnect', 'rel');
 		}
 
 		if($option[ 'params' ]->get('precnct-facebook') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://graph.facebook.com', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://graph.facebook.com', 'dns-prefetch preconnect', 'rel');
 		}
 
 		if($option[ 'params' ]->get('precnct-twitter') == 1)
 		{
-			$option[ 'doc' ]->addHeadLink('https://dn.api.twitter.com', 'dns-prefetch preconnect', 'rel');
-		}
-
-		if($option[ 'params' ]->get('precnct-vk') == 1)
-		{
-			$option[ 'doc' ]->addHeadLink('https://userapi.com', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://vk.com', 'dns-prefetch preconnect', 'rel');
-		}
-
-		if($option[ 'params' ]->get('precnct-mcya') == 1)
-		{
-			$option[ 'doc' ]->addHeadLink('https://mc.yandex.ru', 'dns-prefetch preconnect', 'rel');
-			$option[ 'doc' ]->addHeadLink('https://cdn.jsdelivr.net', 'dns-prefetch preconnect', 'rel');
+			$doc->addHeadLink('https://dn.api.twitter.com', 'dns-prefetch preconnect', 'rel');
 		}
 
 		$preconnects = (array) $option[ 'params' ]->get('preconnect');
@@ -146,7 +137,7 @@ class META
 		{
 			if($preconnect->url)
 			{
-				$option[ 'doc' ]->addHeadLink($preconnect->url, 'dns-prefetch preconnect', 'rel');
+				$doc->addHeadLink($preconnect->url, 'dns-prefetch preconnect', 'rel');
 			}
 		}
 
@@ -155,8 +146,7 @@ class META
 		{
 			if($preload->url)
 			{
-				$preload_as = [ 'as' => $preload->as ];
-
+				$preload_as   = [ 'as' => $preload->as ];
 				$preload_type = [];
 				if($preload->type)
 				{
@@ -177,11 +167,9 @@ class META
 
 				$_preload = array_merge($preload_as, $preload_type, $preload_co, $preload_media);
 
-				$option[ 'doc' ]->addHeadLink($preload->url, 'preload', 'rel', [ $_preload ]);
+				$doc->addHeadLink($preload->url, 'preload', 'rel', [ $_preload ]);
 			}
 		}
-
-		return true;
 	}
 
 	/**
@@ -193,110 +181,91 @@ class META
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function favicons(array $option = []): bool
+	public static function favicons(array $option = []): void
 	{
-		if($option[ 'params' ]->get('usefavicon') == '1')
+		$doc = Factory::getDocument();
+
+		if(is_file($favfolder . 'apple-touch-icon.png'))
 		{
-			$faviconfolder = $option[ 'params' ]->get('faviconfolder');
-
-			if($faviconfolder === '/')
-			{
-				$favfolder = JPATH_SITE . '/';
-				$favsite   = Uri::base();
-			}
-			else
-			{
-				$favfolder = JPATH_SITE . '/' . $faviconfolder . '/';
-				$favsite   = Uri::base() . $faviconfolder . '/';
-			}
-
-			if(is_dir($favfolder))
-			{
-				if(is_file($favfolder . 'apple-touch-icon.png'))
-				{
-					$href    = $favsite . 'apple-touch-icon.png';
-					$attribs = [ 'sizes' => '180x180' ];
-					$option[ 'doc' ]->addHeadLink($href, 'apple-touch-icon', 'rel', $attribs);
-				}
-
-				if(is_file($favfolder . 'apple-touch-icon-precomposed.png.png'))
-				{
-					$href    = $favsite . 'apple-touch-icon-precomposed.png.png';
-					$attribs = [ 'sizes' => '180x180' ];
-					$option[ 'doc' ]->addHeadLink($href, 'apple-touch-icon', 'rel', $attribs);
-				}
-
-				if(is_file($favfolder . 'favicon-32x32.png'))
-				{
-					$href    = $favsite . 'favicon-32x32.png';
-					$attribs = [
-						'sizes' => '32x32',
-						'type'  => 'image/png'
-					];
-					$option[ 'doc' ]->addHeadLink($href, 'icon', 'rel', $attribs);
-				}
-
-				if(is_file($favfolder . 'android-chrome-192x192.png'))
-				{
-					$href    = $favsite . 'android-chrome-192x192.png';
-					$attribs = [
-						'sizes' => '192x192',
-						'type'  => 'image/png'
-					];
-					$option[ 'doc' ]->addHeadLink($href, 'icon', 'rel', $attribs);
-				}
-
-				if(is_file($favfolder . 'favicon-16x16.png'))
-				{
-					$href    = $favsite . 'favicon-16x16.png';
-					$attribs = [
-						'sizes' => '16x16',
-						'type'  => 'image/png'
-					];
-					$option[ 'doc' ]->addHeadLink($href, 'icon', 'rel', $attribs);
-				}
-
-				if(is_file(JPATH_SITE . '/manifest.webmanifest'))
-				{
-					$option[ 'doc' ]->addHeadLink(Uri::base() . 'manifest.webmanifest', 'manifest', 'rel');
-				}
-
-				if(is_file($favfolder . 'safari-pinned-tab.svg'))
-				{
-					$href    = $favsite . 'safari-pinned-tab.svg';
-					$attribs = [ 'color' => $option[ 'params' ]->get('maskiconcolor') ];
-					$option[ 'doc' ]->addHeadLink($href, 'mask-icon', 'rel', $attribs);
-				}
-
-				if(is_file($favfolder . 'favicon.ico'))
-				{
-					$href = $favsite . 'favicon.ico';
-					$option[ 'doc' ]->addHeadLink($href, 'shortcut icon', 'rel');
-				}
-
-				$option[ 'doc' ]->setMetaData('msapplication-TileColor', $option[ 'params' ]->get('msapplication_tilecolor'));
-
-				if(is_file($favfolder . 'mstile-144x144.png'))
-				{
-					$href = $favsite . 'mstile-144x144.png';
-					$option[ 'doc' ]->setMetaData('msapplication-TileImage', $href);
-				}
-
-				if(is_file($favfolder . 'browserconfig.xml'))
-				{
-					$href = $favsite . 'browserconfig.xml';
-					$option[ 'doc' ]->setMetaData('msapplication-config', $href);
-				}
-
-				$option[ 'doc' ]->setMetaData('mobile-web-app-capable', 'yes');
-				$option[ 'doc' ]->setMetaData('apple-mobile-web-app-capable', 'yes');
-				$option[ 'doc' ]->setMetaData('application-name', ($option[ 'params' ]->get('manifest_sname') ? : $option[ 'params' ]->get('manifest_name')));
-				$option[ 'doc' ]->setMetaData('apple-mobile-web-app-title', ($option[ 'params' ]->get('manifest_sname') ? : $option[ 'params' ]->get('manifest_name')));
-				$option[ 'doc' ]->setMetaData('apple-mobile-web-app-status-bar-style', 'black-translucent');
-			}
+			$href    = $favsite . 'apple-touch-icon.png';
+			$attribs = [ 'sizes' => '180x180' ];
+			$doc->addHeadLink($href, 'apple-touch-icon', 'rel', $attribs);
 		}
 
-		return true;
+		if(is_file($favfolder . 'apple-touch-icon-precomposed.png.png'))
+		{
+			$href    = $favsite . 'apple-touch-icon-precomposed.png.png';
+			$attribs = [ 'sizes' => '180x180' ];
+			$doc->addHeadLink($href, 'apple-touch-icon', 'rel', $attribs);
+		}
+
+		if(is_file($favfolder . 'favicon-32x32.png'))
+		{
+			$href    = $favsite . 'favicon-32x32.png';
+			$attribs = [
+				'sizes' => '32x32',
+				'type'  => 'image/png'
+			];
+			$doc->addHeadLink($href, 'icon', 'rel', $attribs);
+		}
+
+		if(is_file($favfolder . 'android-chrome-192x192.png'))
+		{
+			$href    = $favsite . 'android-chrome-192x192.png';
+			$attribs = [
+				'sizes' => '192x192',
+				'type'  => 'image/png'
+			];
+			$doc->addHeadLink($href, 'icon', 'rel', $attribs);
+		}
+
+		if(is_file($favfolder . 'favicon-16x16.png'))
+		{
+			$href    = $favsite . 'favicon-16x16.png';
+			$attribs = [
+				'sizes' => '16x16',
+				'type'  => 'image/png'
+			];
+			$doc->addHeadLink($href, 'icon', 'rel', $attribs);
+		}
+
+		if(is_file(JPATH_SITE . '/manifest.webmanifest'))
+		{
+			$doc->addHeadLink(Uri::base() . 'manifest.webmanifest', 'manifest', 'rel');
+		}
+
+		if(is_file($favfolder . 'safari-pinned-tab.svg'))
+		{
+			$href    = $favsite . 'safari-pinned-tab.svg';
+			$attribs = [ 'color' => $option[ 'params' ]->get('maskiconcolor') ];
+			$doc->addHeadLink($href, 'mask-icon', 'rel', $attribs);
+		}
+
+		if(is_file($favfolder . 'favicon.ico'))
+		{
+			$href = $favsite . 'favicon.ico';
+			$doc->addHeadLink($href, 'shortcut icon', 'rel');
+		}
+
+		$doc->setMetaData('msapplication-TileColor', $option[ 'params' ]->get('msapplication_tilecolor'));
+
+		if(is_file($favfolder . 'mstile-144x144.png'))
+		{
+			$href = $favsite . 'mstile-144x144.png';
+			$doc->setMetaData('msapplication-TileImage', $href);
+		}
+
+		if(is_file($favfolder . 'browserconfig.xml'))
+		{
+			$href = $favsite . 'browserconfig.xml';
+			$doc->setMetaData('msapplication-config', $href);
+		}
+
+		$doc->setMetaData('mobile-web-app-capable', 'yes');
+		$doc->setMetaData('apple-mobile-web-app-capable', 'yes');
+		$doc->setMetaData('application-name', ($option[ 'params' ]->get('manifest_sname') ? : $option[ 'params' ]->get('manifest_name')));
+		$doc->setMetaData('apple-mobile-web-app-title', ($option[ 'params' ]->get('manifest_sname') ? : $option[ 'params' ]->get('manifest_name')));
+		$doc->setMetaData('apple-mobile-web-app-status-bar-style', 'black-translucent');
 	}
 
 	/**
@@ -308,14 +277,14 @@ class META
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function tags(array $option = []): bool
+	public static function tags(array $option = []): void
 	{
+		$doc = Factory::getDocument();
+
 		if($option[ 'params' ]->get('theme_color') != '')
 		{
-			$option[ 'doc' ]->setMetaData('theme-color', $option[ 'params' ]->get('theme_color'));
+			$doc->setMetaData('theme-color', $option[ 'params' ]->get('theme_color'));
 		}
-
-		return true;
 	}
 
 	/**
@@ -327,8 +296,10 @@ class META
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function pwa(array $option = []): bool
+	public static function pwa(array $option = []): void
 	{
+		$doc = Factory::getDocument();
+
 		if($option[ 'params' ]->get('usepwa', 0) == 1)
 		{
 			if($option[ 'params' ]->get('usepush') === '1' && $option[ 'params' ]->get('onesignal_app_id') !== '')
@@ -348,9 +319,7 @@ class META
 }";
 			}
 
-			$option[ 'doc' ]->addScriptDeclaration($pwajs);
+			$doc->addScriptDeclaration($pwajs);
 		}
-
-		return true;
 	}
 }

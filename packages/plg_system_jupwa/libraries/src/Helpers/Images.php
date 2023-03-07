@@ -26,7 +26,7 @@ class Images
 	 *
 	 * @since 1.0
 	 */
-	public static function image_storage(array $option = [])
+	public static function image_storage(array $option = []): string
 	{
 		if(self::is_gallery($option[ 'text' ]))
 		{
@@ -117,7 +117,7 @@ class Images
 		{
 			$image = Uri::base() . $rand_img;
 		}
-		
+
 		if($selectimg == 0 && ($img || $imgmain))
 		{
 			if(is_file(JPATH_SITE . '/' . $img))
@@ -215,7 +215,7 @@ class Images
 	private static function article($jsonimages): string
 	{
 		$html   = '';
-		$images = json_decode($jsonimages);
+		$images = json_decode($jsonimages, false);
 
 		if(isset($images))
 		{

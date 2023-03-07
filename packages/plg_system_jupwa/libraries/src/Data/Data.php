@@ -35,56 +35,52 @@ class Data
 	];
 
 	public static $splash = [
-		[ 640, 1136 ],
-		[ 750, 1294 ],
-		[ 1125, 2436 ],
-		[ 1242, 2148 ],
-		[ 1536, 2048 ],
-		[ 1668, 2224 ],
-		[ 1668, 2388 ],
-		[ 2048, 2732 ]
+		[ 1136, 640 ],
+		[ 2260, 1488 ],
+		[ 2048, 1536 ],
+		[ 2160, 1620 ],
+		[ 2224, 1668 ],
+		[ 2360, 1640 ],
+		[ 2380, 1668 ],
+		[ 2732, 2048 ],
+		[ 1337, 750 ],
+		[ 2208, 1242 ],
+		[ 1792, 828 ],
+		[ 2688, 1242 ],
+		[ 2436, 1125 ],
+		[ 2532, 1170 ],
+		[ 2778, 1284 ],
+		[ 2556, 1179 ],
+		[ 2796, 1290 ],
+		[ 1179, 2556 ]
+	];
+
+	public static $manifest_icons = [
+		192,
+		512
 	];
 
 	public static $manifest = [
-		'name'             => '',
-		'short_name'       => '',
-		'start_url'        => '',
-		'display'          => '',
-		'description'      => '',
-		'scope'            => '',
-		'orientation'      => '',
-		'features'         => [],
-		'screenshots'      => [],
-		'icons'            => [
-			[
-				'src'     => '',
-				'sizes'   => '192x192',
-				'type'    => 'image/png',
-				'purpose' => 'any'
-			],
-			[
-				'src'     => '',
-				'sizes'   => '192x192',
-				'type'    => 'image/png',
-				'purpose' => 'maskable'
-			],
-			[
-				'src'     => '',
-				'sizes'   => '512x512',
-				'type'    => 'image/png',
-				'purpose' => 'any'
-			],
-			[
-				'src'     => '',
-				'sizes'   => '512x512',
-				'type'    => 'image/png',
-				'purpose' => 'maskable'
-			]
-		],
-		'shortcuts'        => [],
-		'categories'       => [],
-		'gcm_sender_id'    => '482941778795',
-		'theme_color'      => '',
-		'background_color' => '',
+		'name'                  => '',
+		'short_name'            => '',
+		'start_url'             => '',
+		'display'               => '',
+		'description'           => '',
+		'scope'                 => '',
+		'orientation'           => '',
+		'features'              => [],
+		'screenshots'           => [],
+		'icons'                 => [],
+		'shortcuts'             => [],
+		'categories'            => [],
+		'gcm_sender_id'         => '482941778795',
+		'gcm_user_visible_only' => true,
+		'theme_color'           => '',
+		'background_color'      => '',
+		'author'                => [
+			'name'    => 'Denys Nosov',
+			'website' => 'https://joomla-ua.org',
+			'github'  => 'https://github.com/Joomla-Ukraine/JUPWA'
+		]
 	];
 }

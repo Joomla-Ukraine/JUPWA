@@ -19,18 +19,20 @@ class PHP_ICO
 	/**
 	 * Images in the BMP format.
 	 *
+	 * @since  1.0
 	 * @var array
 	 * @access private
 	 */
-	var $_images = [];
+	public $_images = [];
 
 	/**
 	 * Flag to tell if the required functions exist.
 	 *
+	 * @since  1.0
 	 * @var boolean
 	 * @access private
 	 */
-	var $_has_requirements = false;
+	public $_has_requirements = false;
 
 
 	/**
@@ -41,8 +43,10 @@ class PHP_ICO
 	 *
 	 * @param   string  $file   Optional. Path to the source image file.
 	 * @param   array   $sizes  Optional. An array of sizes (each size is an array with a width and height) that the source image should be rendered at in the generated ICO file. If sizes are not supplied, the size of the source image will be used.
+	 *
+	 * @since 1.0
 	 */
-	function __construct($file = false, $sizes = [])
+	public function __construct($file = false, array $sizes = [])
 	{
 		$required_functions = [
 			'getimagesize',
@@ -61,7 +65,7 @@ class PHP_ICO
 		{
 			if(!function_exists($function))
 			{
-				trigger_error("The PHP_ICO class was unable to find the $function function, which is part of the GD library. Ensure that the system has the GD library installed and that PHP has access to it through a PHP interface, such as PHP's GD module. Since this function was not found, the library will be unable to create ICO files.");
+				trigger_error("The PHP_ICO class was unable to find the {$function} function, which is part of the GD library. Ensure that the system has the GD library installed and that PHP has access to it through a PHP interface, such as PHP's GD module. Since this function was not found, the library will be unable to create ICO files.");
 
 				return;
 			}
@@ -70,7 +74,7 @@ class PHP_ICO
 		$this->_has_requirements = true;
 
 
-		if(false != $file)
+		if($file)
 		{
 			$this->add_image($file, $sizes);
 		}
@@ -88,15 +92,11 @@ class PHP_ICO
 	 * @param   array   $sizes  Optional. An array of sizes (each size is an array with a width and height) that the source image should be rendered at in the generated ICO file. If sizes are not supplied, the size of the source image will be used.
 	 *
 	 * @return boolean true on success and false on failure.
+	 * @since 1.0
 	 */
-	function add_image($file, $sizes = [])
+	public function add_image(string $file, array $sizes = []): bool
 	{
-		if(!$this->_has_requirements)
-		{
-			return false;
-		}
-
-		if(false === ($im = $this->_load_image_file($file)))
+		if(!$this->_has_requirements || ($im = $this->_load_image_file($file)) === false)
 		{
 			return false;
 		}
@@ -113,7 +113,7 @@ class PHP_ICO
 			$sizes = [ $sizes ];
 		}
 
-		foreach((array) $sizes as $size)
+		foreach($sizes as $size)
 		{
 			[ $width, $height ] = $size;
 
@@ -126,7 +126,7 @@ class PHP_ICO
 			$source_width  = imagesx($im);
 			$source_height = imagesy($im);
 
-			if(false === imagecopyresampled($new_im, $im, 0, 0, 0, 0, $width, $height, $source_width, $source_height))
+			if(imagecopyresampled($new_im, $im, 0, 0, 0, 0, $width, $height, $source_width, $source_height) === false)
 			{
 				continue;
 			}
@@ -143,25 +143,16 @@ class PHP_ICO
 	 * @param   string  $file  Path to save the ICO file data into.
 	 *
 	 * @return boolean true on success and false on failure.
+	 * @since 1.0
 	 */
-	function save_ico($file)
+	public function save_ico(string $file): bool
 	{
-		if(!$this->_has_requirements)
+		if(!$this->_has_requirements || ($data = $this->_get_ico_data()) === false || ($fh = fopen($file, 'wb')) === false)
 		{
 			return false;
 		}
 
-		if(false === ($data = $this->_get_ico_data()))
-		{
-			return false;
-		}
-
-		if(false === ($fh = fopen($file, 'w')))
-		{
-			return false;
-		}
-
-		if(false === (fwrite($fh, $data)))
+		if((fwrite($fh, $data)) === false)
 		{
 			fclose($fh);
 
@@ -177,8 +168,9 @@ class PHP_ICO
 	 * Generate the final ICO data by creating a file header and adding the image data.
 	 *
 	 * @access private
+	 * @since  1.0
 	 */
-	function _get_ico_data()
+	public function _get_ico_data()
 	{
 		if(!is_array($this->_images) || empty($this->_images))
 		{
@@ -212,8 +204,9 @@ class PHP_ICO
 	 * Take a GD image resource and change it into a raw BMP format.
 	 *
 	 * @access private
+	 * @since  1.0
 	 */
-	function _add_image_data($im)
+	public function _add_image_data($im): void
 	{
 		$width  = imagesx($im);
 		$height = imagesy($im);
@@ -254,7 +247,7 @@ class PHP_ICO
 			{
 				while(($x++ % 32) > 0)
 				{
-					$current_opacity_val = $current_opacity_val << 1;
+					$current_opacity_val <<= 1;
 				}
 
 				$opacity_data[]      = $current_opacity_val;
@@ -296,21 +289,12 @@ class PHP_ICO
 	 * Read in the source image file and convert it into a GD image resource.
 	 *
 	 * @access private
+	 * @since  1.0
 	 */
-	function _load_image_file($file)
+	public function _load_image_file($file)
 	{
 		// Run a cheap check to verify that it is an image file.
-		if(false === ($size = getimagesize($file)))
-		{
-			return false;
-		}
-
-		if(false === ($file_data = file_get_contents($file)))
-		{
-			return false;
-		}
-
-		if(false === ($im = imagecreatefromstring($file_data)))
+		if(($size = getimagesize($file)) === false || ($file_data = file_get_contents($file)) === false || ($im = imagecreatefromstring($file_data)) === false)
 		{
 			return false;
 		}
