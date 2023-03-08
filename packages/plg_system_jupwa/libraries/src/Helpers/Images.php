@@ -215,7 +215,7 @@ class Images
 	private static function article($jsonimages): string
 	{
 		$html   = '';
-		$images = json_decode($jsonimages, false);
+		$images = json_decode($jsonimages);
 
 		if(isset($images))
 		{

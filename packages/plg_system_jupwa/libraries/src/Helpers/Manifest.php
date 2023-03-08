@@ -112,9 +112,9 @@ class Manifest
 		$db = Factory::getDbo();
 
 		$shortcuts = $option[ 'shortcuts' ] ?? [];
+		$item      = [];
 		if($shortcuts)
 		{
-			$item = [];
 			foreach($shortcuts as $key => $val)
 			{
 				$query = $db->getQuery(true);

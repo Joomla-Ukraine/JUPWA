@@ -113,7 +113,7 @@ class Video
 
 		if($vid)
 		{
-			$vimeoObject = json_decode(file_get_contents('http://vimeo.com/api/v2/video/' . $vid . '.json'), false);
+			$vimeoObject = json_decode(file_get_contents('http://vimeo.com/api/v2/video/' . $vid . '.json'));
 
 			if(!empty($vimeoObject))
 			{

@@ -31,7 +31,9 @@ class Render
 	 */
 	public static function create(array $option = []): void
 	{
-		Folder::create(JPATH_SITE . '/favicons');
+		$path = JPATH_SITE . '/favicons';
+		Folder::delete($path);
+		Folder::create($path);
 
 		$favicon = self::ico([ 'source_icon_sm' => $option[ 'source_icon_sm' ] ]);
 
@@ -39,9 +41,10 @@ class Render
 			'size' => Data::$icons_sm,
 			'icon' => $option[ 'source_icon_sm' ]
 		]);
+
 		$icons_b = self::icons([
 			'size' => Data::$icons,
-			'icon' => $option[ 'source_icon' ]
+			'icon' => ($option[ 'source_icon' ] !== '' ? $option[ 'source_icon' ] : $option[ 'source_icon_sm' ])
 		]);
 
 		$json = [
@@ -89,19 +92,25 @@ class Render
 	 */
 	public static function splash(array $option = []): array
 	{
+		if(!$option[ 'source_icon' ])
+		{
+			return [];
+		}
+
 		$icons  = Data::$splash;
-		$source = self::image($option[ 'icon' ]);
+		$source = self::image($option[ 'source_icon' ]);
 
 		$image = [];
 		foreach($icons as $icon)
 		{
-			$width  = $icon[ 0 ];
-			$height = $icon[ 1 ];
+			$width  = $icon[ 'width' ];
+			$height = $icon[ 'height' ];
 			$out    = 'favicons/splash_' . $width . 'x' . $height . '.png';
 
-			$image[] = Image::render($source, $out, [
+			$image[] = Image::render2($source, $out, [
 				'width'  => $width,
-				'height' => $height
+				'height' => $height,
+				'color'  => $option[ 'ioscolor' ]
 			]);
 		}
 

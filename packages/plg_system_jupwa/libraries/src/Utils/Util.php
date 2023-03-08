@@ -13,6 +13,7 @@
 namespace JUPWA\Utils;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Layout\FileLayout;
 
 class Util
@@ -51,6 +52,19 @@ class Util
 	public static function LD(array $json = []): string
 	{
 		return '<script type="application/ld+json">' . json_encode(array_filter($json)) . '</script>';
+	}
+
+	public static function get_thumbs()
+	{
+		$json = JPATH_SITE . '/favicons/thumbs.json';
+		if(File::exists($json))
+		{
+			$json = file_get_contents($json);
+
+			return json_decode($json);
+		}
+
+		return false;
 	}
 
 	/**

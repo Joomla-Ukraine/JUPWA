@@ -21,9 +21,6 @@ use JUPWA\Classes\SeblodAPI;
 
 class com_cck
 {
-	/**
-	 * @var array
-	 */
 	protected $loaded = [];
 
 	/**
@@ -327,6 +324,7 @@ class com_cck
 	 * @param $cck_id
 	 *
 	 * @return mixed
+	 * @since 1.0
 	 */
 	private function cck($cck_id)
 	{
@@ -344,6 +342,7 @@ class com_cck
 	 * @param $property
 	 *
 	 * @return bool|string
+	 * @since 1.0
 	 */
 	private function client($context, $cck, $article, $property)
 	{

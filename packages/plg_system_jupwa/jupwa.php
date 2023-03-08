@@ -159,10 +159,7 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->params->get('jauthor') == 1)
 		{
 			$regex  = '#<meta name="author" content="(.*?)" />#m';
-			$buffer = preg_replace($regex, '<meta name="author" content="' . $app->get('sitename') . '" />', $buffer);
-
-			$regex  = '#<meta name="author" content="(.*?)">#m';
-			$buffer = preg_replace($regex, '<meta name="author" content="' . $app->get('sitename') . '">', $buffer);
+			$buffer = preg_replace($regex, '<meta name="author" content="' . $app->get('sitename') . '".*?>', $buffer);
 
 			$this->checkBuffer($buffer);
 		}
@@ -170,10 +167,6 @@ class plgSystemJUPWA extends CMSPlugin
 		/*
 		 * Other fixes
 		 */
-		$regex  = '#<meta name="tmpl_type" content="(.*?)" />#m';
-		$buffer = preg_replace($regex, '', $buffer);
-		$this->checkBuffer($buffer);
-
 		$buffer = str_replace('_og:video', 'og:video', $buffer);
 		$this->checkBuffer($buffer);
 
@@ -188,12 +181,17 @@ class plgSystemJUPWA extends CMSPlugin
 		/*
 		 * Fix favicon
 		 */
-		if($this->params->get('favicon') == 1)
-		{
-			$regex  = '#<link href=".*?" rel="shortcut icon" type="image/vnd.microsoft.icon" />#m';
-			$buffer = preg_replace($regex, '', $buffer);
-			$this->checkBuffer($buffer);
-		}
+		$regex  = '#<link href=".*?" rel=".*?" type="image/vnd.microsoft.icon".*?>#m';
+		$buffer = preg_replace($regex, '', $buffer);
+		$this->checkBuffer($buffer);
+
+		$regex  = '#<link href=".*?" rel="icon" type="image/svg\+xml".*?>#m';
+		$buffer = preg_replace($regex, '', $buffer);
+		$this->checkBuffer($buffer);
+
+		$regex  = '#<link href=".*?" rel="mask-icon" color=".*?".*?>#m';
+		$buffer = preg_replace($regex, '', $buffer);
+		$this->checkBuffer($buffer);
 
 		$buffer = str_replace("	\n", '', $buffer);
 		$this->checkBuffer($buffer);
@@ -260,7 +258,7 @@ class plgSystemJUPWA extends CMSPlugin
 		$app  = Factory::getApplication();
 		$doc  = Factory::getDocument();
 		$lang = Factory::getLanguage();
-		
+
 		$view = $app->input->get('view');
 
 		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl'))
@@ -317,18 +315,12 @@ class plgSystemJUPWA extends CMSPlugin
 			}
 		}
 
+		META::render([ 'params' => $this->params ]);
+
 		if($view === 'article')
 		{
 			META::facebook([ 'params' => $this->params ]);
 		}
-
-		META::preconnect([ 'params' => $this->params ]);
-
-		META::favicons([ 'params' => $this->params ]);
-
-		META::tags([ 'params' => $this->params ]);
-
-		META::pwa([ 'params' => $this->params ]);
 
 		Schema::global([ 'params' => $this->params ]);
 	}
