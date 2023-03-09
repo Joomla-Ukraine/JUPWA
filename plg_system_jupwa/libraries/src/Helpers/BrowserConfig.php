@@ -21,12 +21,12 @@ class BrowserConfig
 	 *
 	 * @param   array  $option
 	 *
-	 * @return bool
+	 * @return void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function create(array $option = [])
+	public static function create(array $option = []): void
 	{
 		$favicons = JPATH_SITE . '/favicons/';
 		$file     = $favicons . '/browserconfig.xml';
@@ -66,9 +66,7 @@ class BrowserConfig
 
 			$data = $xml->saveXML();
 
-			return File::write($file, $data);
+			File::write($file, $data);
 		}
-
-		return false;
 	}
 }

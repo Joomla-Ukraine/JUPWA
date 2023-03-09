@@ -31,7 +31,7 @@ class Minify
 	 * @since 1.0
 	 * @var boolean
 	 */
-	protected $_jsCleanComments = true;
+	private $_jsCleanComments = true;
 	/**
 	 * @since version
 	 * @var mixed
@@ -188,11 +188,11 @@ class Minify
 		return $placeholder;
 	}
 
-	protected $_isXhtml;
-	protected $_replacementHash;
-	protected $_placeholders = [];
-	protected $_cssMinifier;
-	protected $_jsMinifier;
+	private $_isXhtml;
+	private $_replacementHash;
+	private $_placeholders = [];
+	private $_cssMinifier;
+	private $_jsMinifier;
 
 	protected function _removePreCB($m): string
 	{

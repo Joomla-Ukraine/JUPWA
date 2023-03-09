@@ -14,7 +14,6 @@ namespace JUPWA\Helpers;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Data\Data;
@@ -33,8 +32,6 @@ class Manifest
 	 */
 	public static function create(array $option = []): void
 	{
-		$app = Factory::getApplication();
-
 		$manifest      = '/manifest.webmanifest';
 		$file_manifest = JPATH_SITE . $manifest;
 
@@ -54,14 +51,8 @@ class Manifest
 		$data[ 'categories' ]       = $option[ 'param' ][ 'manifest_categories' ];
 
 		$data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-		if(File::write($file_manifest, $data))
-		{
-			$app->enqueueMessage(Text::sprintf('PLG_JUPWA_OS_NOT_UPDATE', '<code>' . $manifest . '</code>'), 'notice');
-		}
-		else
-		{
-			$app->enqueueMessage(JText::sprintf('PLG_JUPWA_OS_NOT_SAVE', '<code>' . $manifest . '</code>'), 'error');
-		}
+
+		File::write($file_manifest, $data);
 	}
 
 	/**

@@ -26,7 +26,7 @@ class OG
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function tag(array $option = [])
+	public static function tag(array $option = []): void
 	{
 		$doc  = Factory::getDocument();
 		$lang = Factory::getLanguage();
@@ -76,7 +76,7 @@ class OG
 			$doc->setMetaData('article:section', $option[ 'article' ]->category_title, 'property');
 		}
 
-		if(isset($option[ 'article' ]->metakey) !== '')
+		if(isset($option[ 'article' ]->metakey) != '')
 		{
 			if(Facebook::bot() === false)
 			{
@@ -124,7 +124,7 @@ class OG
 	 *
 	 * @since 1.0
 	 */
-	public static function twitter(array $option = [])
+	public static function twitter(array $option = []): void
 	{
 		$doc = Factory::getDocument();
 

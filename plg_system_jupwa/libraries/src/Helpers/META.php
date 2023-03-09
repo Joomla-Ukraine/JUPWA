@@ -20,7 +20,13 @@ use JUPWA\Data\Data;
 class META
 {
 	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
 	 * @throws \Exception
+	 * @since 1.0
 	 */
 	public static function render(array $option = []): void
 	{

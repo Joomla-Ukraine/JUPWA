@@ -10,14 +10,37 @@
 namespace JUPWA\Helpers;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\Helpers\StringHelper;
+use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
+use Joomla\String\StringHelper;
 use JUPWA\Utils\Util;
 
 defined('_JEXEC') or die();
 
 class Schema
 {
+
+	/**
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function schema(array $option = []): void
+	{
+		self::article_news($option);
+		self::article($option);
+
+		$rating = self::rating($option);
+
+		self::product($rating, $option);
+		self::event($rating, $option);
+
+		self::youtube($option);
+	}
+
 	/**
 	 *
 	 * @param   array  $option
@@ -27,7 +50,7 @@ class Schema
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function global(array $option = []): bool
+	public static function global(array $option = []): void
 	{
 		$app = Factory::getApplication();
 		$doc = Factory::getDocument();
@@ -64,56 +87,50 @@ class Schema
 			$doc->addCustomTag($json);
 		}
 
-		if($option[ 'params' ]->get('schema_logo') == 1 && $option[ 'params' ]->get('schema_logo_img'))
+		if($option[ 'params' ]->get('schema_logo') == 1)
 		{
-			$option_logo_img = Uri::base() . $option[ 'params' ]->get('schema_logo_img');
+			$file = 'favicons/icon_512.png';
+			if(File::exists(JPATH_SITE . '/' . $file))
+			{
+				$logo = Uri::root() . $file;
+				$json = Util::LD([
+					'@context' => 'https://schema.org',
+					'@type'    => 'Organization',
+					'url'      => Uri::base(),
+					'logo'     => $logo
+				]);
 
-			$json = Util::LD([
-				'@context' => 'https://schema.org',
-				'@type'    => 'Organization',
-				'url'      => Uri::base(),
-				'logo'     => $option_logo_img
-			]);
-
-			$doc->addCustomTag($json);
+				$doc->addCustomTag($json);
+			}
 		}
 
-		if($option[ 'params' ]->get('schema_social') == 1)
+		if($option[ 'params' ]->get('schema_social'))
 		{
-			$schama_sl = [
-				$option[ 'params' ]->get('schema_social_l1') ? : '',
-				$option[ 'params' ]->get('schema_social_l2') ? : '',
-				$option[ 'params' ]->get('schema_social_l3') ? : '',
-				$option[ 'params' ]->get('schema_social_l4') ? : '',
-				$option[ 'params' ]->get('schema_social_l5') ? : '',
-				$option[ 'params' ]->get('schema_social_l6') ? : '',
-				$option[ 'params' ]->get('schema_social_l7') ? : '',
-				$option[ 'params' ]->get('schema_social_l8') ? : '',
-				$option[ 'params' ]->get('schema_social_l9') ? : '',
-				$option[ 'params' ]->get('schema_social_l10') ? : '',
-				$option[ 'params' ]->get('schema_social_l11') ? : '',
-				$option[ 'params' ]->get('schema_social_l12') ? : '',
-				$option[ 'params' ]->get('schema_social_l13') ? : '',
-				$option[ 'params' ]->get('schema_social_l14') ? : '',
-				$option[ 'params' ]->get('schema_social_l15') ? : '',
-				$option[ 'params' ]->get('schema_social_l16') ? : '',
-				$option[ 'params' ]->get('schema_social_l17') ? : ''
-			];
+			$socials = (array) $option[ 'params' ]->get('schema_social_link');
+			if($socials)
+			{
+				$social_link = [];
+				foreach($socials as $social)
+				{
+					$social_link[] = $social->link;
+				}
 
-			$json = Util::LD([
-				'@context' => 'https://schema.org',
-				'@type'    => $option[ 'params' ]->get('schema_social_type'),
-				'name'     => $option[ 'params' ]->get('schema_social_type') === 'Person' ? $option[ 'params' ]->get('schema_social_person') : $app->get('sitename'),
-				'url'      => Uri::base(),
-				'sameAs'   => [
-					array_filter($schama_sl)
-				]
-			]);
+				if($social_link)
+				{
+					$json = Util::LD([
+						'@context' => 'https://schema.org',
+						'@type'    => $option[ 'params' ]->get('schema_social_type'),
+						'name'     => $option[ 'params' ]->get('schema_social_type') === 'Person' ? $option[ 'params' ]->get('schema_social_person') : $app->get('sitename'),
+						'url'      => Uri::base(),
+						'sameAs'   => [
+							$social_link
+						]
+					]);
 
-			$doc->addCustomTag($json);
+					$doc->addCustomTag($json);
+				}
+			}
 		}
-
-		return true;
 	}
 
 	/**
@@ -131,16 +148,11 @@ class Schema
 		$doc    = Factory::getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
-		if(in_array($Itemid, $option[ 'params' ]->get('schema_news_article') ? : [], true))
+		if(in_array($Itemid, $option[ 'params' ]->get('schema_news_article') ? : []))
 		{
-			$sitename = '';
-			if($option[ 'params' ]->get('news_article_logo'))
-			{
-				$news_article_logo = Uri::base() . $option[ 'params' ]->get('news_article_logo');
-				$sitename          = $app->get('sitename');
-			}
-
-			$url = str_replace('[id]', $option[ 'article' ]->created_by, $option[ 'params' ]->get('schema_article_person', ''));
+			$logo     = Uri::root() . Util::get_thumbs()->{'article_logo'};
+			$sitename = $app->get('sitename');
+			$url      = str_replace('[id]', $option[ 'article' ]->created_by, $option[ 'params' ]->get('schema_article_person', ''));
 
 			$json = [
 				'@context'         => 'https://schema.org',
@@ -174,7 +186,7 @@ class Schema
 					'name'  => $sitename,
 					'logo'  => [
 						'@type'  => 'ImageObject',
-						'url'    => $news_article_logo,
+						'url'    => $logo,
 						'height' => 60,
 						'width'  => 600
 					],
@@ -200,16 +212,11 @@ class Schema
 		$doc    = Factory::getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
-		if(in_array($Itemid, $option[ 'params' ]->get('schema_article') ? : [], true))
+		if(in_array($Itemid, $option[ 'params' ]->get('schema_article') ? : []))
 		{
-			$sitename = '';
-			if($option[ 'params' ]->get('article_logo'))
-			{
-				$article_logo = Uri::base() . $option[ 'params' ]->get('article_logo');
-				$sitename     = $app->get('sitename');
-			}
-
-			$url = str_replace('[id]', $option[ 'article' ]->created_by, $option[ 'params' ]->get('schema_article_person', ''));
+			$logo     = Uri::root() . Util::get_thumbs()->{'article_logo'};
+			$sitename = $app->get('sitename');
+			$url      = str_replace('[id]', $option[ 'article' ]->created_by, $option[ 'params' ]->get('schema_article_person', ''));
 
 			$json = [
 				'@context'         => 'https://schema.org',
@@ -228,7 +235,7 @@ class Schema
 					'name'  => $sitename,
 					'logo'  => [
 						'@type'  => 'ImageObject',
-						'url'    => $article_logo,
+						'url'    => $logo,
 						'height' => 60,
 						'width'  => 600
 					],
@@ -296,7 +303,7 @@ class Schema
 		$doc    = Factory::getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
-		if(in_array($Itemid, isset($option[ 'schema_product' ]) && $option[ 'schema_product' ] ? : [], true))
+		if(in_array($Itemid, isset($option[ 'schema_product' ]) && $option[ 'schema_product' ] ? : []))
 		{
 			$json = [
 				'@context'         => 'https://schema.org',
@@ -371,7 +378,7 @@ class Schema
 		$doc    = Factory::getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
-		if(in_array($Itemid, isset($option[ 'schema_event' ]) && $option[ 'schema_event' ] ? : [], true))
+		if(in_array($Itemid, isset($option[ 'schema_event' ]) && $option[ 'schema_event' ] ? : []))
 		{
 			$json = [
 				'@context'         => 'https://schema.org',
@@ -446,7 +453,8 @@ class Schema
 	private static function youtube(array $option = []): void
 	{
 		$doc = Factory::getDocument();
-		if(isset($option[ 'yt' ]))
+
+		if(isset($option[ 'yt' ], $option[ 'youtube' ]) && isset($option[ 'article' ]))
 		{
 			$json = Util::LD([
 				'@context'     => 'https://schema.org',
@@ -461,42 +469,5 @@ class Schema
 
 			$doc->addCustomTag($json);
 		}
-	}
-
-	/**
-	 * @param   array  $option
-	 *
-	 * @return bool
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function schema(array $option = []): bool
-	{
-		//$image     = '';
-		//$use_image = false;
-		/*	if((isset($option[ 'image' ]) && $option[ 'image' ]))
-			{
-				$use_image     = true;
-				$FastImageSize = new FastImageSize();
-				$imageSize     = $FastImageSize->getImageSize($option[ 'image' ]);
-
-				$image = $option[ 'image' ];
-				if(URL::is_url($option[ 'image' ]) === false)
-				{
-					$image = Uri::base() . $option[ 'image' ];
-				}
-			}
-	*/
-
-		self::article_news($option);
-		self::article($option);
-
-		$rating = self::rating($option);
-
-		self::product($rating, $option);
-		self::event($rating, $option);
-
-		return true;
 	}
 }

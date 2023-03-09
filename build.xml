@@ -1,7 +1,6 @@
 <project name="jupwa" default="dist" basedir=".">
 
-    <property name="VERSION" value="8.0"/>
-    <property name="juimage" value="5.12"/>
+    <property name="VERSION" value="1.0"/>
     <property name="JOOMLA" value="4.2"/>
 
     <tstamp>
@@ -12,7 +11,7 @@
     <property name="temp" value="temp"/>
     <property name="dist" value="dist"/>
 
-    <property name="filename" value="pkg_jupwa_v${VERSION}.zip"/>
+    <property name="filename" value="plg_system_jupwa_v${VERSION}.zip"/>
 
     <target name="init" depends="clean">
         <mkdir dir="${build}"/>
@@ -32,19 +31,7 @@
 
     <target name="replace">
 
-        <copy file="pkg_jupwa.xml" todir="${build}">
-            <filterchain>
-                <replacetokens>
-                    <token key="version" value="${VERSION}" />
-                    <token key="date" value="${DATE}" />
-                    <token key="juimage" value="${juimage}" />
-                </replacetokens>
-            </filterchain>
-        </copy>
-
-        <!---->
-
-        <copy file="packages/plg_jupwa/jupwa.xml" todir="${temp}/temp/plg_jupwa">
+        <copy file="packages/plg_system_jupwa/jupwa.xml" todir="${temp}/temp/plg_system_jupwa">
             <filterchain>
                 <replacetokens>
                     <token key="version" value="${VERSION}" />
@@ -53,8 +40,8 @@
             </filterchain>
         </copy>
 
-        <delete file="${temp}/plg_jupwa/jupwa.xml"/>
-        <copy file="${temp}/temp/plg_jupwa/jupwa.xml" todir="${temp}/plg_jupwa"/>
+        <delete file="${temp}/plg_system_jupwa/jupwa.xml"/>
+        <copy file="${temp}/temp/plg_system_jupwa/jupwa.xml" todir="${temp}/plg_system_jupwa"/>
 
 
     </target>
@@ -63,13 +50,11 @@
 
         <mkdir dir="${build}/packages"/>
 
-        <zip destfile="${build}/packages/plg_jupwa.zip" description="plg_jupwa">
-            <fileset dir="${temp}/plg_jupwa"/>
+        <zip destfile="${build}/packages/plg_system_jupwa.zip" description="plg_system_jupwa">
+            <fileset dir="${temp}/plg_system_jupwa"/>
         </zip>
 
-        <copy file="../JUImage/dist/pkg_juimage_v${juimage}.zip" todir="${build}/packages"/>
-
-        <copy file="pkg_jupwa.xml" todir="${build}"/>
+        <copy file="plg_system_jupwa.xml" todir="${build}"/>
 
         <copy file="script.php" todir="${build}"/>
 

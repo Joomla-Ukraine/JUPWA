@@ -54,6 +54,11 @@ class Util
 		return '<script type="application/ld+json">' . json_encode(array_filter($json)) . '</script>';
 	}
 
+	/**
+	 * @return bool|string
+	 *
+	 * @since 1.0
+	 */
 	public static function get_thumbs()
 	{
 		$json = JPATH_SITE . '/favicons/thumbs.json';
@@ -64,7 +69,7 @@ class Util
 			return json_decode($json);
 		}
 
-		return false;
+		return '';
 	}
 
 	/**

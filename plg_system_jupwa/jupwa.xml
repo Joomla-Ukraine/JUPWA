@@ -57,7 +57,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="1"
-	                       label="PLG_JUPWA_JAUTHOR_LABEL">
+	                       label="PLG_JUPWA_JAUTHOR">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -77,7 +77,7 @@
 			                type="radio"
 			                layout="joomla.form.field.radio.switcher"
 			                default="1"
-			                label="PLG_JUPWA_KEYWORDS_REMOVE_LABEL">
+			                label="PLG_JUPWA_KEYWORDS_REMOVE">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -153,15 +153,11 @@
 
 	            <fieldset name="PRECONNECT">
 
-		            <field name="precnct_title"
-		                   type="note"
-		                   label="PLG_JUPWA_PRECONNECT_TITLE" />
-
 	                <field name="precnct-google"
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_GOOGLE_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_GOOGLE">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -170,7 +166,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_GOOGLE_ANALYTICS_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_GOOGLE_ANALYTICS">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -179,7 +175,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_GOOGLE_FONTS_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_GOOGLE_FONTS">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -188,7 +184,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_GOOGLE_ADS_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_GOOGLE_ADS">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -197,7 +193,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_GOOGLE_CSE_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_GOOGLE_CSE">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -206,7 +202,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_GOOGLE_MAPS_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_GOOGLE_MAPS">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -215,7 +211,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_GOOGLE_CLOUDFLARE_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_GOOGLE_CLOUDFLARE">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -224,7 +220,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_YOUTUBE_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_YOUTUBE">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -233,7 +229,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_FACEBOOK_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_FACEBOOK">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -242,7 +238,7 @@
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
-	                       label="PLG_JUPWA_PRECNCT_TWITTER_TITLE_LABEL">
+	                       label="PLG_JUPWA_PRECNCT_TWITTER">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
 	                </field>
@@ -252,7 +248,7 @@
 			                type="subform"
 			                multiple="true"
 			                class="span6"
-			                label="PLG_JUPWA_PRECONNECT_CUSTOM_TITLE_LABEL"
+			                label="PLG_JUPWA_PRECONNECT_CUSTOM"
 			                layout="joomla.form.field.subform.repeatable-table"
 	                >
 		                <form>
@@ -269,16 +265,12 @@
 
 	            <fieldset name="PRELOAD">
 
-	                <field type="note"
-	                       name="preloads_title"
-	                       label="PLG_JUPWA_PRELOAD_TITLE" />
-
 	                <field
 			                name="preloads"
 			                type="subform"
 			                multiple="true"
 			                class="span6"
-			                label="PLG_JUPWA_PRELOAD_CUSTOM_TITLE_LABEL"
+			                label="PLG_JUPWA_PRELOAD_CUSTOM"
 			                layout="joomla.form.field.subform.repeatable-table"
 	                >
 		                <form>
@@ -487,7 +479,6 @@
                        layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="PLG_JUPWA_COMS_INT_JSHOPPING"
-                       description="PLG_JUPWA_INTEGRATION_JSHOPPING"
                 >
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
@@ -499,13 +490,72 @@
 		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="PLG_JUPWA_COMS_INT_K2"
-		                description="PLG_JUPWA_INTEGRATION_K2"
                 >
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
 
             </fieldset>
+
+	        <fieldset name="ICONS">
+
+		        <field type="note"
+		               name="thumb1"
+		               class="alert alert-info w-100"
+		               description="PLG_JUPWA_THUMBS"
+		               showon="thumbs:0"
+		        />
+
+		        <field type="note"
+		               name="thumb11"
+		               class="alert alert-danger w-100"
+		               description="PLG_JUPWA_THUMBS2"
+		               showon="thumbs:1"
+		        />
+
+		        <field name="thumbs"
+		               type="radio"
+		               layout="joomla.form.field.radio.switcher"
+		               default="0"
+		               label="PLG_JUPWA_USE_THUMB"
+		        >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+		        </field>
+
+		        <field name="source_icon_sm"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON_SM"
+		        />
+
+		        <field name="source_icon"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON"
+		        />
+
+		        <field name="source_icon_svg"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON_SVG"
+		        />
+
+		        <field name="source_icon_svg_pin"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON_SVG_PIN"
+		        />
+
+	        </fieldset>
 
             <fieldset name="SCHEMA">
 
@@ -577,22 +627,9 @@
 	                    <option value="1">JYES</option>
 	                </field>
 
-	                <field name="schema_logo_img"
-	                       type="media"
-	                       directory="jupwa/logos"
-	                       label="PLG_JUPWA_SCHEMA_LOGO_IMG"
-	                       showon="schema_logo:1"
-	                />
-
 	            </fieldset>
 
 	            <fieldset name="SCHEMA_ARTICLE">
-
-	                <field name="article_logo"
-	                       type="media"
-	                       directory="jupwa/logos"
-	                       label="PLG_JUPWA_ARTICLE_LOGO"
-	                />
 
 		            <field name="schema_article"
 		                   type="menuitem"
@@ -610,12 +647,6 @@
 	            </fieldset>
 
 	            <fieldset name="SCHEMA_NEWS">
-
-	                <field name="news_article_logo"
-	                       type="media"
-	                       directory="jupwa/logos"
-	                       label="PLG_JUPWA_NEWS_ARTICLE_LOGO"
-	                />
 
 		            <field name="schema_news_article"
 		                   type="menuitem"
@@ -716,6 +747,7 @@
 								    name="link"
 								    type="text"
 								    default=""
+								    class="w-100"
 								    label="PLG_JUPWA_SCHEMA_SOCIAL_LINK"
 						    />
 						</form>
@@ -729,258 +761,57 @@
 
 				<fieldset name="JUPWA_OG">
 
-                <field type="note"
-                       name="s121"
-                       label="PLG_JUPWA_OPEN_GRAGH" />
+	                <field name="og"
+	                       type="radio"
+	                       layout="joomla.form.field.radio.switcher"
+	                       default="1"
+	                       label="PLG_JUPWA_OG"
+	                >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
 
-                <field name="og"
-                       type="radio"
-                       layout="joomla.form.field.radio.switcher"
-                       default="1"
-                       label="PLG_JUPWA_OG"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
+	                <field type="note"
+	                       name="s122"
+	                       class="alert alert-success w-100"
+	                       description="PLG_JUPWA_COVER_DEFAULT"
+	                       showon="og:1"
+	                />
 
-                <field type="note"
-                       name="s122"
-                       label="PLG_JUPWA_COVER_DEFAULT"
-                       showon="og:1"
-                />
+	                <field name="imagemain"
+	                       class=""
+	                       type="media"
+	                       directory="jupwa/logos"
+	                       label="PLG_JUPWA_IMAGE_MAIN"
+	                       showon="og:1"
+	                />
 
-                <field name="imagemain"
-                       class=""
-                       type="media"
-                       directory="jupwa/logos"
-                       label="PLG_JUPWA_IMAGE_MAIN"
-                       showon="og:1"
-                />
+	                <field name="selectimg"
+	                       type="list"
+	                       default="1"
+	                       label="PLG_JUPWA_SELECTIMG"
+	                       showon="og:1"
+	                >
+	                    <option value="0">PLG_JUPWA_SELECTIMG01</option>
+	                    <option value="1">PLG_JUPWA_SELECTIMG02</option>
+	                </field>
 
-                <field name="selectimg"
-                       type="list"
-                       default="1"
-                       label="PLG_JUPWA_SELECTIMG"
-                       showon="og:1"
-                >
-                    <option value="0">PLG_JUPWA_SELECTIMG01</option>
-                    <option value="1">PLG_JUPWA_SELECTIMG02</option>
-                </field>
+	                <field name="image"
+	                       class=""
+	                       type="media"
+	                       directory="jupwa/logos"
+	                       label="PLG_JUPWA_IMAGE"
+	                       showon="og:1[AND]selectimg:0"
+	                />
 
-                <field name="image"
-                       class=""
-                       type="media"
-                       directory="jupwa/logos"
-                       label="PLG_JUPWA_IMAGE"
-                       showon="og:1[AND]selectimg:0"
-                />
-
-                <field name=""
-                       class=""
-                       type="media"
-                       directory="jupwa/images"
-                       preview="none"
-                       label="PLG_JUPWA_UPLOADIMAGES"
-                       showon="og:1[AND]selectimg:1"
-                />
-
-                <field type="note"
-                       name="s124"
-                       label="PLG_JUPWA_COVER_GENERIC_WATERMARK"
-                       showon="og:1"
-                />
-
-                <field name="usecover_wm"
-                       type="radio"
-                       layout="joomla.form.field.radio.switcher"
-                       default="0"
-                       label="PLG_JUPWA_USE_COVER_WATERMARK"
-                       showon="og:1"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-
-                <field name="cover_wm"
-                       class=""
-                       type="media"
-                       directory="jupwa/watermark"
-                       label="PLG_JUPWA_COVER_WATERMARK"
-                       showon="og:1[AND]usecover_wm:1"
-                />
-
-                <field name="cover_wmposition"
-                       type="list"
-                       default="BR"
-                       label="PLG_JUPWA_WATERMARK_POS"
-                       showon="og:1[AND]usecover_wm:1"
-                >
-                    <option value="T">PLG_JUPWA_WATERMARK_POS_T</option>
-                    <option value="B">PLG_JUPWA_WATERMARK_POS_B</option>
-                    <option value="L">PLG_JUPWA_WATERMARK_POS_L</option>
-                    <option value="R">PLG_JUPWA_WATERMARK_POS_R</option>
-                    <option value="C">PLG_JUPWA_WATERMARK_POS_C</option>
-                    <option value="TL">PLG_JUPWA_WATERMARK_POS_TL</option>
-                    <option value="TR">PLG_JUPWA_WATERMARK_POS_TR</option>
-                    <option value="BL">PLG_JUPWA_WATERMARK_POS_BL</option>
-                    <option value="BR">PLG_JUPWA_WATERMARK_POS_BR</option>
-                </field>
-
-                <field name="cover_wmopst"
-                       type="text"
-                       default="75"
-                       size="4"
-                       label="PLG_JUPWA_WATERMARK_OPAC"
-                       showon="og:1[AND]usecover_wm:1"
-                />
-
-                <field name="cover_wmx"
-                       type="text"
-                       default="15"
-                       size="4"
-                       label="PLG_JUPWA_WATERMARK_XMARGIN"
-                       showon="og:1[AND]usecover_wm:1"
-                />
-
-                <field name="cover_wmy"
-                       type="text"
-                       default="15"
-                       size="4"
-                       label="PLG_JUPWA_WATERMARK_YMARGIN"
-                       showon="og:1[AND]usecover_wm:1"
-                />
-
-					<!--                <field type="note"
-										   name="s123"
-
-										   label="PLG_JUPWA_COVER_GENERIC" />
-
-									<field name="usecover"
-										   type="radio"
-										   layout="joomla.form.field.radio.switcher"
-										   default="0"
-										   label="PLG_JUPWA_USE_COVER_GENERIC">
-										   <option value="0">JNO</option>
-										   <option value="1">JYES</option>
-									</field>
-
-									<field name="@toggler_choose_settings001_a"
-										   type="nn_toggler"
-										   param="usecover"
-										   value="1" />
-
-									<field name="cover_img"
-										   class=""
-										   type="media"
-										   directory="jupwa/images"
-										   label="PLG_JUPWA_COVER_IMAGE" />
-
-									<field name="cover_img_pos"
-										   type="list"
-										   default="C"
-										   label="PLG_JUPWA_COVER_IMAGE_POS"
-									>
-										<option value="T">PLG_JUPWA_WATERMARK_POS_T</option>
-										<option value="B">PLG_JUPWA_WATERMARK_POS_B</option>
-										<option value="L">PLG_JUPWA_WATERMARK_POS_L</option>
-										<option value="R">PLG_JUPWA_WATERMARK_POS_R</option>
-										<option value="C">PLG_JUPWA_WATERMARK_POS_C</option>
-										<option value="TL">PLG_JUPWA_WATERMARK_POS_TL</option>
-										<option value="TR">PLG_JUPWA_WATERMARK_POS_TR</option>
-										<option value="BL">PLG_JUPWA_WATERMARK_POS_BL</option>
-										<option value="BR">PLG_JUPWA_WATERMARK_POS_BR</option>
-									</field>
-
-									<field name="cover_img_opst"
-										   type="text"
-										   default="100"
-										   size="4"
-										   label="PLG_JUPWA_COVER_IMAGE_OPAC"
-									/>
-
-									<field name="cover_img_margin"
-										   type="text"
-										   default="0"
-										   size="4"
-										   label="PLG_JUPWA_COVER_IMAGE_MARGIN"
-									/>
-
-									<field name="cover_img_angle"
-										   type="text"
-										   default="0"
-										   size="4"
-										   label="PLG_JUPWA_COVER_IMAGE_ANGLE"
-									/>
-
-									<field name="cover_fonts"
-										   type="filelist"
-										   default=""
-										   label="PLG_JUPWA_COVER_FONTS"
-										   directory="images/jupwa/fonts"
-										   filter="\.ttf$"
-										   hide_none="1"
-										   hide_default="1" />
-
-									<field name="cover_fonts_size"
-										   type="text"
-										   default="28"
-										   size="4"
-										   label="PLG_JUPWA_COVER_FONT_SIZE"
-									/>
-
-									<field name="cover_fonts_pos"
-										   type="list"
-										   default="C"
-										   label="PLG_JUPWA_COVER_FONT_POS"
-									>
-										<option value="T">PLG_JUPWA_WATERMARK_POS_T</option>
-										<option value="B">PLG_JUPWA_WATERMARK_POS_B</option>
-										<option value="L">PLG_JUPWA_WATERMARK_POS_L</option>
-										<option value="R">PLG_JUPWA_WATERMARK_POS_R</option>
-										<option value="C">PLG_JUPWA_WATERMARK_POS_C</option>
-										<option value="TL">PLG_JUPWA_WATERMARK_POS_TL</option>
-										<option value="TR">PLG_JUPWA_WATERMARK_POS_TR</option>
-										<option value="BL">PLG_JUPWA_WATERMARK_POS_BL</option>
-										<option value="BR">PLG_JUPWA_WATERMARK_POS_BR</option>
-									</field>
-
-									<field
-											name="cover_fonts_color"
-											type="color"
-											default="333333"
-											label="PLG_JUPWA_FONT_COLOR"
-									/>
-
-									<field name="cover_fonts_opst"
-										   type="text"
-										   default="100"
-										   size="4"
-										   label="PLG_JUPWA_COVER_FONT_OPST"
-									/>
-
-									<field name="cover_fonts_margin"
-										   type="text"
-										   default="100"
-										   size="4"
-										   label="PLG_JUPWA_COVER_FONT_OPST"
-									/>
-
-									<field name="cover_fonts_angle"
-										   type="text"
-										   default="0"
-										   size="4"
-										   label="PLG_JUPWA_COVER_FONT_ANGLE"
-									/>
-
-									<field name="@toggler_showsuccessmessage001_b"
-										   type="nn_toggler" />-->
-
-
-					<!--
-					<field type="note" name="s125" label="PLG_JUPWA_COVER_CACHE"/>
-
-					<field name="cover_cache" type="folderlist" default="img" label="PLG_JUPWA_COVER_FOLDER" description="PLG_JUMULTITHUMB_IMAGE_FOLDER_DESC" directory="" exclude="administrator|bin|cli|components|community|includes|files|forum|layouts|log|logs|language|libraries|logs|images|modules|min|plugins|templates|tmp|temp" hide_none="1" hide_default="1" />
-					-->
+	                <field name=""
+	                       class=""
+	                       type="media"
+	                       directory="jupwa/images"
+	                       preview="none"
+	                       label="PLG_JUPWA_UPLOADIMAGES"
+	                       showon="og:1[AND]selectimg:1"
+	                />
 
 					<field name="ogvideo_youtube"
 					       type="radio"
@@ -992,6 +823,76 @@
 						<option value="0">JNO</option>
 						<option value="1">JYES</option>
 					</field>
+
+					<!--
+	                <field type="note"
+	                       name="s124"
+	                       label="PLG_JUPWA_COVER_GENERIC_WATERMARK"
+	                       showon="og:1"
+	                />
+
+	                <field name="usecover_wm"
+	                       type="radio"
+	                       layout="joomla.form.field.radio.switcher"
+	                       default="0"
+	                       label="PLG_JUPWA_USE_COVER_WATERMARK"
+	                       showon="og:1"
+	                >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+	                <field name="cover_wm"
+	                       class=""
+	                       type="media"
+	                       directory="jupwa/watermark"
+	                       label="PLG_JUPWA_COVER_WATERMARK"
+	                       showon="og:1[AND]usecover_wm:1"
+	                />
+
+	                <field name="cover_wmposition"
+	                       type="list"
+	                       default="BR"
+	                       label="PLG_JUPWA_WATERMARK_POS"
+	                       showon="og:1[AND]usecover_wm:1"
+	                >
+	                    <option value="T">PLG_JUPWA_WATERMARK_POS_T</option>
+	                    <option value="B">PLG_JUPWA_WATERMARK_POS_B</option>
+	                    <option value="L">PLG_JUPWA_WATERMARK_POS_L</option>
+	                    <option value="R">PLG_JUPWA_WATERMARK_POS_R</option>
+	                    <option value="C">PLG_JUPWA_WATERMARK_POS_C</option>
+	                    <option value="TL">PLG_JUPWA_WATERMARK_POS_TL</option>
+	                    <option value="TR">PLG_JUPWA_WATERMARK_POS_TR</option>
+	                    <option value="BL">PLG_JUPWA_WATERMARK_POS_BL</option>
+	                    <option value="BR">PLG_JUPWA_WATERMARK_POS_BR</option>
+	                </field>
+
+	                <field name="cover_wmopst"
+	                       type="text"
+	                       default="75"
+	                       size="4"
+	                       label="PLG_JUPWA_WATERMARK_OPAC"
+	                       showon="og:1[AND]usecover_wm:1"
+	                />
+
+	                <field name="cover_wmx"
+	                       type="text"
+	                       default="15"
+	                       size="4"
+	                       label="PLG_JUPWA_WATERMARK_XMARGIN"
+	                       showon="og:1[AND]usecover_wm:1"
+	                />
+
+	                <field name="cover_wmy"
+	                       type="text"
+	                       default="15"
+	                       size="4"
+	                       label="PLG_JUPWA_WATERMARK_YMARGIN"
+	                       showon="og:1[AND]usecover_wm:1"
+	                />
+-->
+
+
 
 	            </fieldset>
 
@@ -1058,6 +959,7 @@
 						    <field
 								    name="id"
 								    type="text"
+								    class="w-100"
 								    label="PLG_JUPWA_FBADMIN_ID"
 								    required="true"
 						    />
@@ -1270,43 +1172,14 @@
 
 	        </fieldset>
 
-	        <fieldset name="ICONS">
-
-
-		        <field name="source_icon_sm"
-		               type="media"
-		               preview_width="100"
-		               preview_height="100"
-		               directory="jupwa/icon"
-		               label="PLG_JUPWA_SOURCE_ICON_SM"
-		        />
-
-		        <field name="source_icon"
-		               type="media"
-		               preview_width="100"
-		               preview_height="100"
-		               directory="jupwa/icon"
-		               label="PLG_JUPWA_SOURCE_ICON"
-		        />
-
-		        <field name="source_icon_svg"
-		               type="media"
-		               preview_width="100"
-		               preview_height="100"
-		               directory="jupwa/icon"
-		               label="PLG_JUPWA_SOURCE_ICON_SVG"
-		        />
-
-		        <field name="source_icon_svg_pin"
-		               type="media"
-		               preview_width="100"
-		               preview_height="100"
-		               directory="jupwa/icon"
-		               label="PLG_JUPWA_SOURCE_ICON_SVG_PIN"
-		        />
-	        </fieldset>
-
 	        <fieldset name="SHOTCUTS">
+
+		        <field type="note"
+		               name="thumb2"
+		               class="alert alert-info w-100"
+		               description="PLG_JUPWA_THUMBS"
+		               showon="thumbs:0"
+		        />
 
 		        <field
 				        name="shortcuts"
@@ -1340,20 +1213,27 @@
 
 	        <fieldset name="SCREENSHOTS">
 
-		            <field
-				            name="screenshots"
-				            type="subform"
-				            multiple="true"
-				            min="0"
-				            layout="joomla.form.field.subform.repeatable-table"
-				            label="PLG_JUPWA_MANIFEST_SCREENSHOTS"
-		            >
-						<form>
-							<field name="screen"
-							       type="media"
-							       directory="jupwa/screenshots"
-							       label="PLG_JUPWA_MANIFEST_SCREEN"
-							/>
+		        <field type="note"
+		               name="thumb2"
+		               class="alert alert-info w-100"
+		               description="PLG_JUPWA_THUMBS"
+		               showon="thumbs:0"
+		        />
+
+		        <field
+				        name="screenshots"
+				        type="subform"
+				        multiple="true"
+				        min="0"
+				        layout="joomla.form.field.subform.repeatable-table"
+				        label="PLG_JUPWA_MANIFEST_SCREENSHOTS"
+		        >
+			        <form>
+				        <field name="screen"
+				               type="media"
+				               directory="jupwa/screenshots"
+				               label="PLG_JUPWA_MANIFEST_SCREEN"
+				        />
 						</form>
 					</field>
 

@@ -11,6 +11,13 @@ namespace JUPWA\Helpers;
 
 class Folders
 {
+	/**
+	 * @param $path
+	 *
+	 * @return array
+	 *
+	 * @since 1.0
+	 */
 	public static function files($path): array
 	{
 		$files = [];

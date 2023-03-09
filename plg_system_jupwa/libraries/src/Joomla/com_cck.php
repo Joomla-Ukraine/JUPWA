@@ -21,18 +21,18 @@ use JUPWA\Classes\SeblodAPI;
 
 class com_cck
 {
-	protected $loaded = [];
+	private $loaded = [];
 
 	/**
 	 *
 	 * @param   array  $option
 	 *
-	 * @return array
+	 * @return array|true
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public function run(array $option = []): array
+	public function run(array $option = [])
 	{
 		$article = $option[ 'article' ];
 		$context = $option[ 'context' ];
@@ -235,18 +235,18 @@ class com_cck
 					$registry->loadString($cck->{'options_' . $client});
 					$this->loaded[ $contentType . '_' . $client . '_options' ] = $registry->toArray();
 
-					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]) && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ][ 0 ] == '{')
+					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]) && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ][ 0 ] === '{')
 					{
 						$descriptions                                                            = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]);
 						$lang_tag                                                                = Factory::getLanguage()->getTag();
-						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] = (isset($descriptions->$lang_tag)) ? $descriptions->$lang_tag : '';
+						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] = $descriptions->$lang_tag ?? '';
 					}
 
 					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]) && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ][ 0 ] == '{')
 					{
 						$titles                                                               = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]);
 						$lang_tag                                                             = Factory::getLanguage()->getTag();
-						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] = (isset($titles->$lang_tag)) ? $titles->$lang_tag : '';
+						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] = $titles->$lang_tag ?? '';
 					}
 				}
 

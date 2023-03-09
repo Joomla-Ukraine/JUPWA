@@ -28,8 +28,10 @@ class Image
 	 */
 	public static function render($image, $image_out, array $option = []): string
 	{
-		$width  = $option[ 'width' ];
-		$height = $option[ 'height' ];
+		$width    = $option[ 'width' ];
+		$height   = $option[ 'height' ];
+		$position = ($option[ 'position' ] ?? 'center');
+		$color    = ($option[ 'color' ] ?? null);
 
 		IImage::configure([ 'driver' => $option[ 'imagick' ] ?? 'imagick' ]);
 
@@ -51,7 +53,7 @@ class Image
 			});
 		}
 
-		$img->resizeCanvas($width, $height, 'center', false, $option[ 'color' ] ?? null);
+		$img->resizeCanvas($width, $height, $position, false, $color);
 		$img->save(JPATH_SITE . '/' . $image_out);
 
 		return $image_out;
@@ -67,10 +69,14 @@ class Image
 	 *
 	 * @since 1.0
 	 */
-	public static function render2($image, $image_out, array $option = []): string
+	public static function render_image($image, $image_out, array $option = []): string
 	{
-		$width  = $option[ 'width' ];
-		$height = $option[ 'height' ];
+		$width    = $option[ 'width' ];
+		$height   = $option[ 'height' ];
+		$position = ($option[ 'position' ] ?? 'center');
+		$color    = ($option[ 'color' ] ?? null);
+		$ratio    = ($option[ 'ratio' ] ?? 1.2);
+		$r        = ($option[ 'r' ] ?? 0);
 
 		IImage::configure([ 'driver' => $option[ 'imagick' ] ?? 'imagick' ]);
 
@@ -79,7 +85,7 @@ class Image
 
 		if($logo->width() > $width)
 		{
-			$logo->resize($width / 1.2, null, static function ($constraint)
+			$logo->resize($width / $ratio, null, static function ($constraint)
 			{
 				$constraint->aspectRatio();
 			});
@@ -87,14 +93,14 @@ class Image
 
 		if($logo->height() > $height)
 		{
-			$logo->resize(null, $height / 1.2, static function ($constraint)
+			$logo->resize(null, $height / $ratio, static function ($constraint)
 			{
 				$constraint->aspectRatio();
 			});
 		}
 
-		$logo->resizeCanvas($width, $height, 'center', false, $option[ 'color' ] ?? null);
-		$img->insert($logo, 'center');
+		$logo->resizeCanvas($width, $height, $position, false, $color);
+		$img->insert($logo, 'center', $r);
 		$img->save(JPATH_SITE . '/' . $image_out);
 
 		return $image_out;

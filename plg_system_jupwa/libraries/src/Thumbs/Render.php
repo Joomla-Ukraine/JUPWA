@@ -53,6 +53,7 @@ class Render
 			'icons'            => array_merge($icons_s, $icons_b),
 			'shortcuts'        => self::shortcuts($option),
 			'splash'           => self::splash($option),
+			'article_logo'     => self::article_logo($option),
 		];
 
 		$json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
@@ -85,6 +86,32 @@ class Render
 	 *
 	 * @param   array  $option
 	 *
+	 * @return string
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function article_logo(array $option = [])
+	{
+		$source = self::image($option[ 'source_icon' ]);
+		$width  = 600;
+		$height = 60;
+		$out    = 'favicons/logo_' . $width . 'x' . $height . '.png';
+
+		return Image::render_image($source, $out, [
+			'width'    => $width,
+			'height'   => $height,
+			'position' => 'left',
+			'color'    => '#ffffff',
+			'ratio'    => 0.6,
+			'r'        => 15
+		]);
+	}
+
+	/**
+	 *
+	 * @param   array  $option
+	 *
 	 * @return array
 	 *
 	 * @throws \Exception
@@ -107,9 +134,10 @@ class Render
 			$height = $icon[ 'height' ];
 			$out    = 'favicons/splash_' . $width . 'x' . $height . '.png';
 
-			$image[] = Image::render2($source, $out, [
+			$image[] = Image::render_image($source, $out, [
 				'width'  => $width,
 				'height' => $height,
+				'ratio'  => 1.15,
 				'color'  => $option[ 'ioscolor' ]
 			]);
 		}

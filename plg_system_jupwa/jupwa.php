@@ -13,6 +13,8 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
@@ -70,7 +72,10 @@ class plgSystemJUPWA extends CMSPlugin
 		{
 			$post_param = $post[ 'jform' ][ 'params' ];
 
-			Render::create($post_param);
+			if($post_param[ 'thumbs' ] == 1)
+			{
+				Render::create($post_param);
+			}
 
 			BrowserConfig::create($post_param);
 
@@ -80,6 +85,11 @@ class plgSystemJUPWA extends CMSPlugin
 			]);
 
 			ServiceWorker::create([ 'param' => $post_param ]);
+
+			if(!File::exists(JPATH_SITE . '/favicons/thumbs.json'))
+			{
+				$app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+			}
 		}
 	}
 
@@ -130,10 +140,7 @@ class plgSystemJUPWA extends CMSPlugin
 		 */
 		if($this->params->get('jgenerator') == 1)
 		{
-			$regex  = '#<meta name="generator" content="(.*?)" />#m';
-			$buffer = preg_replace($regex, '', $buffer);
-
-			$regex  = '#<meta name="generator" content="(.*?)">#m';
+			$regex  = '#<meta name="generator" content="(.*?)".*?>#m';
 			$buffer = preg_replace($regex, '', $buffer);
 
 			$this->checkBuffer($buffer);
@@ -144,10 +151,7 @@ class plgSystemJUPWA extends CMSPlugin
 		 */
 		if($this->params->get('keywords') == 1)
 		{
-			$regex  = '#<meta name="keywords" content="(.*?)" />#m';
-			$buffer = preg_replace($regex, '', $buffer);
-
-			$regex  = '#<meta name="keywords" content="(.*?)">#m';
+			$regex  = '#<meta name="keywords" content="(.*?)".*?>#m';
 			$buffer = preg_replace($regex, '', $buffer);
 
 			$this->checkBuffer($buffer);
@@ -158,8 +162,8 @@ class plgSystemJUPWA extends CMSPlugin
 		 */
 		if($this->params->get('jauthor') == 1)
 		{
-			$regex  = '#<meta name="author" content="(.*?)" />#m';
-			$buffer = preg_replace($regex, '<meta name="author" content="' . $app->get('sitename') . '".*?>', $buffer);
+			$regex  = '#<meta name="author" content="(.*?)".*?>#m';
+			$buffer = preg_replace($regex, '<meta name="author" content="' . $app->get('sitename') . '">', $buffer);
 
 			$this->checkBuffer($buffer);
 		}
@@ -456,7 +460,7 @@ class plgSystemJUPWA extends CMSPlugin
 		$description = strip_tags(HTML::html($desc));
 		$description = HTML::compress($description);
 
-		if(!$image)
+		if(!isset($image))
 		{
 			$image = Images::image_storage([
 				'article' => $article,
@@ -493,6 +497,7 @@ class plgSystemJUPWA extends CMSPlugin
 		]);
 
 		Schema::schema([
+			'params'       => $this->params,
 			'title'        => $title,
 			'image'        => $img->image,
 			'image_width'  => $img->width,
