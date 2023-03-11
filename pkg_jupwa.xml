@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="3.1" method="upgrade">
+    <name>PKG_JUPWA</name>
+    <packagename>jupwa</packagename>
+    <creationDate>@date@</creationDate>
+    <packager>Joomla! Ukraine</packager>
+    <copyright>(C) 2023 Denys Nosov, Joomla! Ukraine</copyright>
+    <packagerurl>https://joomla-ua.org</packagerurl>
+    <author>Denys Nosov, Joomla! Ukraine</author>
+    <authorEmail>denys@joomla-ua.org</authorEmail>
+    <authorUrl>https://joomla-ua.org</authorUrl>
+    <version>@version@</version>
+    <license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License</license>
+    <description>PKG_JUPWA_XML_DESCRIPTION</description>
+    <scriptfile>script.php</scriptfile>
+    <update>https://joomla-ua.org/update/plg/jupwa.xml</update>
+    <updateservers>
+        <server type="extension" priority="1" name="JUPWA">https://joomla-ua.org/update/plg/jupwa.xml
+        </server>
+    </updateservers>
+    <files folder="packages">
+        <file type="plugin" id="jupwa" group="content">plg_jupwa.zip</file>
+        <file type="plugin" id="jupwa_content" group="content">plg_jupwa_content.zip</file>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.pkg_jupwa.ini</language>
+        <language tag="en-GB">en-GB/en-GB.pkg_jupwa.sys.ini</language>
+    </languages>
+</extension>

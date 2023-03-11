@@ -28,7 +28,6 @@ use JUPWA\Helpers\OG;
 use JUPWA\Helpers\Schema;
 use JUPWA\Helpers\ServiceWorker;
 use JUPWA\Helpers\Video;
-use JUPWA\Joomla\Integration;
 use JUPWA\Thumbs\Render;
 
 require_once __DIR__ . '/libraries/vendor/autoload.php';
@@ -342,11 +341,11 @@ class plgSystemJUPWA extends CMSPlugin
 	{
 		$app = Factory::getApplication();
 
-		if($app->getName() !== 'site' || $context === 'com_finder.indexer' || !in_array($context, [
-				'com_content.article',
-				'com_k2.item',
-				'com_k2.item-media'
-			]))
+		JPluginHelper::importPlugin('jupwa');
+
+		$use_access = $app->triggerEvent('onContentAccess', [ $context ]);
+
+		if($app->getName() !== 'site' || $context === 'com_finder.indexer' || !in_array($context, $use_access))
 		{
 			return true;
 		}
@@ -365,8 +364,8 @@ class plgSystemJUPWA extends CMSPlugin
 		$title = HTML::text($article->title);
 
 		// Introtext
-		$intro  = $article->introtext;
-		$alltxt = $article->introtext . $article->fulltext;
+		$intro = $article->introtext;
+		$text  = $article->introtext . $article->fulltext;
 
 		$yt = Video::YouTube($article);
 		if($this->params->get('int_seblod', 0) == 1)
@@ -413,6 +412,7 @@ class plgSystemJUPWA extends CMSPlugin
 		$performer = '';
 		$brand     = '';
 
+		/*
 		// component integration
 		$components = [
 			'com_cck' => $this->params->get('int_seblod', 0)
@@ -456,18 +456,20 @@ class plgSystemJUPWA extends CMSPlugin
 				}
 			}
 		}
+*/
 
 		$description = strip_tags(HTML::html($desc));
 		$description = HTML::compress($description);
 
-		if(!isset($image))
+		$plugins = $app->triggerEvent('onGetData', [
+			$article,
+			$text
+		]);
+
+		$image = '';
+		foreach($plugins as $plugin)
 		{
-			$image = Images::image_storage([
-				'article' => $article,
-				'params'  => $this->params,
-				'text'    => $alltxt,
-				'alltxt'  => $alltxt,
-			]);
+			$image = $plugin[ 'image' ];
 		}
 
 		$img = Images::display($image);
