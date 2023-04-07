@@ -78,7 +78,7 @@ class Images
 			}
 		}
 
-		if($local === true)
+		if($local === true && $image)
 		{
 			$FastImageSize = new FastImageSize();
 

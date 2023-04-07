@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" group="jupwa" method="upgrade">
+<extension version="3.9"
+           type="plugin"
+           group="jupwa"
+           method="upgrade">
 	<name>plg_jupwa_content</name>
 	<author>Denys Nosov, Joomla! Ukraine</author>
 	 <creationDate>@date@</creationDate>

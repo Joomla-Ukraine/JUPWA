@@ -48,7 +48,7 @@
 
         <!---->
 
-        <copy file="packages/plg_jupwa/jupwa.xml" todir="${temp}/temp/plg_jupwa">
+        <copy file="packages/plg_system_jupwa/jupwa.xml" todir="${temp}/temp/plg_system_jupwa">
             <filterchain>
                 <replacetokens>
                     <token key="version" value="${VERSION}" />
@@ -57,12 +57,12 @@
             </filterchain>
         </copy>
 
-        <delete file="${temp}/plg_jupwa/jupwa.xml"/>
-        <copy file="${temp}/temp/plg_jupwa/jupwa.xml" todir="${temp}/plg_jupwa"/>
+        <delete file="${temp}/plg_system_jupwa/jupwa.xml"/>
+        <copy file="${temp}/temp/plg_system_jupwa/jupwa.xml" todir="${temp}/plg_system_jupwa"/>
 
         <!---->
 
-        <copy file="packages/plg_jupwa_content/jupwa_content.xml" todir="${temp}/temp/plg_jupwa_content">
+        <copy file="packages/plg_jupwa_content/content.xml" todir="${temp}/temp/plg_jupwa_content">
             <filterchain>
                 <replacetokens>
                     <token key="version" value="${VERSION}" />
@@ -72,7 +72,7 @@
         </copy>
 
         <delete file="${temp}/plg_jupwa_content/jupwa_content.xml"/>
-        <copy file="${temp}/temp/plg_jupwa_content/jupwa_content.xml" todir="${temp}/plg_jupwa_content"/>
+        <copy file="${temp}/temp/plg_jupwa_content/content.xml" todir="${temp}/plg_jupwa_content"/>
 
     </target>
 
@@ -80,19 +80,19 @@
 
         <mkdir dir="${build}/packages"/>
 
-        <zip destfile="${build}/packages/plg_jupwa.zip" description="plg_jupwa">
-            <fileset dir="${temp}/plg_jupwa"/>
+        <zip destfile="${build}/packages/plg_system_jupwa.zip" description="plg_jupwa">
+            <fileset dir="${temp}/plg_system_jupwa"/>
         </zip>
 
         <zip destfile="${build}/packages/plg_jupwa_content.zip" description="plg_jupwa_content">
             <fileset dir="${temp}/plg_jupwa_content"/>
         </zip>
 
-        <copy todir="${build}/language">
+<!--        <copy todir="${build}/language">
             <fileset dir="${temp}/language">
                 <include name="**"/>
             </fileset>
-        </copy>
+        </copy>-->
 
         <copy file="pkg_jupwa.xml" todir="${build}"/>
 

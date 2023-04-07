@@ -275,20 +275,6 @@ class plgSystemJUPWA extends CMSPlugin
 			{
 				$image = Images::display_default($this->params->get('selectimg', 0), $this->params->get('image', ''), $this->params->get('imagemain', ''));
 
-				$components = [
-					'com_jshopping' => $this->params->get('int_jshopping', 0),
-					'com_k2'        => $this->params->get('int_k2', 0)
-				];
-
-				foreach($components as $com => $v)
-				{
-					if($v == 1)
-					{
-						$data  = $this->integration->component($com, [ 'option' => $app->input->getCmd('option') ]);
-						$image = $data[ 'image' ];
-					}
-				}
-
 				$title = HTML::text($doc->getTitle());
 				if($app->getMenu()->getActive() !== $app->getMenu()->getDefault($lang->getTag()))
 				{
@@ -296,6 +282,13 @@ class plgSystemJUPWA extends CMSPlugin
 				}
 
 				$description = HTML::html($doc->getMetaData('description'));
+
+				$plugins = $app->triggerEvent('onGetComponentImage', [ $app->input->getCmd('option') ]);
+
+				foreach($plugins as $plugin)
+				{
+					$image = $plugin;
+				}
 
 				$img = Images::display($image);
 
@@ -341,9 +334,9 @@ class plgSystemJUPWA extends CMSPlugin
 	{
 		$app = Factory::getApplication();
 
-		JPluginHelper::importPlugin('jupwa');
+		PluginHelper::importPlugin('jupwa');
 
-		$use_access = $app->triggerEvent('onContentAccess', [ $context ]);
+		$use_access = $app->triggerEvent('onAccess', [ $context ]);
 
 		if($app->getName() !== 'site' || $context === 'com_finder.indexer' || !in_array($context, $use_access))
 		{
@@ -367,22 +360,6 @@ class plgSystemJUPWA extends CMSPlugin
 		$intro = $article->introtext;
 		$text  = $article->introtext . $article->fulltext;
 
-		$yt = Video::YouTube($article);
-		if($this->params->get('int_seblod', 0) == 1)
-		{
-			$yt = '';
-		}
-
-		if($this->params->get('int_jshopping', 0) == 1)
-		{
-			$yt = '';
-		}
-
-		if($this->params->get('int_k2', 0) == 1)
-		{
-			$yt = Video::YouTube($article);
-		}
-
 		// Description
 		$desc = $article->metadesc;
 		if($article->metadesc !== '' && $this->params->get('usemeta') == 1)
@@ -399,69 +376,11 @@ class plgSystemJUPWA extends CMSPlugin
 			$desc = $article->title;
 		}
 
-		$startdate = '';
-		$enddate   = '';
-		$place     = '';
-		$address   = '';
-		$city      = '';
-		$region    = '';
-		$country   = '';
-		$zip       = '';
-		$price     = '';
-		$currency  = '';
-		$performer = '';
-		$brand     = '';
-
-		/*
-		// component integration
-		$components = [
-			'com_cck' => $this->params->get('int_seblod', 0)
-		];
-
-		foreach($components as $com => $value)
-		{
-			if($value == 1)
-			{
-				$integration = Integration::is_com($com, [
-					'component' => 'com_content',
-					'option'    => $app->input->getCmd('option')
-				]);
-
-				if($integration === true)
-				{
-					$data = '\\JUPWA\\Joomla\\Integration\\' . $com::run([
-							'params'  => $this->params,
-							'article' => $article,
-							'context' => $context
-						]);
-
-					$title     = $data[ 'title' ];
-					$desc      = $data[ 'desc' ];
-					$intro     = $data[ 'intro' ];
-					$image     = $data[ 'image' ];
-					$alltxt    = $data[ 'alltxt' ];
-					$yt        = $data[ 'yt' ];
-					$startdate = $data[ 'startdate' ];
-					$enddate   = $data[ 'enddate' ];
-					$place     = $data[ 'place' ];
-					$address   = $data[ 'address' ];
-					$city      = $data[ 'city' ];
-					$region    = $data[ 'region' ];
-					$country   = $data[ 'country' ];
-					$zip       = $data[ 'zip' ];
-					$price     = $data[ 'price' ];
-					$currency  = $data[ 'currency' ];
-					$performer = $data[ 'performer' ];
-					$brand     = $data[ 'brand' ];
-				}
-			}
-		}
-*/
-
 		$description = strip_tags(HTML::html($desc));
 		$description = HTML::compress($description);
 
-		$plugins = $app->triggerEvent('onGetData', [
+		// Image
+		$plugins = $app->triggerEvent('onGetArticleImage', [
 			$article,
 			$text
 		]);
@@ -469,8 +388,23 @@ class plgSystemJUPWA extends CMSPlugin
 		$image = '';
 		foreach($plugins as $plugin)
 		{
-			$image = $plugin[ 'image' ];
+			$image = $plugin;
 		}
+
+		// YouTube
+		$plugins = $app->triggerEvent('onGetArticleYouTube', [ $article ]);
+
+		$youtube = '';
+		foreach($plugins as $plugin)
+		{
+			$youtube = $plugin;
+		}
+
+		// Schema
+		$app->triggerEvent('onGetArticleSchema', [
+			$article,
+			$text
+		]);
 
 		$img = Images::display($image);
 
@@ -482,7 +416,7 @@ class plgSystemJUPWA extends CMSPlugin
 			'image_height'   => $img->height,
 			'description'    => $description,
 			'article'        => $article,
-			'youtube'        => $yt,
+			'youtube'        => $youtube,
 			'use_rating'     => $this->params->get('use_rating'),
 			'schema_product' => $this->params->get('schema_product'),
 			'schema_event'   => $this->params->get('schema_event')
@@ -495,7 +429,7 @@ class plgSystemJUPWA extends CMSPlugin
 			'image_width'  => $img->width,
 			'image_height' => $img->height,
 			'description'  => $description,
-			'youtube'      => $yt
+			'youtube'      => $youtube
 		]);
 
 		Schema::schema([
@@ -507,19 +441,7 @@ class plgSystemJUPWA extends CMSPlugin
 			'description'  => $description,
 			'intro'        => $intro,
 			'article'      => $article,
-			'yt'           => $yt,
-			'startdate'    => $startdate,
-			'enddate'      => $enddate,
-			'place'        => $place,
-			'address'      => $address,
-			'city'         => $city,
-			'region'       => $region,
-			'country'      => $country,
-			'zip'          => $zip,
-			'price'        => $price,
-			'currency'     => $currency,
-			'performer'    => $performer,
-			'brand'        => $brand
+			'yt'           => $youtube
 		]);
 
 		return true;

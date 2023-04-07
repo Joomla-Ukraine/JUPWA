@@ -10,35 +10,65 @@
  *
  **/
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use JUPWA\Helpers\Images;
+use JUPWA\Helpers\Video;
 
 defined('_JEXEC') or die;
 
 class PlgJUPWAContent extends CMSPlugin
 {
 	/**
-	 * @return array
+	 * @param $article
+	 * @param $text
 	 *
-	 * @throws \Exception
+	 * @return string
+	 *
 	 * @since 1.0
 	 */
-	public function onGetData($article, $text): array
+	public function onGetArticleImage($article, $text): string
 	{
-		$image = Images::image_storage([
+		return Images::image_storage([
 			'article' => $article,
 			'params'  => $this->params,
 			'text'    => $text,
 			'alltxt'  => $text,
 		]);
-
-		return [ 'image' => $image ];
 	}
 
 	/**
+	 * @param $article
+	 *
+	 * @return string
+	 *
+	 * @since 1.0
+	 */
+	public function onGetArticleYouTube($article): string
+	{
+		return Video::YouTube($article);
+	}
+
+	/**
+	 * @param $article
+	 * @param $text
+	 *
+	 * @return true
+	 *
+	 * @since 1.0
+	 */
+	public function onGetArticleSchema($article, $text): bool
+	{
+		$doc = Factory::getDocument();
+
+		return true;
+	}
+
+	/**
+	 * @param $context
+	 *
 	 * @return bool
 	 *
-	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public function onContentAccess($context): bool
