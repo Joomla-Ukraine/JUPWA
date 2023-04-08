@@ -19,7 +19,7 @@ class OG
 {
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -118,7 +118,7 @@ class OG
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -128,41 +128,38 @@ class OG
 	{
 		$doc = Factory::getDocument();
 
-		if($option[ 'params' ]->get('tw') == 1)
+		$doc->setMetaData('twitter:card', 'summary_large_image');
+
+		if($option[ 'description' ])
 		{
-			$doc->setMetaData('twitter:card', 'summary_large_image');
+			$doc->setMetaData('twitter:description', $option[ 'description' ]);
+		}
 
-			if($option[ 'description' ])
-			{
-				$doc->setMetaData('twitter:description', $option[ 'description' ]);
-			}
+		if($option[ 'title' ])
+		{
+			$doc->setMetaData('twitter:title', $option[ 'title' ]);
+		}
 
-			if($option[ 'title' ])
-			{
-				$doc->setMetaData('twitter:title', $option[ 'title' ]);
-			}
+		if($option[ 'params' ]->get('twsite'))
+		{
+			$doc->setMetaData('twitter:site', $option[ 'params' ]->get('twsite'));
+		}
 
-			if($option[ 'params' ]->get('twsite'))
-			{
-				$doc->setMetaData('twitter:site', $option[ 'params' ]->get('twsite'));
-			}
+		if($option[ 'params' ]->get('twcreator'))
+		{
+			$doc->setMetaData('twitter:creator', $option[ 'params' ]->get('twcreator'));
+		}
 
-			if($option[ 'params' ]->get('twcreator'))
-			{
-				$doc->setMetaData('twitter:creator', $option[ 'params' ]->get('twcreator'));
-			}
+		if(isset($option[ 'image' ]))
+		{
+			$doc->setMetaData('twitter:image:src', $option[ 'image' ]);
+		}
 
-			if(isset($option[ 'image' ]))
-			{
-				$doc->setMetaData('twitter:image:src', $option[ 'image' ]);
-			}
-
-			if(isset($option[ 'youtube' ]) && $option[ 'youtube' ] && preg_match_all('#(youtube.com)/embed/([0-9A-Za-z]+)#i', $option[ 'youtube' ], $match))
-			{
-				$doc->setMetaData('twitter:player', 'https://' . $match[ 0 ][ 0 ]);
-				$doc->setMetaData('twitter:player:width', '640');
-				$doc->setMetaData('twitter:player:height', '480');
-			}
+		if(isset($option[ 'youtube' ]) && $option[ 'youtube' ] && preg_match_all('#(youtube.com)/embed/([0-9A-Za-z]+)#i', $option[ 'youtube' ], $match))
+		{
+			$doc->setMetaData('twitter:player', 'https://' . $match[ 0 ][ 0 ]);
+			$doc->setMetaData('twitter:player:width', '640');
+			$doc->setMetaData('twitter:player:height', '480');
 		}
 	}
 }

@@ -27,7 +27,6 @@ use JUPWA\Helpers\META;
 use JUPWA\Helpers\OG;
 use JUPWA\Helpers\Schema;
 use JUPWA\Helpers\ServiceWorker;
-use JUPWA\Helpers\Video;
 use JUPWA\Thumbs\Render;
 
 require_once __DIR__ . '/libraries/vendor/autoload.php';
@@ -332,10 +331,9 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onContentPrepare($context, $article): bool
 	{
-		$app = Factory::getApplication();
-
 		PluginHelper::importPlugin('jupwa');
 
+		$app        = Factory::getApplication();
 		$use_access = $app->triggerEvent('onAccess', [ $context ]);
 
 		if($app->getName() !== 'site' || $context === 'com_finder.indexer' || !in_array($context, $use_access))
@@ -347,102 +345,11 @@ class plgSystemJUPWA extends CMSPlugin
 		{
 			return true;
 		}
-
-		if(($this->params->get('og') != 1) || ($this->params->get('og') != 1 && $this->params->get('tw') != 1))
-		{
-			return true;
-		}
-
-		// Title
-		$title = HTML::text($article->title);
-
-		// Introtext
-		$intro = $article->introtext;
-		$text  = $article->introtext . $article->fulltext;
-
-		// Description
-		$desc = $article->metadesc;
-		if($article->metadesc !== '' && $this->params->get('usemeta') == 1)
-		{
-			$desc = $article->metadesc;
-		}
-		elseif($intro !== null && $intro !== '')
-		{
-			$desc = $intro;
-		}
-
-		if($article->metadesc != '')
-		{
-			$desc = $article->title;
-		}
-
-		$description = strip_tags(HTML::html($desc));
-		$description = HTML::compress($description);
-
-		// Image
-		$plugins = $app->triggerEvent('onGetArticleImage', [
-			$article,
-			$text
-		]);
-
-		$image = '';
-		foreach($plugins as $plugin)
-		{
-			$image = $plugin;
-		}
-
-		// YouTube
-		$plugins = $app->triggerEvent('onGetArticleYouTube', [ $article ]);
-
-		$youtube = '';
-		foreach($plugins as $plugin)
-		{
-			$youtube = $plugin;
-		}
-
+		
 		// Schema
-		$app->triggerEvent('onGetArticleSchema', [
-			$article,
-			$text
-		]);
-
-		$img = Images::display($image);
-
-		OG::tag([
-			'type'           => 'article',
-			'title'          => $title,
-			'image'          => $img->image,
-			'image_width'    => $img->width,
-			'image_height'   => $img->height,
-			'description'    => $description,
-			'article'        => $article,
-			'youtube'        => $youtube,
-			'use_rating'     => $this->params->get('use_rating'),
-			'schema_product' => $this->params->get('schema_product'),
-			'schema_event'   => $this->params->get('schema_event')
-		]);
-
-		OG::twitter([
-			'params'       => $this->params,
-			'title'        => $title,
-			'image'        => $img->image,
-			'image_width'  => $img->width,
-			'image_height' => $img->height,
-			'description'  => $description,
-			'youtube'      => $youtube
-		]);
-
-		Schema::schema([
-			'params'       => $this->params,
-			'title'        => $title,
-			'image'        => $img->image,
-			'image_width'  => $img->width,
-			'image_height' => $img->height,
-			'description'  => $description,
-			'intro'        => $intro,
-			'article'      => $article,
-			'yt'           => $youtube
-		]);
+		$app->triggerEvent('onGetArticleSchema', [ $article ]);
+		$app->triggerEvent('onGetArticleTwitter', [ $article, $this->params ]);
+		$app->triggerEvent('onGetArticleOG', [ $article, $this->params ]);
 
 		return true;
 	}

@@ -21,7 +21,7 @@ class Schema
 {
 
 	/**
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -43,7 +43,7 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -135,14 +135,14 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	private static function article_news(array $option = []): void
+	public static function article_news(array $option = []): void
 	{
 		$app    = Factory::getApplication();
 		$doc    = Factory::getDocument();
@@ -199,14 +199,14 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	private static function article(array $option = []): void
+	public static function article(array $option = []): void
 	{
 		$app    = Factory::getApplication();
 		$doc    = Factory::getDocument();
@@ -262,7 +262,7 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return array
 	 *
@@ -289,8 +289,8 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $rating
-	 * @param   array  $option
+	 * @param array $rating
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -364,8 +364,8 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $rating
-	 * @param   array  $option
+	 * @param array $rating
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -443,14 +443,14 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	private static function youtube(array $option = []): void
+	public static function youtube(array $option = []): void
 	{
 		$doc = Factory::getDocument();
 

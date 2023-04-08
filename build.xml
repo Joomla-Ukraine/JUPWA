@@ -1,35 +1,45 @@
-<project name="jupwa" default="dist" basedir=".">
+<project name="jupwa"
+         default="dist"
+         basedir=".">
 
-    <property name="VERSION" value="1.0"/>
-    <property name="JOOMLA" value="3.9"/>
+    <property name="VERSION"
+              value="1.0" />
+    <property name="JOOMLA"
+              value="4.0" />
 
     <tstamp>
-        <format property="DATE" pattern="%d.%m.%Y" />
+        <format property="DATE"
+                pattern="%d.%m.%Y" />
     </tstamp>
 
-    <property name="build" value="build"/>
-    <property name="temp" value="temp"/>
-    <property name="dist" value="dist"/>
+    <property name="build"
+              value="build" />
+    <property name="temp"
+              value="temp" />
+    <property name="dist"
+              value="dist" />
 
-    <property name="filename" value="pkg_jupwa_v${VERSION}.zip"/>
+    <property name="filename"
+              value="pkg_jupwa_v${VERSION}.zip" />
 
-    <target name="init" depends="clean">
-        <mkdir dir="${build}"/>
-        <mkdir dir="${temp}"/>
-        <mkdir dir="${dist}"/>
+    <target name="init"
+            depends="clean">
+        <mkdir dir="${build}" />
+        <mkdir dir="${temp}" />
+        <mkdir dir="${dist}" />
     </target>
 
     <target name="temp">
 
         <copy todir="${temp}/language">
             <fileset dir="language">
-                <include name="**"/>
+                <include name="**" />
             </fileset>
         </copy>
 
         <copy todir="${temp}">
             <fileset dir="packages">
-                <include name="**"/>
+                <include name="**" />
             </fileset>
         </copy>
 
@@ -37,86 +47,103 @@
 
     <target name="replace">
 
-        <copy file="pkg_jupwa.xml" todir="${build}">
+        <copy file="pkg_jupwa.xml"
+              todir="${build}">
             <filterchain>
                 <replacetokens>
-                    <token key="version" value="${VERSION}" />
-                    <token key="date" value="${DATE}" />
+                    <token key="version"
+                           value="${VERSION}" />
+                    <token key="date"
+                           value="${DATE}" />
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <!---->
+	    <!---->
 
-        <copy file="packages/plg_system_jupwa/jupwa.xml" todir="${temp}/temp/plg_system_jupwa">
+	    <copy file="packages/plg_system_jupwa/jupwa.xml"
+	          todir="${temp}/temp/plg_system_jupwa">
             <filterchain>
                 <replacetokens>
-                    <token key="version" value="${VERSION}" />
-                    <token key="date" value="${DATE}" />
+                    <token key="version"
+                           value="${VERSION}" />
+                    <token key="date"
+                           value="${DATE}" />
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <delete file="${temp}/plg_system_jupwa/jupwa.xml"/>
-        <copy file="${temp}/temp/plg_system_jupwa/jupwa.xml" todir="${temp}/plg_system_jupwa"/>
+        <delete file="${temp}/plg_system_jupwa/jupwa.xml" />
+        <copy file="${temp}/temp/plg_system_jupwa/jupwa.xml"
+              todir="${temp}/plg_system_jupwa" />
 
-        <!---->
+	    <!---->
 
-        <copy file="packages/plg_jupwa_content/content.xml" todir="${temp}/temp/plg_jupwa_content">
+	    <copy file="packages/plg_jupwa_content/content.xml"
+	          todir="${temp}/temp/plg_jupwa_content">
             <filterchain>
                 <replacetokens>
-                    <token key="version" value="${VERSION}" />
-                    <token key="date" value="${DATE}" />
+                    <token key="version"
+                           value="${VERSION}" />
+                    <token key="date"
+                           value="${DATE}" />
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <delete file="${temp}/plg_jupwa_content/jupwa_content.xml"/>
-        <copy file="${temp}/temp/plg_jupwa_content/content.xml" todir="${temp}/plg_jupwa_content"/>
+        <delete file="${temp}/plg_jupwa_content/content.xml" />
+        <copy file="${temp}/temp/plg_jupwa_content/content.xml"
+              todir="${temp}/plg_jupwa_content" />
 
     </target>
 
     <target name="pack-plugins">
 
-        <mkdir dir="${build}/packages"/>
+        <mkdir dir="${build}/packages" />
 
-        <zip destfile="${build}/packages/plg_system_jupwa.zip" description="plg_jupwa">
-            <fileset dir="${temp}/plg_system_jupwa"/>
+        <zip destfile="${build}/packages/plg_system_jupwa.zip"
+             description="plg_jupwa">
+            <fileset dir="${temp}/plg_system_jupwa" />
         </zip>
 
-        <zip destfile="${build}/packages/plg_jupwa_content.zip" description="plg_jupwa_content">
-            <fileset dir="${temp}/plg_jupwa_content"/>
+        <zip destfile="${build}/packages/plg_jupwa_content.zip"
+             description="plg_jupwa_content">
+            <fileset dir="${temp}/plg_jupwa_content" />
         </zip>
 
-<!--        <copy todir="${build}/language">
+        <copy todir="${build}/language">
             <fileset dir="${temp}/language">
-                <include name="**"/>
+                <include name="**" />
             </fileset>
-        </copy>-->
+        </copy>
 
-        <copy file="pkg_jupwa.xml" todir="${build}"/>
+	    <copy file="pkg_jupwa.xml"
+	          todir="${build}" />
 
-        <copy file="script.php" todir="${build}"/>
+        <copy file="script.php"
+              todir="${build}" />
 
     </target>
 
-    <target name="dist" depends="init, temp, replace, pack-plugins">
+    <target name="dist"
+            depends="init, temp, replace, pack-plugins">
         <zip destfile="${dist}/${filename}">
             <fileset dir="${build}/">
-                <include name="**/**"/>
+                <include name="**/**" />
             </fileset>
         </zip>
 
-        <echo msg="Removing old files..."/>
-        <delete dir="${build}"/>
-        <delete dir="${temp}"/>
+        <echo msg="Removing old files..." />
+        <delete dir="${build}" />
+        <delete dir="${temp}" />
 
     </target>
 
-    <target name="clean" description="clean up">
+    <target name="clean"
+            description="clean up">
 
-        <delete dir="${build}"/>
-        <delete dir="${temp}"/>
+        <delete dir="${build}" />
+        <delete dir="${temp}" />
 
     </target>
 
