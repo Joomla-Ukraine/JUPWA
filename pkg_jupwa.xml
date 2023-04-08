@@ -31,7 +31,7 @@
               group="content">plg_system_jupwa.zip</file>
         <file type="plugin"
               id="jupwa_content"
-              group="content">plg_jupwa_content.zip</file>
+              group="jupwa">plg_jupwa_content.zip</file>
     </files>
 
     <languages folder="language">

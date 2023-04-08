@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 class PlgJUPWAContent extends CMSPlugin
 {
 	/**
-	 * @param $option
+	 * @param $article
 	 *
 	 * @return void
 	 *
@@ -48,7 +48,8 @@ class PlgJUPWAContent extends CMSPlugin
 	}
 
 	/**
-	 * @param $option
+	 * @param $article
+	 * @param $params
 	 *
 	 * @return void
 	 *
@@ -57,27 +58,36 @@ class PlgJUPWAContent extends CMSPlugin
 	 */
 	public function onGetArticleOG($article, $params): void
 	{
-		if($params->get('tw') == 1)
+		if($params->get('og') == 1)
 		{
 			OG::tag([
+				'params'       => $params,
 				'type'         => 'article',
 				'title'        => $this->core($article)->title,
 				'image'        => $this->image($article)->image,
 				'image_width'  => $this->image($article)->width,
 				'image_height' => $this->image($article)->height,
-				'description'  => $this->core($article)->description,
-				'article'      => $article,
-				'youtube'      => $this->youtube($article)
+				'description'  => $this->core($article)->description
+			]);
+
+			OG::tagArticle([
+				'params'  => $params,
+				'article' => $article
+			]);
+
+			OG::tagYouTube([
+				'params'  => $params,
+				'youtube' => $this->youtube($article)
 			]);
 		}
 	}
 
 	/**
-	 * @param $option
+	 * @param $article
+	 * @param $params
 	 *
 	 * @return void
 	 *
-	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public function onGetArticleTwitter($article, $params): void
@@ -98,13 +108,12 @@ class PlgJUPWAContent extends CMSPlugin
 
 	/**
 	 * @param $article
-	 * @param $text
 	 *
-	 * @return string
+	 * @return object
 	 *
 	 * @since 1.0
 	 */
-	private function image($article): string
+	private function image($article)
 	{
 		$image = Images::image_storage([
 			'article' => $article,

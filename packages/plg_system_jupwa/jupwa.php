@@ -51,13 +51,14 @@ class plgSystemJUPWA extends CMSPlugin
 	{
 		parent::__construct($subject, $config);
 
+		$this->loadLanguage();
+
 		$app = Factory::getApplication();
+
 		if($app->getName() === 'site')
 		{
 			return;
 		}
-
-		$this->loadLanguage();
 
 		$this->plg    = PluginHelper::getPlugin('system', 'jupwa');
 		$this->view   = $app->input->get('view');
@@ -307,6 +308,11 @@ class plgSystemJUPWA extends CMSPlugin
 					'image'       => $image,
 					'description' => $description
 				]);
+
+				// Integration
+				$app->triggerEvent('onGetComponentSchema');
+				$app->triggerEvent('onGetComponentTwitter', [ $this->params ]);
+				$app->triggerEvent('onGetComponentOG', [ $this->params ]);
 			}
 		}
 
@@ -345,8 +351,8 @@ class plgSystemJUPWA extends CMSPlugin
 		{
 			return true;
 		}
-		
-		// Schema
+
+		// Integration
 		$app->triggerEvent('onGetArticleSchema', [ $article ]);
 		$app->triggerEvent('onGetArticleTwitter', [ $article, $this->params ]);
 		$app->triggerEvent('onGetArticleOG', [ $article, $this->params ]);

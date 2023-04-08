@@ -4,11 +4,11 @@
            group="system"
            method="upgrade">
     <name>plg_system_jupwa</name>
-    <creationDate>@date@</creationDate>
+    <creationDate>08.04.2023</creationDate>
     <author>Denys Nosov</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
     <authorUrl>https://joomla-ua.org</authorUrl>
-    <version>@version@</version>
+    <version>1.0</version>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <copyright>(C) 2023 Joomla! Ukraine. All rights reserved.</copyright>
     <description>PLG_JUPWA_INFO</description>
@@ -336,164 +336,6 @@
 	                </field>
 
 	            </fieldset>
-
-            </fieldset>
-
-	        <fieldset name="INTEGRATION">
-
-                <field type="note"
-                       name="integration0"
-                       label="PLG_JUPWA_INTEGRATION" />
-
-                <field name="int_seblod"
-                       type="radio"
-                       layout="joomla.form.field.radio.switcher"
-                       default="0"
-                       label="PLG_JUPWA_COMS_INT_SEBLOD"
-                       description="PLG_JUPWA_INTEGRATION_SEBLOD"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-
-                <field name="seblod_images"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_IMAGES"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_intro"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_INTRO"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_gallery"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_GALLERY"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_video"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_VIDEO"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_place"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_PLACE"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_address"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_ADDRESS"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_city"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_CITY"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_region"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_REGION"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_country"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_COUNTRY"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_zip"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_ZIP"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_price"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_PRICE"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_currency"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_CURRENCY"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_brand"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_BRAND"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_startdate"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_STARTDATE"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_enddate"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_ENDDATE"
-                       showon="int_seblod:1"
-                />
-
-                <field type="note"
-                       name="integration_event"
-                       label="PLG_JUPWA_INTEGRATION_SEBLOD_EVENTS"
-                       showon="int_seblod:1"
-                />
-
-                <field name="seblod_performer"
-                       size="50"
-                       type="text"
-                       label="PLG_JUPWA_SEBLOD_PERFORMER"
-                       showon="int_seblod:1"
-                />
-
-                <field name="int_jshopping"
-                       type="radio"
-                       layout="joomla.form.field.radio.switcher"
-                       default="0"
-                       label="PLG_JUPWA_COMS_INT_JSHOPPING"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-
-                <field
-		                name="int_k2"
-		                type="radio"
-		                layout="joomla.form.field.radio.switcher"
-		                default="0"
-		                label="PLG_JUPWA_COMS_INT_K2"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
 
             </fieldset>
 

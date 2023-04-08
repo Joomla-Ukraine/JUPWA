@@ -25,9 +25,9 @@ class Pkg_JUPWAInstallerScript
 	{
 		$app = Factory::getApplication();
 
-		if(version_compare(JVERSION, '3.10', 'lt'))
+		if(version_compare(JVERSION, '4.0', 'lt'))
 		{
-			$app->enqueueMessage('Update for Joomla! 3.10 +', 'error');
+			$app->enqueueMessage('Update for Joomla! 4.0 +', 'error');
 
 			return false;
 		}
@@ -38,6 +38,51 @@ class Pkg_JUPWAInstallerScript
 		{
 			$app->enqueueMessage("Error creating folder '/img'. Please manually create the folder 'img' in the root of the site where you installed Joomla!", 'error');
 		}
+
+		return true;
+	}
+
+	public function postflight($type, $parent)
+	{
+		$enabled = [];
+
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__extensions');
+		$query->where($db->quoteName('folder') . ' = ' . $db->quote('jupwa'));
+		$db->setQuery($query);
+		$results = $db->loadObjectList();
+
+		$html = '<div class="main-card p-4">
+		<table class="table">
+		  <thead class="table-light">
+		    <tr>
+		      <th scope="col">Extensions</th>
+		      <th scope="col">Status</th>
+		    </tr>
+		  </thead>
+		<tbody>';
+
+		foreach($results as $result)
+		{
+			$html .= '<tr><td><strong>' . $result->name . '</strong></td><td>';
+
+			if($result->enabled == 1)
+			{
+				$html .= '<span class="tbody-icon active"><i class="icon-publish" aria-hidden="true"></i></span>';
+			}
+			else
+			{
+				$html .= '<span class="tbody-icon"><i class="icon-unpublish" aria-hidden="true"></i></span>';
+			}
+
+			$html .= '</td></tr>';
+		}
+
+		$html .= '</tbody></table></div>';
+
+		echo $html;
 
 		return true;
 	}
