@@ -20,7 +20,7 @@ $data = (object) $displayData;
 importScripts('<?php echo $data->workbox; ?>');
 
 workbox.setConfig({
-	debug: true
+	debug: false
 });
 
 const CACHE = "jupwa-offline_<?php echo $data->pwa_version; ?>";
