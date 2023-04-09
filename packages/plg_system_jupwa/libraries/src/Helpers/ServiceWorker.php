@@ -19,7 +19,7 @@ class ServiceWorker
 {
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -33,7 +33,7 @@ class ServiceWorker
 		if($option[ 'param' ][ 'usepwa' ] == 1)
 		{
 			$revision = [];
-			$pwa_dirs = (array) $option[ 'param' ][ 'pwa_dirs' ];
+			$pwa_dirs = $option[ 'param' ][ 'pwa_dirs' ];
 			foreach($pwa_dirs as $pwa_dir)
 			{
 				$pwa_folder = JPATH_SITE . '/' . ltrim($pwa_dir[ 'folder' ], '/');
