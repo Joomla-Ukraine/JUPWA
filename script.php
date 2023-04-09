@@ -32,20 +32,18 @@ class Pkg_JUPWAInstallerScript
 			return false;
 		}
 
-		Folder::create(JPATH_SITE . '/img');
-
-		if(!Folder::exists(JPATH_SITE . '/img'))
-		{
-			$app->enqueueMessage("Error creating folder '/img'. Please manually create the folder 'img' in the root of the site where you installed Joomla!", 'error');
-		}
+		Folder::create(JPATH_SITE . '/images/jupwa');
+		Folder::create(JPATH_SITE . '/images/jupwa/icon');
+		Folder::create(JPATH_SITE . '/images/jupwa/icons');
+		Folder::create(JPATH_SITE . '/images/jupwa/images');
+		Folder::create(JPATH_SITE . '/images/jupwa/screenshots');
+		Folder::create(JPATH_SITE . '/images/jupwa/watermark');
 
 		return true;
 	}
 
 	public function postflight($type, $parent)
 	{
-		$enabled = [];
-
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*');

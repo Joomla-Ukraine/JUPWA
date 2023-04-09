@@ -62,16 +62,6 @@
 	                    <option value="1">JYES</option>
 	                </field>
 
-	                <field name="usemeta"
-	                       type="radio"
-	                       layout="joomla.form.field.radio.switcher"
-	                       default="1"
-	                       label="PLG_JUPWA_USEMETA"
-	                >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
-	                </field>
-
 	                <field
 			                name="keywords"
 			                type="radio"
@@ -156,7 +146,7 @@
 	                <field name="precnct-google"
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
-	                       default="0"
+	                       default="1"
 	                       label="PLG_JUPWA_PRECNCT_GOOGLE">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
@@ -165,7 +155,7 @@
 	                <field name="precnct-google-analytics"
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
-	                       default="0"
+	                       default="1"
 	                       label="PLG_JUPWA_PRECNCT_GOOGLE_ANALYTICS">
 	                    <option value="0">JNO</option>
 	                    <option value="1">JYES</option>
@@ -471,44 +461,6 @@
 
 	            </fieldset>
 
-	            <fieldset name="SCHEMA_EVENT">
-
-		            <field name="schema_event"
-		                   type="menuitem"
-		                   multiple="true"
-		                   size="15"
-		                   state="1"
-		                   label="PLG_JUPWA_MENU_ITEM"
-		            />
-
-	            </fieldset>
-
-	            <fieldset name="SCHEMA_PRODUCT">
-
-		           <field name="schema_product"
-		                  type="menuitem"
-		                  multiple="true"
-		                  size="15"
-		                  state="1"
-		                  label="PLG_JUPWA_MENU_ITEM"
-		           />
-
-	            </fieldset>
-
-	            <fieldset name="SCHEMA_RATING">
-
-	                <field name="use_rating"
-	                       type="radio"
-	                       layout="joomla.form.field.radio.switcher"
-	                       default="0"
-	                       label="PLG_JUPWA_SCHEMA_USE_RATING"
-	                >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
-	                </field>
-
-	            </fieldset>
-
 	            <fieldset name="SCHEMA_SOCIAL">
 
 	                <field name="schema_social"
@@ -572,7 +524,7 @@
 	                <field name="og"
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
-	                       default="1"
+	                       default="0"
 	                       label="PLG_JUPWA_OG"
 	                >
 	                    <option value="0">JNO</option>
@@ -620,7 +572,6 @@
 	                       label="PLG_JUPWA_UPLOADIMAGES"
 	                       showon="og:1[AND]selectimg:1"
 	                />
-
 
 					<!--
 	                <field type="note"
@@ -689,7 +640,6 @@
 	                       showon="og:1[AND]usecover_wm:1"
 	                />
 -->
-
 
 	            </fieldset>
 

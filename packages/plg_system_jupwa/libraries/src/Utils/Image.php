@@ -20,7 +20,7 @@ class Image
 	 *
 	 * @param          $image
 	 * @param          $image_out
-	 * @param   array  $option
+	 * @param array    $option
 	 *
 	 * @return string
 	 *
@@ -63,7 +63,7 @@ class Image
 	 *
 	 * @param          $image
 	 * @param          $image_out
-	 * @param   array  $option
+	 * @param array    $option
 	 *
 	 * @return string
 	 *
@@ -73,14 +73,14 @@ class Image
 	{
 		$width    = $option[ 'width' ];
 		$height   = $option[ 'height' ];
-		$position = ($option[ 'position' ] ?? 'center');
-		$color    = ($option[ 'color' ] ?? null);
-		$ratio    = ($option[ 'ratio' ] ?? 1.2);
-		$r        = ($option[ 'r' ] ?? 0);
+		$position = ($option[ 'position' ] ? : 'center');
+		$color    = ($option[ 'color' ] ? : null);
+		$ratio    = ($option[ 'ratio' ] ? : 1.2);
+		$r        = ($option[ 'r' ] ? : 0);
 
-		IImage::configure([ 'driver' => $option[ 'imagick' ] ?? 'imagick' ]);
+		IImage::configure([ 'driver' => $option[ 'imagick' ] ? : 'imagick' ]);
 
-		$img  = IImage::canvas($width, $height, $option[ 'color' ] ?? null);
+		$img  = IImage::canvas($width, $height, $option[ 'color' ] ? : null);
 		$logo = IImage::make(JPATH_SITE . '/' . $image);
 
 		if($logo->width() > $width)

@@ -307,12 +307,7 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		META::render([ 'params' => $this->params ]);
-
-		if($view === 'article')
-		{
-			META::facebook([ 'params' => $this->params ]);
-		}
-
+		META::facebook([ 'params' => $this->params ]);
 		Schema::global([ 'params' => $this->params ]);
 	}
 
@@ -370,7 +365,7 @@ class plgSystemJUPWA extends CMSPlugin
 	}
 
 	/**
-	 * @param   null  $plugin_image
+	 * @param null $plugin_image
 	 *
 	 * @return object
 	 * @throws \Exception

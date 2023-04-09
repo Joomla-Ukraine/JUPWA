@@ -22,7 +22,7 @@ class Render
 {
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -32,16 +32,18 @@ class Render
 	public static function create(array $option = []): void
 	{
 		$path = JPATH_SITE . '/favicons';
-		Folder::delete($path);
+		if(Folder::exists($path))
+		{
+			Folder::delete($path);
+		}
+
 		Folder::create($path);
 
 		$favicon = self::ico([ 'source_icon_sm' => $option[ 'source_icon_sm' ] ]);
-
 		$icons_s = self::icons([
 			'size' => Data::$icons_sm,
 			'icon' => $option[ 'source_icon_sm' ]
 		]);
-
 		$icons_b = self::icons([
 			'size' => Data::$icons,
 			'icon' => ($option[ 'source_icon' ] !== '' ? $option[ 'source_icon' ] : $option[ 'source_icon_sm' ])
@@ -63,7 +65,7 @@ class Render
 
 	/**
 	 *
-	 * @param   string  $image
+	 * @param string $image
 	 *
 	 * @return string
 	 *
@@ -84,7 +86,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return string
 	 *
@@ -110,7 +112,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return array
 	 *
@@ -147,7 +149,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return array
 	 *
@@ -175,7 +177,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return array
 	 *
@@ -206,7 +208,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return object
 	 *

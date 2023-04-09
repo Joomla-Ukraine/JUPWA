@@ -9,6 +9,8 @@
 
 namespace JUPWA\Helpers;
 
+use Joomla\CMS\Filesystem\Folder;
+
 class Folders
 {
 	/**
@@ -20,9 +22,16 @@ class Folders
 	 */
 	public static function files($path): array
 	{
+		$folder = JPATH_BASE . $path;
+
+		if(!Folder::exists($folder))
+		{
+			Folder::create($folder);
+		}
+
 		$files = [];
-		$dir   = opendir(JPATH_BASE . $path);
-		while(($currentFile = readdir($dir)) !== false)
+		$dir   = opendir($folder);
+		while(false !== ($currentFile = readdir($dir)))
 		{
 			if($currentFile === '.' || $currentFile === '..')
 			{
