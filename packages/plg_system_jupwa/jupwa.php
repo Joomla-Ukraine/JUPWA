@@ -259,9 +259,6 @@ class plgSystemJUPWA extends CMSPlugin
 	public function onBeforeCompileHead(): void
 	{
 		$app  = Factory::getApplication();
-		$doc  = Factory::getDocument();
-		$lang = Factory::getLanguage();
-
 		$view = $app->input->get('view');
 
 		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl'))
@@ -273,24 +270,17 @@ class plgSystemJUPWA extends CMSPlugin
 		{
 			if($this->params->get('og') == 1 || $this->params->get('tw') == 1)
 			{
-				$image = Images::display_default($this->params->get('selectimg', 0), $this->params->get('image', ''), $this->params->get('imagemain', ''));
-
-				$title = HTML::text($doc->getTitle());
-				if($app->getMenu()->getActive() !== $app->getMenu()->getDefault($lang->getTag()))
-				{
-					$title = $app->getMenu()->getActive()->title;
-				}
-
-				$description = HTML::html($doc->getMetaData('description'));
+				$image       = $this->coreTags()->image;
+				$title       = $this->coreTags()->title;
+				$description = $this->coreTags()->description;
 
 				$plugins = $app->triggerEvent('onGetComponentImage', [ $app->input->getCmd('option') ]);
-
 				foreach($plugins as $plugin)
 				{
 					$image = $plugin;
 				}
 
-				$img = Images::display($image);
+				$img = $this->coreTags($image)->img;
 
 				OG::tag([
 					'params'       => $this->params,
@@ -337,17 +327,11 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onContentPrepare($context, $article): bool
 	{
-		PluginHelper::importPlugin('jupwa');
+		$integration = PluginHelper::importPlugin('jupwa');
+		$app         = Factory::getApplication();
+		$use_access  = $app->triggerEvent('onAccess', [ $context ]);
 
-		$app        = Factory::getApplication();
-		$use_access = $app->triggerEvent('onAccess', [ $context ]);
-
-		if($app->getName() !== 'site' || $context === 'com_finder.indexer' || !in_array($context, $use_access))
-		{
-			return true;
-		}
-
-		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl'))
+		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl') || $context === 'com_finder.indexer' || ($integration && !in_array($context, $use_access)))
 		{
 			return true;
 		}
@@ -357,7 +341,70 @@ class plgSystemJUPWA extends CMSPlugin
 		$app->triggerEvent('onGetArticleTwitter', [ $article, $this->params ]);
 		$app->triggerEvent('onGetArticleOG', [ $article, $this->params ]);
 
+		if($integration === null)
+		{
+			$image       = $this->coreTags()->image;
+			$title       = $this->coreTags()->title;
+			$description = $this->coreTags()->description;
+			$img         = $this->coreTags($image)->img;
+
+			OG::tag([
+				'params'       => $this->params,
+				'type'         => 'website',
+				'title'        => $title,
+				'image'        => $img->image,
+				'image_width'  => $img->width,
+				'image_height' => $img->height,
+				'description'  => $description
+			]);
+
+			OG::twitter([
+				'params'      => $this->params,
+				'title'       => $title,
+				'image'       => $image,
+				'description' => $description
+			]);
+		}
+
 		return true;
+	}
+
+	/**
+	 * @param   null  $plugin_image
+	 *
+	 * @return object
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	private function coreTags($plugin_image = null)
+	{
+		$app  = Factory::getApplication();
+		$doc  = Factory::getDocument();
+		$lang = Factory::getLanguage();
+
+		$image = Images::display_default($this->params->get('selectimg', 0), $this->params->get('image', ''), $this->params->get('imagemain', ''));
+
+		$title = HTML::text($doc->getTitle());
+		if($app->getMenu()->getActive() !== $app->getMenu()->getDefault($lang->getTag()))
+		{
+			$title = $app->getMenu()->getActive()->title;
+		}
+
+		$description = HTML::html($doc->getMetaData('description'));
+
+		if($plugin_image)
+		{
+			$image = $plugin_image;
+		}
+
+		$img = Images::display($image);
+
+		return (object) [
+			'title'       => $title,
+			'description' => $description,
+			'image'       => $image,
+			'img'         => $img
+		];
 	}
 
 	/**

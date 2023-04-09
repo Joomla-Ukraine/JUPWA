@@ -21,7 +21,7 @@ class Schema
 {
 
 	/**
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -43,7 +43,7 @@ class Schema
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -135,7 +135,7 @@ class Schema
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -199,7 +199,7 @@ class Schema
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -214,7 +214,7 @@ class Schema
 
 		if(in_array($Itemid, $option[ 'params' ]->get('schema_article') ? : []))
 		{
-			$logo     = Uri::root() . Util::get_thumbs()->{'article_logo'};
+			$logo     = (isset(Util::get_thumbs()->{'article_logo'}) ? Uri::root() . Util::get_thumbs()->{'article_logo'} : '');
 			$sitename = $app->get('sitename');
 			$url      = str_replace('[id]', $option[ 'article' ]->created_by, $option[ 'params' ]->get('schema_article_person', ''));
 
@@ -262,7 +262,7 @@ class Schema
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return array
 	 *
@@ -289,8 +289,8 @@ class Schema
 
 	/**
 	 *
-	 * @param array $rating
-	 * @param array $option
+	 * @param   array  $rating
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -364,8 +364,8 @@ class Schema
 
 	/**
 	 *
-	 * @param array $rating
-	 * @param array $option
+	 * @param   array  $rating
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -443,7 +443,7 @@ class Schema
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *

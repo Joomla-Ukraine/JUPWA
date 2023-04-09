@@ -48,7 +48,7 @@ class Manifest
 		$data[ 'screenshots' ]      = self::screenshots($option[ 'param' ]);
 		$data[ 'icons' ]            = self::icons();
 		$data[ 'shortcuts' ]        = self::shortcuts($option[ 'param' ]);
-		$data[ 'categories' ]       = (isset($option[ 'param' ][ 'manifest_categories' ]) ? $option[ 'param' ][ 'manifest_categories' ] : []);
+		$data[ 'categories' ]       = ($option[ 'param' ][ 'manifest_categories' ] ?? []);
 
 		$data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
