@@ -14,6 +14,7 @@ namespace JUPWA\Helpers;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Data\Data;
@@ -50,9 +51,68 @@ class Manifest
 		$data[ 'shortcuts' ]        = self::shortcuts($option[ 'param' ]);
 		$data[ 'categories' ]       = ($option[ 'param' ][ 'manifest_categories' ] ?? []);
 
+		if(is_countable($data[ 'screenshots' ]) && count($data[ 'screenshots' ]) == 0)
+		{
+			unset($data[ 'screenshots' ]);
+		}
+
+		if(is_countable($data[ 'icons' ]) && count($data[ 'icons' ]) == 0)
+		{
+			unset($data[ 'icons' ]);
+		}
+
+		if(is_countable($data[ 'shortcuts' ]) && count($data[ 'shortcuts' ]) == 0)
+		{
+			unset($data[ 'shortcuts' ]);
+		}
+
+		if(is_countable($data[ 'categories' ]) && count($data[ 'categories' ]) == 0)
+		{
+			unset($data[ 'categories' ]);
+		}
+
 		$data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
 		File::write($file_manifest, $data);
+	}
+
+	/**
+	 *
+	 * @return void
+	 *
+	 * @since 1.0
+	 */
+	public static function addVersion(): void
+	{
+		$path = JPATH_SITE . '/favicons';
+		Folder::create($path);
+
+		$json = [
+			'version' => hash('crc32b', time()),
+		];
+
+		$json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+		File::write($path . '/version.json', $json);
+	}
+
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since 1.0
+	 */
+	public static function getVersion(): string
+	{
+		$json = JPATH_SITE . '/favicons/version.json';
+		if(File::exists($json))
+		{
+			$json = file_get_contents($json);
+
+			return json_decode($json)->{'version'};
+		}
+
+		return '';
 	}
 
 	/**

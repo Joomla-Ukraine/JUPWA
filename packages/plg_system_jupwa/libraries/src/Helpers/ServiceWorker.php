@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
+use JUPWA\Data\Data;
 use JUPWA\Utils\Util;
 
 class ServiceWorker
@@ -74,11 +75,9 @@ class ServiceWorker
 				}
 			}
 
-			$pwa_version = hash('crc32b', time() . $option[ 'param' ][ 'pwa_version' ]);
-			$workbox     = 'https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js';
-			$pwa_data    = Util::tmpl('sw', [
-				'workbox'     => $workbox,
-				'pwa_version' => $pwa_version,
+			$pwa_data = Util::tmpl('sw', [
+				'workbox'     => Data::$workbox,
+				'pwa_version' => Manifest::getVersion(),
 				'pwa_data'    => $revision
 			]);
 

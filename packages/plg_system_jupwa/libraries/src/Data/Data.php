@@ -101,21 +101,6 @@ class Data
 			'orientation' => 'landscape'
 		],
 
-		/*[
-			'width'       => 1668,
-			'height'      => 2224,
-			'd_width'     => 834,
-			'd_height'    => 1112,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2224,
-			'height'      => 1668,
-			'd_width'     => 834,
-			'd_height'    => 1112,
-			'orientation' => 'landscape'
-		],*/
-
 		[
 			'width'       => 1640,
 			'height'      => 2360,
@@ -340,6 +325,8 @@ class Data
 			'github'  => 'https://github.com/Joomla-Ukraine/JUPWA'
 		]
 	];
+
+	public static $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js';
 
 	public static $preconnect = [
 		'google'           => [ 'https://www.google.com' ],

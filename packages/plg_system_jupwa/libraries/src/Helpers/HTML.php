@@ -17,7 +17,7 @@ use JUPWA\Classes\Minify;
 class HTML
 {
 	/**
-	 * @param   string  $text
+	 * @param string $text
 	 *
 	 * @return string
 	 *
@@ -37,9 +37,9 @@ class HTML
 	}
 
 	/**
-	 * @param   string  $html
+	 * @param string $html
 	 *
-	 * @return string|NULL
+	 * @return string
 	 *
 	 * @since 1.0
 	 */
@@ -59,7 +59,7 @@ class HTML
 	}
 
 	/**
-	 * @param   string  $html
+	 * @param string $html
 	 *
 	 * @return string
 	 *
@@ -87,7 +87,7 @@ class HTML
 	}
 
 	/**
-	 * @param   array  $matches
+	 * @param array $matches
 	 *
 	 * @return string
 	 *
@@ -132,7 +132,7 @@ class HTML
 	}
 
 	/**
-	 * @param   string  $html
+	 * @param string $html
 	 *
 	 * @return string
 	 *

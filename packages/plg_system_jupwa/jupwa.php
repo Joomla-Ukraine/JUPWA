@@ -83,6 +83,7 @@ class plgSystemJUPWA extends CMSPlugin
 				'site'  => $app->get('sitename')
 			]);
 
+			Manifest::addVersion();
 			ServiceWorker::create([ 'param' => $post_param ]);
 
 			if(!File::exists(JPATH_SITE . '/favicons/thumbs.json'))

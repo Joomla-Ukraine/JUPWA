@@ -44,7 +44,7 @@ class OG
 
 			if(isset($option[ 'image' ]))
 			{
-				$doc->setMetaData('og:image', $option[ 'image' ], 'property');
+				$doc->setMetaData('og:image', Images::joomlaImage($option[ 'image' ]), 'property');
 
 				if((isset($option[ 'image_width' ]) && $option[ 'image_width' ] > 0) || (isset($option[ 'image_height' ]) && $option[ 'image_height' ] > 0))
 				{

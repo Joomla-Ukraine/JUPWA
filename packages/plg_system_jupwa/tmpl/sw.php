@@ -17,20 +17,14 @@ defined('_JEXEC') or die('Restricted access');
 $data = (object) $displayData;
 
 ?>
-const CACHE = "jupwa-offline-page";
-const versionPrecache = '<?php echo $data->pwa_version; ?>';
-
 importScripts('<?php echo $data->workbox; ?>');
 
 workbox.setConfig({
-	debug: false
+	debug: true
 });
 
-const {registerRoute, setCatchHandler} = workbox.routing;
-const {NetworkFirst, StaleWhileRevalidate, CacheFirst} = workbox.strategies;
-const {CacheableResponsePlugin} = workbox.cacheableResponse;
-const {ExpirationPlugin} = workbox.expiration;
-const {precacheAndRoute, matchPrecache} = workbox.precaching;
+const CACHE = "jupwa-offline_<?php echo $data->pwa_version; ?>";
+const offlineFallbackPage = "/offline.php";
 
 self.addEventListener("message", (event) => {
 	if (event.data && event.data.type === "SKIP_WAITING") {
@@ -40,8 +34,9 @@ self.addEventListener("message", (event) => {
 
 self.addEventListener('install', async (event) => {
 	event.waitUntil(
-		caches.open(CACHE)
-		.then((cache) => cache.add(offlineFallbackPage))
+		caches
+			.open(CACHE)
+			.then((cache) => cache.add(offlineFallbackPage))
 	);
 });
 
@@ -49,21 +44,16 @@ if (workbox.navigationPreload.isSupported()) {
 	workbox.navigationPreload.enable();
 }
 
-workbox.routing.registerRoute(
-	new RegExp('/*'),
-	new workbox.strategies.StaleWhileRevalidate({
-		cacheName: CACHE
-	})
-);
-
 self.addEventListener('fetch', (event) => {
 	if (event.request.mode === 'navigate') {
 		event.respondWith((async () => {
 			try {
 				const preloadResp = await event.preloadResponse;
+
 				if (preloadResp) {
 					return preloadResp;
 				}
+
 				const networkResp = await fetch(event.request);
 
 				return networkResp;
@@ -76,71 +66,3 @@ self.addEventListener('fetch', (event) => {
 		})());
 	}
 });
-
-//self.addEventListener('install', () => self.skipWaiting());
-//self.addEventListener('activate', () => self.clients.claim());
-
-// files
-precacheAndRoute([
-<?php
-$i = 0;
-$numItems = count($data->pwa_data);
-foreach($data->pwa_data as $data) {
-	echo "  {'revision': versionPrecache, 'url': '$data'}";
-	echo (++$i !== $numItems ? ',':'') ."\n";
-}
-?>
-]);
-
-// Cache assets
-registerRoute(
-	({request}) =>
-		request.destination === 'style' ||
-		request.destination === 'script' ||
-		request.destination === 'font',
-	new StaleWhileRevalidate({
-		cacheName: 'assets',
-		plugins: [
-			new CacheableResponsePlugin({
-				statuses: [0, 200]
-			})
-		]
-	})
-);
-
-// Cache images
-registerRoute(
-	({request}) => request.destination === 'image',
-	new CacheFirst({
-		cacheName: 'images',
-		plugins: [
-			new CacheableResponsePlugin({
-				statuses: [0, 200],
-			}),
-			new ExpirationPlugin({
-				maxEntries: 100,
-				maxAgeSeconds: 30 * 24 * 60 * 60,
-				purgeOnQuotaError: true
-			})
-		]
-	})
-);
-
-// Cache pages
-registerRoute(
-	({request}) => request.mode === 'navigate',
-	new NetworkFirst({
-		cacheName: 'pages',
-		plugins: [
-			new CacheableResponsePlugin({
-				statuses: [0, 200],
-			}),
-			new ExpirationPlugin({
-				maxAgeSeconds: 30 * 24 * 60 * 60,
-				purgeOnQuotaError: true
-			})
-		]
-	})
-);
-
-precacheAndRoute([]);

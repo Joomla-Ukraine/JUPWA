@@ -20,7 +20,7 @@ use JUPWA\Utils\Util;
 class Images
 {
 	/**
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return string
 	 *
@@ -133,7 +133,14 @@ class Images
 		return $image;
 	}
 
-	private static function joomlaImage($url)
+	/**
+	 * @param $url
+	 *
+	 * @return string
+	 *
+	 * @since 1.0
+	 */
+	public static function joomlaImage($url)
 	{
 		$jimg = '#joomlaImage:';
 		if(strpos($url, $jimg) === false)

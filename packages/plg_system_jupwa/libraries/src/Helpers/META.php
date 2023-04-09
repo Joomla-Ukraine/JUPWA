@@ -21,7 +21,7 @@ class META
 {
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -47,7 +47,7 @@ class META
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -82,7 +82,7 @@ class META
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -126,7 +126,7 @@ class META
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -161,7 +161,7 @@ class META
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -188,7 +188,7 @@ class META
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -287,7 +287,7 @@ class META
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -306,7 +306,7 @@ class META
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -319,7 +319,9 @@ class META
 
 		if($option[ 'params' ]->get('usepwa', 0) == 1)
 		{
-			$pwajs = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('" . Uri::base() . "sw.js?v=" . hash('crc32b', $option[ 'params' ]->get('pwa_version')) . "'); }); }";
+			$pwa_version = Manifest::getVersion();
+			$pwajs       = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('" . Uri::base() . "sw.js?v=" . $pwa_version . "'); }); }";
+
 			$doc->addScriptDeclaration($pwajs);
 		}
 	}

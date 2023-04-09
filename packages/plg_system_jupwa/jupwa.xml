@@ -833,14 +833,6 @@
 	                </field>
 
 		            <field
-				            name="pwa_version"
-				            type="text"
-				            default="0"
-				            label="PLG_JUPWA_PWA_VERSION"
-				            showon="usepwa:1"
-		            />
-
-		            <field
 				            name="pwa_dirs"
 				            type="subform"
 				            multiple="true"

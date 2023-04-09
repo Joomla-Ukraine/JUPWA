@@ -20,12 +20,10 @@ $data = (object) $displayData;
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title><?php echo $data->app->get('sitename'); ?></title>
+	<title>You are offline - <?php echo $data->app->get('sitename'); ?></title>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-	<title>You are offline</title>
 
 	<style>
         body {
@@ -61,10 +59,6 @@ $data = (object) $displayData;
 
 <script>
     document.querySelector('button').addEventListener('click', () => {
-        window.location.reload();
-    });
-
-    window.addEventListener('online', () => {
         window.location.reload();
     });
 
