@@ -832,47 +832,6 @@
 	                    <option value="1">JYES</option>
 	                </field>
 
-		            <field
-				            name="pwa_dirs"
-				            type="subform"
-				            multiple="true"
-				            min="0"
-				            layout="joomla.form.field.subform.repeatable-table"
-				            label="PLG_JUPWA_MANIFEST_PWA_DIRS"
-				            showon="usepwa:1"
-		            >
-						<form>
-							<field
-									name="folder"
-									type="text"
-									default=""
-									label="PLG_JUPWA_PWA_FOLDER"
-							/>
-							<field
-									name="type"
-									type="list"
-									default="0"
-									label="PLG_JUPWA_PWA_FOLDER_TYPE"
-							>
-			                    <option value="0">PLG_JUPWA_PWA_FOLDER_SIMPLE</option>
-			                    <option value="1">PLG_JUPWA_PWA_FOLDER_RECURSIVE</option>
-			                </field>
-							<field
-									name="extensions"
-									type="list"
-									default="0"
-									label="PLG_JUPWA_PWA_EXTENSIONS"
-							>
-			                    <option value="0">PLG_JUPWA_PWA_ALL</option>
-			                    <option value="1">PLG_JUPWA_PWA_CSS</option>
-			                    <option value="2">PLG_JUPWA_PWA_JS</option>
-			                    <option value="3">PLG_JUPWA_PWA_IMAGES</option>
-			                    <option value="4">PLG_JUPWA_PWA_CSS_JS</option>
-			                    <option value="5">PLG_JUPWA_PWA_CSS_JS_IMAGES</option>
-			                </field>
-						</form>
-					</field>
-
 	            </fieldset>
 
             </fieldset>

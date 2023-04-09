@@ -23,7 +23,7 @@ workbox.setConfig({
 	debug: false
 });
 
-const CACHE = "jupwa-offline_<?php echo $data->pwa_version; ?>";
+const CACHE = "jupwa-offline";
 const offlineFallbackPage = "/offline.php";
 
 self.addEventListener("message", (event) => {
