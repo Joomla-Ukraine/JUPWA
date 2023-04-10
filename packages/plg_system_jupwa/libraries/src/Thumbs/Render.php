@@ -207,8 +207,8 @@ class Render
 				$out    = 'favicons/shortcut_' . $val[ 'item' ] . '.png';
 
 				$image[] = Image::render($source, $out, [
-					'width'  => 192,
-					'height' => 192
+					'width'  => 96,
+					'height' => 96
 				]);
 			}
 		}
