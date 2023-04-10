@@ -325,7 +325,7 @@ class Data
 		]
 	];
 
-	public static $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js';
+	public static $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js';
 
 	public static $preconnect = [
 		'google'           => [ 'https://www.google.com' ],

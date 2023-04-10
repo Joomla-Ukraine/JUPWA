@@ -54,7 +54,7 @@ class Render
 		$icons_m = self::icons([
 			'size' => Data::$manifest_icons,
 			'name' => 'micon',
-			'icon' => ($option[ 'source_icon' ] !== '' ? $option[ 'source_icon' ] : $option[ 'source_icon_sm' ])
+			'icon' => ($option[ 'source_icon_sm' ] !== '' ? $option[ 'source_icon_sm' ] : $option[ 'source_icon' ])
 		]);
 
 		$json = [
