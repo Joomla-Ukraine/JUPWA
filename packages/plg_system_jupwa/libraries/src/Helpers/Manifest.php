@@ -191,7 +191,7 @@ class Manifest
 					'icons' => [
 						'src'   => $file,
 						'type'  => 'image/png',
-						'sizes' => '192x192'
+						'sizes' => '96x96'
 					]
 
 				];
