@@ -26,11 +26,11 @@ class Data
 		152,
 		150,
 		168,
-		180,
-		192
+		180
 	];
 
 	public static $icons = [
+		192,
 		310,
 		512
 	];
@@ -310,7 +310,6 @@ class Data
 		'description'           => '',
 		'scope'                 => '',
 		'orientation'           => '',
-		'features'              => [],
 		'screenshots'           => [],
 		'icons'                 => [],
 		'shortcuts'             => [],

@@ -128,7 +128,7 @@ class Manifest
 		$icons = [];
 		foreach($sizes as $size)
 		{
-			$file = 'favicons/icon_' . $size . '.png';
+			$file = 'favicons/micon_' . $size . '.png';
 			if(File::exists(JPATH_SITE . '/' . $file))
 			{
 				$icons[] = [

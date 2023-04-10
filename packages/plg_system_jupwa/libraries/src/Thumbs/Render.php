@@ -40,12 +40,20 @@ class Render
 		Folder::create($path);
 
 		$favicon = self::ico([ 'source_icon_sm' => $option[ 'source_icon_sm' ] ]);
+
 		$icons_s = self::icons([
 			'size' => Data::$icons_sm,
 			'icon' => $option[ 'source_icon_sm' ]
 		]);
+
 		$icons_b = self::icons([
 			'size' => Data::$icons,
+			'icon' => ($option[ 'source_icon' ] !== '' ? $option[ 'source_icon' ] : $option[ 'source_icon_sm' ])
+		]);
+
+		$icons_m = self::icons([
+			'size' => Data::$manifest_icons,
+			'name' => 'micon',
 			'icon' => ($option[ 'source_icon' ] !== '' ? $option[ 'source_icon' ] : $option[ 'source_icon_sm' ])
 		]);
 
@@ -53,6 +61,7 @@ class Render
 			'favicon_root'     => $favicon->root,
 			'favicon_favicons' => $favicon->favicons,
 			'icons'            => array_merge($icons_s, $icons_b),
+			'manifest_icons'   => $icons_m,
 			'shortcuts'        => self::shortcuts($option),
 			'splash'           => self::splash($option),
 			'article_logo'     => self::article_logo($option),
@@ -160,11 +169,12 @@ class Render
 	{
 		$icons  = $option[ 'size' ];
 		$source = self::image($option[ 'icon' ]);
+		$name   = ($option[ 'name' ] ? : 'icon');
 
 		$image = [];
 		foreach($icons as $icon)
 		{
-			$out = 'favicons/icon_' . $icon . '.png';
+			$out = 'favicons/' . $name . '_' . $icon . '.png';
 
 			$image[] = Image::render($source, $out, [
 				'width'  => $icon,
