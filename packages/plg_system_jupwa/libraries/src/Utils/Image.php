@@ -33,7 +33,10 @@ class Image
 		$position = ($option[ 'position' ] ?? 'center');
 		$color    = ($option[ 'color' ] ?? null);
 
-		IImage::configure([ 'driver' => $option[ 'imagick' ] ?? 'imagick' ]);
+		if(extension_loaded('imagick') && class_exists('Imagick'))
+		{
+			IImage::configure([ 'driver' => 'imagick' ]);
+		}
 
 		$img = IImage::make(JPATH_SITE . '/' . $image);
 
@@ -78,7 +81,10 @@ class Image
 		$ratio    = ($option[ 'ratio' ] ? : 1.2);
 		$r        = ($option[ 'r' ] ? : 0);
 
-		IImage::configure([ 'driver' => $option[ 'imagick' ] ? : 'imagick' ]);
+		if(extension_loaded('imagick') && class_exists('Imagick'))
+		{
+			IImage::configure([ 'driver' => 'imagick' ]);
+		}
 
 		$img  = IImage::canvas($width, $height, $option[ 'color' ] ? : null);
 		$logo = IImage::make(JPATH_SITE . '/' . $image);

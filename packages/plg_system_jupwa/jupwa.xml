@@ -4,11 +4,11 @@
            group="system"
            method="upgrade">
     <name>plg_system_jupwa</name>
-    <creationDate>08.04.2023</creationDate>
+    <creationDate>@date@</creationDate>
     <author>Denys Nosov</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
     <authorUrl>https://joomla-ua.org</authorUrl>
-    <version>1.0</version>
+	<version>@version@</version>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <copyright>(C) 2023 Joomla! Ukraine. All rights reserved.</copyright>
     <description>PLG_JUPWA_INFO</description>

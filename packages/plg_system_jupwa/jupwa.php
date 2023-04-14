@@ -129,8 +129,10 @@ class plgSystemJUPWA extends CMSPlugin
 
 			if(preg_match('#<!DOCTYPE html>#', $buffer))
 			{
-				$buffer = preg_replace('#xmlns="http://www\.w3\.org/1999/xhtml"#i', '', $buffer);
-				$buffer = str_replace('  ', ' ', $buffer);
+				$buffer = str_replace([
+					'xmlns="http://www.w3.org/1999/xhtml"',
+					'  '
+				], [ '', ' ' ], $buffer);
 				$this->checkBuffer($buffer);
 			}
 		}
@@ -269,20 +271,20 @@ class plgSystemJUPWA extends CMSPlugin
 
 		if($view !== 'article')
 		{
-			if($this->params->get('og') == 1 || $this->params->get('tw') == 1)
+			$image       = $this->coreTags()->image;
+			$title       = $this->coreTags()->title;
+			$description = $this->coreTags()->description;
+
+			$plugins = $app->triggerEvent('onJUPWAImage', [ $app->input->getCmd('option') ]);
+			foreach($plugins as $plugin)
 			{
-				$image       = $this->coreTags()->image;
-				$title       = $this->coreTags()->title;
-				$description = $this->coreTags()->description;
+				$image = $plugin;
+			}
 
-				$plugins = $app->triggerEvent('onGetComponentImage', [ $app->input->getCmd('option') ]);
-				foreach($plugins as $plugin)
-				{
-					$image = $plugin;
-				}
+			$img = $this->coreTags($image)->img;
 
-				$img = $this->coreTags($image)->img;
-
+			if($this->params->get('og') == 1)
+			{
 				OG::tag([
 					'params'       => $this->params,
 					'type'         => 'website',
@@ -292,18 +294,29 @@ class plgSystemJUPWA extends CMSPlugin
 					'image_height' => $img->height,
 					'description'  => $description
 				]);
+			}
 
+			if($this->params->get('tw') == 1)
+			{
 				OG::twitter([
 					'params'      => $this->params,
 					'title'       => $title,
 					'image'       => $image,
 					'description' => $description
 				]);
+			}
 
-				// Integration
-				$app->triggerEvent('onGetComponentSchema');
-				$app->triggerEvent('onGetComponentTwitter', [ $this->params ]);
-				$app->triggerEvent('onGetComponentOG', [ $this->params ]);
+			// Integration
+			$app->triggerEvent('onJUPWASchema');
+
+			if($this->params->get('tw') == 1)
+			{
+				$app->triggerEvent('onJUPWATwitter', [ $this->params ]);
+			}
+
+			if($this->params->get('og') == 1)
+			{
+				$app->triggerEvent('onJUPWAOG', [ $this->params ]);
 			}
 		}
 
@@ -323,9 +336,9 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onContentPrepare($context, $article): bool
 	{
-		$integration = PluginHelper::importPlugin('jupwa');
 		$app         = Factory::getApplication();
-		$use_access  = $app->triggerEvent('onAccess', [ $context ]);
+		$integration = PluginHelper::importPlugin('jupwa');
+		$use_access  = $app->triggerEvent('onJUPWAAccess', [ $context ]);
 
 		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl') || $context === 'com_finder.indexer' || ($integration && !in_array($context, $use_access)))
 		{
@@ -333,9 +346,12 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		// Integration
-		$app->triggerEvent('onGetArticleSchema', [ $article ]);
-		$app->triggerEvent('onGetArticleTwitter', [ $article, $this->params ]);
-		$app->triggerEvent('onGetArticleOG', [ $article, $this->params ]);
+		$app->triggerEvent('onJUPWAArticleSchema', [ $article ]);
+		$app->triggerEvent('onJUPWAArticleTwitter', [
+			$article,
+			$this->params
+		]);
+		$app->triggerEvent('onJUPWAArticleOG', [ $article, $this->params ]);
 
 		if($integration === null)
 		{
@@ -404,16 +420,14 @@ class plgSystemJUPWA extends CMSPlugin
 	}
 
 	/**
-	 * @param $buffer
+	 * Check the buffer.
 	 *
+	 * @param string $buffer Buffer to be checked.
 	 *
-	 * @throws \Exception
-	 * @since 1.0
+	 * @return  void
 	 */
 	private function checkBuffer($buffer): void
 	{
-		$app = Factory::getApplication();
-
 		if($buffer === null)
 		{
 			switch(preg_last_error())
@@ -429,10 +443,9 @@ class plgSystemJUPWA extends CMSPlugin
 					break;
 				default:
 					$message = 'Unknown PCRE error calling PCRE function';
-					break;
 			}
 
-			$app->enqueueMessage($message, 'error');
+			throw new RuntimeException($message);
 		}
 	}
 }

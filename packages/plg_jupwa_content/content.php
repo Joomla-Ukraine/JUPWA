@@ -29,7 +29,7 @@ class PlgJUPWAContent extends CMSPlugin
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public function onGetArticleSchema($article): void
+	public function onJUPWAArticleSchema($article): void
 	{
 		$option = [
 			'params'       => $this->params,
@@ -56,7 +56,7 @@ class PlgJUPWAContent extends CMSPlugin
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public function onGetArticleOG($article, $params): void
+	public function onJUPWAArticleOG($article, $params): void
 	{
 		if($params->get('og') == 1)
 		{
@@ -90,7 +90,7 @@ class PlgJUPWAContent extends CMSPlugin
 	 *
 	 * @since 1.0
 	 */
-	public function onGetArticleTwitter($article, $params): void
+	public function onJUPWAArticleTwitter($article, $params): void
 	{
 		if($params->get('tw') == 1)
 		{
@@ -181,7 +181,7 @@ class PlgJUPWAContent extends CMSPlugin
 	 *
 	 * @since 1.0
 	 */
-	public function onAccess($context): bool
+	public function onJUPWAAccess($context): bool
 	{
 		if($context === 'com_content.article')
 		{
