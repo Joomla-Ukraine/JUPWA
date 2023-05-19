@@ -70,8 +70,8 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->option === 'com_plugins' && $this->layout === 'edit' && isset($post[ 'jform' ][ 'params' ]) && $extension_id == $this->plg->id)
 		{
 			$post_param = $post[ 'jform' ][ 'params' ];
-
-			if($post_param[ 'thumbs' ] == 1)
+			
+			if($post_param[ 'thumbs' ] == 1 && ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save'))
 			{
 				Render::create($post_param);
 			}

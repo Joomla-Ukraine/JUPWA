@@ -57,21 +57,6 @@ class Data
 		],
 
 		[
-			'width'       => 1488,
-			'height'      => 2266,
-			'd_width'     => 744,
-			'd_height'    => 1133,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2266,
-			'height'      => 1488,
-			'd_width'     => 744,
-			'd_height'    => 1133,
-			'orientation' => 'landscape'
-		],
-
-		[
 			'width'       => 1536,
 			'height'      => 2048,
 			'd_width'     => 768,
@@ -87,44 +72,14 @@ class Data
 		],
 
 		[
-			'width'       => 1620,
-			'height'      => 2160,
-			'd_width'     => 810,
-			'd_height'    => 1080,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2160,
-			'height'      => 1620,
-			'd_width'     => 810,
-			'd_height'    => 1080,
-			'orientation' => 'landscape'
-		],
-
-		[
-			'width'       => 1640,
-			'height'      => 2360,
-			'd_width'     => 820,
-			'd_height'    => 1180,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2360,
-			'height'      => 1640,
-			'd_width'     => 820,
-			'd_height'    => 1180,
-			'orientation' => 'landscape'
-		],
-
-		[
 			'width'       => 1668,
-			'height'      => 2388,
+			'height'      => 2224,
 			'd_width'     => 834,
 			'd_height'    => 1194,
 			'orientation' => 'portrait'
 		],
 		[
-			'width'       => 2388,
+			'width'       => 2224,
 			'height'      => 1668,
 			'd_width'     => 834,
 			'd_height'    => 1194,
@@ -177,36 +132,6 @@ class Data
 		],
 
 		[
-			'width'       => 828,
-			'height'      => 1792,
-			'd_width'     => 414,
-			'd_height'    => 896,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 1792,
-			'height'      => 828,
-			'd_width'     => 414,
-			'd_height'    => 896,
-			'orientation' => 'landscape'
-		],
-
-		[
-			'width'       => 1242,
-			'height'      => 2688,
-			'd_width'     => 414,
-			'd_height'    => 896,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2688,
-			'height'      => 1242,
-			'd_width'     => 414,
-			'd_height'    => 896,
-			'orientation' => 'landscape'
-		],
-
-		[
 			'width'       => 1125,
 			'height'      => 2436,
 			'd_width'     => 375,
@@ -219,87 +144,14 @@ class Data
 			'd_width'     => 375,
 			'd_height'    => 812,
 			'orientation' => 'landscape'
-		],
-
-		[
-			'width'       => 1170,
-			'height'      => 2532,
-			'd_width'     => 390,
-			'd_height'    => 844,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2532,
-			'height'      => 1170,
-			'd_width'     => 390,
-			'd_height'    => 844,
-			'orientation' => 'landscape'
-		],
-
-		[
-			'width'       => 1284,
-			'height'      => 2778,
-			'd_width'     => 428,
-			'd_height'    => 926,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2778,
-			'height'      => 1284,
-			'd_width'     => 428,
-			'd_height'    => 926,
-			'orientation' => 'landscape'
-		],
-
-		[
-			'width'       => 1179,
-			'height'      => 2556,
-			'd_width'     => 393,
-			'd_height'    => 852,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2556,
-			'height'      => 1179,
-			'd_width'     => 393,
-			'd_height'    => 852,
-			'orientation' => 'landscape'
-		],
-
-		[
-			'width'       => 1290,
-			'height'      => 2796,
-			'd_width'     => 430,
-			'd_height'    => 932,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2796,
-			'height'      => 1290,
-			'd_width'     => 430,
-			'd_height'    => 932,
-			'orientation' => 'landscape'
-		],
-
-		[
-			'width'       => 1179,
-			'height'      => 2556,
-			'd_width'     => 430,
-			'd_height'    => 932,
-			'orientation' => 'portrait'
-		],
-		[
-			'width'       => 2556,
-			'height'      => 1179,
-			'd_width'     => 393,
-			'd_height'    => 852,
-			'orientation' => 'landscape'
 		]
 	];
 
 	public static $manifest_icons = [
 		192,
-		512
+		384,
+		512,
+		1024
 	];
 
 	public static $manifest = [
@@ -317,12 +169,7 @@ class Data
 		'gcm_sender_id'         => '482941778795',
 		'gcm_user_visible_only' => true,
 		'theme_color'           => '',
-		'background_color'      => '',
-		'author'                => [
-			'name'    => 'Denys Nosov',
-			'website' => 'https://joomla-ua.org',
-			'github'  => 'https://github.com/Joomla-Ukraine/JUPWA'
-		]
+		'background_color'      => ''
 	];
 
 	public static $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js';

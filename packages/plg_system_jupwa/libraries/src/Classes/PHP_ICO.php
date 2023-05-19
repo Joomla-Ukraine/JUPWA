@@ -41,8 +41,8 @@ class PHP_ICO
 	 * If the constructor is not passed a file, a file will need to be supplied using the {@link PHP_ICO::add_image}
 	 * function in order to generate an ICO file.
 	 *
-	 * @param   string  $file   Optional. Path to the source image file.
-	 * @param   array   $sizes  Optional. An array of sizes (each size is an array with a width and height) that the source image should be rendered at in the generated ICO file. If sizes are not supplied, the size of the source image will be used.
+	 * @param string $file  Optional. Path to the source image file.
+	 * @param array  $sizes Optional. An array of sizes (each size is an array with a width and height) that the source image should be rendered at in the generated ICO file. If sizes are not supplied, the size of the source image will be used.
 	 *
 	 * @since 1.0
 	 */
@@ -65,7 +65,7 @@ class PHP_ICO
 		{
 			if(!function_exists($function))
 			{
-				trigger_error("The PHP_ICO class was unable to find the {$function} function, which is part of the GD library. Ensure that the system has the GD library installed and that PHP has access to it through a PHP interface, such as PHP's GD module. Since this function was not found, the library will be unable to create ICO files.");
+				trigger_error("The PHP_ICO class was unable to find the $function function, which is part of the GD library. Ensure that the system has the GD library installed and that PHP has access to it through a PHP interface, such as PHP's GD module. Since this function was not found, the library will be unable to create ICO files.");
 
 				return;
 			}
@@ -88,8 +88,8 @@ class PHP_ICO
 	 * different sized images in the resulting ICO file. For instance, a small source image can be used for the small
 	 * resolutions while a larger source image can be used for large resolutions.
 	 *
-	 * @param   string  $file   Path to the source image file.
-	 * @param   array   $sizes  Optional. An array of sizes (each size is an array with a width and height) that the source image should be rendered at in the generated ICO file. If sizes are not supplied, the size of the source image will be used.
+	 * @param string $file  Path to the source image file.
+	 * @param array  $sizes Optional. An array of sizes (each size is an array with a width and height) that the source image should be rendered at in the generated ICO file. If sizes are not supplied, the size of the source image will be used.
 	 *
 	 * @return boolean true on success and false on failure.
 	 * @since 1.0
@@ -140,7 +140,7 @@ class PHP_ICO
 	/**
 	 * Write the ICO file data to a file path.
 	 *
-	 * @param   string  $file  Path to save the ICO file data into.
+	 * @param string $file Path to save the ICO file data into.
 	 *
 	 * @return boolean true on success and false on failure.
 	 * @since 1.0
@@ -227,7 +227,7 @@ class PHP_ICO
 				$alpha = (1 - ($alpha / 127)) * 255;
 
 				$color &= 0xFFFFFF;
-				$color |= 0xFF000000 & ($alpha << 24);
+				$color |= 0xFF000000 & ((int) $alpha << 24);
 
 				$pixel_data[] = $color;
 

@@ -30,8 +30,8 @@ class Image
 	{
 		$width    = $option[ 'width' ];
 		$height   = $option[ 'height' ];
-		$position = ($option[ 'position' ] ?? 'center');
-		$color    = ($option[ 'color' ] ?? null);
+		$position = (isset($option[ 'position' ]) && $option[ 'position' ] ? $option[ 'position' ] : 'center');
+		$color    = (isset($option[ 'color' ]) && $option[ 'color' ] ? $option[ 'color' ] : null);
 
 		if(extension_loaded('imagick') && class_exists('Imagick'))
 		{
@@ -76,10 +76,16 @@ class Image
 	{
 		$width    = $option[ 'width' ];
 		$height   = $option[ 'height' ];
-		$position = ($option[ 'position' ] ? : 'center');
-		$color    = ($option[ 'color' ] ? : null);
-		$ratio    = ($option[ 'ratio' ] ? : 1.2);
-		$r        = ($option[ 'r' ] ? : 0);
+		$position = (isset($option[ 'position' ]) && $option[ 'position' ] ? $option[ 'position' ] : 'center');
+		$color    = (isset($option[ 'color' ]) && $option[ 'color' ] ? $option[ 'color' ] : null);
+
+		$ratio = (1.2);
+		if(isset($option[ 'ratio' ]) && $option[ 'ratio' ])
+		{
+			$ratio = $option[ 'ratio' ];
+		}
+
+		$r = (isset($option[ 'r' ]) && $option[ 'r' ] ? $option[ 'r' ] : 0);
 
 		if(extension_loaded('imagick') && class_exists('Imagick'))
 		{

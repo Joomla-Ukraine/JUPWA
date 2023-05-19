@@ -102,7 +102,7 @@ class Render
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function article_logo(array $option = [])
+	public static function article_logo(array $option = []): string
 	{
 		$source = self::image($option[ 'source_icon' ]);
 		$width  = 600;
@@ -169,7 +169,7 @@ class Render
 	{
 		$icons  = $option[ 'size' ];
 		$source = self::image($option[ 'icon' ]);
-		$name   = ($option[ 'name' ] ? : 'icon');
+		$name   = (isset($option[ 'name' ]) && $option[ 'name' ] ? : 'icon');
 
 		$image = [];
 		foreach($icons as $icon)

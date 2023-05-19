@@ -84,8 +84,12 @@ class Images
 
 			$image     = ltrim($image, '/');
 			$imageSize = $FastImageSize->getImageSize(JPATH_SITE . '/' . $image);
-			$width     = $imageSize[ 'width' ];
-			$height    = $imageSize[ 'height' ];
+
+			if($imageSize !== false)
+			{
+				$width  = $imageSize[ 'width' ];
+				$height = $imageSize[ 'height' ];
+			}
 		}
 
 		$image = Uri::base() . $image;
@@ -140,7 +144,7 @@ class Images
 	 *
 	 * @since 1.0
 	 */
-	public static function joomlaImage($url)
+	public static function joomlaImage($url): string
 	{
 		$jimg = '#joomlaImage:';
 		if(strpos($url, $jimg) === false)
@@ -172,7 +176,7 @@ class Images
 	 *
 	 * @since 1.0
 	 */
-	private static function gallery($text)
+	private static function gallery($text): mixed
 	{
 		if(strpos($text, '{gallery') === false)
 		{

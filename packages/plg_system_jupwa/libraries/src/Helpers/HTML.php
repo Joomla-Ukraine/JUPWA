@@ -43,16 +43,19 @@ class HTML
 	 *
 	 * @since 1.0
 	 */
-	public static function html($html): string
+	public static function html($html)
 	{
-		$html = self::clean($html);
-		$html = preg_replace('/<a(.*?)>(.*?)<\/a>/is', '\\2', $html);
-		$html = preg_replace('/<iframe.*?>(.*?)<\/iframe>/is', '', $html);
-		$html = preg_replace('#<p(.*)>"#is', '<p>', $html);
-
-		if(preg_match('#<p[^>]*>(.*)<\/p>#isU', $html, $matches))
+		if($html)
 		{
-			$html = $matches[ 0 ];
+			$html = self::clean($html);
+			$html = preg_replace('/<a(.*?)>(.*?)<\/a>/is', '\\2', $html);
+			$html = preg_replace('/<iframe.*?>(.*?)<\/iframe>/is', '', $html);
+			$html = preg_replace('#<p(.*)>"#is', '<p>', $html);
+
+			if(preg_match('#<p[^>]*>(.*)<\/p>#isU', $html, $matches))
+			{
+				$html = $matches[ 0 ];
+			}
 		}
 
 		return $html;
@@ -65,7 +68,7 @@ class HTML
 	 *
 	 * @since 1.0
 	 */
-	public static function clean($html): string
+	public static function clean(string $html): string
 	{
 		$html = preg_replace('/<script.+?<\/script>/is', '', $html);
 		$html = preg_replace('/<script.*?>(.*?)<\/script>/is', '', $html);

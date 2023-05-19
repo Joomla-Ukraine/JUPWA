@@ -21,7 +21,7 @@ class Schema
 {
 
 	/**
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -43,7 +43,7 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -135,7 +135,7 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -199,7 +199,7 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -262,7 +262,7 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return array
 	 *
@@ -289,8 +289,8 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $rating
-	 * @param   array  $option
+	 * @param array $rating
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -364,8 +364,8 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $rating
-	 * @param   array  $option
+	 * @param array $rating
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -443,7 +443,7 @@ class Schema
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return void
 	 *
@@ -454,7 +454,7 @@ class Schema
 	{
 		$doc = Factory::getDocument();
 
-		if(isset($option[ 'yt' ], $option[ 'youtube' ]) && isset($option[ 'article' ]))
+		if(isset($option[ 'yt' ], $option[ 'youtube' ], $option[ 'article' ]))
 		{
 			$json = Util::LD([
 				'@context'     => 'https://schema.org',
