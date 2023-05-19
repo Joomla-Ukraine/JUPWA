@@ -84,8 +84,10 @@ class Images
 
 			$image     = ltrim($image, '/');
 			$imageSize = $FastImageSize->getImageSize(JPATH_SITE . '/' . $image);
-			$width     = $imageSize[ 'width' ];
-			$height    = $imageSize[ 'height' ];
+            if ($imageSize !== false) {
+                $width  = $imageSize['width'];
+                $height = $imageSize['height'];
+            }
 		}
 
 		$image = Uri::base() . $image;
