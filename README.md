@@ -24,9 +24,9 @@
 Override the offline page and the worker service in your template.
 
 For example:
-/templates/my_template/html/jupwa/offline.php
-/templates/my_template/html/jupwa/sw.php
+`/templates/my_template/html/jupwa/offline.php`
+`/templates/my_template/html/jupwa/sw.php`
 
 The original code is placed in:
-/plugins/system/jupwa/tmpl/offline.php
-/plugins/system/jupwa/tmpl/sw.php
+`/plugins/system/jupwa/tmpl/offline.php`
+`/plugins/system/jupwa/tmpl/sw.php`
