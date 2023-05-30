@@ -29,14 +29,14 @@ class PlgJUPWAContent extends CMSPlugin
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public function onJUPWAArticleSchema($article): void
+	public function onJUPWAArticleSchema($article, $params): void
 	{
 		$option = [
 			'params'       => $this->params,
 			'title'        => $this->core($article)->title,
-			'image'        => $this->image($article)->image,
-			'image_width'  => $this->image($article)->width,
-			'image_height' => $this->image($article)->height,
+			'image'        => $this->image($article, $params)->image,
+			'image_width'  => $this->image($article, $params)->width,
+			'image_height' => $this->image($article, $params)->height,
 			'description'  => $this->core($article)->description,
 			'intro'        => $this->core($article)->intro,
 			'article'      => $article
@@ -64,9 +64,9 @@ class PlgJUPWAContent extends CMSPlugin
 				'params'       => $params,
 				'type'         => 'article',
 				'title'        => $this->core($article)->title,
-				'image'        => $this->image($article)->image,
-				'image_width'  => $this->image($article)->width,
-				'image_height' => $this->image($article)->height,
+				'image'        => $this->image($article, $params)->image,
+				'image_width'  => $this->image($article, $params)->width,
+				'image_height' => $this->image($article, $params)->height,
 				'description'  => $this->core($article)->description
 			]);
 
@@ -97,9 +97,9 @@ class PlgJUPWAContent extends CMSPlugin
 			OG::twitter([
 				'params'       => $params,
 				'title'        => $this->core($article)->title,
-				'image'        => $this->image($article)->image,
-				'image_width'  => $this->image($article)->width,
-				'image_height' => $this->image($article)->height,
+				'image'        => $this->image($article, $params)->image,
+				'image_width'  => $this->image($article, $params)->width,
+				'image_height' => $this->image($article, $params)->height,
 				'description'  => $this->core($article)->description,
 				'youtube'      => $this->youtube($article)
 			]);
@@ -108,21 +108,27 @@ class PlgJUPWAContent extends CMSPlugin
 
 	/**
 	 * @param $article
+	 * @param $params
 	 *
-	 * @return object
+	 * @return false|object
 	 *
 	 * @since 1.0
 	 */
-	private function image($article)
+	private function image($article, $params)
 	{
 		$image = Images::image_storage([
 			'article' => $article,
-			'params'  => $this->params,
+			'params'  => $params,
 			'text'    => $this->core($article)->text,
 			'alltxt'  => $this->core($article)->text,
 		]);
 
-		return Images::display($image);
+		if($image)
+		{
+			return Images::display($image);
+		}
+
+		return false;
 	}
 
 	/**
