@@ -20,7 +20,7 @@ use JUPWA\Utils\Util;
 class Images
 {
 	/**
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return string
 	 *
@@ -81,9 +81,8 @@ class Images
 		if($local === true && $image)
 		{
 			$FastImageSize = new FastImageSize();
-
-			$image     = ltrim($image, '/');
-			$imageSize = $FastImageSize->getImageSize(JPATH_SITE . '/' . $image);
+			$image         = ltrim($image, '/');
+			$imageSize     = $FastImageSize->getImageSize(JPATH_SITE . '/' . $image);
 
 			if($imageSize !== false)
 			{
@@ -92,10 +91,8 @@ class Images
 			}
 		}
 
-		$image = Uri::base() . $image;
-
 		return (object) [
-			'image'  => $image,
+			'image'  => Uri::base() . $image,
 			'width'  => $width,
 			'height' => $height,
 		];
@@ -112,25 +109,32 @@ class Images
 	 */
 	public static function display_default($selectimg, $img, $imgmain): string
 	{
-		$rand_img = self::random();
-		$img      = self::joomlaImage($img);
-		$imgmain  = self::joomlaImage($imgmain);
-		$image    = Uri::base() . 'media/jupwa/jupwa.png';
+		$img     = self::joomlaImage($img);
+		$imgmain = self::joomlaImage($imgmain);
+		$image   = Uri::base() . 'media/jupwa/jupwa.png';
 
-		if($rand_img !== '')
+		if($selectimg == 1)
 		{
-			$image = Uri::base() . $rand_img;
+			$rand_img = self::random();
+			if($rand_img !== '')
+			{
+				$image = Uri::base() . $rand_img;
+			}
 		}
 
-		if($selectimg == 0 && ($img || $imgmain))
+		if($img || $imgmain)
 		{
-			if(is_file(JPATH_SITE . '/' . $img))
+			if($selectimg == 0)
 			{
-				$image = $img;
-			}
-			elseif(is_file(JPATH_SITE . '/' . $imgmain))
-			{
-				$image = self::joomlaImage($imgmain);
+				if(is_file(JPATH_SITE . '/' . $img))
+				{
+					$image = $img;
+				}
+
+				if(is_file(JPATH_SITE . '/' . $imgmain))
+				{
+					$image = self::joomlaImage($imgmain);
+				}
 			}
 		}
 
@@ -140,21 +144,26 @@ class Images
 	/**
 	 * @param $url
 	 *
-	 * @return string
+	 * @return mixed|string
 	 *
 	 * @since 1.0
 	 */
-	public static function joomlaImage($url): string
+	public static function joomlaImage($url)
 	{
-		$jimg = '#joomlaImage:';
-		if(strpos($url, $jimg) === false)
+		if($url)
 		{
-			return $url;
+			$jimg = '#joomlaImage:';
+			if(strpos($url, $jimg) === false)
+			{
+				return $url;
+			}
+
+			$image = explode($jimg, $url);
+
+			return $image[ 0 ];
 		}
 
-		$image = explode($jimg, $url);
-
-		return $image[ 0 ];
+		return '';
 	}
 
 	/**

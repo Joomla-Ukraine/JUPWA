@@ -169,7 +169,12 @@ class Data
 		'gcm_sender_id'         => '482941778795',
 		'gcm_user_visible_only' => true,
 		'theme_color'           => '',
-		'background_color'      => ''
+		'background_color'      => '',
+		'author'                => [
+			'name'    => 'Joomla! Ukraine',
+			'website' => 'https://joomla-ua.org',
+			'github'  => 'https://github.com/Joomla-Ukraine/JUPWA'
+		]
 	];
 
 	public static $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js';

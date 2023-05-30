@@ -39,6 +39,13 @@ require_once __DIR__ . '/libraries/vendor/autoload.php';
 class plgSystemJUPWA extends CMSPlugin
 {
 	/**
+	 * @since  4.0.0
+	 * @var    \Joomla\CMS\Application\CMSApplication
+	 *
+	 */
+	protected $app;
+
+	/**
 	 * plgSystemJUPWA constructor.
 	 *
 	 * @param $subject
@@ -53,7 +60,7 @@ class plgSystemJUPWA extends CMSPlugin
 
 		$this->loadLanguage();
 
-		$app = Factory::getApplication();
+		$app = $this->app;
 
 		if($app->getName() === 'site')
 		{
@@ -70,7 +77,7 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->option === 'com_plugins' && $this->layout === 'edit' && isset($post[ 'jform' ][ 'params' ]) && $extension_id == $this->plg->id)
 		{
 			$post_param = $post[ 'jform' ][ 'params' ];
-			
+
 			if($post_param[ 'thumbs' ] == 1 && ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save'))
 			{
 				Render::create($post_param);
@@ -101,7 +108,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterRender(): void
 	{
-		$app = Factory::getApplication();
+		$app = $this->app;
 
 		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl'))
 		{
@@ -261,7 +268,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onBeforeCompileHead(): void
 	{
-		$app  = Factory::getApplication();
+		$app  = $this->app;
 		$view = $app->input->get('view');
 
 		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl'))
@@ -336,7 +343,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onContentPrepare($context, $article): bool
 	{
-		$app         = Factory::getApplication();
+		$app         = $this->app;
 		$integration = PluginHelper::importPlugin('jupwa');
 		$use_access  = $app->triggerEvent('onJUPWAAccess', [ $context ]);
 
@@ -346,12 +353,18 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		// Integration
-		$app->triggerEvent('onJUPWAArticleSchema', [ $article ]);
+		$app->triggerEvent('onJUPWAArticleSchema', [
+			$article,
+			$this->params
+		]);
 		$app->triggerEvent('onJUPWAArticleTwitter', [
 			$article,
 			$this->params
 		]);
-		$app->triggerEvent('onJUPWAArticleOG', [ $article, $this->params ]);
+		$app->triggerEvent('onJUPWAArticleOG', [
+			$article,
+			$this->params
+		]);
 
 		if($integration === null)
 		{
@@ -382,7 +395,7 @@ class plgSystemJUPWA extends CMSPlugin
 	}
 
 	/**
-	 * @param null $plugin_image
+	 * @param   null  $plugin_image
 	 *
 	 * @return object
 	 * @throws \Exception
@@ -390,7 +403,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	private function coreTags($plugin_image = null)
 	{
-		$app  = Factory::getApplication();
+		$app  = $this->app;
 		$doc  = Factory::getDocument();
 		$lang = Factory::getLanguage();
 
@@ -422,7 +435,7 @@ class plgSystemJUPWA extends CMSPlugin
 	/**
 	 * Check the buffer.
 	 *
-	 * @param string $buffer Buffer to be checked.
+	 * @param   string  $buffer  Buffer to be checked.
 	 *
 	 * @return  void
 	 */

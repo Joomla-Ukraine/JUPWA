@@ -196,17 +196,17 @@ class Minify
 
 	protected function _removePreCB($m): string
 	{
-		return $this->_reservePlace("<pre{$m[1]}");
+		return $this->_reservePlace("<pre$m[1]");
 	}
 
 	protected function _removeTextareaCB($m): string
 	{
-		return $this->_reservePlace("<textarea{$m[1]}");
+		return $this->_reservePlace("<textarea$m[1]");
 	}
 
 	protected function _removeStyleCB($m): string
 	{
-		$openStyle = "<style{$m[1]}";
+		$openStyle = "<style$m[1]";
 		$css       = $m[ 2 ];
 		// remove HTML comments
 		$css = preg_replace('/(?:^\\s*<!--|-->\\s*$)/u', '', $css);
@@ -218,12 +218,12 @@ class Minify
 		$minifier = $this->_cssMinifier ? : 'trim';
 		$css      = $minifier($css);
 
-		return $this->_reservePlace($this->_needsCdata($css) ? "{$openStyle}/*<![CDATA[*/{$css}/*]]>*/</style>" : "{$openStyle}{$css}</style>");
+		return $this->_reservePlace($this->_needsCdata($css) ? "$openStyle/*<![CDATA[*/$css/*]]>*/</style>" : "$openStyle$css</style>");
 	}
 
 	protected function _removeScriptCB($m): string
 	{
-		$openScript = "<script{$m[2]}";
+		$openScript = "<script$m[2]";
 		$js         = $m[ 3 ];
 
 		// whitespace surrounding? preserve at least one space
@@ -243,7 +243,7 @@ class Minify
 		$minifier = $this->_jsMinifier ? : 'trim';
 		$js       = $minifier($js);
 
-		return $this->_reservePlace($this->_needsCdata($js) ? "{$ws1}{$openScript}/*<![CDATA[*/{$js}/*]]>*/</script>{$ws2}" : "{$ws1}{$openScript}{$js}</script>{$ws2}");
+		return $this->_reservePlace($this->_needsCdata($js) ? "$ws1$openScript/*<![CDATA[*/$js/*]]>*/</script>$ws2" : "$ws1$openScript$js</script>$ws2");
 	}
 
 	protected function _removeCdata($str)

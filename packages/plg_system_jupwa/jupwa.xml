@@ -552,8 +552,8 @@
 	                       label="PLG_JUPWA_SELECTIMG"
 	                       showon="og:1"
 	                >
-	                    <option value="0">PLG_JUPWA_SELECTIMG01</option>
-	                    <option value="1">PLG_JUPWA_SELECTIMG02</option>
+	                    <option value="0">PLG_JUPWA_SELECTIMG_0</option>
+	                    <option value="1">PLG_JUPWA_SELECTIMG_1</option>
 	                </field>
 
 	                <field name="image"
