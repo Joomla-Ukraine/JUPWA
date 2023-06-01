@@ -22,6 +22,13 @@ defined('_JEXEC') or die;
 class PlgJUPWAContent extends CMSPlugin
 {
 	/**
+	 * @since  4.0.0
+	 * @var    \Joomla\CMS\Application\CMSApplication
+	 *
+	 */
+	protected $app;
+
+	/**
 	 * @param $article
 	 *
 	 * @return void
@@ -44,6 +51,7 @@ class PlgJUPWAContent extends CMSPlugin
 
 		Schema::article_news($option);
 		Schema::article($option);
+		Schema::article_blogposting($option);
 		Schema::youtube($option);
 	}
 
@@ -60,9 +68,22 @@ class PlgJUPWAContent extends CMSPlugin
 	{
 		if($params->get('og') == 1)
 		{
+			$itemid          = $this->app->input->getInt('Itemid');
+			$og_type_website = $this->params->get('og_type_website', 0);
+			$og_website      = $this->params->get('og_website_menus');
+
+			$type = 'article';
+			if(is_array($og_website) && $og_type_website)
+			{
+				if(in_array($itemid, $og_website))
+				{
+					$type = 'website';
+				}
+			}
+
 			OG::tag([
 				'params'       => $params,
-				'type'         => 'article',
+				'type'         => $type,
 				'title'        => $this->core($article)->title,
 				'image'        => $this->image($article, $params)->image,
 				'image_width'  => $this->image($article, $params)->width,
@@ -70,15 +91,18 @@ class PlgJUPWAContent extends CMSPlugin
 				'description'  => $this->core($article)->description
 			]);
 
-			OG::tagArticle([
-				'params'  => $params,
-				'article' => $article
-			]);
+			if($og_type_website == 0)
+			{
+				OG::tagArticle([
+					'params'  => $params,
+					'article' => $article
+				]);
 
-			OG::tagYouTube([
-				'params'  => $params,
-				'youtube' => $this->youtube($article)
-			]);
+				OG::tagYouTube([
+					'params'  => $params,
+					'youtube' => $this->youtube($article)
+				]);
+			}
 		}
 	}
 

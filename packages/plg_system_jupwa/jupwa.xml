@@ -892,6 +892,8 @@
 						        name="item"
 						        type="menuitem"
 						        default="0"
+						        state="1"
+						        published="1"
 						        label="PLG_JUPWA_PWA_MENUITEM"
 				        >
 			                    <option value="">JDEFAULT</option>
