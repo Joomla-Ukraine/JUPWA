@@ -24,6 +24,7 @@ class Images
 	 *
 	 * @return string
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public static function image_storage(array $option = []): string
@@ -105,6 +106,7 @@ class Images
 	 *
 	 * @return string
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public static function display_default($selectimg, $img, $imgmain): string
@@ -122,19 +124,16 @@ class Images
 			}
 		}
 
-		if($img || $imgmain)
+		if($selectimg == 0 && ($img || $imgmain))
 		{
-			if($selectimg == 0)
+			if(isset($img) && is_file(JPATH_SITE . '/' . $img))
 			{
-				if(is_file(JPATH_SITE . '/' . $img))
-				{
-					$image = $img;
-				}
+				$image = $img;
+			}
 
-				if(is_file(JPATH_SITE . '/' . $imgmain))
-				{
-					$image = self::joomlaImage($imgmain);
-				}
+			if(isset($imgmain) && is_file(JPATH_SITE . '/' . $imgmain))
+			{
+				$image = self::joomlaImage($imgmain);
 			}
 		}
 
@@ -185,7 +184,7 @@ class Images
 	 *
 	 * @since 1.0
 	 */
-	private static function gallery($text): mixed
+	private static function gallery($text)
 	{
 		if(strpos($text, '{gallery') === false)
 		{
@@ -347,7 +346,7 @@ class Images
 	 */
 	private static function random(): string
 	{
-		$folder = '/images/jupwa';
+		$folder = '/images/jupwa/images';
 		$images = Folders::files($folder);
 
 		$html = '';
