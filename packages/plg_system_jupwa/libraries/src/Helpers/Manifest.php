@@ -24,7 +24,7 @@ class Manifest
 {
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -151,7 +151,7 @@ class Manifest
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return array
 	 *
@@ -203,7 +203,7 @@ class Manifest
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return array
 	 *

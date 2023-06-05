@@ -22,7 +22,7 @@ class Render
 {
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -74,7 +74,7 @@ class Render
 
 	/**
 	 *
-	 * @param string $image
+	 * @param   string  $image
 	 *
 	 * @return string
 	 *
@@ -95,7 +95,7 @@ class Render
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return string
 	 *
@@ -121,7 +121,7 @@ class Render
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return array
 	 *
@@ -158,7 +158,7 @@ class Render
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return array
 	 *
@@ -169,13 +169,12 @@ class Render
 	{
 		$icons  = $option[ 'size' ];
 		$source = self::image($option[ 'icon' ]);
-		$name   = (isset($option[ 'name' ]) && $option[ 'name' ] ? : 'icon');
+		$name   = (isset($option[ 'name' ]) && $option[ 'name' ] ? $option[ 'name' ] : 'icon');
 
 		$image = [];
 		foreach($icons as $icon)
 		{
-			$out = 'favicons/' . $name . '_' . $icon . '.png';
-
+			$out     = 'favicons/' . $name . '_' . $icon . '.png';
 			$image[] = Image::render($source, $out, [
 				'width'  => $icon,
 				'height' => $icon
@@ -187,7 +186,7 @@ class Render
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return array
 	 *
@@ -218,7 +217,7 @@ class Render
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return object
 	 *

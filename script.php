@@ -34,6 +34,7 @@ class Pkg_JUPWAInstallerScript
 
 		Folder::create(JPATH_SITE . '/images/jupwa');
 		Folder::create(JPATH_SITE . '/images/jupwa/icon');
+		Folder::create(JPATH_SITE . '/images/jupwa/logos');
 		Folder::create(JPATH_SITE . '/images/jupwa/icons');
 		Folder::create(JPATH_SITE . '/images/jupwa/images');
 		Folder::create(JPATH_SITE . '/images/jupwa/screenshots');
