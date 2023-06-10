@@ -924,7 +924,7 @@
 				        name="use_assetlinks"
 				        layout="joomla.form.field.radio.switcher"
 				        type="radio"
-				        default="0"
+				        default="1"
 				        label="PLG_JUPWA_USE_ASSETLINKS"
 		        >
 	                    <option value="0">JNO</option>
