@@ -162,7 +162,7 @@ class Data
 		'description'           => '',
 		'scope'                 => '',
 		'orientation'           => '',
-		'screenshots'           => [],
+		'related_applications'  => [],
 		'icons'                 => [],
 		'shortcuts'             => [],
 		'categories'            => [],
@@ -170,10 +170,19 @@ class Data
 		'gcm_user_visible_only' => true,
 		'theme_color'           => '',
 		'background_color'      => '',
+		'screenshots'           => [],
 		'author'                => [
 			'name'    => 'Joomla! Ukraine',
 			'website' => 'https://joomla-ua.org',
 			'github'  => 'https://github.com/Joomla-Ukraine/JUPWA'
+		]
+	];
+
+	public static $assetlinks = [
+		'relation' => [ 'delegate_permission/common.query_webapk' ],
+		'target'   => [
+			'namespace' => 'web',
+			'site'      => ''
 		]
 	];
 

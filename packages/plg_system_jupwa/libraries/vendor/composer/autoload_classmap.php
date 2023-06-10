@@ -182,6 +182,7 @@ return array(
     'JUPWA\\Classes\\PHP_ICO' => $baseDir . '/src/Classes/PHP_ICO.php',
     'JUPWA\\Classes\\SeblodAPI' => $baseDir . '/src/Classes/SeblodAPI.php',
     'JUPWA\\Data\\Data' => $baseDir . '/src/Data/Data.php',
+    'JUPWA\\Helpers\\Assetinks' => $baseDir . '/src/Helpers/Assetinks.php',
     'JUPWA\\Helpers\\BrowserConfig' => $baseDir . '/src/Helpers/BrowserConfig.php',
     'JUPWA\\Helpers\\Facebook' => $baseDir . '/src/Helpers/Facebook.php',
     'JUPWA\\Helpers\\Favicons' => $baseDir . '/src/Helpers/Favicons.php',

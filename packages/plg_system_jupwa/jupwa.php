@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use JUPWA\Helpers\Assetinks;
 use JUPWA\Helpers\BrowserConfig;
 use JUPWA\Helpers\Facebook;
 use JUPWA\Helpers\HTML;
@@ -89,6 +90,8 @@ class plgSystemJUPWA extends CMSPlugin
 				'param' => $post_param,
 				'site'  => $app->get('sitename')
 			]);
+
+			Assetinks::create([ 'param' => $post_param ]);
 
 			Manifest::addVersion();
 			ServiceWorker::create([ 'param' => $post_param ]);

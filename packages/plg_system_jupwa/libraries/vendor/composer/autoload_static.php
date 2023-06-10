@@ -234,6 +234,7 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
         'JUPWA\\Classes\\PHP_ICO' => __DIR__ . '/../..' . '/src/Classes/PHP_ICO.php',
         'JUPWA\\Classes\\SeblodAPI' => __DIR__ . '/../..' . '/src/Classes/SeblodAPI.php',
         'JUPWA\\Data\\Data' => __DIR__ . '/../..' . '/src/Data/Data.php',
+        'JUPWA\\Helpers\\Assetinks' => __DIR__ . '/../..' . '/src/Helpers/Assetinks.php',
         'JUPWA\\Helpers\\BrowserConfig' => __DIR__ . '/../..' . '/src/Helpers/BrowserConfig.php',
         'JUPWA\\Helpers\\Facebook' => __DIR__ . '/../..' . '/src/Helpers/Facebook.php',
         'JUPWA\\Helpers\\Favicons' => __DIR__ . '/../..' . '/src/Helpers/Favicons.php',
