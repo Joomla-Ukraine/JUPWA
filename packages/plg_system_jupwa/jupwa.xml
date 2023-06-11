@@ -721,6 +721,17 @@
 
 	            <fieldset name="MANIFEST">
 
+		            <field
+				            name="usepwa"
+				            layout="joomla.form.field.radio.switcher"
+				            type="radio"
+				            default="0"
+				            label="PLG_JUPWA_USEPWA"
+		            >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
 	                <field name="manifest_name"
 	                       size="50"
 	                       type="text"
@@ -739,6 +750,17 @@
 	                       label="PLG_JUPWA_MANIFEST_DESC"
 	                />
 
+		            <field
+				            name="manifest_dir"
+				            type="list"
+				            default="auto"
+				            label="PLG_JUPWA_MANIFEST_DIR"
+		            >
+						<option value="auto">auto</option>
+						<option value="ltr">ltr</option>
+						<option value="rtl">rtl</option>
+	                </field>
+
 	                <field name="manifest_scope"
 	                       size="50"
 	                       type="text"
@@ -749,6 +771,12 @@
 		                   size="50"
 		                   type="text"
 		                   label="PLG_JUPWA_MANIFEST_START_URL"
+		            />
+
+		            <field name="manifest_id"
+		                   size="50"
+		                   type="text"
+		                   label="PLG_JUPWA_MANIFEST_ID"
 		            />
 
 		            <field
@@ -802,6 +830,17 @@
 	                </field>
 
 		            <field
+				            name="manifest_display_override"
+				            type="list"
+				            multiple="true"
+				            label="PLG_JUPWA_MANIFEST_DISPLAY_OVERRIDE"
+		            >
+						<option value="window-controls-overlay">window-controls-overlay</option>
+						<option value="standalone">standalone</option>
+						<option value="standalone">browser</option>
+	                </field>
+
+		            <field
 				            name="manifest_orientation"
 				            type="list"
 				            default="any"
@@ -817,22 +856,97 @@
 	                    <option value="landscape-secondary">landscape-secondary</option>
 	                </field>
 
-	            </fieldset>
-
-	            <fieldset name="PWAAPP">
-
-		             <field
-				             name="usepwa"
-				             layout="joomla.form.field.radio.switcher"
-				             type="radio"
-				             default="0"
-				             label="PLG_JUPWA_USEPWA"
-		             >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
+		            <field
+				            name="manifest_handle_links"
+				            type="list"
+				            default="auto"
+				            label="PLG_JUPWA_MANIFEST_HANDLE_LINKS"
+		            >
+						<option value="auto">auto</option>
+						<option value="preferred">preferred</option>
+						<option value="not-preferred">not-preferred</option>
 	                </field>
 
+		             <field name="manifest_edge_side_panel_width"
+		                    size="50"
+		                    type="text"
+		                    default="600"
+		                    label="PLG_JUPWA_MANIFEST_EDGE_SIDE_PANEL_WIDTH"
+		             />
+
 	            </fieldset>
+
+	            <fieldset name="RELATED_APPS">
+		            <field
+				            name="prefer_related_applications"
+				            type="list"
+				            default="true"
+				            label="PLG_JUPWA_MANIFEST_PREFER_RELATED_APPS"
+		            >
+			            <option value="true">true</option>
+	                    <option value="false">false</option>
+			        </field>
+
+			        <field
+					        name="my_webapp_pwa"
+					        layout="joomla.form.field.radio.switcher"
+					        type="radio"
+					        default="1"
+					        label="PLG_JUPWA_MY_WEBAPP_PWA"
+			        >
+		                    <option value="0">JNO</option>
+		                    <option value="1">JYES</option>
+			        </field>
+
+			        <field
+					        name="related_apps"
+					        type="subform"
+					        multiple="true"
+					        min="0"
+					        layout="joomla.form.field.subform.repeatable-table"
+					        label="PLG_JUPWA_MANIFEST_RELATED_APPS"
+			        >
+				        <form>
+				            <field
+						            name="related_apps_platforms"
+						            type="list"
+						            default=""
+						            label="PLG_JUPWA_MANIFEST_RELATED_APPS_PLATFORMS"
+				            >
+								<option value="play">Google Play Store</option>
+					            <option value="itunes">Apple App Store</option>
+					            <option value="webapp">Web apps</option>
+					            <option value="windows">Windows Store</option>
+					            <option value="chrome_web_store">Google Chrome Web Store</option>
+								<option value="chromeos_play">Chrome OS Play</option>
+								<option value="f-droid">F-droid</option>
+								<option value="amazon">Amazon App Store</option>
+			                </field>
+
+					         <field name="related_apps_url"
+					                type="text"
+					                label="PLG_JUPWA_MANIFEST_RELATED_APPS_URL"
+					         />
+
+					        <field name="related_apps_id"
+					               type="text"
+					               label="PLG_JUPWA_MANIFEST_RELATED_APPS_ID"
+					        />
+				        </form>
+			        </field>
+
+			        <field
+					        name="use_assetlinks"
+					        layout="joomla.form.field.radio.switcher"
+					        type="radio"
+					        default="1"
+					        label="PLG_JUPWA_USE_ASSETLINKS"
+			        >
+		                    <option value="0">JNO</option>
+		                    <option value="1">JYES</option>
+			        </field>
+
+		        </fieldset>
 
             </fieldset>
 
@@ -867,69 +981,6 @@
 				        type="color"
 				        label="PLG_JUPWA_MSAPPLICATION_TILECOLOR"
 		        />
-
-	        </fieldset>
-
-	        <fieldset name="RELATED_APPS">
-
-		        <field
-				        name="my_webapp_pwa"
-				        layout="joomla.form.field.radio.switcher"
-				        type="radio"
-				        default="1"
-				        label="PLG_JUPWA_MY_WEBAPP_PWA"
-		        >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
-		        </field>
-
-		        <field
-				        name="related_apps"
-				        type="subform"
-				        multiple="true"
-				        min="0"
-				        layout="joomla.form.field.subform.repeatable-table"
-				        label="PLG_JUPWA_MANIFEST_RELATED_APPS"
-		        >
-			        <form>
-			            <field
-					            name="related_apps_platforms"
-					            type="list"
-					            default=""
-					            label="PLG_JUPWA_MANIFEST_RELATED_APPS_PLATFORMS"
-			            >
-							<option value="play">Google Play Store</option>
-				            <option value="itunes">Apple App Store</option>
-				            <option value="webapp">Web apps</option>
-				            <option value="windows">Windows Store</option>
-				            <option value="chrome_web_store">Google Chrome Web Store</option>
-							<option value="chromeos_play">Chrome OS Play</option>
-							<option value="f-droid">F-droid</option>
-							<option value="amazon">Amazon App Store</option>
-		                </field>
-
-				         <field name="related_apps_url"
-				                type="text"
-				                label="PLG_JUPWA_MANIFEST_RELATED_APPS_URL"
-				         />
-
-				        <field name="related_apps_id"
-				               type="text"
-				               label="PLG_JUPWA_MANIFEST_RELATED_APPS_ID"
-				        />
-			        </form>
-		        </field>
-
-		        <field
-				        name="use_assetlinks"
-				        layout="joomla.form.field.radio.switcher"
-				        type="radio"
-				        default="1"
-				        label="PLG_JUPWA_USE_ASSETLINKS"
-		        >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
-		        </field>
 
 	        </fieldset>
 

@@ -36,25 +36,36 @@ class Manifest
 		$manifest      = '/manifest.webmanifest';
 		$file_manifest = JPATH_SITE . $manifest;
 
-		$data                           = Data::$manifest;
-		$data[ 'name' ]                 = ($option[ 'param' ][ 'manifest_name' ] ? : $option[ 'site' ]);
-		$data[ 'short_name' ]           = ($option[ 'param' ][ 'manifest_sname' ] ? : $option[ 'site' ]);
-		$data[ 'description' ]          = $option[ 'param' ][ 'manifest_desc' ];
-		$data[ 'scope' ]                = $option[ 'param' ][ 'manifest_scope' ];
-		$data[ 'display' ]              = $option[ 'param' ][ 'manifest_display' ];
-		$data[ 'orientation' ]          = $option[ 'param' ][ 'manifest_orientation' ];
-		$data[ 'start_url' ]            = $option[ 'param' ][ 'manifest_start_url' ];
-		$data[ 'background_color' ]     = $option[ 'param' ][ 'meta_background_color' ];
-		$data[ 'theme_color' ]          = $option[ 'param' ][ 'theme_color' ];
-		$data[ 'related_applications' ] = self::related_applications($option[ 'param' ]);
-		$data[ 'screenshots' ]          = self::screenshots($option[ 'param' ]);
-		$data[ 'icons' ]                = self::icons();
-		$data[ 'shortcuts' ]            = self::shortcuts($option[ 'param' ]);
-		$data[ 'categories' ]           = ($option[ 'param' ][ 'manifest_categories' ] ?? []);
+		$data                                           = Data::$manifest;
+		$data[ 'name' ]                                 = ($option[ 'param' ][ 'manifest_name' ] ? : $option[ 'site' ]);
+		$data[ 'short_name' ]                           = ($option[ 'param' ][ 'manifest_sname' ] ? : $option[ 'site' ]);
+		$data[ 'description' ]                          = $option[ 'param' ][ 'manifest_desc' ];
+		$data[ 'dir' ]                                  = $option[ 'param' ][ 'manifest_dir' ];
+		$data[ 'scope' ]                                = $option[ 'param' ][ 'manifest_scope' ];
+		$data[ 'display' ]                              = $option[ 'param' ][ 'manifest_display' ];
+		$data[ 'display_override' ]                     = $option[ 'param' ][ 'manifest_display_override' ];
+		$data[ 'orientation' ]                          = $option[ 'param' ][ 'manifest_orientation' ];
+		$data[ 'start_url' ]                            = $option[ 'param' ][ 'manifest_start_url' ];
+		$data[ 'id' ]                                   = $option[ 'param' ][ 'manifest_id' ];
+		$data[ 'background_color' ]                     = $option[ 'param' ][ 'meta_background_color' ];
+		$data[ 'theme_color' ]                          = $option[ 'param' ][ 'theme_color' ];
+		$data[ 'prefer_related_applications' ]          = (bool) $option[ 'param' ][ 'prefer_related_applications' ];
+		$data[ 'related_applications' ]                 = self::related_applications($option[ 'param' ]);
+		$data[ 'screenshots' ]                          = self::screenshots($option[ 'param' ]);
+		$data[ 'icons' ]                                = self::icons();
+		$data[ 'shortcuts' ]                            = self::shortcuts($option[ 'param' ]);
+		$data[ 'handle_links' ]                         = ($option[ 'param' ][ 'manifest_handle_links' ] ?? []);
+		$data[ 'categories' ]                           = ($option[ 'param' ][ 'manifest_categories' ] ?? []);
+		$data[ 'edge_side_panel' ][ 'preferred_width' ] = $option[ 'param' ][ 'manifest_edge_side_panel_width' ];
 
 		if(is_countable($data[ 'screenshots' ]) && count($data[ 'screenshots' ]) == 0)
 		{
 			unset($data[ 'screenshots' ]);
+		}
+
+		if($data[ 'display_override' ] !== '')
+		{
+			unset($data[ 'display_override' ]);
 		}
 
 		if(is_countable($data[ 'icons' ]) && count($data[ 'icons' ]) == 0)

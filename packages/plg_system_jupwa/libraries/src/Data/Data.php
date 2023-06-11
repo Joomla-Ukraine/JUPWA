@@ -155,23 +155,29 @@ class Data
 	];
 
 	public static $manifest = [
-		'name'                  => '',
-		'short_name'            => '',
-		'start_url'             => '',
-		'display'               => '',
-		'description'           => '',
-		'scope'                 => '',
-		'orientation'           => '',
-		'related_applications'  => [],
-		'icons'                 => [],
-		'shortcuts'             => [],
-		'categories'            => [],
-		'gcm_sender_id'         => '482941778795',
-		'gcm_user_visible_only' => true,
-		'theme_color'           => '',
-		'background_color'      => '',
-		'screenshots'           => [],
-		'author'                => [
+		'name'                        => '',
+		'short_name'                  => '',
+		'start_url'                   => '',
+		'id'                          => '',
+		'display'                     => '',
+		'display_override'            => [],
+		'description'                 => '',
+		'dir'                         => '',
+		'scope'                       => '',
+		'orientation'                 => '',
+		'prefer_related_applications' => '',
+		'related_applications'        => [],
+		'icons'                       => [],
+		'shortcuts'                   => [],
+		'categories'                  => [],
+		'gcm_sender_id'               => '482941778795',
+		'gcm_user_visible_only'       => true,
+		'theme_color'                 => '',
+		'background_color'            => '',
+		'screenshots'                 => [],
+		'handle_links'                => [],
+		'edge_side_panel'             => [],
+		'author'                      => [
 			'name'    => 'Joomla! Ukraine',
 			'website' => 'https://joomla-ua.org',
 			'github'  => 'https://github.com/Joomla-Ukraine/JUPWA'
@@ -186,7 +192,7 @@ class Data
 		]
 	];
 
-	public static $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js';
+	public static $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js';
 
 	public static $preconnect = [
 		'google'           => [ 'https://www.google.com' ],
