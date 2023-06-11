@@ -17,13 +17,10 @@ defined('_JEXEC') or die('Restricted access');
 $data = (object) $displayData;
 
 ?>
+const CACHE = "jupwa-offline";
+
 importScripts('<?php echo $data->workbox; ?>');
 
-workbox.setConfig({
-	debug: false
-});
-
-const CACHE = "jupwa-offline";
 const offlineFallbackPage = "/offline.php";
 
 self.addEventListener("message", (event) => {
@@ -34,13 +31,27 @@ self.addEventListener("message", (event) => {
 
 self.addEventListener('install', async (event) => {
 	event.waitUntil(
-		caches.open(CACHE).then((cache) => cache.add(offlineFallbackPage))
+		caches.open(CACHE)
+		.then((cache) => cache.add(offlineFallbackPage))
 	);
 });
 
 if (workbox.navigationPreload.isSupported()) {
 	workbox.navigationPreload.enable();
 }
+
+self.addEventListener('fetch', event => {
+	event.respondWith(async () => {
+		const cache = await caches.open(CACHE);
+		const cachedResponse = await cache.match(event.request);
+
+		if (cachedResponse !== undefined) {
+			return cachedResponse;
+		} else {
+			return fetch(event.request)
+		};
+	});
+});
 
 workbox.routing.registerRoute(
 	new RegExp('/*'),
