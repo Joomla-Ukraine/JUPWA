@@ -40,19 +40,6 @@ if (workbox.navigationPreload.isSupported()) {
 	workbox.navigationPreload.enable();
 }
 
-self.addEventListener('fetch', event => {
-	event.respondWith(async () => {
-		const cache = await caches.open(CACHE);
-		const cachedResponse = await cache.match(event.request);
-
-		if (cachedResponse !== undefined) {
-			return cachedResponse;
-		} else {
-			return fetch(event.request)
-		};
-	});
-});
-
 workbox.routing.registerRoute(
 	new RegExp('/*'),
 	new workbox.strategies.StaleWhileRevalidate({
