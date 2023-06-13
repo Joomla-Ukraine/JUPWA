@@ -19,7 +19,7 @@ class OG
 {
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -28,7 +28,8 @@ class OG
 	 */
 	public static function tag(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		if(isset($option[ 'params' ]) && $option[ 'params' ]->get('og') == 1)
 		{
@@ -62,7 +63,7 @@ class OG
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -71,7 +72,8 @@ class OG
 	 */
 	public static function tagYouTube(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		if(isset($option[ 'params' ]) && $option[ 'params' ]->get('ogvideo_youtube') == 1 && $option[ 'params' ]->get('og') == 1)
 		{
@@ -99,7 +101,7 @@ class OG
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -108,7 +110,8 @@ class OG
 	 */
 	public static function tagArticle(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		if(isset($option[ 'params' ]) && $option[ 'params' ]->get('og') == 1)
 		{
@@ -148,15 +151,17 @@ class OG
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public static function twitter(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		if(isset($option[ 'params' ]) && $option[ 'params' ]->get('tw') == 1)
 		{
