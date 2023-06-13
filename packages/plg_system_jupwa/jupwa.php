@@ -205,10 +205,6 @@ class plgSystemJUPWA extends CMSPlugin
 		$buffer = preg_replace($regex, '', $buffer);
 		$this->checkBuffer($buffer);
 
-		$regex  = '#<link href=".*?" rel="mask-icon" color=".*?".*?>#m';
-		$buffer = preg_replace($regex, '', $buffer);
-		$this->checkBuffer($buffer);
-
 		$buffer = str_replace("	\n", '', $buffer);
 		$this->checkBuffer($buffer);
 
@@ -407,7 +403,7 @@ class plgSystemJUPWA extends CMSPlugin
 	private function coreTags($plugin_image = null)
 	{
 		$app  = $this->app;
-		$doc  = Factory::getDocument();
+		$doc  = $app->getDocument();
 		$lang = Factory::getLanguage();
 
 		$image = Images::display_default($this->params->get('selectimg', 0), $this->params->get('image', ''), $this->params->get('imagemain', ''));
