@@ -53,7 +53,7 @@ class Schema
 	public static function global(array $option = []): void
 	{
 		$app = Factory::getApplication();
-		$doc = Factory::getDocument();
+		$doc = $app->getDocument();
 
 		if($option[ 'params' ]->get('schema_search') == 1 && $option[ 'params' ]->get('schema_search_query'))
 		{
@@ -145,7 +145,7 @@ class Schema
 	public static function article_news(array $option = []): void
 	{
 		$app    = Factory::getApplication();
-		$doc    = Factory::getDocument();
+		$doc    = $app->getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
 		if(in_array($Itemid, $option[ 'params' ]->get('schema_news_article') ? : []))
@@ -209,7 +209,7 @@ class Schema
 	public static function article_blogposting(array $option = []): void
 	{
 		$app    = Factory::getApplication();
-		$doc    = Factory::getDocument();
+		$doc    = $app->getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
 		if(in_array($Itemid, $option[ 'params' ]->get('schema_blogposting') ? : []))
@@ -274,7 +274,7 @@ class Schema
 	public static function article(array $option = []): void
 	{
 		$app    = Factory::getApplication();
-		$doc    = Factory::getDocument();
+		$doc    = $app->getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
 		if(in_array($Itemid, $option[ 'params' ]->get('schema_article') ? : []))
@@ -365,7 +365,7 @@ class Schema
 	private static function product(array $rating = [], array $option = []): void
 	{
 		$app    = Factory::getApplication();
-		$doc    = Factory::getDocument();
+		$doc    = $app->getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
 		if(in_array($Itemid, isset($option[ 'schema_product' ]) && $option[ 'schema_product' ] ? : []))
@@ -440,7 +440,7 @@ class Schema
 	private static function event(array $rating = [], array $option = []): void
 	{
 		$app    = Factory::getApplication();
-		$doc    = Factory::getDocument();
+		$doc    = $app->getDocument();
 		$Itemid = $app->input->getInt('Itemid');
 
 		if(in_array($Itemid, isset($option[ 'schema_event' ]) && $option[ 'schema_event' ] ? : []))
@@ -517,7 +517,8 @@ class Schema
 	 */
 	public static function youtube(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		if(isset($option[ 'yt' ], $option[ 'youtube' ], $option[ 'article' ]))
 		{
