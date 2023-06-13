@@ -355,6 +355,17 @@
 	                    <option value="1">JYES</option>
 		        </field>
 
+		        <field name="manifest_icon_background_color"
+		               type="radio"
+		               layout="joomla.form.field.radio.switcher"
+		               default="0"
+		               label="PLG_JUPWA_USE_BACKGROUND_COLOR_FOR_MANIFEST_ICON"
+		               showon="thumbs:1"
+		        >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+		        </field>
+
 		        <field name="source_icon_sm"
 		               type="media"
 		               preview_width="100"
@@ -959,7 +970,7 @@
 		        />
 
 		        <field
-				        name="meta_background_color"
+				        name="background_color"
 				        type="color"
 				        label="PLG_JUPWA_META_BG_COLOR_COLOR"
 		        />
