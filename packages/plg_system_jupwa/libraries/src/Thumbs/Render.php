@@ -51,17 +51,11 @@ class Render
 			'icon' => ($option[ 'source_icon' ] !== '' ? $option[ 'source_icon' ] : $option[ 'source_icon_sm' ])
 		]);
 
-		$icons_m = self::icons([
-			'size' => Data::$manifest_icons,
-			'name' => 'micon',
-			'icon' => ($option[ 'source_icon_sm' ] !== '' ? $option[ 'source_icon_sm' ] : $option[ 'source_icon' ])
-		]);
-
 		$json = [
 			'favicon_root'     => $favicon->root,
 			'favicon_favicons' => $favicon->favicons,
 			'icons'            => array_merge($icons_s, $icons_b),
-			'manifest_icons'   => $icons_m,
+			'manifest_icons'   => self::manifest_icons($option),
 			'shortcuts'        => self::shortcuts($option),
 			'splash'           => self::splash($option),
 			'article_logo'     => self::article_logo($option),
@@ -150,6 +144,42 @@ class Render
 				'height' => $height,
 				'ratio'  => 1.15,
 				'color'  => $option[ 'ioscolor' ]
+			]);
+		}
+
+		return $image;
+	}
+
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function manifest_icons(array $option = []): array
+	{
+		if(!$option[ 'source_icon' ])
+		{
+			return [];
+		}
+
+		$icons = Data::$manifest_icons;
+
+		$source_icon = ($option[ 'source_icon_sm' ] !== '' ? $option[ 'source_icon_sm' ] : $option[ 'source_icon' ]);
+		$source      = self::image($source_icon);
+
+		$image = [];
+		foreach($icons as $icon)
+		{
+			$out     = 'favicons/micon_' . $icon . '.png';
+			$image[] = Image::render_image($source, $out, [
+				'width'  => $icon,
+				'height' => $icon,
+				'ratio'  => 1.75,
+				'color'  => $option[ 'manifest_icon_background_color' ] == 1 ? $option[ 'background_color' ] : null
 			]);
 		}
 
