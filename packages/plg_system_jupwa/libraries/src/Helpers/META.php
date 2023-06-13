@@ -16,12 +16,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Data\Data;
+use JUPWA\Thumbs\Render;
 
 class META
 {
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -35,7 +36,9 @@ class META
 		self::preconnect([ 'params' => $option[ 'params' ] ]);
 		self::preloads([ 'params' => $option[ 'params' ] ]);
 
-		self::icons_apple([ 'params' => $option[ 'params' ] ]);
+		self::meta_apple([ 'params' => $option[ 'params' ] ]);
+		self::meta_ms([ 'params' => $option[ 'params' ] ]);
+
 		self::icons();
 
 		self::splash([ 'params' => $option[ 'params' ] ]);
@@ -47,7 +50,7 @@ class META
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -56,7 +59,8 @@ class META
 	 */
 	public static function facebook(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		if($option[ 'params' ]->get('fbpage') !== '')
 		{
@@ -82,7 +86,7 @@ class META
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -91,7 +95,8 @@ class META
 	 */
 	public static function preloads(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		$preloads = (array) $option[ 'params' ]->get('preloads');
 		foreach($preloads as $preload)
@@ -126,7 +131,7 @@ class META
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -135,7 +140,8 @@ class META
 	 */
 	public static function preconnect(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		$preconnect = Data::$preconnect;
 		foreach($preconnect as $key => $val)
@@ -161,7 +167,7 @@ class META
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -170,9 +176,10 @@ class META
 	 */
 	public static function splash(array $option = []): void
 	{
-		$doc = Factory::getDocument();
-
+		$app   = Factory::getApplication();
+		$doc   = $app->getDocument();
 		$icons = Data::$splash;
+
 		foreach($icons as $icon)
 		{
 			$file = 'favicons/splash_' . $icon[ 'width' ] . 'x' . $icon[ 'height' ] . '.png';
@@ -188,16 +195,17 @@ class META
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function icons_apple(array $option = []): void
+	public static function meta_apple(array $option = []): void
 	{
-		$doc   = Factory::getDocument();
+		$app   = Factory::getApplication();
+		$doc   = $app->getDocument();
 		$icons = Data::$favicons;
 
 		foreach($icons[ 'apple-touch-icon' ] as $icon)
@@ -216,27 +224,60 @@ class META
 		$doc->setMetaData('apple-mobile-web-app-title', ($option[ 'params' ]->get('manifest_sname') ? : $option[ 'params' ]->get('manifest_name')));
 		$doc->setMetaData('apple-mobile-web-app-status-bar-style', 'black-translucent');
 
-		/*
-				if(is_file($favfolder . 'safari-pinned-tab.svg'))
-				{
-					$href    = $favsite . 'safari-pinned-tab.svg';
-					$attribs = [ 'color' => $option[ 'params' ]->get('maskiconcolor') ];
-					$doc->addHeadLink($href, 'mask-icon', 'rel', $attribs);
-				}
+		if($option[ 'params' ]->get('source_icon_svg_pin') !== '' && $option[ 'params' ]->get('maskiconcolor') !== '')
+		{
+			$file = Render::image($option[ 'params' ]->get('source_icon_svg_pin'));
+			if(File::exists(JPATH_SITE . '/' . $file))
+			{
+				$href = Uri::root() . $file;
+				$doc->addHeadLink($href, 'mask-icon', 'rel', [ 'color' => $option[ 'params' ]->get('maskiconcolor') ]);
+			}
+		}
+	}
 
-		*/
+	/**
+	 *
+	 * @param   array  $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function meta_ms(array $option = []): void
+	{
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
+		if($option[ 'params' ]->get('msapplication_tilecolor'))
+		{
+			$doc->setMetaData('msapplication-TileColor', $option[ 'params' ]->get('msapplication_tilecolor'));
+		}
+
+		if($option[ 'params' ]->get('theme_color'))
+		{
+			$doc->setMetaData('theme-color', $option[ 'params' ]->get('theme_color'));
+		}
+
+		$file = 'favicons/browserconfig.xml';
+		if(File::exists(JPATH_SITE . '/' . $file))
+		{
+			$href = Uri::root() . $file;
+			$doc->setMetaData('msapplication-config', $href);
+		}
 	}
 
 	/**
 	 *
 	 * @return void
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public static function icons(): void
 	{
-		$doc   = Factory::getDocument();
+		$app   = Factory::getApplication();
+		$doc   = $app->getDocument();
 		$icons = Data::$favicons;
 
 		foreach($icons[ 'icon' ] as $icon)
@@ -258,24 +299,19 @@ class META
 			$href = Uri::root() . $file;
 			$doc->addHeadLink($href, 'shortcut icon');
 		}
-
-		$file = 'favicons/browserconfig.xml';
-		if(File::exists(JPATH_SITE . '/' . $file))
-		{
-			$href = Uri::root() . $file;
-			$doc->setMetaData('msapplication-config', $href);
-		}
 	}
 
 	/**
 	 *
 	 * @return void
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public static function manifest(): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		$file = 'manifest.webmanifest';
 		if(File::exists(JPATH_SITE . '/' . $file))
@@ -287,7 +323,7 @@ class META
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -296,7 +332,8 @@ class META
 	 */
 	public static function tags(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		if($option[ 'params' ]->get('theme_color') != '')
 		{
@@ -306,7 +343,7 @@ class META
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -315,7 +352,8 @@ class META
 	 */
 	public static function pwa(array $option = []): void
 	{
-		$doc = Factory::getDocument();
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
 
 		if($option[ 'params' ]->get('usepwa', 0) == 1)
 		{
