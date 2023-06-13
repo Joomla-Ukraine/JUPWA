@@ -47,7 +47,7 @@ class Manifest
 		$data[ 'orientation' ]                          = $option[ 'param' ][ 'manifest_orientation' ];
 		$data[ 'start_url' ]                            = $option[ 'param' ][ 'manifest_start_url' ];
 		$data[ 'id' ]                                   = $option[ 'param' ][ 'manifest_id' ];
-		$data[ 'background_color' ]                     = $option[ 'param' ][ 'meta_background_color' ];
+		$data[ 'background_color' ]                     = $option[ 'param' ][ 'background_color' ];
 		$data[ 'theme_color' ]                          = $option[ 'param' ][ 'theme_color' ];
 		$data[ 'prefer_related_applications' ]          = (bool) $option[ 'param' ][ 'prefer_related_applications' ];
 		$data[ 'related_applications' ]                 = self::related_applications($option[ 'param' ]);
