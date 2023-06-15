@@ -12,6 +12,8 @@
 
 namespace JUPWA\Helpers;
 
+use FastImageSize\FastImageSize;
+use GuzzleHttp\Psr7\MimeType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
@@ -144,16 +146,15 @@ class Manifest
 			if(File::exists(JPATH_SITE . '/' . $file))
 			{
 				$icons[] = [
-					'src'     => Uri::root() . $file,
-					'sizes'   => $size . 'x' . $size,
-					'type'    => 'image/png',
-					'purpose' => 'any'
+					'src'   => Uri::root() . $file,
+					'sizes' => $size . 'x' . $size,
+					'type'  => 'image/png'
 				];
 				$icons[] = [
+					'purpose' => 'maskable',
 					'src'     => Uri::root() . $file,
 					'sizes'   => $size . 'x' . $size,
-					'type'    => 'image/png',
-					'purpose' => 'maskable'
+					'type'    => 'image/png'
 				];
 			}
 		}
@@ -201,11 +202,12 @@ class Manifest
 					'name'  => $row->title,
 					'url'   => Route::link('site', $row->link, true, null, true),
 					'icons' => [
-						'src'   => $file,
-						'type'  => 'image/png',
-						'sizes' => '96x96'
+						[
+							'src'   => $file,
+							'type'  => 'image/png',
+							'sizes' => '96x96'
+						]
 					]
-
 				];
 			}
 		}
@@ -229,9 +231,23 @@ class Manifest
 
 		if($screenshots)
 		{
-			foreach($screenshots as $key => $val)
+			foreach($screenshots as $screenshot)
 			{
-				$screen[] = Uri::root() . Render::image($val[ 'screen' ]);
+				$file          = Render::image($screenshot[ 'screen' ]);
+				$FastImageSize = new FastImageSize();
+				$imageSize     = $FastImageSize->getImageSize(JPATH_SITE . '/' . $file);
+
+				$sizes = '';
+				if($imageSize !== false)
+				{
+					$sizes = $imageSize[ 'width' ] . 'x' . $imageSize[ 'height' ];
+				}
+
+				$screen[] = [
+					'src'   => Uri::root() . $file,
+					'sizes' => $sizes,
+					'type'  => MimeType::fromFilename(JPATH_ROOT . '/' . $file)
+				];
 			}
 		}
 
