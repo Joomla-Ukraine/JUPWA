@@ -61,19 +61,17 @@ class plgSystemJUPWA extends CMSPlugin
 
 		$this->loadLanguage();
 
-		$app = $this->app;
-
-		if($app->getName() === 'site')
+		if($this->app->isClient('site'))
 		{
 			return;
 		}
 
 		$this->plg    = PluginHelper::getPlugin('system', 'jupwa');
-		$this->view   = $app->input->get('view');
-		$this->layout = $app->input->get('layout');
-		$this->option = $app->input->get('option');
-		$extension_id = $app->input->get('extension_id');
-		$post         = $app->input->post->getArray();
+		$this->view   = $this->app->input->get('view');
+		$this->layout = $this->app->input->get('layout');
+		$this->option = $this->app->input->get('option');
+		$extension_id = $this->app->input->get('extension_id');
+		$post         = $this->app->input->post->getArray();
 
 		if($this->option === 'com_plugins' && $this->layout === 'edit' && isset($post[ 'jform' ][ 'params' ]) && $extension_id == $this->plg->id)
 		{
@@ -88,7 +86,7 @@ class plgSystemJUPWA extends CMSPlugin
 
 			Manifest::create([
 				'param' => $post_param,
-				'site'  => $app->get('sitename')
+				'site'  => $this->app->get('sitename')
 			]);
 
 			Assetinks::create([ 'param' => $post_param ]);
@@ -98,7 +96,7 @@ class plgSystemJUPWA extends CMSPlugin
 
 			if(!File::exists(JPATH_SITE . '/favicons/thumbs.json'))
 			{
-				$app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+				$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
 			}
 		}
 	}
@@ -111,9 +109,12 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterRender(): void
 	{
-		$app = $this->app;
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
 
-		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl'))
+		if($this->app->getDocument()->getType() !== 'html')
 		{
 			return;
 		}
@@ -123,7 +124,7 @@ class plgSystemJUPWA extends CMSPlugin
 		 */
 		Facebook::fix();
 
-		$buffer = $app->getBody();
+		$buffer = $this->app->getBody();
 
 		/*
 		 * Replace <html> for support OG-tags
@@ -175,7 +176,7 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->params->get('jauthor') == 1)
 		{
 			$regex  = '#<meta name="author" content="(.*?)".*?>#m';
-			$buffer = preg_replace($regex, '<meta name="author" content="' . $app->get('sitename') . '">', $buffer);
+			$buffer = preg_replace($regex, '<meta name="author" content="' . $this->app->get('sitename') . '">', $buffer);
 
 			$this->checkBuffer($buffer);
 		}
@@ -217,7 +218,7 @@ class plgSystemJUPWA extends CMSPlugin
 			$this->checkBuffer($buffer);
 		}
 
-		$app->setBody($buffer);
+		$this->app->setBody($buffer);
 
 		/*
 		 * Add cache support
@@ -237,15 +238,15 @@ class plgSystemJUPWA extends CMSPlugin
 
 		if($this->params->get('brawser_cache', 0) == 1)
 		{
-			$app->allowCache(true);
+			$this->app->allowCache(true);
 			if($this->params->get('pragma', 0) == 1)
 			{
-				$app->setHeader('Pragma', 'public', true);
+				$this->app->setHeader('Pragma', 'public', true);
 			}
 
 			if($this->params->get('cachecontrol', 0) == 1)
 			{
-				$app->setHeader('Cache-Control', 'public, max-age=' . $this->params->get('expirestime'), true);
+				$this->app->setHeader('Cache-Control', 'public, max-age=' . $this->params->get('expirestime'), true);
 			}
 
 			if($this->params->get('expires', 0) == 1)
@@ -253,7 +254,7 @@ class plgSystemJUPWA extends CMSPlugin
 				$date = new DateTime();
 				$date->setTimezone(new DateTimeZone('GMT'));
 				$expireheader = $date->setTimestamp(time() + $this->params->get('expirestime'))->format('D, d M Y H:i:s T');
-				$app->setHeader('Expires', $expireheader, true);
+				$this->app->setHeader('Expires', $expireheader, true);
 			}
 		}
 	}
@@ -267,10 +268,14 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onBeforeCompileHead(): void
 	{
-		$app  = $this->app;
-		$view = $app->input->get('view');
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
 
-		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl'))
+		$view = $this->app->input->get('view');
+
+		if($this->app->getDocument()->getType() !== 'html')
 		{
 			return;
 		}
@@ -281,7 +286,7 @@ class plgSystemJUPWA extends CMSPlugin
 			$title       = $this->coreTags()->title;
 			$description = $this->coreTags()->description;
 
-			$plugins = $app->triggerEvent('onJUPWAImage', [ $app->input->getCmd('option') ]);
+			$plugins = $this->app->triggerEvent('onJUPWAImage', [ $this->app->input->getCmd('option') ]);
 			foreach($plugins as $plugin)
 			{
 				$image = $plugin;
@@ -313,16 +318,16 @@ class plgSystemJUPWA extends CMSPlugin
 			}
 
 			// Integration
-			$app->triggerEvent('onJUPWASchema');
+			$this->app->triggerEvent('onJUPWASchema');
 
 			if($this->params->get('tw') == 1)
 			{
-				$app->triggerEvent('onJUPWATwitter', [ $this->params ]);
+				$this->app->triggerEvent('onJUPWATwitter', [ $this->params ]);
 			}
 
 			if($this->params->get('og') == 1)
 			{
-				$app->triggerEvent('onJUPWAOG', [ $this->params ]);
+				$this->app->triggerEvent('onJUPWAOG', [ $this->params ]);
 			}
 		}
 
@@ -335,32 +340,41 @@ class plgSystemJUPWA extends CMSPlugin
 	 * @param        $context
 	 * @param        $article
 	 *
-	 * @return bool
+	 * @return true|void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public function onContentPrepare($context, $article): bool
+	public function onContentPrepare($context, $article)
 	{
-		$app         = $this->app;
-		$integration = PluginHelper::importPlugin('jupwa');
-		$use_access  = $app->triggerEvent('onJUPWAAccess', [ $context ]);
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
 
-		if($app->getName() !== 'site' || ($app->input->getCmd('format') !== 'html' && $app->input->getCmd('format')) || $app->input->getCmd('tmpl') || $context === 'com_finder.indexer' || ($integration && !in_array($context, $use_access)))
+		if($this->app->getDocument()->getType() !== 'html')
+		{
+			return;
+		}
+
+		$integration = PluginHelper::importPlugin('jupwa');
+		$use_access  = $this->app->triggerEvent('onJUPWAAccess', [ $context ]);
+
+		if($context === 'com_finder.indexer' || ($integration && !in_array($context, $use_access)))
 		{
 			return true;
 		}
 
 		// Integration
-		$app->triggerEvent('onJUPWAArticleSchema', [
+		$this->app->triggerEvent('onJUPWAArticleSchema', [
 			$article,
 			$this->params
 		]);
-		$app->triggerEvent('onJUPWAArticleTwitter', [
+		$this->app->triggerEvent('onJUPWAArticleTwitter', [
 			$article,
 			$this->params
 		]);
-		$app->triggerEvent('onJUPWAArticleOG', [
+		$this->app->triggerEvent('onJUPWAArticleOG', [
 			$article,
 			$this->params
 		]);
@@ -402,16 +416,15 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	private function coreTags($plugin_image = null)
 	{
-		$app  = $this->app;
-		$doc  = $app->getDocument();
+		$doc  = $this->app->getDocument();
 		$lang = Factory::getLanguage();
 
 		$image = Images::display_default($this->params->get('selectimg', 0), $this->params->get('image', ''), $this->params->get('imagemain', ''));
 
 		$title = HTML::text($doc->getTitle());
-		if($app->getMenu()->getActive() !== $app->getMenu()->getDefault($lang->getTag()))
+		if($this->app->getMenu()->getActive() !== $this->app->getMenu()->getDefault($lang->getTag()))
 		{
-			$title = $app->getMenu()->getActive()->title;
+			$title = $this->app->getMenu()->getActive()->title;
 		}
 
 		$description = HTML::html($doc->getMetaData('description'));
@@ -437,6 +450,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 * @param   string  $buffer  Buffer to be checked.
 	 *
 	 * @return  void
+	 * @since 1.0
 	 */
 	private function checkBuffer($buffer): void
 	{
