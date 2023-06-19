@@ -16,7 +16,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Data\Data;
-use JUPWA\Thumbs\Render;
 
 class META
 {
@@ -226,7 +225,7 @@ class META
 
 		if($option[ 'params' ]->get('source_icon_svg_pin') !== '' && $option[ 'params' ]->get('maskiconcolor') !== '')
 		{
-			$file = Render::image($option[ 'params' ]->get('source_icon_svg_pin'));
+			$file = $option[ 'params' ]->get('source_icon_svg_pin');
 			if(File::exists(JPATH_SITE . '/' . $file))
 			{
 				$href = Uri::root() . $file;

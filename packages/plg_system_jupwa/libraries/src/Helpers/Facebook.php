@@ -58,9 +58,12 @@ class Facebook
 			}
 		}
 
-		if($app->get('gzip', 0) == 1 && $unsupported === true)
+		if($app->get('gzip', 0) == 1)
 		{
-			$app->set('gzip', 0);
+			if($unsupported === true)
+			{
+				$app->set('gzip', 0);
+			}
 		}
 
 		return true;

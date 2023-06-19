@@ -30,6 +30,7 @@ class PlgJUPWAContent extends CMSPlugin
 
 	/**
 	 * @param $article
+	 * @param $params
 	 *
 	 * @return void
 	 *
@@ -73,12 +74,9 @@ class PlgJUPWAContent extends CMSPlugin
 			$og_website      = $this->params->get('og_website_menus');
 
 			$type = 'article';
-			if(is_array($og_website) && $og_type_website)
+			if(is_array($og_website) && $og_type_website && in_array($itemid, $og_website))
 			{
-				if(in_array($itemid, $og_website))
-				{
-					$type = 'website';
-				}
+				$type = 'website';
 			}
 
 			OG::tag([
@@ -112,6 +110,7 @@ class PlgJUPWAContent extends CMSPlugin
 	 *
 	 * @return void
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public function onJUPWAArticleTwitter($article, $params): void
@@ -136,6 +135,7 @@ class PlgJUPWAContent extends CMSPlugin
 	 *
 	 * @return false|object
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	private function image($article, $params)
@@ -167,6 +167,13 @@ class PlgJUPWAContent extends CMSPlugin
 		return Video::YouTube($article);
 	}
 
+	/**
+	 * @param $article
+	 *
+	 * @return object
+	 *
+	 * @since 1.0
+	 */
 	private function core($article)
 	{
 		// Title
@@ -201,7 +208,6 @@ class PlgJUPWAContent extends CMSPlugin
 			'text'        => $text,
 			'description' => $description,
 		];
-
 	}
 
 	/**
