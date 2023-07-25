@@ -2,7 +2,8 @@
 
 # Donation Buttons
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=WQJNDPDPDMKP8) [![Static Badge](https://img.shields.io/badge/Donate-Moby%20%2F%20Signal%20%2F%20MobileCoin-blue)](https://moby.app/denys)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=WQJNDPDPDMKP8) 
+[![Static Badge](https://img.shields.io/badge/Donate-Moby%20%2F%20Signal%20%2F%20MobileCoin-blue)](https://moby.app/denys)
 
 # JUPWA - Progressive Web Application (PWA) for Joomla!
 
