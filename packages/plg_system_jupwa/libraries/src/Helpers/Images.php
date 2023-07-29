@@ -14,6 +14,7 @@ namespace JUPWA\Helpers;
 
 use DOMDocument;
 use FastImageSize\FastImageSize;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Utils\Util;
 
@@ -111,8 +112,8 @@ class Images
 	 */
 	public static function display_default($selectimg, $img, $imgmain): string
 	{
-		$img     = self::joomlaImage($img);
-		$imgmain = self::joomlaImage($imgmain);
+		$img     = HTMLHelper::cleanImageURL($img)->url;
+		$imgmain = HTMLHelper::cleanImageURL($imgmain)->url;
 		$image   = Uri::base() . 'media/jupwa/jupwa.png';
 
 		if($selectimg == 1)
@@ -133,7 +134,7 @@ class Images
 
 			if(isset($imgmain) && is_file(JPATH_SITE . '/' . $imgmain))
 			{
-				$image = self::joomlaImage($imgmain);
+				$image = HTMLHelper::cleanImageURL($imgmain)->url;
 			}
 		}
 
@@ -144,8 +145,9 @@ class Images
 	 * @param $url
 	 *
 	 * @return mixed|string
-	 *
 	 * @since 1.0
+	 * @deprecated
+	 *
 	 */
 	public static function joomlaImage($url)
 	{

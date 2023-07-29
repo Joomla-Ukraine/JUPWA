@@ -123,7 +123,7 @@ class META
 
 				$_preload = array_merge($preload_as, $preload_type, $preload_co, $preload_media);
 
-				$doc->addHeadLink($preload->url, 'preload', 'rel', [ $_preload ]);
+				$doc->addHeadLink($preload->url, 'preload prefetch', 'rel', [ $_preload ]);
 			}
 		}
 	}

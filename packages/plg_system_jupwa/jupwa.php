@@ -12,7 +12,6 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -345,7 +344,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public function onContentPrepare($context, $article)
+	public function onContentPrepare($context, &$article)
 	{
 		if(!$this->app->isClient('site'))
 		{
@@ -417,7 +416,7 @@ class plgSystemJUPWA extends CMSPlugin
 	private function coreTags($plugin_image = null)
 	{
 		$doc  = $this->app->getDocument();
-		$lang = Factory::getLanguage();
+		$lang = $this->app->getLanguage();
 
 		$image = Images::display_default($this->params->get('selectimg', 0), $this->params->get('image', ''), $this->params->get('imagemain', ''));
 

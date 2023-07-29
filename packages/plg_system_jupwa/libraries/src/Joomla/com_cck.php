@@ -40,7 +40,7 @@ class com_cck
 		if(strpos($article->text, '::/cck::'))
 		{
 			$app       = Factory::getApplication();
-			$lang      = Factory::getLanguage();
+			$lang      = $app->getLanguage();
 			$multilang = JLanguageMultilang::isEnabled();
 
 			$id      = $app->input->getInt('id');

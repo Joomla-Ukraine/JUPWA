@@ -13,6 +13,7 @@
 namespace JUPWA\Helpers;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 
 class OG
@@ -33,8 +34,8 @@ class OG
 
 		if(isset($option[ 'params' ]) && $option[ 'params' ]->get('og') == 1)
 		{
-			$lang = Factory::getLanguage();
 			$app  = Factory::getApplication();
+			$lang = $app->getLanguage();
 
 			$doc->setMetaData('og:locale', str_replace('-', '_', $lang->getTag()), 'property');
 			$doc->setMetaData('og:type', $option[ 'type' ], 'property');
@@ -45,7 +46,7 @@ class OG
 
 			if(isset($option[ 'image' ]))
 			{
-				$doc->setMetaData('og:image', Images::joomlaImage($option[ 'image' ]), 'property');
+				$doc->setMetaData('og:image', HTMLHelper::cleanImageURL($option[ 'image' ])->url, 'property');
 
 				if((isset($option[ 'image_width' ]) && $option[ 'image_width' ] > 0) || (isset($option[ 'image_height' ]) && $option[ 'image_height' ] > 0))
 				{
