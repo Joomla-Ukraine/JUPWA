@@ -3,7 +3,7 @@
          basedir=".">
 
     <property name="VERSION"
-              value="1.14" />
+              value="1.16" />
     <property name="JOOMLA"
               value="4.0" />
 
@@ -95,6 +95,24 @@
         <copy file="${temp}/temp/plg_jupwa_content/content.xml"
               todir="${temp}/plg_jupwa_content" />
 
+	    <!---->
+
+	    <copy file="packages/plg_jupwa_seblod/seblod.xml"
+	          todir="${temp}/temp/plg_jupwa_seblod">
+            <filterchain>
+                <replacetokens>
+                    <token key="version"
+                           value="${VERSION}" />
+                    <token key="date"
+                           value="${DATE}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <delete file="${temp}/plg_jupwa_seblod/seblod.xml" />
+        <copy file="${temp}/temp/plg_jupwa_seblod/seblod.xml"
+              todir="${temp}/plg_jupwa_seblod" />
+
     </target>
 
     <target name="pack-plugins">
@@ -109,6 +127,11 @@
         <zip destfile="${build}/packages/plg_jupwa_content.zip"
              description="plg_jupwa_content">
             <fileset dir="${temp}/plg_jupwa_content" />
+        </zip>
+
+        <zip destfile="${build}/packages/plg_jupwa_seblod.zip"
+             description="plg_jupwa_seblod">
+            <fileset dir="${temp}/plg_jupwa_seblod" />
         </zip>
 
         <copy todir="${build}/language">

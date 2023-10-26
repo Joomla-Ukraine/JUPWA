@@ -842,6 +842,7 @@
 
 		            <field
 				            name="manifest_display_override"
+				            default="standalone"
 				            type="list"
 				            multiple="true"
 				            label="PLG_JUPWA_MANIFEST_DISPLAY_OVERRIDE"

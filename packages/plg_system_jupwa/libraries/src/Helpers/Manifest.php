@@ -45,7 +45,7 @@ class Manifest
 		$data[ 'dir' ]                                  = $option[ 'param' ][ 'manifest_dir' ];
 		$data[ 'scope' ]                                = $option[ 'param' ][ 'manifest_scope' ];
 		$data[ 'display' ]                              = $option[ 'param' ][ 'manifest_display' ];
-		$data[ 'display_override' ]                     = $option[ 'param' ][ 'manifest_display_override' ];
+		$data[ 'display_override' ]                     = ($option[ 'param' ][ 'manifest_display_override' ] ?? []);
 		$data[ 'orientation' ]                          = $option[ 'param' ][ 'manifest_orientation' ];
 		$data[ 'start_url' ]                            = $option[ 'param' ][ 'manifest_start_url' ];
 		$data[ 'id' ]                                   = $option[ 'param' ][ 'manifest_id' ];
