@@ -43,7 +43,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 * @var    \Joomla\CMS\Application\CMSApplication
 	 *
 	 */
-	protected \Joomla\CMS\Application\CMSApplication $app;
+	protected $app;
 
 	/**
 	 * plgSystemJUPWA constructor.
