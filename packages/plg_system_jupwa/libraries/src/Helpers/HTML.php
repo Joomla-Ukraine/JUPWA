@@ -19,11 +19,11 @@ class HTML
 	/**
 	 * @param   string  $text
 	 *
-	 * @return string
+	 * @return string|null
 	 *
 	 * @since 1.0
 	 */
-	public static function text(string $text): string
+	public static function text(string $text): ?string
 	{
 		$text = rtrim($text, ' ');
 		$text = trim($text);

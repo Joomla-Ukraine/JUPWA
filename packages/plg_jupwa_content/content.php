@@ -177,14 +177,14 @@ class PlgJUPWAContent extends CMSPlugin
 	private function core($article)
 	{
 		// Title
-		$title = HTML::text($article->title);
+		$title = HTML::text(($article->title ? : ''));
 
 		// Introtext
 		$intro = $article->introtext;
 		$text  = $article->introtext . $article->fulltext;
 
 		// Description
-		$desc = $article->metadesc;
+		$desc = ($article->metadesc ? : '');
 		if($article->metadesc !== '' && $this->params->get('usemeta') == 1)
 		{
 			$desc = $article->metadesc;
