@@ -43,7 +43,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 * @var    \Joomla\CMS\Application\CMSApplication
 	 *
 	 */
-	protected $app;
+	protected \Joomla\CMS\Application\CMSApplication $app;
 
 	/**
 	 * plgSystemJUPWA constructor.
@@ -413,7 +413,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	private function coreTags($plugin_image = null)
+	private function coreTags($plugin_image = null): object
 	{
 		$doc  = $this->app->getDocument();
 		$lang = $this->app->getLanguage();
@@ -451,7 +451,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 * @return  void
 	 * @since 1.0
 	 */
-	private function checkBuffer($buffer): void
+	private function checkBuffer(string $buffer): void
 	{
 		if($buffer === null)
 		{

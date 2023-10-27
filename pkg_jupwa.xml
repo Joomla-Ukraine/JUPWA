@@ -21,8 +21,9 @@
     <updateservers>
         <server type="extension"
                 priority="1"
-                name="JUPWA">https://joomla-ua.org/update/plg/jupwa.xml
-        </server>
+                name="JUPWA">
+            <![CDATA[https://joomla-ua.org/update/plg/jupwa.xml]]>
+            </server>
     </updateservers>
 
     <files folder="packages">
@@ -41,4 +42,9 @@
         <language tag="en-GB">en-GB/en-GB.pkg_jupwa.ini</language>
         <language tag="en-GB">en-GB/en-GB.pkg_jupwa.sys.ini</language>
     </languages>
+
+    <compatibility>
+        <version>4</version>
+        <version>5</version>
+    </compatibility>
 </extension>
