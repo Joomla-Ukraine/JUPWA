@@ -4,7 +4,6 @@
            group="jupwa"
            method="upgrade">
 	<name>plg_jupwa_content</name>
-	<author>Denys Nosov, Joomla! Ukraine</author>
 	<creationDate>@date@</creationDate>
 	<copyright>(C) 2023 Denys Nosov, Joomla! Ukraine</copyright>
 	<license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License</license>

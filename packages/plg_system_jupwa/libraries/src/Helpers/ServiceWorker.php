@@ -1,16 +1,19 @@
 <?php
 /**
- * @package     JUPWA\Helpers
- * @subpackage
+ * JUPWA plugin
  *
- * @copyright   A copyright
- * @license     A "Slug" license name e.g. GPL2
- */
+ * @version       1.x
+ * @package       JUPWA
+ * @author        Denys D. Nosov (denys@joomla-ua.org)
+ * @copyright (C) 2023 by Denys D. Nosov (https://joomla-ua.org)
+ * @license       GNU General Public License version 2 or later; see LICENSE.md
+ *
+ **/
 
 namespace JUPWA\Helpers;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use JUPWA\Data\Data;
 use JUPWA\Utils\Util;
 
@@ -18,7 +21,7 @@ class ServiceWorker
 {
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -49,12 +52,12 @@ class ServiceWorker
 		}
 		else
 		{
-			if(File::exists(JPATH_SITE . '/sw.js'))
+			if(file_exists(JPATH_SITE . '/sw.js'))
 			{
 				File::delete(JPATH_SITE . '/sw.js');
 			}
 
-			if(File::exists(JPATH_SITE . '/offline.php'))
+			if(file_exists(JPATH_SITE . '/offline.php'))
 			{
 				File::delete(JPATH_SITE . '/offline.php');
 			}

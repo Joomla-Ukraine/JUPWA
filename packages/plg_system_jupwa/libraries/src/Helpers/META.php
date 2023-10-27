@@ -13,7 +13,6 @@
 namespace JUPWA\Helpers;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Data\Data;
 
@@ -182,7 +181,7 @@ class META
 		foreach($icons as $icon)
 		{
 			$file = 'favicons/splash_' . $icon[ 'width' ] . 'x' . $icon[ 'height' ] . '.png';
-			if(File::exists(JPATH_SITE . '/' . $file))
+			if(file_exists(JPATH_SITE . '/' . $file))
 			{
 				$href = Uri::root() . $file;
 				$doc->addHeadLink($href, 'apple-touch-startup-image', 'rel', [
@@ -210,7 +209,7 @@ class META
 		foreach($icons[ 'apple-touch-icon' ] as $icon)
 		{
 			$file = 'favicons/icon_' . $icon . '.png';
-			if(File::exists(JPATH_SITE . '/' . $file))
+			if(file_exists(JPATH_SITE . '/' . $file))
 			{
 				$href = Uri::root() . $file;
 				$doc->addHeadLink($href, 'apple-touch-icon', 'rel', [ 'sizes' => $icon . 'x' . $icon ]);
@@ -226,7 +225,7 @@ class META
 		if($option[ 'params' ]->get('source_icon_svg_pin') !== '' && $option[ 'params' ]->get('maskiconcolor') !== '')
 		{
 			$file = $option[ 'params' ]->get('source_icon_svg_pin');
-			if(File::exists(JPATH_SITE . '/' . $file))
+			if(file_exists(JPATH_SITE . '/' . $file))
 			{
 				$href = Uri::root() . $file;
 				$doc->addHeadLink($href, 'mask-icon', 'rel', [ 'color' => $option[ 'params' ]->get('maskiconcolor') ]);
@@ -259,7 +258,7 @@ class META
 		}
 
 		$file = 'favicons/browserconfig.xml';
-		if(File::exists(JPATH_SITE . '/' . $file))
+		if(file_exists(JPATH_SITE . '/' . $file))
 		{
 			$href = Uri::root() . $file;
 			$doc->setMetaData('msapplication-config', $href);
@@ -282,7 +281,7 @@ class META
 		foreach($icons[ 'icon' ] as $icon)
 		{
 			$file = 'favicons/icon_' . $icon . '.png';
-			if(File::exists(JPATH_SITE . '/' . $file))
+			if(file_exists(JPATH_SITE . '/' . $file))
 			{
 				$href = Uri::root() . $file;
 				$doc->addHeadLink($href, 'icon', 'rel', [
@@ -293,7 +292,7 @@ class META
 		}
 
 		$file = 'favicons/favicon.ico';
-		if(File::exists(JPATH_SITE . '/' . $file))
+		if(file_exists(JPATH_SITE . '/' . $file))
 		{
 			$href = Uri::root() . $file;
 			$doc->addHeadLink($href, 'shortcut icon');
@@ -313,7 +312,7 @@ class META
 		$doc = $app->getDocument();
 
 		$file = 'manifest.webmanifest';
-		if(File::exists(JPATH_SITE . '/' . $file))
+		if(file_exists(JPATH_SITE . '/' . $file))
 		{
 			$href = Uri::root() . $file;
 			$doc->addHeadLink($href, 'manifest');

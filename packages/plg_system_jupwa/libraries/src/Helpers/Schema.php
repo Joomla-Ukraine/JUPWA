@@ -1,16 +1,18 @@
 <?php
 /**
- * @package     JUPWA\Helpers
- * @subpackage
+ * JUPWA plugin
  *
- * @copyright   A copyright
- * @license     A "Slug" license name e.g. GPL2
- */
+ * @version       1.x
+ * @package       JUPWA
+ * @author        Denys D. Nosov (denys@joomla-ua.org)
+ * @copyright (C) 2023 by Denys D. Nosov (https://joomla-ua.org)
+ * @license       GNU General Public License version 2 or later; see LICENSE.md
+ *
+ **/
 
 namespace JUPWA\Helpers;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 use JUPWA\Utils\Util;
@@ -90,7 +92,7 @@ class Schema
 		if($option[ 'params' ]->get('schema_logo') == 1)
 		{
 			$file = 'favicons/icon_512.png';
-			if(File::exists(JPATH_SITE . '/' . $file))
+			if(file_exists(JPATH_SITE . '/' . $file))
 			{
 				$logo = Uri::root() . $file;
 				$json = Util::LD([

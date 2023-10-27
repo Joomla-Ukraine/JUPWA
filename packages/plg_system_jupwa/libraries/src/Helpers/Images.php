@@ -240,8 +240,8 @@ class Images
 
 		if(isset($images))
 		{
-			$image_intro = $images->image_intro;
-			$image_full  = $images->image_fulltext;
+			$image_intro = (isset($images->image_intro) ? $images->image_intro : '');
+			$image_full  = (isset($images->image_fulltext) ? $images->image_fulltext : '');
 
 			$_intro = '';
 			if(!empty($image_intro))

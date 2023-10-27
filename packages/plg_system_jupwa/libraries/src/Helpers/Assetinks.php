@@ -1,17 +1,20 @@
 <?php
 /**
- * @package     JUPWA\Helpers
- * @subpackage
+ * JUPWA plugin
  *
- * @copyright   A copyright
- * @license     A "Slug" license name e.g. GPL2
- */
+ * @version       1.x
+ * @package       JUPWA
+ * @author        Denys D. Nosov (denys@joomla-ua.org)
+ * @copyright (C) 2023 by Denys D. Nosov (https://joomla-ua.org)
+ * @license       GNU General Public License version 2 or later; see LICENSE.md
+ *
+ **/
 
 namespace JUPWA\Helpers;
 
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use JUPWA\Data\Data;
 
 class Assetinks
@@ -30,9 +33,9 @@ class Assetinks
 		$assetlinks      = '/assetlinks.json';
 		$file_assetlinks = $folder . $assetlinks;
 
-		if($option[ 'param' ][ 'use_assetlinks' ] == 1 && File::exists(JPATH_ROOT . '/manifest.webmanifest'))
+		if($option[ 'param' ][ 'use_assetlinks' ] == 1 && file_exists(JPATH_ROOT . '/manifest.webmanifest'))
 		{
-			if(!Folder::exists($folder))
+			if(!(file_exists($folder) && is_dir($folder)))
 			{
 				Folder::create($folder);
 			}

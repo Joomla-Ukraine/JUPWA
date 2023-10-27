@@ -13,7 +13,7 @@
 namespace JUPWA\Helpers;
 
 use DOMDocument;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 
 class BrowserConfig
 {
@@ -30,8 +30,8 @@ class BrowserConfig
 	{
 		$favicons = JPATH_SITE . '/favicons/';
 		$file     = $favicons . '/browserconfig.xml';
-		$icon150  = File::exists($favicons . '/icon_150.png');
-		$icon310  = File::exists($favicons . '/icon_310.png');
+		$icon150  = file_exists($favicons . '/icon_150.png');
+		$icon310  = file_exists($favicons . '/icon_310.png');
 
 		if($icon150 || $icon310)
 		{

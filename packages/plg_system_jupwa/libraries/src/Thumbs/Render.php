@@ -12,8 +12,8 @@
 
 namespace JUPWA\Thumbs;
 
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use JUPWA\Classes\PHP_ICO;
 use JUPWA\Data\Data;
 use JUPWA\Utils\Image;
@@ -32,7 +32,7 @@ class Render
 	public static function create(array $option = []): void
 	{
 		$path = JPATH_SITE . '/favicons';
-		if(Folder::exists($path))
+		if(file_exists($path) && is_dir($path))
 		{
 			Folder::delete($path);
 		}
@@ -272,7 +272,7 @@ class Render
 			}
 
 			$is_favicons = [ 'favicons' => '' ];
-			if(File::exists($favicons))
+			if(file_exists($favicons))
 			{
 				$is_favicons = [ 'favicons' => 'favicons/favicon.ico' ];
 			}

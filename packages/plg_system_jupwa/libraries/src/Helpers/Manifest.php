@@ -15,10 +15,11 @@ namespace JUPWA\Helpers;
 use FastImageSize\FastImageSize;
 use GuzzleHttp\Psr7\MimeType;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use JUPWA\Data\Data;
 use JUPWA\Thumbs\Render;
 
@@ -119,7 +120,7 @@ class Manifest
 	public static function getVersion(): string
 	{
 		$json = JPATH_SITE . '/favicons/version.json';
-		if(File::exists($json))
+		if(file_exists($json))
 		{
 			$json = file_get_contents($json);
 
@@ -143,7 +144,7 @@ class Manifest
 		foreach($sizes as $size)
 		{
 			$file = 'favicons/micon_' . $size . '.png';
-			if(File::exists(JPATH_SITE . '/' . $file))
+			if(file_exists(JPATH_SITE . '/' . $file))
 			{
 				$icons[] = [
 					'src'   => Uri::root() . $file,
@@ -173,7 +174,7 @@ class Manifest
 	 */
 	private static function shortcuts(array $option = []): array
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 
 		$shortcuts = $option[ 'shortcuts' ] ?? [];
 		$item      = [];
@@ -193,7 +194,7 @@ class Manifest
 
 				$icon = 'favicons/shortcut_' . $val[ 'item' ] . '.png';
 				$file = '';
-				if(File::exists(JPATH_SITE . '/' . $icon))
+				if(file_exists(JPATH_SITE . '/' . $icon))
 				{
 					$file = Uri::root() . $icon;
 				}
@@ -269,7 +270,7 @@ class Manifest
 		$related_apps  = $option[ 'related_apps' ] ?? [];
 		$item          = [];
 
-		if($my_webapp_pwa && File::exists(JPATH_ROOT . '/manifest.webmanifest'))
+		if($my_webapp_pwa && file_exists(JPATH_ROOT . '/manifest.webmanifest'))
 		{
 			$item[] = [
 				'platform' => 'webapp',

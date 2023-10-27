@@ -14,9 +14,9 @@ namespace JUPWA\Joomla;
 
 use JCck;
 use JCckDatabase;
-use JLanguageMultilang;
 use Joomla\CMS\Factory;
-use JRegistry;
+use Joomla\CMS\Language\Multilanguage;
+use Joomla\Registry\Registry;
 use JUPWA\Classes\SeblodAPI;
 
 class com_cck
@@ -41,7 +41,7 @@ class com_cck
 		{
 			$app       = Factory::getApplication();
 			$lang      = $app->getLanguage();
-			$multilang = JLanguageMultilang::isEnabled();
+			$multilang = Multilanguage::isEnabled();
 
 			$id      = $app->input->getInt('id');
 			$cck     = new SeblodAPI();
@@ -231,21 +231,21 @@ class com_cck
 				{
 					$lang->load('pkg_app_cck_' . $cck->folder_app, JPATH_SITE, null, false, false);
 
-					$registry = new JRegistry;
+					$registry = new Registry;
 					$registry->loadString($cck->{'options_' . $client});
 					$this->loaded[ $contentType . '_' . $client . '_options' ] = $registry->toArray();
 
 					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]) && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ][ 0 ] === '{')
 					{
 						$descriptions                                                            = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]);
-						$lang_tag                                                                = Factory::getLanguage()->getTag();
+						$lang_tag                                                                = Factory::getApplication()->getLanguage()->getTag();
 						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] = $descriptions->$lang_tag ?? '';
 					}
 
 					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]) && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ][ 0 ] == '{')
 					{
 						$titles                                                               = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]);
-						$lang_tag                                                             = Factory::getLanguage()->getTag();
+						$lang_tag                                                             = Factory::getApplication()->getLanguage()->getTag();
 						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] = $titles->$lang_tag ?? '';
 					}
 				}

@@ -3,7 +3,7 @@
          basedir=".">
 
     <property name="VERSION"
-              value="1.17" />
+              value="1.18" />
     <property name="JOOMLA"
               value="4.0" />
 
@@ -58,6 +58,12 @@
                 </replacetokens>
             </filterchain>
         </copy>
+
+	    <!---->
+
+	    <delete file="${temp}/plg_system_jupwa/libraries/composer.json" />
+        <delete file="${temp}/plg_system_jupwa/libraries/composer.lock" />
+        <delete file="${temp}/plg_system_jupwa/libraries/vendor/marc1706/fast-image-size/composer.lock" />
 
 	    <!---->
 

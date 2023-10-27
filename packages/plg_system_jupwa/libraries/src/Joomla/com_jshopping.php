@@ -15,6 +15,7 @@ namespace JUPWA\Joomla;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use JSFactory;
 
 class com_jshopping
@@ -31,7 +32,7 @@ class com_jshopping
 	public function run(array $option = []): array
 	{
 		$app        = Factory::getApplication();
-		$db         = Factory::getDbo();
+		$db         = Factory::getContainer()->get(DatabaseInterface::class);
 		$id         = $app->input->getInt('product_id');
 		$controller = $app->input->get('controller');
 

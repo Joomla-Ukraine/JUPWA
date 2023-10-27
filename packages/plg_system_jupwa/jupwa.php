@@ -12,7 +12,6 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -93,7 +92,7 @@ class plgSystemJUPWA extends CMSPlugin
 			Manifest::addVersion();
 			ServiceWorker::create([ 'param' => $post_param ]);
 
-			if(!File::exists(JPATH_SITE . '/favicons/thumbs.json'))
+			if(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
 			{
 				$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
 			}
