@@ -431,6 +431,6 @@
             "install-path": "../ralouphie/getallheaders"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }
