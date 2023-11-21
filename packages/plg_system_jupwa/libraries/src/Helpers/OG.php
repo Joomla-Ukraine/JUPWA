@@ -80,7 +80,7 @@ class OG
 		{
 			if(preg_match_all('#(youtube.com)/embed/([0-9A-Za-z-_]+)#i', $option[ 'youtube' ], $match) || preg_match_all('#(youtube.com)/watch\?v=([0-9A-Za-z-_]+)#i', $option[ 'youtube' ], $match))
 			{
-				$doc->setMetaData('og:video:url', 'http://' . $match[ 0 ][ 0 ], 'property');
+				$doc->setMetaData('og:video:url', 'https://' . $match[ 0 ][ 0 ], 'property');
 				$doc->setMetaData('og:video:secure_url', 'https://' . $match[ 0 ][ 0 ], 'property');
 				$doc->setMetaData('og:video:type', 'text/html', 'property');
 				$doc->setMetaData('og:video:width', '640', 'property');

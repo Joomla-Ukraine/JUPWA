@@ -14,7 +14,7 @@ namespace JUPWA\Data;
 
 class Data
 {
-	public static $icons_sm = [
+	public static array $icons_sm = [
 		16,
 		32,
 		48,
@@ -29,18 +29,18 @@ class Data
 		180
 	];
 
-	public static $icons = [
+	public static array $icons = [
 		192,
 		310,
 		512
 	];
 
-	public static $favicons = [
+	public static array $favicons = [
 		'apple-touch-icon' => [ 180 ],
 		'icon'             => [ 16, 32, 192 ]
 	];
 
-	public static $splash = [
+	public static array $splash = [
 		[
 			'width'       => 640,
 			'height'      => 1136,
@@ -147,14 +147,14 @@ class Data
 		]
 	];
 
-	public static $manifest_icons = [
+	public static array $manifest_icons = [
 		192,
 		384,
 		512,
 		1024
 	];
 
-	public static $manifest = [
+	public static array $manifest = [
 		'name'                        => '',
 		'short_name'                  => '',
 		'start_url'                   => '',
@@ -184,7 +184,7 @@ class Data
 		]
 	];
 
-	public static $assetlinks = [
+	public static array $assetlinks = [
 		'relation' => [ 'delegate_permission/common.query_webapk' ],
 		'target'   => [
 			'namespace' => 'web',
@@ -192,9 +192,9 @@ class Data
 		]
 	];
 
-	public static $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js';
+	public static string $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js';
 
-	public static $preconnect = [
+	public static array $preconnect = [
 		'google'           => [ 'https://www.google.com' ],
 		'google-analytics' => [
 			'https://www.google.com',

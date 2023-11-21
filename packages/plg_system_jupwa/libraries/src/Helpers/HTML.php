@@ -37,13 +37,13 @@ class HTML
 	}
 
 	/**
-	 * @param   string  $html
+	 * @param   string|string[]|null  $html
 	 *
 	 * @return mixed|string|string[]|null
 	 *
 	 * @since 1.0
 	 */
-	public static function html($html)
+	public static function html($html): mixed
 	{
 		if($html)
 		{
@@ -129,7 +129,7 @@ class HTML
 			$buffer = preg_replace('#prefix="og: http://ogp\.me/ns\#"#i', '', $buffer);
 		}
 
-		$buffer = str_replace($buffer, $buffer . ' prefix="og: http://ogp.me/ns# fb: http://www.facebook.com/2008/fbml og: http://opengraphprotocol.org/schema/"', $buffer);
+		$buffer = str_replace($buffer, $buffer . ' prefix="og: https://ogp.me/ns# fb: https:///www.facebook.com/2008/fbml og: https://opengraphprotocol.org/schema/"', $buffer);
 
 		return '<html' . $buffer . '>';
 	}

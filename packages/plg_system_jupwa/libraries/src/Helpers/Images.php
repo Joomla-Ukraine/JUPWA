@@ -149,7 +149,7 @@ class Images
 	 * @deprecated
 	 *
 	 */
-	public static function joomlaImage($url)
+	public static function joomlaImage($url): mixed
 	{
 		if($url)
 		{
@@ -186,7 +186,7 @@ class Images
 	 *
 	 * @since 1.0
 	 */
-	private static function gallery($text)
+	private static function gallery($text): mixed
 	{
 		if(strpos($text, '{gallery') === false)
 		{
@@ -240,8 +240,8 @@ class Images
 
 		if(isset($images))
 		{
-			$image_intro = (isset($images->image_intro) ? $images->image_intro : '');
-			$image_full  = (isset($images->image_fulltext) ? $images->image_fulltext : '');
+			$image_intro = ($images->image_intro ?? '');
+			$image_full  = ($images->image_fulltext ?? '');
 
 			$_intro = '';
 			if(!empty($image_intro))
@@ -330,12 +330,12 @@ class Images
 			'https://youtube.com',
 			'http://www.youtube.com',
 			'http://youtube.com'
-		], 'http://www.youtube.com', $text);
+		], 'https://www.youtube.com', $text);
 
 		$image = '';
 		if(preg_match_all('#(youtube.com)/embed/([0-9A-Za-z-_]+)#i', $youtube, $match))
 		{
-			$image = Util::HTTP('http://' . $match[ 0 ][ 0 ]);
+			$image = Util::HTTP('https://' . $match[ 0 ][ 0 ]);
 		}
 
 		return $image;

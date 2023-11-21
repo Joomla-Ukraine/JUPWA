@@ -34,7 +34,7 @@ class Video
 			'https://youtube.com',
 			'http://www.youtube.com',
 			'http://youtube.com'
-		], 'http://www.youtube.com', $article->text);
+		], 'https://www.youtube.com', $article->text);
 
 		$url = '';
 		if(preg_match_all('#(youtube.com)/embed/([0-9A-Za-z-_]+)#i', $youtube, $match))
@@ -52,7 +52,7 @@ class Video
 	 *
 	 * @since 1.0
 	 */
-	public static function parse($url)
+	public static function parse($url): bool|string
 	{
 		$urls = parse_url($url);
 		$yid  = '';
@@ -113,7 +113,7 @@ class Video
 
 		if($vid)
 		{
-			$vimeoObject = json_decode(file_get_contents('http://vimeo.com/api/v2/video/' . $vid . '.json'));
+			$vimeoObject = json_decode(file_get_contents('https://vimeo.com/api/v2/video/' . $vid . '.json'));
 
 			if(!empty($vimeoObject))
 			{

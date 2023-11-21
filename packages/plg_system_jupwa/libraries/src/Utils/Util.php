@@ -58,7 +58,7 @@ class Util
 	 *
 	 * @since 1.0
 	 */
-	public static function get_thumbs()
+	public static function get_thumbs(): bool|string
 	{
 		$json = JPATH_SITE . '/favicons/thumbs.json';
 		if(file_exists($json))
@@ -78,7 +78,7 @@ class Util
 	 *
 	 * @since 1.0
 	 */
-	public static function HTTP($url)
+	public static function HTTP($url): bool|string
 	{
 		$ch = curl_init();
 

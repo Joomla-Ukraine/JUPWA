@@ -23,7 +23,7 @@ class SeblodAPI extends JCckContent
 	 *
 	 * @since 1.0
 	 */
-	public function loadContent($id)
+	public function loadContent($id): object|bool
 	{
 		if($id === null)
 		{

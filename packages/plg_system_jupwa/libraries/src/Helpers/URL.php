@@ -17,7 +17,7 @@ use Joomla\CMS\Uri\Uri;
 class URL
 {
 	/**
-	 * @param string $url
+	 * @param   string  $url
 	 *
 	 * @return bool
 	 *
@@ -41,7 +41,7 @@ class URL
 	 *
 	 * @since 1.0
 	 */
-	public static function absolute($html)
+	public static function absolute($html): array|string|null
 	{
 		$root_url = Uri::base();
 
