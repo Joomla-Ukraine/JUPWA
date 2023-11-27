@@ -162,6 +162,7 @@ class Data
 		'display'                     => '',
 		'display_override'            => [],
 		'description'                 => '',
+		'lang'                        => '',
 		'dir'                         => '',
 		'scope'                       => '',
 		'orientation'                 => '',

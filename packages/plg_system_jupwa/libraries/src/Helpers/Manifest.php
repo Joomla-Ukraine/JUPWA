@@ -43,6 +43,7 @@ class Manifest
 		$data[ 'name' ]                                 = ($option[ 'param' ][ 'manifest_name' ] ? : $option[ 'site' ]);
 		$data[ 'short_name' ]                           = ($option[ 'param' ][ 'manifest_sname' ] ? : $option[ 'site' ]);
 		$data[ 'description' ]                          = $option[ 'param' ][ 'manifest_desc' ];
+		$data[ 'lang' ]                                 = $option[ 'param' ][ 'manifest_lang' ];
 		$data[ 'dir' ]                                  = $option[ 'param' ][ 'manifest_dir' ];
 		$data[ 'scope' ]                                = $option[ 'param' ][ 'manifest_scope' ];
 		$data[ 'display' ]                              = $option[ 'param' ][ 'manifest_display' ];

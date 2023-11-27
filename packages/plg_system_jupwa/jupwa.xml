@@ -760,6 +760,13 @@
 	                       label="PLG_JUPWA_MANIFEST_DESC"
 	                />
 
+	                <field name="manifest_lang"
+	                       size="50"
+	                       type="text"
+	                       default="en"
+	                       label="PLG_JUPWA_MANIFEST_LANG"
+	                />
+
 		            <field
 				            name="manifest_dir"
 				            type="list"
