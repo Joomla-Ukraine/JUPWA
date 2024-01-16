@@ -1,10 +1,9 @@
 [![Stand With Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://stand-with-ukraine.pp.ua)
 
-# Donation Buttons
+# Donation
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=WQJNDPDPDMKP8) 
-
-[![Static Badge](https://img.shields.io/badge/Donate-Moby%20%2F%20Signal%20%2F%20MobileCoin-blue)](https://moby.app/denys)
+* https://www.paypal.com/donate/?hosted_button_id=WQJNDPDPDMKP8
+* https://send.monobank.ua/jar/7u4x6vNRZJ
 
 # JUPWA - Progressive Web Application (PWA) for Joomla!
 
