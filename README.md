@@ -22,7 +22,7 @@
 * Chrome / Chrome for Android
 * Edge
 * Safari / Safari on iOS / Safari on iPadOS
-* Firefox
+* Firefox for Mobile
 * Opera / Opera Mobile
 * Samsung Internet
 * Android Browser
