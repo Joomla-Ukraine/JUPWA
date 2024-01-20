@@ -17,6 +17,17 @@
 
 [JUPWA v 1.24](https://github.com/Joomla-Ukraine/JUPWA/releases/download/1.24/pkg_jupwa_v1.24.zip)
 
+## Browser support
+
+* Chrome / Chrome for Android
+* Edge
+* Safari / Safari on iOS / Safari on iPadOS
+* Firefox
+* Opera / Opera Mobile
+* Samsung Internet
+* Android Browser
+* Firefox for Android
+
 ## Features
 
 * OG-tags
