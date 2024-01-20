@@ -1,10 +1,13 @@
 [![Stand With Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://stand-with-ukraine.pp.ua)
 
-# Donation Buttons
+# Donate: Buy Me a Coffee
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=WQJNDPDPDMKP8) 
+* [Monobank (Google Pay or Bank Card)](https://send.monobank.ua/jar/7u4x6vNRZJ)
+* [PayPal](https://www.paypal.com/donate/?hosted_button_id=WQJNDPDPDMKP8)
 
-[![Static Badge](https://img.shields.io/badge/Donate-Moby%20%2F%20Signal%20%2F%20MobileCoin-blue)](https://moby.app/denys)
+# JUPWA Documentation
+
+[Read More on Wiki](https://github.com/Joomla-Ukraine/JUPWA/wiki)
 
 # JUPWA - Progressive Web Application (PWA) for Joomla!
 
