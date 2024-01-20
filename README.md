@@ -1,17 +1,21 @@
 [![Stand With Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://stand-with-ukraine.pp.ua)
 
-# Donate: Buy Me a Coffee
+# JUPWA: Free Progressive Web Application (PWA) for Joomla!
+
+## Donate: Buy Me a Coffee
 
 * [Monobank (Google Pay or Bank Card)](https://send.monobank.ua/jar/7u4x6vNRZJ)
 * [PayPal](https://www.paypal.com/donate/?hosted_button_id=WQJNDPDPDMKP8)
 
-# JUPWA Documentation
+## JUPWA Documentation
 
 [Read More on Wiki](https://github.com/Joomla-Ukraine/JUPWA/wiki)
 
-# JUPWA - Progressive Web Application (PWA) for Joomla!
+## Download
 
-**Features:**
+[JUPWA v 1.24](https://github.com/Joomla-Ukraine/JUPWA/releases/download/1.24/pkg_jupwa_v1.24.zip)
+
+## Features
 
 * OG-tags
 * Schema.org
@@ -30,7 +34,7 @@
 * Support ofline template
 * Support plugins integration
 
-## Templates
+### Templates
 
 Override the offline page and the worker service in your template.
 

@@ -33,9 +33,6 @@
         <file type="plugin"
               id="jupwa_content"
               group="jupwa">plg_jupwa_content.zip</file>
-        <file type="plugin"
-              id="jupwa_seblod"
-              group="jupwa">plg_jupwa_seblod.zip</file>
     </files>
 
     <languages folder="language">
