@@ -2,6 +2,8 @@
 
 # JUPWA: Free Progressive Web Application (PWA) for Joomla!
 
+![JUPWA](https://repository-images.githubusercontent.com/604152173/03fc8604-76de-4c5c-81ad-0b3246afad24)
+
 ## Donate: Buy Me a Coffee
 
 * [Monobank (Google Pay or Bank Card)](https://send.monobank.ua/jar/7u4x6vNRZJ)
