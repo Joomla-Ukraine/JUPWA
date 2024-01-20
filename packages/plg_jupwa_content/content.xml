@@ -5,7 +5,7 @@
            method="upgrade">
 	<name>plg_jupwa_content</name>
 	<creationDate>@date@</creationDate>
-	<copyright>(C) 2023 Denys Nosov, Joomla! Ukraine</copyright>
+	<copyright>(C) 2023-2024 Denys Nosov, Joomla! Ukraine</copyright>
 	<license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License</license>
     <author>Denys Nosov, Joomla! Ukraine</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>

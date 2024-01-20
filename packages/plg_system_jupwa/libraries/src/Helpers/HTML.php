@@ -5,7 +5,7 @@
  * @version       1.x
  * @package       JUPWA\Helpers
  * @author        Denys D. Nosov (denys@joomla-ua.org)
- * @copyright (C) 2023 by Denys D. Nosov (https://joomla-ua.org)
+ * @copyright (C) 2023-2024 by Denys D. Nosov (https://joomla-ua.org)
  * @license       GNU General Public License version 2 or later; see LICENSE.md
  *
  **/
@@ -17,7 +17,7 @@ use JUPWA\Classes\Minify;
 class HTML
 {
 	/**
-	 * @param   string  $text
+	 * @param string $text
 	 *
 	 * @return string|null
 	 *
@@ -37,7 +37,7 @@ class HTML
 	}
 
 	/**
-	 * @param   string|string[]|null  $html
+	 * @param string|string[]|null $html
 	 *
 	 * @return mixed|string|string[]|null
 	 *
@@ -62,7 +62,7 @@ class HTML
 	}
 
 	/**
-	 * @param   string  $html
+	 * @param string $html
 	 *
 	 * @return string
 	 *
@@ -90,7 +90,7 @@ class HTML
 	}
 
 	/**
-	 * @param   array  $matches
+	 * @param array $matches
 	 *
 	 * @return string
 	 *
@@ -135,7 +135,7 @@ class HTML
 	}
 
 	/**
-	 * @param   string  $html
+	 * @param string $html
 	 *
 	 * @return string
 	 *

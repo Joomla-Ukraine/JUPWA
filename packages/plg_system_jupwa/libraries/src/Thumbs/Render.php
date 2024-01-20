@@ -5,13 +5,14 @@
  * @version       1.x
  * @package       JUPWA\Thumbs
  * @author        Denys D. Nosov (denys@joomla-ua.org)
- * @copyright (C) 2023 by Denys D. Nosov (https://joomla-ua.org)
+ * @copyright (C) 2023-2024 by Denys D. Nosov (https://joomla-ua.org)
  * @license       GNU General Public License version 2 or later; see LICENSE.md
  *
  **/
 
 namespace JUPWA\Thumbs;
 
+use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use JUPWA\Classes\PHP_ICO;
@@ -22,15 +23,31 @@ class Render
 {
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
+	 * @param       $app
 	 *
 	 * @return void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function create(array $option = []): void
+	public static function create(array $option = [], $app = ''): void
 	{
+		if(function_exists('fastcgi_finish_request') || function_exists('ignore_user_abort'))
+		{
+			ignore_user_abort(true);
+			session_write_close();
+
+			if(function_exists('fastcgi_finish_request'))
+			{
+				fastcgi_finish_request();
+			}
+
+			set_time_limit(0);
+
+			ob_start();
+		}
+
 		$path = JPATH_SITE . '/favicons';
 		if(file_exists($path) && is_dir($path))
 		{
@@ -64,11 +81,28 @@ class Render
 		$json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
 		File::write(JPATH_SITE . '/favicons/thumbs.json', $json);
+
+		if($app && !file_exists(JPATH_SITE . '/favicons/thumbs.json'))
+		{
+			$app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+		}
+
+		if(function_exists('fastcgi_finish_request') || function_exists('ignore_user_abort'))
+		{
+			ob_end_flush();
+			ob_flush();
+			flush();
+
+			if(session_id())
+			{
+				session_write_close();
+			}
+		}
 	}
 
 	/**
 	 *
-	 * @param   string  $image
+	 * @param string $image
 	 *
 	 * @return string
 	 *
@@ -89,7 +123,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return string
 	 *
@@ -115,7 +149,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return array
 	 *
@@ -152,7 +186,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return array
 	 *
@@ -188,7 +222,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return array
 	 *
@@ -216,7 +250,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return array
 	 *
@@ -247,7 +281,7 @@ class Render
 
 	/**
 	 *
-	 * @param   array  $option
+	 * @param array $option
 	 *
 	 * @return object
 	 *

@@ -244,6 +244,7 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
         'JUPWA\\Helpers\\META' => __DIR__ . '/../..' . '/src/Helpers/META.php',
         'JUPWA\\Helpers\\Manifest' => __DIR__ . '/../..' . '/src/Helpers/Manifest.php',
         'JUPWA\\Helpers\\OG' => __DIR__ . '/../..' . '/src/Helpers/OG.php',
+        'JUPWA\\Helpers\\PWAInstall' => __DIR__ . '/../..' . '/src/Helpers/PWAInstall.php',
         'JUPWA\\Helpers\\Schema' => __DIR__ . '/../..' . '/src/Helpers/Schema.php',
         'JUPWA\\Helpers\\ServiceWorker' => __DIR__ . '/../..' . '/src/Helpers/ServiceWorker.php',
         'JUPWA\\Helpers\\URL' => __DIR__ . '/../..' . '/src/Helpers/URL.php',

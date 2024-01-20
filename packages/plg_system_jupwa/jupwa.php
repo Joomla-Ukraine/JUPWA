@@ -5,14 +5,14 @@
  * @version       1.x
  * @package       JUPWA
  * @author        Denys D. Nosov (denys@joomla-ua.org)
- * @copyright (C) 2023 by Denys D. Nosov (https://joomla-ua.org)
+ * @copyright (C) 2023-2024 by Denys D. Nosov (https://joomla-ua.org)
  * @license       GNU General Public License version 2 or later; see LICENSE.md
  *
  **/
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
+use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
@@ -24,6 +24,7 @@ use JUPWA\Helpers\Images;
 use JUPWA\Helpers\Manifest;
 use JUPWA\Helpers\META;
 use JUPWA\Helpers\OG;
+use JUPWA\Helpers\PWAInstall;
 use JUPWA\Helpers\Schema;
 use JUPWA\Helpers\ServiceWorker;
 use JUPWA\Thumbs\Render;
@@ -75,11 +76,6 @@ class plgSystemJUPWA extends CMSPlugin
 		{
 			$post_param = $post[ 'jform' ][ 'params' ];
 
-			if($post_param[ 'thumbs' ] == 1 && ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save'))
-			{
-				Render::create($post_param);
-			}
-
 			BrowserConfig::create($post_param);
 
 			Manifest::create([
@@ -92,9 +88,16 @@ class plgSystemJUPWA extends CMSPlugin
 			Manifest::addVersion();
 			ServiceWorker::create([ 'param' => $post_param ]);
 
-			if(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
+			if($post_param[ 'thumbs' ] == 1 && ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save'))
 			{
-				$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+				Render::create($post_param, $this->app);
+			}
+			else
+			{
+				if(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
+				{
+					$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+				}
 			}
 		}
 	}
@@ -123,6 +126,16 @@ class plgSystemJUPWA extends CMSPlugin
 		Facebook::fix();
 
 		$buffer = $this->app->getBody();
+
+		/*
+		 * PWA Install
+		 */
+		if($this->params->get('usepwainstall') == 1)
+		{
+			$buffer = str_replace('</body>', PWAInstall::panel() . '</body>', $buffer);
+
+			$this->checkBuffer($buffer);
+		}
 
 		/*
 		 * Replace <html> for support OG-tags
@@ -254,6 +267,42 @@ class plgSystemJUPWA extends CMSPlugin
 				$expireheader = $date->setTimestamp(time() + $this->params->get('expirestime'))->format('D, d M Y H:i:s T');
 				$this->app->setHeader('Expires', $expireheader, true);
 			}
+		}
+	}
+
+	/**
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public function onAfterDispatch(): void
+	{
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
+
+		$doc = $this->app->getDocument();
+		if(!($doc instanceof HtmlDocument))
+		{
+			return;
+		}
+
+		if($this->params->get('usepwainstall') == 1)
+		{
+			$wa                    = $doc->getWebAssetManager();
+			$jupwa_install_version = '1.0';
+
+			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_install_version . '.js', [ 'version' => false ], [
+				'defer'         => 'defer',
+				'fetchpriority' => 'auto'
+			]);
+
+			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_install_version . '.js', 'preload prefetch', 'rel', [
+				'as' => 'script'
+			]);
 		}
 	}
 
@@ -406,7 +455,7 @@ class plgSystemJUPWA extends CMSPlugin
 	}
 
 	/**
-	 * @param   null  $plugin_image
+	 * @param null $plugin_image
 	 *
 	 * @return object
 	 * @throws \Exception
@@ -445,7 +494,7 @@ class plgSystemJUPWA extends CMSPlugin
 	/**
 	 * Check the buffer.
 	 *
-	 * @param   string  $buffer  Buffer to be checked.
+	 * @param string $buffer Buffer to be checked.
 	 *
 	 * @return  void
 	 * @since 1.0

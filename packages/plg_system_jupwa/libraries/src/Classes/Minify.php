@@ -5,7 +5,7 @@
  * @version       1.x
  * @package       JUPWA\Classes
  * @author        Denys D. Nosov (denys@joomla-ua.org)
- * @copyright (C) 2023 by Denys D. Nosov (https://joomla-ua.org)
+ * @copyright (C) 2023-2024 by Denys D. Nosov (https://joomla-ua.org)
  * @license       GNU General Public License version 2 or later; see LICENSE.md
  *
  **/
@@ -41,9 +41,9 @@ class Minify
 	/**
 	 * "Minify" an HTML page
 	 *
-	 * @param   string  $html
+	 * @param string $html
 	 *
-	 * @param   array   $options
+	 * @param array  $options
 	 *
 	 * 'cssMinifier' : (optional) callback function to process content of STYLE
 	 * elements.
@@ -65,9 +65,9 @@ class Minify
 	/**
 	 * Create a minifier object
 	 *
-	 * @param   string  $html
+	 * @param string $html
 	 *
-	 * @param   array   $options
+	 * @param array  $options
 	 *
 	 * 'cssMinifier' : (optional) callback function to process content of STYLE
 	 * elements.

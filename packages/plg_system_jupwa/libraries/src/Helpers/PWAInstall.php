@@ -12,7 +12,12 @@
 
 namespace JUPWA\Helpers;
 
-class Favicons
-{
+use Joomla\CMS\Uri\Uri;
 
+class PWAInstall
+{
+	public static function panel(): string
+	{
+		return '<pwa-install id="pwa-install" manifest-url="' . Uri::root() . 'manifest.webmanifest"></pwa-install>';
+	}
 }

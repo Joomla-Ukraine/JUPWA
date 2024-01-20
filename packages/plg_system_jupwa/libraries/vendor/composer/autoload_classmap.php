@@ -192,6 +192,7 @@ return array(
     'JUPWA\\Helpers\\META' => $baseDir . '/src/Helpers/META.php',
     'JUPWA\\Helpers\\Manifest' => $baseDir . '/src/Helpers/Manifest.php',
     'JUPWA\\Helpers\\OG' => $baseDir . '/src/Helpers/OG.php',
+    'JUPWA\\Helpers\\PWAInstall' => $baseDir . '/src/Helpers/PWAInstall.php',
     'JUPWA\\Helpers\\Schema' => $baseDir . '/src/Helpers/Schema.php',
     'JUPWA\\Helpers\\ServiceWorker' => $baseDir . '/src/Helpers/ServiceWorker.php',
     'JUPWA\\Helpers\\URL' => $baseDir . '/src/Helpers/URL.php',

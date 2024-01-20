@@ -10,7 +10,7 @@
     <authorUrl>https://joomla-ua.org</authorUrl>
 	<version>@version@</version>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-    <copyright>(C) 2023 Joomla! Ukraine. All rights reserved.</copyright>
+    <copyright>(C) 2023-2024 Joomla! Ukraine. All rights reserved.</copyright>
     <description>PLG_JUPWA_INFO</description>
 
     <files>
@@ -18,6 +18,11 @@
         <folder>libraries</folder>
         <folder>tmpl</folder>
     </files>
+
+	<media folder="media/jupwa"
+	       destination="jupwa">
+        <folder>js</folder>
+    </media>
 
     <languages>
         <language tag="en-GB">language/en-GB.plg_system_jupwa.ini</language>
@@ -965,6 +970,25 @@
 			        </field>
 
 		        </fieldset>
+
+            </fieldset>
+
+	        <fieldset name="PWA_INSTALL">
+
+	            <fieldset name="INSTALL">
+
+		            <field
+				            name="usepwainstall"
+				            layout="joomla.form.field.radio.switcher"
+				            type="radio"
+				            default="0"
+				            label="PLG_JUPWA_USEPWAINSTALL"
+		            >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+	            </fieldset>
 
             </fieldset>
 

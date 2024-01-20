@@ -5,7 +5,7 @@
  * @version       1.x
  * @package       JUPWA\Utils
  * @author        Denys D. Nosov (denys@joomla-ua.org)
- * @copyright (C) 2023 by Denys D. Nosov (https://joomla-ua.org)
+ * @copyright (C) 2023-2024 by Denys D. Nosov (https://joomla-ua.org)
  * @license       GNU General Public License version 2 or later; see LICENSE.md
  *
  **/
@@ -19,7 +19,7 @@ class Util
 {
 	/**
 	 * @param          $name
-	 * @param   array  $variables
+	 * @param array    $variables
 	 *
 	 * @return string
 	 *
@@ -42,7 +42,7 @@ class Util
 	}
 
 	/**
-	 * @param   array  $json
+	 * @param array $json
 	 *
 	 * @return string
 	 *
@@ -54,11 +54,11 @@ class Util
 	}
 
 	/**
-	 * @return bool|string
+	 * @return string
 	 *
 	 * @since 1.0
 	 */
-	public static function get_thumbs(): bool|string
+	public static function get_thumbs(): string
 	{
 		$json = JPATH_SITE . '/favicons/thumbs.json';
 		if(file_exists($json))
