@@ -15,7 +15,7 @@
 
 ## Download
 
-[JUPWA v 1.24](https://github.com/Joomla-Ukraine/JUPWA/releases/download/1.24/pkg_jupwa_v1.24.zip)
+[JUPWA v 1.25](https://github.com/Joomla-Ukraine/JUPWA/releases/download/1.25/pkg_jupwa_v1.25.zip)
 
 ## Browser support
 
