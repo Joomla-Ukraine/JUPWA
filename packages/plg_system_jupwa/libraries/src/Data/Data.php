@@ -176,7 +176,9 @@ class Data
 		'gcm_user_visible_only'       => true,
 		'prefer_related_applications' => '',
 		'related_applications'        => [],
-		'handle_links'                => [],
+		'handle_links'                => '',
+		'launch_handler'              => [],
+		'scope_extensions'            => [],
 		'edge_side_panel'             => [],
 		'author'                      => [
 			'name'    => 'Joomla! Ukraine',
@@ -198,12 +200,10 @@ class Data
 	public static array $preconnect = [
 		'google'           => [ 'https://www.google.com' ],
 		'google-analytics' => [
-			'https://www.google.com',
 			'https://www.google-analytics.com',
 			'https://www.googletagmanager.com'
 		],
 		'google-fonts'     => [
-			'https://www.google.com',
 			'https://fonts.googleapis.com'
 		],
 		'google-ads'       => [

@@ -860,7 +860,7 @@
 		            >
 						<option value="window-controls-overlay">window-controls-overlay</option>
 						<option value="standalone">standalone</option>
-						<option value="standalone">browser</option>
+						<option value="browser">browser</option>
 	                </field>
 
 		            <field
@@ -889,6 +889,36 @@
 						<option value="preferred">preferred</option>
 						<option value="not-preferred">not-preferred</option>
 	                </field>
+
+		            <field
+				            name="manifest_launch_handler"
+				            type="list"
+				            default="auto"
+				            multiple="true"
+				            label="PLG_JUPWA_MANIFEST_LAUNCH_HANDLER"
+		            >
+						<option value="auto">auto</option>
+						<option value="focus-existing">focus-existing</option>
+						<option value="not-preferred">not-preferred</option>
+						<option value="navigate-existing">navigate-existing</option>
+						<option value="navigate-new">navigate-new</option>
+	                </field>
+
+		             <field
+				             name="manifest_scope_extensions"
+				             type="subform"
+				             multiple="true"
+				             min="0"
+				             layout="joomla.form.field.subform.repeatable-table"
+				             label="PLG_JUPWA_MANIFEST_SCOPE_EXTENTIONS"
+		             >
+				        <form>
+					         <field name="domains"
+					                type="text"
+					                label="PLG_JUPWA_MANIFEST_SCOPE_EXTENTIONS_DOMAINS"
+					         />
+				        </form>
+			        </field>
 
 		             <field name="manifest_edge_side_panel_width"
 		                    size="50"
@@ -988,6 +1018,18 @@
 	                    <option value="1">JYES</option>
 	                </field>
 
+		            <field
+				            name="pwainstall_disablechrome"
+				            layout="joomla.form.field.radio.switcher"
+				            type="radio"
+				            default="0"
+				            label="PLG_JUPWA_PWAINSTALL_DISABLECHROME"
+				            showon="usepwainstall:1"
+		            >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
 	            </fieldset>
 
             </fieldset>
@@ -1053,7 +1095,14 @@
 						        label="PLG_JUPWA_PWA_MENUITEM"
 				        >
 			                    <option value="">JDEFAULT</option>
-			                </field>
+				        </field>
+
+				        <field name="language"
+				               type="contentlanguage"
+				               label="JFIELD_LANGUAGE_LABEL"
+				        >
+							<option value="*">JALL</option>
+						</field>
 
 				        <field name="icons"
 				               type="media"

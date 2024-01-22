@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@khmyznikov/pwa-install':
-    specifier: ^0.3.1
-    version: 0.3.1
+    specifier: ^0.3.3
+    version: 0.3.3
 
 devDependencies:
   '@babel/core':
@@ -29,7 +29,7 @@ devDependencies:
     specifier: ^4.0.0
     version: 4.0.0(webpack@5.89.0)
   css-loader:
-    specifier: ^6.9.0
+    specifier: ^6.9.1
     version: 6.9.1(webpack@5.89.0)
   cssnano:
     specifier: ^6.0.3
@@ -1323,21 +1323,14 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@khmyznikov/pwa-install@0.3.1:
-    resolution: {integrity: sha512-5flIesjsJZJ7hONbx37R1vr9XSh/WdXDrI+ddafczZiCIQTEmcopmFxsO55huv8OT5qCqOHWX5Oo0+jCYPQXVg==}
+  /@khmyznikov/pwa-install@0.3.3:
+    resolution: {integrity: sha512-Ttg73jBQUSA3C0gpBrbwLYbTUP8Qw3oFbiq5bSVM+lAM3D90tb32XOVP+CK47ZpUHo6YV+HhVWlLKwHjNjnbog==}
     dependencies:
-      '@lit/localize': 0.12.1
       lit: 3.1.1
     dev: false
 
   /@lit-labs/ssr-dom-shim@1.1.2:
     resolution: {integrity: sha512-jnOD+/+dSrfTWYfSXBXlo5l5f0q1UuJo3tkbMDCYA2lKUYq79jaxqtGEvnRoh049nt1vdo1+45RinipU6FGY2g==}
-    dev: false
-
-  /@lit/localize@0.12.1:
-    resolution: {integrity: sha512-uuF6OO6fjqomCf3jXsJ5cTGf1APYuN88S4Gvo/fjt9YkG4OMaMvpEUqd5oWhyzrJfY+HcenAbLJNi2Cq3H7gdg==}
-    dependencies:
-      lit: 3.1.1
     dev: false
 
   /@lit/reactive-element@2.0.3:

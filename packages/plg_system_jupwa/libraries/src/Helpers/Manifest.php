@@ -15,7 +15,6 @@ namespace JUPWA\Helpers;
 use FastImageSize\FastImageSize;
 use GuzzleHttp\Psr7\MimeType;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\File;
@@ -39,37 +38,36 @@ class Manifest
 		$manifest      = '/manifest.webmanifest';
 		$file_manifest = JPATH_SITE . $manifest;
 
+		$utc = Uri::root() . '?utm_source=pwa';
+
 		$data                                           = Data::$manifest;
 		$data[ 'name' ]                                 = ($option[ 'param' ][ 'manifest_name' ] ? : $option[ 'site' ]);
 		$data[ 'short_name' ]                           = ($option[ 'param' ][ 'manifest_sname' ] ? : $option[ 'site' ]);
-		$data[ 'description' ]                          = $option[ 'param' ][ 'manifest_desc' ];
-		$data[ 'lang' ]                                 = $option[ 'param' ][ 'manifest_lang' ];
+		$data[ 'description' ]                          = ($option[ 'param' ][ 'manifest_desc' ] ? : $option[ 'description' ]);
+		$data[ 'lang' ]                                 = ($option[ 'param' ][ 'manifest_lang' ] ? : 'en');
 		$data[ 'dir' ]                                  = $option[ 'param' ][ 'manifest_dir' ];
-		$data[ 'scope' ]                                = $option[ 'param' ][ 'manifest_scope' ];
+		$data[ 'scope' ]                                = ($option[ 'param' ][ 'manifest_scope' ] ? : Uri::root());
 		$data[ 'display' ]                              = $option[ 'param' ][ 'manifest_display' ];
-		$data[ 'display_override' ]                     = ($option[ 'param' ][ 'manifest_display_override' ] ?? []);
+		$data[ 'display_override' ]                     = $option[ 'param' ][ 'manifest_display_override' ];
 		$data[ 'orientation' ]                          = $option[ 'param' ][ 'manifest_orientation' ];
-		$data[ 'start_url' ]                            = $option[ 'param' ][ 'manifest_start_url' ];
-		$data[ 'id' ]                                   = $option[ 'param' ][ 'manifest_id' ];
-		$data[ 'background_color' ]                     = $option[ 'param' ][ 'background_color' ];
-		$data[ 'theme_color' ]                          = $option[ 'param' ][ 'theme_color' ];
+		$data[ 'start_url' ]                            = ($option[ 'param' ][ 'manifest_start_url' ] ? : $utc);
+		$data[ 'id' ]                                   = ($option[ 'param' ][ 'manifest_id' ] ? : $utc);
+		$data[ 'launch_handler' ]                       = self::launch_handler($option[ 'param' ]);
+		$data[ 'background_color' ]                     = ($option[ 'param' ][ 'background_color' ] ? : '#fafafa');
+		$data[ 'theme_color' ]                          = ($option[ 'param' ][ 'theme_color' ] ? : '#fafafa');
 		$data[ 'prefer_related_applications' ]          = (bool) $option[ 'param' ][ 'prefer_related_applications' ];
 		$data[ 'related_applications' ]                 = self::related_applications($option[ 'param' ]);
+		$data[ 'scope_extensions' ]                     = self::scope_extensions($option[ 'param' ]);
 		$data[ 'screenshots' ]                          = self::screenshots($option[ 'param' ]);
 		$data[ 'icons' ]                                = self::icons();
 		$data[ 'shortcuts' ]                            = self::shortcuts($option[ 'param' ]);
 		$data[ 'handle_links' ]                         = ($option[ 'param' ][ 'manifest_handle_links' ] ?? []);
 		$data[ 'categories' ]                           = ($option[ 'param' ][ 'manifest_categories' ] ?? []);
-		$data[ 'edge_side_panel' ][ 'preferred_width' ] = $option[ 'param' ][ 'manifest_edge_side_panel_width' ];
+		$data[ 'edge_side_panel' ][ 'preferred_width' ] = (int) $option[ 'param' ][ 'manifest_edge_side_panel_width' ];
 
 		if(is_countable($data[ 'screenshots' ]) && count($data[ 'screenshots' ]) == 0)
 		{
 			unset($data[ 'screenshots' ]);
-		}
-
-		if($data[ 'display_override' ] !== '')
-		{
-			unset($data[ 'display_override' ]);
 		}
 
 		if(is_countable($data[ 'icons' ]) && count($data[ 'icons' ]) == 0)
@@ -85,6 +83,11 @@ class Manifest
 		if(is_countable($data[ 'categories' ]) && count($data[ 'categories' ]) == 0)
 		{
 			unset($data[ 'categories' ]);
+		}
+
+		if(is_countable($data[ 'scope_extensions' ]) && count($data[ 'scope_extensions' ]) == 0)
+		{
+			unset($data[ 'scope_extensions' ]);
 		}
 
 		$data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
@@ -148,15 +151,16 @@ class Manifest
 			if(file_exists(JPATH_SITE . '/' . $file))
 			{
 				$icons[] = [
-					'src'   => Uri::root() . $file,
-					'sizes' => $size . 'x' . $size,
-					'type'  => 'image/png'
-				];
-				$icons[] = [
-					'purpose' => 'maskable',
 					'src'     => Uri::root() . $file,
 					'sizes'   => $size . 'x' . $size,
-					'type'    => 'image/png'
+					'type'    => 'image/png',
+					'purpose' => 'any'
+				];
+				$icons[] = [
+					'src'     => Uri::root() . $file,
+					'sizes'   => $size . 'x' . $size,
+					'type'    => 'image/png',
+					'purpose' => 'maskable'
 				];
 			}
 		}
@@ -183,10 +187,17 @@ class Manifest
 		{
 			foreach($shortcuts as $key => $val)
 			{
+				$language = '';
+				if(!($val[ 'language' ] === '' || $val[ 'language' ] === '*'))
+				{
+					$lang_code = explode('-', $val[ 'language' ])[ 0 ];
+					$language  = '/' . $lang_code . '/';
+				}
+
 				$query = $db->getQuery(true);
 				$query->select([
 					'title',
-					'link'
+					'path'
 				]);
 				$query->from('#__menu');
 				$query->where($db->quoteName('id') . '=' . $db->Quote($val[ 'item' ]));
@@ -202,7 +213,7 @@ class Manifest
 
 				$item[] = [
 					'name'  => $row->title,
-					'url'   => Route::link('site', $row->link, true, null, true),
+					'url'   => $language . $row->path,
 					'icons' => [
 						[
 							'src'   => $file,
@@ -292,5 +303,48 @@ class Manifest
 		}
 
 		return $item;
+	}
+
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	private static function scope_extensions(array $option = []): array
+	{
+		$scope_extensions = $option[ 'manifest_scope_extensions' ] ?? [];
+		$item             = [];
+
+		if($scope_extensions)
+		{
+			foreach($scope_extensions as $scope)
+			{
+				$item[] = [
+					'origin' => $scope[ 'domains' ]
+				];
+			}
+		}
+
+		return $item;
+	}
+
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	private static function launch_handler(array $option = []): array
+	{
+		$launch_handler = $option[ 'manifest_launch_handler' ] ?? [];
+
+		return [ 'client_mode' => [ implode(',', $launch_handler) ] ];
 	}
 }

@@ -16,8 +16,8 @@ use Joomla\CMS\Uri\Uri;
 
 class PWAInstall
 {
-	public static function panel(): string
+	public static function panel($params): string
 	{
-		return '<pwa-install id="pwa-install" manifest-url="' . Uri::root() . 'manifest.webmanifest"></pwa-install>';
+		return '<pwa-install id="pwa-install"' . ($params->get('pwainstall_disablechrome') == 1 ? ' disable-chrome="true"' : '') . ' manifest-url="' . Uri::root() . 'manifest.webmanifest"></pwa-install>';
 	}
 }

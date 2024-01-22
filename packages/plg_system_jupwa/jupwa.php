@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
@@ -79,8 +80,9 @@ class plgSystemJUPWA extends CMSPlugin
 			BrowserConfig::create($post_param);
 
 			Manifest::create([
-				'param' => $post_param,
-				'site'  => $this->app->get('sitename')
+				'param'       => $post_param,
+				'site'        => $this->app->get('sitename'),
+				'description' => $this->app->get('MetaDesc'),
 			]);
 
 			Assetinks::create([ 'param' => $post_param ]);
@@ -132,7 +134,7 @@ class plgSystemJUPWA extends CMSPlugin
 		 */
 		if($this->params->get('usepwainstall') == 1)
 		{
-			$buffer = str_replace('</body>', PWAInstall::panel() . '</body>', $buffer);
+			$buffer = str_replace('</body>', PWAInstall::panel($this->params) . '</body>', $buffer);
 
 			$this->checkBuffer($buffer);
 		}
@@ -293,7 +295,7 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->params->get('usepwainstall') == 1)
 		{
 			$wa                    = $doc->getWebAssetManager();
-			$jupwa_install_version = '1.0';
+			$jupwa_install_version = '1.1';
 
 			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_install_version . '.js', [ 'version' => false ], [
 				'defer'         => 'defer',
