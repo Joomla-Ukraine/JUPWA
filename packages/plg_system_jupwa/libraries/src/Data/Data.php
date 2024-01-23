@@ -198,15 +198,15 @@ class Data
 	public static string $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js';
 
 	public static array $preconnect = [
-		'google'           => [ 'https://www.google.com' ],
-		'google-analytics' => [
+		'google'            => [ 'https://www.google.com' ],
+		'google-analytics'  => [
 			'https://www.google-analytics.com',
 			'https://www.googletagmanager.com'
 		],
-		'google-fonts'     => [
+		'google-fonts'      => [
 			'https://fonts.googleapis.com'
 		],
-		'google-ads'       => [
+		'google-ads'        => [
 			'https://www.google.com',
 			'https://pagead2.googlesyndication.com',
 			'https://googleads.g.doubleclick.net',
@@ -215,28 +215,29 @@ class Data
 			'https://partner.googleadservices.com',
 			'https://fonts.googleapis.com'
 		],
-		'google-cse'       => [
+		'google-cse'        => [
 			'https://www.google.com',
 			'https://cse.google.com',
 			'https://ssl.gstatic.com',
 			'https://clients1.google.com',
 			'https://www.googleapis.com',
 		],
-		'google-maps'      => [
+		'google-maps'       => [
 			'https://maps.gstatic.com',
 			'https://maps.googleapis.com',
 			'https://fonts.gstatic.com',
 			'https://fonts.googleapis.com',
 		],
-		'cloudflare'       => [ 'https://cdnjs.cloudflare.com' ],
-		'youtube'          => [
+		'cloudflare'        => [ 'https://cdnjs.cloudflare.com' ],
+		'cloudflare-static' => [ 'https://static.cloudflareinsights.com' ],
+		'youtube'           => [
 			'https://www.youtube.com',
 			'https://i.ytimg.com',
 			'https://s.ytimg.com',
 			'https://yt3.ggpht.com',
 			'https://fonts.gstatic.com',
 		],
-		'facebook'         => [ 'https://graph.facebook.com' ],
-		'twitter'          => [ 'https://dn.api.twitter.com' ],
+		'facebook'          => [ 'https://graph.facebook.com' ],
+		'twitter'           => [ 'https://dn.api.twitter.com' ],
 	];
 }

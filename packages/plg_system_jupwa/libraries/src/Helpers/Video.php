@@ -48,7 +48,7 @@ class Video
 	/**
 	 * @param $url
 	 *
-	 * @return string
+	 * @return bool|string
 	 *
 	 * @since 1.0
 	 */
