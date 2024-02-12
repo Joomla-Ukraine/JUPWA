@@ -142,32 +142,6 @@ class Images
 	}
 
 	/**
-	 * @param $url
-	 *
-	 * @return mixed|string
-	 * @since 1.0
-	 * @deprecated
-	 *
-	 */
-	public static function joomlaImage($url): mixed
-	{
-		if($url)
-		{
-			$jimg = '#joomlaImage:';
-			if(strpos($url, $jimg) === false)
-			{
-				return $url;
-			}
-
-			$image = explode($jimg, $url);
-
-			return $image[ 0 ];
-		}
-
-		return '';
-	}
-
-	/**
 	 * @param $text
 	 *
 	 * @return bool
@@ -282,8 +256,12 @@ class Images
 	 */
 	private static function html($text): string
 	{
-		$dom = new DOMDocument();
+		$dom            = new DOMDocument();
+		$internalErrors = libxml_use_internal_errors(true);
+
 		$dom->loadHTML($text);
+		libxml_use_internal_errors($internalErrors);
+
 		$images = $dom->getElementsByTagName('img');
 
 		$i = 0;

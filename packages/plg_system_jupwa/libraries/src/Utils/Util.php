@@ -54,11 +54,11 @@ class Util
 	}
 
 	/**
-	 * @return string
+	 * @return mixed
 	 *
 	 * @since 1.0
 	 */
-	public static function get_thumbs(): string
+	public static function get_thumbs(): mixed
 	{
 		$json = JPATH_SITE . '/favicons/thumbs.json';
 		if(file_exists($json))
