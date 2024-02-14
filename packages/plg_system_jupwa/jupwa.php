@@ -295,7 +295,7 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->params->get('usepwainstall') == 1)
 		{
 			$wa                    = $doc->getWebAssetManager();
-			$jupwa_install_version = '1.1';
+			$jupwa_install_version = '1.3';
 
 			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_install_version . '.js', [ 'version' => false ], [
 				'defer'         => 'defer',
@@ -310,12 +310,12 @@ class plgSystemJUPWA extends CMSPlugin
 
 	/**
 	 *
-	 * @return void
+	 * @return true|void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public function onBeforeCompileHead(): void
+	public function onBeforeCompileHead()
 	{
 		if(!$this->app->isClient('site'))
 		{
@@ -331,39 +331,13 @@ class plgSystemJUPWA extends CMSPlugin
 
 		if($view !== 'article')
 		{
-			$image       = $this->coreTags()->image;
-			$title       = $this->coreTags()->title;
-			$description = $this->coreTags()->description;
+			$integration = PluginHelper::importPlugin('jupwa');
+			$component   = $this->app->input->getCmd('option');
+			$use_access  = $this->app->triggerEvent('onJUPWAAccess', [ $component ]);
 
-			$plugins = $this->app->triggerEvent('onJUPWAImage', [ $this->app->input->getCmd('option') ]);
-			foreach($plugins as $plugin)
+			if($component === 'com_finder' || ($integration && !in_array($component, $use_access)))
 			{
-				$image = $plugin;
-			}
-
-			$img = $this->coreTags($image)->img;
-
-			if($this->params->get('og') == 1)
-			{
-				OG::tag([
-					'params'       => $this->params,
-					'type'         => 'website',
-					'title'        => $title,
-					'image'        => $img->image,
-					'image_width'  => $img->width,
-					'image_height' => $img->height,
-					'description'  => $description
-				]);
-			}
-
-			if($this->params->get('tw') == 1)
-			{
-				OG::twitter([
-					'params'      => $this->params,
-					'title'       => $title,
-					'image'       => $image,
-					'description' => $description
-				]);
+				return true;
 			}
 
 			// Integration

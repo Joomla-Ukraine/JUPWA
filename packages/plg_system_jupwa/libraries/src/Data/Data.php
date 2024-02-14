@@ -179,12 +179,7 @@ class Data
 		'handle_links'                => '',
 		'launch_handler'              => [],
 		'scope_extensions'            => [],
-		'edge_side_panel'             => [],
-		'author'                      => [
-			'name'    => 'Joomla! Ukraine',
-			'website' => 'https://joomla-ua.org',
-			'github'  => 'https://github.com/Joomla-Ukraine/JUPWA'
-		]
+		'edge_side_panel'             => []
 	];
 
 	public static array $assetlinks = [

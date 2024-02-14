@@ -21,13 +21,14 @@ class OG
 	/**
 	 *
 	 * @param array $option
+	 * @param array $parameters
 	 *
 	 * @return void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function tag(array $option = []): void
+	public static function tag(array $option = [], array $parameters = []): void
 	{
 		$app = Factory::getApplication();
 		$doc = $app->getDocument();
@@ -55,9 +56,9 @@ class OG
 				}
 			}
 
-			if(Facebook::bot() === false)
+			foreach($parameters as $k => $v)
 			{
-				$doc->setMetaData('og:headline', $option[ 'title' ], 'property');
+				$doc->setMetaData('og:' . $k, $v, 'property');
 			}
 		}
 	}

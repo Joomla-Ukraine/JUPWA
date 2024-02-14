@@ -87,6 +87,8 @@ class PlgJUPWAContent extends CMSPlugin
 				'image_width'  => $this->image($article, $params)->width,
 				'image_height' => $this->image($article, $params)->height,
 				'description'  => $this->core($article)->description
+			], [
+				'headline' => $this->core($article)->title
 			]);
 
 			if($og_type_website == 0)

@@ -106,52 +106,46 @@ const pluginProgressBar = new ProgressBarPlugin({
         }
     ]),
     pluginTerser = new TerserPlugin({
+        minify: TerserPlugin.swcMinify,
         terserOptions: {
-            parse: {
-                ecma: 8
-            },
             compress: {
                 ecma: 5,
-                warnings: false,
+                //arrows: false,
+                //booleans: true,
+                collapse_vars: false,
                 comparisons: false,
-                inline: 2,
+                computed_props: false,
                 drop_console: true,
-                module: false,
-                ie8: false,
+                hoist_props: false,
+                inline: 2,
                 keep_classnames: undefined,
                 keep_fnames: true,
-                arrows: false,
-                collapse_vars: false,
-                computed_props: false,
-                hoist_funs: false,
-                hoist_props: false,
-                hoist_vars: false,
-                loops: false,
+                //loops: false,
+                module: false,
                 negate_iife: false,
-                properties: false,
-                reduce_funcs: false,
+                //properties: false,
                 reduce_vars: false,
-                switches: false,
-                toplevel: false,
+                reduce_funcs: false,
+                //switches: false,
+                //toplevel: false,
                 typeofs: false,
-                booleans: true,
-                if_return: true,
-                sequences: true,
                 unused: true,
-                conditionals: true,
-                dead_code: true,
-                evaluate: true
+                //warnings: false
             },
             mangle: {
-                safari10: true
+                safari10: true,
+                toplevel: true,
             },
+            keep_fnames: false,
+            toplevel: true,
             output: {
                 ecma: 5,
-                comments: false
+                comments: false,
+                beautify: true
             }
         },
-        parallel: 4,
-        extractComments: false
+        parallel: true,
+        extractComments: false,
     });
 
 const watchOptions = {
@@ -167,6 +161,9 @@ const configProd = {
     mode: 'production',
     entry: entry,
     output: output,
+    experiments: {
+        outputModule: true,
+    },
     cache: {
         type: "filesystem"
     },
@@ -198,6 +195,7 @@ const configProd = {
         moduleIds: "deterministic",
         nodeEnv: 'production',
         removeAvailableModules: true,
+        removeEmptyChunks: true,
         usedExports: true,
         minimize: true,
         minimizer: [

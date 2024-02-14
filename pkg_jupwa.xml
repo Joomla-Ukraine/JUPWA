@@ -33,6 +33,9 @@
         <file type="plugin"
               id="jupwa_content"
               group="jupwa">plg_jupwa_content.zip</file>
+        <file type="plugin"
+              id="jupwa_jshopping"
+              group="jupwa">plg_jupwa_jshopping.zip</file>
     </files>
 
     <languages folder="language">
