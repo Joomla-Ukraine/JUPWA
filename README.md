@@ -15,18 +15,12 @@
 
 ## Download
 
-[JUPWA v 1.26](https://github.com/Joomla-Ukraine/JUPWA/releases/download/1.26/pkg_jupwa_v1.26.zip)
+[JUPWA v 1.27](https://github.com/Joomla-Ukraine/JUPWA/releases/download/1.27/pkg_jupwa_v1.27.zip)
 
-## Browser support
+## Integration
 
-* Chrome / Chrome for Android
-* Edge
-* Safari / Safari on iOS / Safari on iPadOS
-* Firefox for Mobile
-* Opera / Opera Mobile
-* Samsung Internet
-* Android Browser
-* Firefox for Android
+* Joomla! Content
+* JoomShopping
 
 ## Features
 
@@ -46,6 +40,17 @@
 * Support sw.js template
 * Support ofline template
 * Support plugins integration
+
+## Browser support
+
+* Chrome / Chrome for Android
+* Edge
+* Safari / Safari on iOS / Safari on iPadOS
+* Firefox for Mobile
+* Opera / Opera Mobile
+* Samsung Internet
+* Android Browser
+* Firefox for Android
 
 ### Templates
 
