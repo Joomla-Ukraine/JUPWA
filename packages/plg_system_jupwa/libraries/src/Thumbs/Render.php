@@ -33,21 +33,6 @@ class Render
 	 */
 	public static function create(array $option = [], $app = ''): void
 	{
-		if(function_exists('fastcgi_finish_request') || function_exists('ignore_user_abort'))
-		{
-			ignore_user_abort(true);
-			session_write_close();
-
-			if(function_exists('fastcgi_finish_request'))
-			{
-				fastcgi_finish_request();
-			}
-
-			set_time_limit(0);
-
-			ob_start();
-		}
-
 		$path = JPATH_SITE . '/favicons';
 		if(file_exists($path) && is_dir($path))
 		{
@@ -85,18 +70,6 @@ class Render
 		if($app && !file_exists(JPATH_SITE . '/favicons/thumbs.json'))
 		{
 			$app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
-		}
-
-		if(function_exists('fastcgi_finish_request') || function_exists('ignore_user_abort'))
-		{
-			ob_end_flush();
-			ob_flush();
-			flush();
-
-			if(session_id())
-			{
-				session_write_close();
-			}
 		}
 	}
 
