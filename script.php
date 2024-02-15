@@ -34,6 +34,7 @@ class Pkg_JUPWAInstallerScript
 			return false;
 		}
 
+		Folder::create(JPATH_SITE . '/favicons');
 		Folder::create(JPATH_SITE . '/images/jupwa');
 		Folder::create(JPATH_SITE . '/images/jupwa/icon');
 		Folder::create(JPATH_SITE . '/images/jupwa/logos');
