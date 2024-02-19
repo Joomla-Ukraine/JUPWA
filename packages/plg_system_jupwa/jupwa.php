@@ -295,7 +295,7 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->params->get('usepwainstall') == 1)
 		{
 			$wa                    = $doc->getWebAssetManager();
-			$jupwa_install_version = '1.3';
+			$jupwa_install_version = '1.5';
 
 			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_install_version . '.js', [ 'version' => false ], [
 				'defer'         => 'defer',
@@ -338,6 +338,37 @@ class plgSystemJUPWA extends CMSPlugin
 			if($component === 'com_finder' || ($integration && !in_array($component, $use_access)))
 			{
 				return true;
+			}
+
+			if($integration === null)
+			{
+				$image       = $this->coreTags()->image;
+				$title       = $this->coreTags()->title;
+				$description = $this->coreTags()->description;
+				$img         = $this->coreTags($image)->img;
+
+				if($this->params->get('og') == 1)
+				{
+					OG::tag([
+						'params'       => $this->params,
+						'type'         => 'website',
+						'title'        => $title,
+						'image'        => $img->image,
+						'image_width'  => $img->width,
+						'image_height' => $img->height,
+						'description'  => $description
+					]);
+				}
+
+				if($this->params->get('tw') == 1)
+				{
+					OG::twitter([
+						'params'      => $this->params,
+						'title'       => $title,
+						'image'       => $image,
+						'description' => $description
+					]);
+				}
 			}
 
 			// Integration

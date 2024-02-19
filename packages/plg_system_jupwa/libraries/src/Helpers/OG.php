@@ -54,6 +54,8 @@ class OG
 					$doc->setMetaData('og:image:width', $option[ 'image_width' ], 'property');
 					$doc->setMetaData('og:image:height', $option[ 'image_height' ], 'property');
 				}
+
+				$doc->setMetaData('og:image:alt', $option[ 'title' ], 'property');
 			}
 
 			foreach($parameters as $k => $v)
