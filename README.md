@@ -15,12 +15,13 @@
 
 ## Download
 
-[JUPWA v 1.28](https://github.com/Joomla-Ukraine/JUPWA/releases/download/1.28/pkg_jupwa_v1.28.zip)
+[JUPWA v 1.29](https://github.com/Joomla-Ukraine/JUPWA/releases/download/1.29/pkg_jupwa_v1.29.zip)
 
 ## Integration
 
 * Joomla! Content
 * JoomShopping
+* SEBLOD CCK
 
 ## Features
 
