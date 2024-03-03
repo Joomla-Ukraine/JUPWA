@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 class PlgJUPWAContent extends CMSPlugin
 {
 	/**
-	 * @since  4.0.0
+	 * @since 1.0
 	 * @var    \Joomla\CMS\Application\CMSApplication
 	 *
 	 */

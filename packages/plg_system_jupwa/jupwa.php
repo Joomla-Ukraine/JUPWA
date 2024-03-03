@@ -322,25 +322,30 @@ class plgSystemJUPWA extends CMSPlugin
 			return;
 		}
 
-		$view = $this->app->input->get('view');
-
 		if($this->app->getDocument()->getType() !== 'html')
 		{
 			return;
 		}
 
+		$view        = $this->app->input->get('view');
+		$integration = PluginHelper::importPlugin('jupwa');
+		$component   = $this->app->input->getCmd('option');
+		$use_access  = $this->app->triggerEvent('onJUPWAAccess', [ $component ]);
+
+		if($component === 'com_finder')
+		{
+			return true;
+		}
+
 		if($view !== 'article')
 		{
-			$integration = PluginHelper::importPlugin('jupwa');
-			$component   = $this->app->input->getCmd('option');
-			$use_access  = $this->app->triggerEvent('onJUPWAAccess', [ $component ]);
-
-			if($component === 'com_finder' || ($integration && !in_array($component, $use_access)))
+			$access = true;
+			foreach($use_access as $ua)
 			{
-				return true;
+				$access = $ua;
 			}
 
-			if($integration === null)
+			if($access === false)
 			{
 				$image       = $this->coreTags()->image;
 				$title       = $this->coreTags()->title;
@@ -370,19 +375,19 @@ class plgSystemJUPWA extends CMSPlugin
 					]);
 				}
 			}
+		}
 
-			// Integration
-			$this->app->triggerEvent('onJUPWASchema');
+		// Integration
+		$this->app->triggerEvent('onJUPWASchema');
 
-			if($this->params->get('tw') == 1)
-			{
-				$this->app->triggerEvent('onJUPWATwitter', [ $this->params ]);
-			}
+		if($this->params->get('tw') == 1)
+		{
+			$this->app->triggerEvent('onJUPWATwitter', [ $this->params ]);
+		}
 
-			if($this->params->get('og') == 1)
-			{
-				$this->app->triggerEvent('onJUPWAOG', [ $this->params ]);
-			}
+		if($this->params->get('og') == 1)
+		{
+			$this->app->triggerEvent('onJUPWAOG', [ $this->params ]);
 		}
 
 		META::render([ 'params' => $this->params ]);
@@ -422,15 +427,18 @@ class plgSystemJUPWA extends CMSPlugin
 		// Integration
 		$this->app->triggerEvent('onJUPWAArticleSchema', [
 			$article,
-			$this->params
+			$this->params,
+			$context
 		]);
 		$this->app->triggerEvent('onJUPWAArticleTwitter', [
 			$article,
-			$this->params
+			$this->params,
+			$context
 		]);
 		$this->app->triggerEvent('onJUPWAArticleOG', [
 			$article,
-			$this->params
+			$this->params,
+			$context
 		]);
 
 		if($integration === null)
