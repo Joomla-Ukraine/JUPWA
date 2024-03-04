@@ -24,11 +24,20 @@ defined('_JEXEC') or die;
 class PlgJUPWAJShopping extends CMSPlugin
 {
 	/**
-	 * @since  4.0.0
-	 * @var    \Joomla\CMS\Application\CMSApplication
+	 * PlgJUPWASeblod constructor.
 	 *
+	 * @param $subject
+	 * @param $config
+	 *
+	 * @throws \Exception
+	 * @since 1.0
 	 */
-	protected $app;
+	public function __construct(&$subject, $config)
+	{
+		parent::__construct($subject, $config);
+
+		$this->app = Factory::getApplication();
+	}
 
 	/**
 	 * @return void
@@ -36,7 +45,7 @@ class PlgJUPWAJShopping extends CMSPlugin
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public function onJUPWASchema(): void
+	public function onJUPWASchema($params): void
 	{
 		$use_schema = $this->params->get('use_schema', 0);
 
@@ -61,9 +70,9 @@ class PlgJUPWAJShopping extends CMSPlugin
 					'sku'              => $product->product_ean,
 					'image'            => [
 						'@type'  => 'ImageObject',
-						'url'    => $this->image()->image,
-						'height' => $this->image()->width,
-						'width'  => $this->image()->height
+						'url'    => $this->image($params)->image,
+						'height' => $this->image($params)->width,
+						'width'  => $this->image($params)->height
 					],
 					'offers'           => [
 						'@type'         => 'AggregateOffer',
@@ -152,9 +161,9 @@ class PlgJUPWAJShopping extends CMSPlugin
 				'params'       => $params,
 				'type'         => 'product',
 				'title'        => $this->core()->title,
-				'image'        => $this->image()->image,
-				'image_width'  => $this->image()->width,
-				'image_height' => $this->image()->height,
+				'image'        => $this->image($params)->image,
+				'image_width'  => $this->image($params)->width,
+				'image_height' => $this->image($params)->height,
 				'description'  => $this->core()->description
 			], [
 				'price:amount'   => $this->core()->price,
@@ -180,9 +189,9 @@ class PlgJUPWAJShopping extends CMSPlugin
 			OG::twitter([
 				'params'       => $params,
 				'title'        => $this->core()->title,
-				'image'        => $this->image()->image,
-				'image_width'  => $this->image()->width,
-				'image_height' => $this->image()->height,
+				'image'        => $this->image($params)->image,
+				'image_width'  => $this->image($params)->width,
+				'image_height' => $this->image($params)->height,
 				'description'  => $this->core()->intro
 			]);
 		}
@@ -193,7 +202,7 @@ class PlgJUPWAJShopping extends CMSPlugin
 	 *
 	 * @since 1.0
 	 */
-	private function image(): object|bool
+	private function image($params): object|bool
 	{
 		$jshopConfig = JSFactory::getConfig();
 		$image       = $this->core()->image;
@@ -205,7 +214,9 @@ class PlgJUPWAJShopping extends CMSPlugin
 			return Images::display($image);
 		}
 
-		return false;
+		$default_image = Images::display_default($params->get('selectimg'), $params->get('image'), $params->get('imagemain'));
+
+		return Images::display($default_image);
 	}
 
 	/**

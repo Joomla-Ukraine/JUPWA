@@ -10,6 +10,7 @@
  *
  **/
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Plugin\CMSPlugin;
 use JUPWA\Helpers\HTML;
@@ -24,17 +25,21 @@ require_once __DIR__ . '/SeblodAPI.php';
 class PlgJUPWASeblod extends CMSPlugin
 {
 	/**
-	 * @since 1.0
-	 * @var    \Joomla\CMS\Application\CMSApplication
+	 * PlgJUPWASeblod constructor.
 	 *
-	 */
-	protected $app;
-
-	/**
+	 * @param $subject
+	 * @param $config
+	 *
+	 * @throws \Exception
 	 * @since 1.0
-	 * @var array
 	 */
-	protected array $loaded = [];
+	public function __construct(&$subject, $config)
+	{
+		parent::__construct($subject, $config);
+
+		$this->app    = Factory::getApplication();
+		$this->loaded = [];
+	}
 
 	/**
 	 * @param $article
@@ -51,9 +56,9 @@ class PlgJUPWASeblod extends CMSPlugin
 		$option = [
 			'params'       => $this->params,
 			'title'        => $this->core($article, $context)->title,
-			'image'        => $this->image($article, $params)->image,
-			'image_width'  => $this->image($article, $params)->width,
-			'image_height' => $this->image($article, $params)->height,
+			'image'        => $this->image($article, $params, $context)->image,
+			'image_width'  => $this->image($article, $params, $context)->width,
+			'image_height' => $this->image($article, $params, $context)->height,
 			'description'  => $this->core($article, $context)->description,
 			'intro'        => $this->core($article, $context)->intro,
 			'article'      => $article
@@ -92,9 +97,9 @@ class PlgJUPWASeblod extends CMSPlugin
 				'params'       => $params,
 				'type'         => $type,
 				'title'        => $this->core($article, $context)->title,
-				'image'        => $this->image($article, $context)->image,
-				'image_width'  => $this->image($article, $context)->width,
-				'image_height' => $this->image($article, $context)->height,
+				'image'        => $this->image($article, $params, $context)->image,
+				'image_width'  => $this->image($article, $params, $context)->width,
+				'image_height' => $this->image($article, $params, $context)->height,
 				'description'  => $this->core($article, $context)->description
 			], [
 				'headline' => $this->core($article, $context)->title
@@ -127,9 +132,9 @@ class PlgJUPWASeblod extends CMSPlugin
 			OG::twitter([
 				'params'       => $params,
 				'title'        => $this->core($article, $context)->title,
-				'image'        => $this->image($article, $params)->image,
-				'image_width'  => $this->image($article, $params)->width,
-				'image_height' => $this->image($article, $params)->height,
+				'image'        => $this->image($article, $params, $context)->image,
+				'image_width'  => $this->image($article, $params, $context)->width,
+				'image_height' => $this->image($article, $params, $context)->height,
 				'description'  => $this->core($article, $context)->description
 			]);
 		}
@@ -137,22 +142,26 @@ class PlgJUPWASeblod extends CMSPlugin
 
 	/**
 	 * @param $article
+	 * @param $params
 	 * @param $context
 	 *
 	 * @return false|object
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
-	private function image($article, $context): object|bool
+	private function image($article, $params, $context): object|bool
 	{
 		$image = $this->core($article, $context)->image;
 
-		if($image)
+		if($image !== '')
 		{
 			return Images::display($image);
 		}
 
-		return false;
+		$default_image = Images::display_default($params->get('selectimg'), $params->get('image'), $params->get('imagemain'));
+
+		return Images::display($default_image);
 	}
 
 	private function core($article, $context): object
@@ -215,6 +224,7 @@ class PlgJUPWASeblod extends CMSPlugin
 	}
 
 	/**
+	 * @param      $id
 	 * @param null $attr
 	 *
 	 * @return array|bool

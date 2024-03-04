@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -40,13 +41,6 @@ require_once __DIR__ . '/libraries/vendor/autoload.php';
 class plgSystemJUPWA extends CMSPlugin
 {
 	/**
-	 * @since  4.0.0
-	 * @var    \Joomla\CMS\Application\CMSApplication
-	 *
-	 */
-	protected $app;
-
-	/**
 	 * plgSystemJUPWA constructor.
 	 *
 	 * @param $subject
@@ -60,6 +54,8 @@ class plgSystemJUPWA extends CMSPlugin
 		parent::__construct($subject, $config);
 
 		$this->loadLanguage();
+
+		$this->app = Factory::getApplication();
 
 		if($this->app->isClient('site'))
 		{
@@ -378,7 +374,7 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		// Integration
-		$this->app->triggerEvent('onJUPWASchema');
+		$this->app->triggerEvent('onJUPWASchema', [ $this->params ]);
 
 		if($this->params->get('tw') == 1)
 		{

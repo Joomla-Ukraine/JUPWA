@@ -10,6 +10,7 @@
  *
  **/
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use JUPWA\Helpers\HTML;
 use JUPWA\Helpers\Images;
@@ -22,11 +23,20 @@ defined('_JEXEC') or die;
 class PlgJUPWAContent extends CMSPlugin
 {
 	/**
-	 * @since 1.0
-	 * @var    \Joomla\CMS\Application\CMSApplication
+	 * PlgJUPWASeblod constructor.
 	 *
+	 * @param $subject
+	 * @param $config
+	 *
+	 * @throws \Exception
+	 * @since 1.0
 	 */
-	protected $app;
+	public function __construct(&$subject, $config)
+	{
+		parent::__construct($subject, $config);
+
+		$this->app = Factory::getApplication();
+	}
 
 	/**
 	 * @param $article
@@ -149,12 +159,14 @@ class PlgJUPWAContent extends CMSPlugin
 			'alltxt'  => $this->core($article)->text,
 		]);
 
-		if($image)
+		if($image !== '')
 		{
 			return Images::display($image);
 		}
 
-		return false;
+		$default_image = Images::display_default($params->get('selectimg'), $params->get('image'), $params->get('imagemain'));
+
+		return Images::display($default_image);
 	}
 
 	/**

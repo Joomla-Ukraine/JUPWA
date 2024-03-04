@@ -70,7 +70,6 @@ class Data
 			'd_height'    => 1024,
 			'orientation' => 'landscape'
 		],
-
 		[
 			'width'       => 1668,
 			'height'      => 2224,
@@ -85,7 +84,6 @@ class Data
 			'd_height'    => 1194,
 			'orientation' => 'landscape'
 		],
-
 		[
 			'width'       => 2048,
 			'height'      => 2732,
@@ -100,7 +98,6 @@ class Data
 			'd_height'    => 1366,
 			'orientation' => 'landscape'
 		],
-
 		[
 			'width'       => 750,
 			'height'      => 1334,
@@ -115,7 +112,6 @@ class Data
 			'd_height'    => 667,
 			'orientation' => 'landscape'
 		],
-
 		[
 			'width'       => 1242,
 			'height'      => 2208,
@@ -130,7 +126,6 @@ class Data
 			'd_height'    => 736,
 			'orientation' => 'landscape'
 		],
-
 		[
 			'width'       => 1125,
 			'height'      => 2436,
@@ -189,7 +184,7 @@ class Data
 			'site'      => ''
 		]
 	];
-
+	
 	public static string $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js';
 
 	public static array $preconnect = [

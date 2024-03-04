@@ -114,7 +114,7 @@ class Images
 	{
 		$img     = HTMLHelper::cleanImageURL($img)->url;
 		$imgmain = HTMLHelper::cleanImageURL($imgmain)->url;
-		$image   = Uri::base() . 'media/jupwa/jupwa.png';
+		$image   = Uri::base() . 'favicons/og_cover.png';
 
 		if($selectimg == 1)
 		{

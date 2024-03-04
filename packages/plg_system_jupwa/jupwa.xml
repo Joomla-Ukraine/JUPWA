@@ -21,6 +21,7 @@
 
 	<media folder="media/jupwa"
 	       destination="jupwa">
+        <folder>image</folder>
         <folder>js</folder>
     </media>
 
