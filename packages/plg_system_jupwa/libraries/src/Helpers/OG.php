@@ -74,44 +74,6 @@ class OG
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function tagYouTube(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
-
-		if(isset($option[ 'params' ]) && $option[ 'params' ]->get('ogvideo_youtube') == 1 && $option[ 'params' ]->get('og') == 1)
-		{
-			if(preg_match_all('#(youtube.com)/embed/([0-9A-Za-z-_]+)#i', $option[ 'youtube' ], $match) || preg_match_all('#(youtube.com)/watch\?v=([0-9A-Za-z-_]+)#i', $option[ 'youtube' ], $match))
-			{
-				$doc->setMetaData('og:video:url', 'https://' . $match[ 0 ][ 0 ], 'property');
-				$doc->setMetaData('og:video:secure_url', 'https://' . $match[ 0 ][ 0 ], 'property');
-				$doc->setMetaData('og:video:type', 'text/html', 'property');
-				$doc->setMetaData('og:video:width', '640', 'property');
-				$doc->setMetaData('og:video:height', '480', 'property');
-				$doc->setMetaData('_og:video', 'https://' . str_replace([
-						'/embed/',
-						'/watch?v='
-					], '/v/', $match[ 0 ][ 0 ]), 'property');
-				$doc->setMetaData('_og:video:secure_url', 'https://' . str_replace([
-						'/embed/',
-						'/watch?v='
-					], '/v/', $match[ 0 ][ 0 ]), 'property');
-				$doc->setMetaData('_og:video:type', 'application/x-shockwave-flash', 'property');
-				$doc->setMetaData('_og:video:width', '640', 'property');
-				$doc->setMetaData('_og:video:height', '480', 'property');
-			}
-		}
-	}
-
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
 	public static function tagArticle(array $option = []): void
 	{
 		$app = Factory::getApplication();

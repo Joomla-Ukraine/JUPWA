@@ -346,24 +346,18 @@ class PlgJUPWASeblod extends CMSPlugin
 					$registry->loadString($cck->{'options_' . $client});
 					$this->loaded[ $contentType . '_' . $client . '_options' ] = $registry->toArray();
 
-					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]))
+					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]) && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ][ 0 ] == '{')
 					{
-						if($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ][ 0 ] == '{')
-						{
-							$descriptions                                                            = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]);
-							$lang_tag                                                                = $lang->getTag();
-							$this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] = (isset($descriptions->$lang_tag)) ? $descriptions->$lang_tag : '';
-						}
+						$descriptions                                                            = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]);
+						$lang_tag                                                                = $lang->getTag();
+						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] = (isset($descriptions->$lang_tag)) ? $descriptions->$lang_tag : '';
 					}
 
-					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]))
+					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]) && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ][ 0 ] == '{')
 					{
-						if($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ][ 0 ] == '{')
-						{
-							$titles                                                               = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]);
-							$lang_tag                                                             = $lang->getTag();
-							$this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] = (isset($titles->$lang_tag)) ? $titles->$lang_tag : '';
-						}
+						$titles                                                               = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]);
+						$lang_tag                                                             = $lang->getTag();
+						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] = (isset($titles->$lang_tag)) ? $titles->$lang_tag : '';
 					}
 				}
 
@@ -431,13 +425,13 @@ class PlgJUPWASeblod extends CMSPlugin
 	 */
 	private function client($context, $cck, $article, $property): bool|string
 	{
-		if($context == 'text')
+		if($context === 'text')
 		{
 			$client = 'intro';
 		}
-		elseif($context == 'com_finder.indexer')
+		elseif($context === 'com_finder.indexer')
 		{
-			if($cck->indexed == 'none')
+			if($cck->indexed === 'none')
 			{
 				$article->$property = '';
 
@@ -446,18 +440,15 @@ class PlgJUPWASeblod extends CMSPlugin
 
 			$client = (empty($cck->indexed)) ? 'intro' : $cck->indexed;
 		}
+		elseif($cck->storage_location != '')
+		{
+			$properties = [ 'contexts' ];
+			$properties = JCck::callFunc('plgCCK_Storage_Location' . $cck->storage_location, 'getStaticProperties', $properties);
+			$client     = (in_array($context, $properties[ 'contexts' ])) ? 'content' : 'intro';
+		}
 		else
 		{
-			if($cck->storage_location != '')
-			{
-				$properties = [ 'contexts' ];
-				$properties = JCck::callFunc('plgCCK_Storage_Location' . $cck->storage_location, 'getStaticProperties', $properties);
-				$client     = (in_array($context, $properties[ 'contexts' ])) ? 'content' : 'intro';
-			}
-			else
-			{
-				$client = 'intro';
-			}
+			$client = 'intro';
 		}
 
 		return $client;

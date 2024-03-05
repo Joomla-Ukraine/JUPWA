@@ -8,6 +8,7 @@ const chalk = require("chalk"),
     ProgressBarPlugin = require("progress-bar-webpack-plugin"),
     MiniCssExtractPlugin = require('mini-css-extract-plugin'),
     TerserPlugin = require('terser-webpack-plugin'),
+    CopyWebpackPlugin = require('copy-webpack-plugin'),
     ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin'),
     {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
@@ -28,8 +29,16 @@ const entry = {
     };
 
 const cleanDirs = [
-    '**/packages/plg_system_jupwa/media/jupwa/js/*'
-];
+        '**/packages/plg_system_jupwa/media/jupwa/js/*'
+    ],
+    copyFiles = {
+        patterns: [
+            {
+                from: './src/image',
+                to: './image'
+            }
+        ]
+    };
 
 const rulesJS = {
         test: /\.js$/,
@@ -93,6 +102,7 @@ const pluginProgressBar = new ProgressBarPlugin({
         chunkFilename: `./css/app.[name].${version}.css`
     }),
     pluginMCP = new webpack.optimize.ModuleConcatenationPlugin(),
+    pluginCopy = new CopyWebpackPlugin(copyFiles),
     pluginReplace = new ReplaceInFileWebpackPlugin([
         {
             dir: path.join(__dirname, '/packages/plg_system_jupwa'),
@@ -192,6 +202,7 @@ const configProd = {
         pluginClean,
         pluginMiniCss,
         pluginMCP,
+        pluginCopy,
         pluginReplace
     ],
     optimization: {

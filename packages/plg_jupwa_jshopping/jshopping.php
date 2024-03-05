@@ -40,6 +40,8 @@ class PlgJUPWAJShopping extends CMSPlugin
 	}
 
 	/**
+	 * @param $params
+	 *
 	 * @return void
 	 *
 	 * @throws \Exception
@@ -200,6 +202,7 @@ class PlgJUPWAJShopping extends CMSPlugin
 	/**
 	 * @return false|object
 	 *
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	private function image($params): object|bool

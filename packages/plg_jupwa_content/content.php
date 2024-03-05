@@ -16,7 +16,6 @@ use JUPWA\Helpers\HTML;
 use JUPWA\Helpers\Images;
 use JUPWA\Helpers\OG;
 use JUPWA\Helpers\Schema;
-use JUPWA\Helpers\Video;
 
 defined('_JEXEC') or die;
 
@@ -63,7 +62,6 @@ class PlgJUPWAContent extends CMSPlugin
 		Schema::article_news($option);
 		Schema::article($option);
 		Schema::article_blogposting($option);
-		Schema::youtube($option);
 	}
 
 	/**
@@ -107,11 +105,6 @@ class PlgJUPWAContent extends CMSPlugin
 					'params'  => $params,
 					'article' => $article
 				]);
-
-				OG::tagYouTube([
-					'params'  => $params,
-					'youtube' => $this->youtube($article)
-				]);
 			}
 		}
 	}
@@ -135,8 +128,7 @@ class PlgJUPWAContent extends CMSPlugin
 				'image'        => $this->image($article, $params)->image,
 				'image_width'  => $this->image($article, $params)->width,
 				'image_height' => $this->image($article, $params)->height,
-				'description'  => $this->core($article)->description,
-				'youtube'      => $this->youtube($article)
+				'description'  => $this->core($article)->description
 			]);
 		}
 	}
@@ -167,18 +159,6 @@ class PlgJUPWAContent extends CMSPlugin
 		$default_image = Images::display_default($params->get('selectimg'), $params->get('image'), $params->get('imagemain'));
 
 		return Images::display($default_image);
-	}
-
-	/**
-	 * @param $article
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	private function youtube($article): string
-	{
-		return Video::YouTube($article);
 	}
 
 	/**

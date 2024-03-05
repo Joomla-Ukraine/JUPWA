@@ -184,7 +184,7 @@ class Data
 			'site'      => ''
 		]
 	];
-	
+
 	public static string $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js';
 
 	public static array $preconnect = [
@@ -226,6 +226,8 @@ class Data
 			'https://s.ytimg.com',
 			'https://yt3.ggpht.com',
 			'https://fonts.gstatic.com',
+			'https://play.google.com',
+			'https://jnn-pa.googleapis.com',
 		],
 		'facebook'          => [ 'https://graph.facebook.com' ],
 		'twitter'           => [ 'https://dn.api.twitter.com' ],

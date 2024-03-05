@@ -42,29 +42,42 @@ class Render
 
 		Folder::create($path);
 
-		$favicon = self::ico([ 'source_icon_sm' => $option[ 'source_icon_sm' ] ]);
+		$favicon     = self::ico([ 'source_icon_sm' => $option[ 'source_icon_sm' ] ]);
+		$source_icon = JPATH_SITE . '/' . $option[ 'source_icon' ];
 
 		$icons_s = self::icons([
 			'size' => Data::$icons_sm,
 			'icon' => $option[ 'source_icon_sm' ]
 		]);
 
-		$icons_b = self::icons([
-			'size' => Data::$icons,
-			'icon' => ($option[ 'source_icon' ] !== '' ? $option[ 'source_icon' ] : $option[ 'source_icon_sm' ])
-		]);
+		$icons_b = [];
+		if($option[ 'source_icon' ] && !file_exists($source_icon))
+		{
+			$icons_b = self::icons([
+				'size' => Data::$icons,
+				'icon' => ($option[ 'source_icon' ] !== '' ? $option[ 'source_icon' ] : $option[ 'source_icon_sm' ])
+			]);
+		}
 
 		$json = [
 			'favicon_root'     => $favicon->root,
 			'favicon_favicons' => $favicon->favicons,
 			'icons'            => array_merge($icons_s, $icons_b),
 			'manifest_icons'   => self::manifest_icons($option),
-			'shortcuts'        => self::shortcuts($option),
-			'splash'           => self::splash($option),
-			'article_logo'     => self::article_logo($option),
-			'og_default'       => self::og_default($option),
+			'shortcuts'        => self::shortcuts($option)
 		];
 
+		$json_ext = [];
+		if($option[ 'source_icon' ] && !file_exists($source_icon))
+		{
+			$json_ext = [
+				'splash'       => self::splash($option),
+				'article_logo' => self::article_logo($option),
+				'og_default'   => self::og_default($option)
+			];
+		}
+
+		$json = array_merge($json, $json_ext);
 		$json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
 		File::write(JPATH_SITE . '/favicons/thumbs.json', $json);
@@ -232,7 +245,7 @@ class Render
 			$image[] = Image::render_image($source, $out, [
 				'width'  => $icon,
 				'height' => $icon,
-				'ratio'  => 1.14,
+				'ratio'  => 1.12,
 				'color'  => $option[ 'manifest_icon_background_color' ] == 1 ? $option[ 'background_color' ] : null
 			]);
 		}
