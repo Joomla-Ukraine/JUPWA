@@ -315,7 +315,9 @@ class META
 		if(file_exists(JPATH_SITE . '/' . $file))
 		{
 			$href = Uri::root() . $file;
-			$doc->addHeadLink($href, 'manifest');
+			$doc->addHeadLink($href, 'manifest', 'rel', [
+				'crossorigin' => 'use-credentials'
+			]);
 		}
 	}
 

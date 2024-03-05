@@ -29,12 +29,6 @@ const {precacheAndRoute, matchPrecache} = workbox.precaching;
 
 const offlineFallbackPage = "/offline.php";
 
-const HOSTNAME_WHITELIST = [
-	self.location.hostname,
-	'fonts.gstatic.com',
-	'fonts.googleapis.com'
-];
-
 self.addEventListener("message", (event) => {
 	if (event.data && event.data.type === "SKIP_WAITING") {
 		self.skipWaiting();
@@ -42,49 +36,14 @@ self.addEventListener("message", (event) => {
 });
 
 // Offline
-const getFixedUrl = (req) => {
-	let now = Date.now(),
-		url = new URL(req.url);
-
-	url.protocol = self.location.protocol;
-
-	if (url.hostname === self.location.hostname) {
-		url.search += (url.search ? '&' : '?') + 'cache-bust=' + now;
-	}
-
-	return url.href;
-}
-
-self.addEventListener('activate', event => {
-	event.waitUntil(self.clients.claim());
-})
-
-self.addEventListener('fetch', event => {
-	if (HOSTNAME_WHITELIST.indexOf(new URL(event.request.url).hostname) > -1) {
-		const cached = caches.match(event.request),
-			fixedUrl = getFixedUrl(event.request),
-			fetched = fetch(fixedUrl, { cache: 'no-store' }),
-			fetchedCopy = fetched.then(resp => resp.clone());
-
-		event.respondWith(
-			Promise.race([fetched.catch(_ => cached), cached])
-			.then(resp => resp || fetched)
-		);
-
-		event.waitUntil(
-			Promise.all([fetchedCopy, caches.open( CACHE )])
-			.then(([response, cache]) => response.ok && cache.put(event.request, response))
-		);
-	}
+self.addEventListener('install', async (event) => {
+	event.waitUntil(
+		caches.open(CACHE)
+		.then((cache) => cache.add(offlineFallbackPage))
+	);
 });
 
-setCatchHandler(async ({event}) => {
-	if (event.request.destination === 'document') {
-		return new matchPrecache(offlineFallbackPage);
-	}
-
-	return new Response.error();
-});
+self.addEventListener('activate', () => self.clients.claim());
 
 // Preload
 if (workbox.navigationPreload.isSupported()) {
@@ -151,10 +110,12 @@ self.addEventListener('fetch', (event) => {
 					return preloadResp;
 				}
 				const networkResp = await fetch(event.request);
+
 				return networkResp;
 			} catch (error) {
 				const cache = await caches.open(CACHE);
 				const cachedResp = await cache.match(offlineFallbackPage);
+
 				return cachedResp;
 			}
 		})());
