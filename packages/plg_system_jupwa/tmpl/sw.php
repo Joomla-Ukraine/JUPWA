@@ -36,6 +36,8 @@ self.addEventListener("message", (event) => {
 });
 
 // Offline
+self.addEventListener('activate', () => self.clients.claim());
+
 self.addEventListener('install', async (event) => {
 	event.waitUntil(
 		caches.open(CACHE)
@@ -43,7 +45,13 @@ self.addEventListener('install', async (event) => {
 	);
 });
 
-self.addEventListener('activate', () => self.clients.claim());
+setCatchHandler(async ({event}) => {
+	if (event.request.destination === 'document') {
+		return new matchPrecache(offlineFallbackPage);
+	}
+
+	return new Response.error();
+});
 
 // Preload
 if (workbox.navigationPreload.isSupported()) {
@@ -110,12 +118,10 @@ self.addEventListener('fetch', (event) => {
 					return preloadResp;
 				}
 				const networkResp = await fetch(event.request);
-
 				return networkResp;
 			} catch (error) {
 				const cache = await caches.open(CACHE);
 				const cachedResp = await cache.match(offlineFallbackPage);
-
 				return cachedResp;
 			}
 		})());

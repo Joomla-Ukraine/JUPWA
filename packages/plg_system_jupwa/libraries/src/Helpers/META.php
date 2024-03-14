@@ -41,8 +41,6 @@ class META
 
 		self::splash([ 'params' => $option[ 'params' ] ]);
 
-		self::tags([ 'params' => $option[ 'params' ] ]);
-
 		self::pwa([ 'params' => $option[ 'params' ] ]);
 	}
 
@@ -222,7 +220,7 @@ class META
 		$doc->setMetaData('apple-mobile-web-app-title', ($option[ 'params' ]->get('manifest_sname') ? : $option[ 'params' ]->get('manifest_name')));
 		$doc->setMetaData('apple-mobile-web-app-status-bar-style', 'black-translucent');
 
-		if($option[ 'params' ]->get('source_icon_svg_pin') !== '' && $option[ 'params' ]->get('maskiconcolor') !== '')
+		if($option[ 'params' ]->get('source_icon_svg_pin') && $option[ 'params' ]->get('maskiconcolor'))
 		{
 			$file = $option[ 'params' ]->get('source_icon_svg_pin');
 			if(file_exists(JPATH_SITE . '/' . $file))
@@ -318,26 +316,6 @@ class META
 			$doc->addHeadLink($href, 'manifest', 'rel', [
 				'crossorigin' => 'use-credentials'
 			]);
-		}
-	}
-
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function tags(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
-
-		if($option[ 'params' ]->get('theme_color') != '')
-		{
-			$doc->setMetaData('theme-color', $option[ 'params' ]->get('theme_color'));
 		}
 	}
 

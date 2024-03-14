@@ -247,7 +247,6 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
         'JUPWA\\Helpers\\Schema' => __DIR__ . '/../..' . '/src/Helpers/Schema.php',
         'JUPWA\\Helpers\\ServiceWorker' => __DIR__ . '/../..' . '/src/Helpers/ServiceWorker.php',
         'JUPWA\\Helpers\\URL' => __DIR__ . '/../..' . '/src/Helpers/URL.php',
-        'JUPWA\\Helpers\\Video' => __DIR__ . '/../..' . '/src/Helpers/Video.php',
         'JUPWA\\Thumbs\\Render' => __DIR__ . '/../..' . '/src/Thumbs/Render.php',
         'JUPWA\\Utils\\Image' => __DIR__ . '/../..' . '/src/Utils/Image.php',
         'JUPWA\\Utils\\Util' => __DIR__ . '/../..' . '/src/Utils/Util.php',

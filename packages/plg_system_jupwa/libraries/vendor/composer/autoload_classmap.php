@@ -195,7 +195,6 @@ return array(
     'JUPWA\\Helpers\\Schema' => $baseDir . '/src/Helpers/Schema.php',
     'JUPWA\\Helpers\\ServiceWorker' => $baseDir . '/src/Helpers/ServiceWorker.php',
     'JUPWA\\Helpers\\URL' => $baseDir . '/src/Helpers/URL.php',
-    'JUPWA\\Helpers\\Video' => $baseDir . '/src/Helpers/Video.php',
     'JUPWA\\Thumbs\\Render' => $baseDir . '/src/Thumbs/Render.php',
     'JUPWA\\Utils\\Image' => $baseDir . '/src/Utils/Image.php',
     'JUPWA\\Utils\\Util' => $baseDir . '/src/Utils/Util.php',
