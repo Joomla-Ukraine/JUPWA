@@ -33,11 +33,7 @@ use JUPWA\Thumbs\Render;
 
 require_once __DIR__ . '/libraries/vendor/autoload.php';
 
-/**
- * JUPWA System Plugin.
- *
- * @since  1.0
- */
+#[AllowDynamicProperties]
 class plgSystemJUPWA extends CMSPlugin
 {
 	/**

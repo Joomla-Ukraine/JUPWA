@@ -41,7 +41,7 @@ class Folders
 				continue;
 			}
 
-			if(preg_match('/\.(jpg|jpeg|png|gif)/', strtolower($currentFile)))
+			if(preg_match('/\.(jpg|jpeg|png|gif|webp)/', strtolower($currentFile)))
 			{
 				$file    = $path . '/' . $currentFile;
 				$files[] = trim($file, '/');

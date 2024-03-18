@@ -21,6 +21,7 @@ use JUPWA\Utils\Util;
 
 defined('_JEXEC') or die;
 
+#[AllowDynamicProperties]
 class PlgJUPWAJShopping extends CMSPlugin
 {
 	/**

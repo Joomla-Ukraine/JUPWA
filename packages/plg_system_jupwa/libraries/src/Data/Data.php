@@ -174,7 +174,12 @@ class Data
 		'handle_links'                => '',
 		'launch_handler'              => [],
 		'scope_extensions'            => [],
-		'edge_side_panel'             => []
+		'edge_side_panel'             => [],
+		'author'                      => [
+			'name'    => 'Joomla! Ukraine',
+			'website' => 'https://joomla-ua.org',
+			'github'  => 'https://github.com/Joomla-Ukraine/JUPWA'
+		]
 	];
 
 	public static array $assetlinks = [
@@ -230,6 +235,6 @@ class Data
 			'https://jnn-pa.googleapis.com',
 		],
 		'facebook'          => [ 'https://graph.facebook.com' ],
-		'twitter'           => [ 'https://dn.api.twitter.com' ],
+		'twitter'           => [ 'https://platform.twitter.com' ],
 	];
 }

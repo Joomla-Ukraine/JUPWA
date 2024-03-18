@@ -18,6 +18,7 @@ $data = (object) $displayData;
 
 ?>
 const CACHE = 'jupwa-pages';
+const offlineFallbackPage = "/offline.php";
 
 importScripts('<?php echo $data->workbox; ?>');
 
@@ -26,8 +27,6 @@ const {NetworkFirst, StaleWhileRevalidate, CacheFirst} = workbox.strategies;
 const {CacheableResponsePlugin} = workbox.cacheableResponse;
 const {ExpirationPlugin} = workbox.expiration;
 const {precacheAndRoute, matchPrecache} = workbox.precaching;
-
-const offlineFallbackPage = "/offline.php";
 
 self.addEventListener("message", (event) => {
 	if (event.data && event.data.type === "SKIP_WAITING") {
@@ -102,6 +101,7 @@ registerRoute(
 				statuses: [0, 200]
 			}),
 			new ExpirationPlugin({
+				maxEntries: 100,
 				maxAgeSeconds: 30 * 24 * 60 * 60,
 				purgeOnQuotaError: true
 			})

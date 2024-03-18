@@ -22,6 +22,7 @@ defined('_JEXEC') or die;
 
 require_once __DIR__ . '/SeblodAPI.php';
 
+#[AllowDynamicProperties]
 class PlgJUPWASeblod extends CMSPlugin
 {
 	/**
@@ -350,14 +351,14 @@ class PlgJUPWASeblod extends CMSPlugin
 					{
 						$descriptions                                                            = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ]);
 						$lang_tag                                                                = $lang->getTag();
-						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] = (isset($descriptions->$lang_tag)) ? $descriptions->$lang_tag : '';
+						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'metadesc' ] = $descriptions->$lang_tag ?? '';
 					}
 
 					if(isset($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]) && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] != '' && $this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ][ 0 ] == '{')
 					{
 						$titles                                                               = json_decode($this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ]);
 						$lang_tag                                                             = $lang->getTag();
-						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] = (isset($titles->$lang_tag)) ? $titles->$lang_tag : '';
+						$this->loaded[ $contentType . '_' . $client . '_options' ][ 'title' ] = $titles->$lang_tag ?? '';
 					}
 				}
 

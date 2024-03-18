@@ -294,7 +294,7 @@ class PHP_ICO
 	public function _load_image_file($file)
 	{
 		// Run a cheap check to verify that it is an image file.
-		if(($size = getimagesize($file)) === false || ($file_data = file_get_contents($file)) === false || ($im = imagecreatefromstring($file_data)) === false)
+		if(($file_data = file_get_contents($file)) === false || ($im = imagecreatefromstring($file_data)) === false)
 		{
 			return false;
 		}

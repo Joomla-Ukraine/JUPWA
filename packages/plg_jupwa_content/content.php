@@ -19,6 +19,7 @@ use JUPWA\Helpers\Schema;
 
 defined('_JEXEC') or die;
 
+#[AllowDynamicProperties]
 class PlgJUPWAContent extends CMSPlugin
 {
 	/**

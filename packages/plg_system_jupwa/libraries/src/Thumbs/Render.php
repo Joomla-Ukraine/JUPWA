@@ -118,7 +118,7 @@ class Render
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function og_default(array $option = [])
+	public static function og_default(array $option = []): \Intervention\Image\Image|string
 	{
 		$source = 'media/jupwa/image/jupwa.png';
 		$out    = 'favicons/og_cover.png';
