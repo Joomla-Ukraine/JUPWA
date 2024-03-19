@@ -184,7 +184,6 @@ return array(
     'JUPWA\\Helpers\\Assetinks' => $baseDir . '/src/Helpers/Assetinks.php',
     'JUPWA\\Helpers\\BrowserConfig' => $baseDir . '/src/Helpers/BrowserConfig.php',
     'JUPWA\\Helpers\\Facebook' => $baseDir . '/src/Helpers/Facebook.php',
-    'JUPWA\\Helpers\\Favicons' => $baseDir . '/src/Helpers/Favicons.php',
     'JUPWA\\Helpers\\Folders' => $baseDir . '/src/Helpers/Folders.php',
     'JUPWA\\Helpers\\HTML' => $baseDir . '/src/Helpers/HTML.php',
     'JUPWA\\Helpers\\Images' => $baseDir . '/src/Helpers/Images.php',

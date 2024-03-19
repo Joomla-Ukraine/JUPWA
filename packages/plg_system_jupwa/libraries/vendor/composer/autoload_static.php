@@ -236,7 +236,6 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
         'JUPWA\\Helpers\\Assetinks' => __DIR__ . '/../..' . '/src/Helpers/Assetinks.php',
         'JUPWA\\Helpers\\BrowserConfig' => __DIR__ . '/../..' . '/src/Helpers/BrowserConfig.php',
         'JUPWA\\Helpers\\Facebook' => __DIR__ . '/../..' . '/src/Helpers/Facebook.php',
-        'JUPWA\\Helpers\\Favicons' => __DIR__ . '/../..' . '/src/Helpers/Favicons.php',
         'JUPWA\\Helpers\\Folders' => __DIR__ . '/../..' . '/src/Helpers/Folders.php',
         'JUPWA\\Helpers\\HTML' => __DIR__ . '/../..' . '/src/Helpers/HTML.php',
         'JUPWA\\Helpers\\Images' => __DIR__ . '/../..' . '/src/Helpers/Images.php',

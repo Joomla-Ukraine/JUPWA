@@ -3,7 +3,7 @@
          basedir=".">
 
     <property name="VERSION"
-              value="2.1.1" />
+              value="2.1.2" />
     <property name="JOOMLA"
               value="4.0" />
 

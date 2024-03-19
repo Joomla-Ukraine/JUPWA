@@ -14,6 +14,7 @@
 
 namespace JUPWA\Classes;
 
+#[AllowDynamicProperties]
 class PHP_ICO
 {
 	/**

@@ -167,19 +167,12 @@ class Data
 		'theme_color'                 => '',
 		'background_color'            => '',
 		'screenshots'                 => [],
-		'gcm_sender_id'               => '482941778795',
-		'gcm_user_visible_only'       => true,
 		'prefer_related_applications' => '',
 		'related_applications'        => [],
 		'handle_links'                => '',
 		'launch_handler'              => [],
 		'scope_extensions'            => [],
-		'edge_side_panel'             => [],
-		'author'                      => [
-			'name'    => 'Joomla! Ukraine',
-			'website' => 'https://joomla-ua.org',
-			'github'  => 'https://github.com/Joomla-Ukraine/JUPWA'
-		]
+		'edge_side_panel'             => []
 	];
 
 	public static array $assetlinks = [

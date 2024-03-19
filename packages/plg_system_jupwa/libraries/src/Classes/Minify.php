@@ -25,6 +25,7 @@ namespace JUPWA\Classes;
  * @author  Stephen Clay <steve@mrclay.org>
  * @package Minify
  */
+#[AllowDynamicProperties]
 class Minify
 {
 	/**
