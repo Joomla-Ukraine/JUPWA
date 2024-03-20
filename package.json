@@ -1,7 +1,7 @@
 {
   "name": "jupwa",
   "sideEffects": true,
-  "version": "1.9",
+  "version": "1.10",
   "description": "JUPWA",
   "private": true,
   "scripts": {
@@ -17,10 +17,10 @@
   "keywords": [],
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.24.0",
-    "@babel/plugin-transform-runtime": "^7.24.0",
-    "@babel/preset-env": "^7.24.0",
-    "@babel/runtime": "^7.24.0",
+    "@babel/core": "^7.24.1",
+    "@babel/plugin-transform-runtime": "^7.24.1",
+    "@babel/preset-env": "^7.24.1",
+    "@babel/runtime": "^7.24.1",
     "@swc/core": "^1.4.8",
     "babel-loader": "^9.1.3",
     "clean-webpack-plugin": "^4.0.0",
@@ -42,6 +42,6 @@
     "yargs": "^17.7.2"
   },
   "dependencies": {
-    "@khmyznikov/pwa-install": "^0.3.4"
+    "@khmyznikov/pwa-install": "^0.3.5"
   }
 }

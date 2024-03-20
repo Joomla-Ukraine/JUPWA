@@ -245,7 +245,7 @@ class Render
 			$image[] = Image::render_image($source, $out, [
 				'width'  => $icon,
 				'height' => $icon,
-				'ratio'  => 1.12,
+				'ratio'  => 1.11,
 				'color'  => $option[ 'manifest_icon_background_color' ] == 1 ? $option[ 'background_color' ] : null
 			]);
 		}
