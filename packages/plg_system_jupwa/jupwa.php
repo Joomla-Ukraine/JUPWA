@@ -318,7 +318,7 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->params->get('usepwainstall') == 1)
 		{
 			$wa                    = $doc->getWebAssetManager();
-			$jupwa_install_version = '1.10';
+			$jupwa_install_version = '2.0';
 
 			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_install_version . '.js', [ 'version' => false ], [
 				'defer'         => 'defer',
