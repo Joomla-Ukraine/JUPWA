@@ -176,10 +176,9 @@ class Data
 	];
 
 	public static array $assetlinks = [
-		'relation' => [ 'delegate_permission/common.query_webapk' ],
-		'target'   => [
-			'namespace' => 'web',
-			'site'      => ''
+		[
+			'relation' => [],
+			'target'   => []
 		]
 	];
 
