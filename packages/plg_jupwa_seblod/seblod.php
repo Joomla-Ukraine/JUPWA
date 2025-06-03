@@ -248,6 +248,13 @@ class PlgJUPWASeblod extends CMSPlugin
 			$seblod_gallery = $attr[ 'params' ]->get('seblod_gallery');
 			$seblod_intro   = $attr[ 'params' ]->get('seblod_intro');
 
+			if($multilang === true)
+			{
+				$lang_tag     = $lang->getTag();
+				$lang_code    = explode('-', $lang_tag)[ 0 ];
+				$seblod_intro = str_replace('[lang]', $lang_code, $seblod_intro);
+			}
+
 			$data  = [];
 			$_next = 1;
 
