@@ -36,6 +36,8 @@ require_once __DIR__ . '/libraries/vendor/autoload.php';
 #[AllowDynamicProperties]
 class plgSystemJUPWA extends CMSPlugin
 {
+	public int $caching = 0;
+
 	/**
 	 * plgSystemJUPWA constructor.
 	 *
@@ -86,12 +88,9 @@ class plgSystemJUPWA extends CMSPlugin
 			{
 				Render::create($post_param, $this->app);
 			}
-			else
+			elseif(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
 			{
-				if(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
-				{
-					$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
-				}
+				$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
 			}
 		}
 	}
@@ -261,6 +260,38 @@ class plgSystemJUPWA extends CMSPlugin
 				$expireheader = $date->setTimestamp(time() + $this->params->get('expirestime'))->format('D, d M Y H:i:s T');
 				$this->app->setHeader('Expires', $expireheader, true);
 			}
+		}
+	}
+
+	/**
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public function onAfterRoute(): void
+	{
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
+
+		if(strpos(JURI::current(), '/account') !== false)
+		{
+			$this->app->getConfig()->set('caching', 0);
+		}
+
+		if(!$this->app->getIdentity()->guest)
+		{
+			$this->app->getConfig()->set('caching', 0);
+		}
+
+		if($this->checkRules())
+		{
+			$this->caching = $this->app->getConfig()->get('caching');
+
+			$this->app->getConfig()->set('caching', 0);
 		}
 	}
 
@@ -527,5 +558,60 @@ class plgSystemJUPWA extends CMSPlugin
 
 			throw new RuntimeException($message);
 		}
+	}
+
+	/**
+	 *
+	 * @return bool
+	 *
+	 * @since 1.0
+	 */
+	private function checkRules(): bool
+	{
+		$defs = str_replace("\r", "", $this->params->get('definitions', ''));
+		$defs = explode("\n", $defs);
+
+		foreach($defs as $def)
+		{
+			$result = $this->parseQueryString($def);
+			if(is_array($result))
+			{
+				$found    = 0;
+				$required = count($result);
+				foreach($result as $key => $value)
+				{
+					if($this->app->getInput()->get($key) == $value || ($this->app->getInput()->get($key, null) !== null && $value === '?'))
+					{
+						$found++;
+					}
+				}
+				if($found == $required)
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 *
+	 * @param
+	 *
+	 * @return array
+	 * @since 1.0
+	 */
+	private function parseQueryString($str): array
+	{
+		$op    = [];
+		$pairs = explode("&", $str);
+		foreach($pairs as $pair)
+		{
+			[ $k, $v ] = array_map("urldecode", explode("=", $pair));
+			$op[ $k ] = $v;
+		}
+
+		return $op;
 	}
 }
