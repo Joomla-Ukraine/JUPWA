@@ -110,29 +110,16 @@
 		                   description="PLG_JUPWA_CACHE_REENABLE_DESC"
 		                   showon="joomla_cache:1"
 		            >
-		                    <option value="0">No</option>
-		                    <option value="1">Yes</option>
-		                </field>
-	            </fieldset>
-
-	             <fieldset name="CACHE">
-
-					<field name="brawser_cache"
-					       type="radio"
-					       layout="joomla.form.field.radio.switcher"
-					       default="0"
-					       label="PLG_JUPWA_CACHE_USE"
-					>
-						<option value="0">JNO</option>
-					    <option value="1">JYES</option>
-					</field>
+			            <option value="0">No</option>
+			            <option value="1">Yes</option>
+		            </field>
 
 	                <field name="pragma"
 	                       type="radio"
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
 	                       label="PLG_JUPWA_CACHE_PRAGMA"
-	                       showon="brawser_cache:1"
+	                       showon="joomla_cache:1"
 	                >
 						<option value="0">JNO</option>
 					    <option value="1">JYES</option>
@@ -143,7 +130,7 @@
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
 	                       label="PLG_JUPWA_CACHE_CONTROL"
-	                       showon="brawser_cache:1"
+	                       showon="joomla_cache:1"
 	                >
 						<option value="0">JNO</option>
 					    <option value="1">JYES</option>
@@ -154,7 +141,7 @@
 	                       layout="joomla.form.field.radio.switcher"
 	                       default="0"
 	                       label="PLG_JUPWA_CACHE_EXPIRIES"
-	                       showon="brawser_cache:1"
+	                       showon="joomla_cache:1"
 	                >
 						<option value="0">JNO</option>
 					    <option value="1">JYES</option>
@@ -164,7 +151,7 @@
 	                       type="text"
 	                       default="900"
 	                       label="PLG_JUPWA_CACHE_EXPIRIES_TIME"
-	                       showon="brawser_cache:1"
+	                       showon="joomla_cache:1"
 	                />
 
 			        <field
@@ -173,7 +160,7 @@
 					        rows="10"
 					        cols="20"
 					        label="PLG_JUPWA_CACHE_EXCLUSION"
-					        showon="brawser_cache:1"
+					        showon="joomla_cache:1"
 			        />
 
 	            </fieldset>

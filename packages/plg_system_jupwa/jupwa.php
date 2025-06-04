@@ -240,7 +240,7 @@ class plgSystemJUPWA extends CMSPlugin
 			}
 		}
 
-		if($this->params->get('brawser_cache', 0) == 1)
+		if($this->params->get('joomla_cache', 0) == 1)
 		{
 			$this->app->allowCache(true);
 			if($this->params->get('pragma', 0) == 1)
@@ -277,21 +277,24 @@ class plgSystemJUPWA extends CMSPlugin
 			return;
 		}
 
-		if(strpos(JURI::current(), '/account') !== false)
+		if($this->params->get('joomla_cache', 0) == 1)
 		{
-			$this->app->getConfig()->set('caching', 0);
-		}
+			if(strpos(JURI::current(), '/account') !== false)
+			{
+				$this->app->getConfig()->set('caching', 0);
+			}
 
-		if(!$this->app->getIdentity()->guest)
-		{
-			$this->app->getConfig()->set('caching', 0);
-		}
+			if(!$this->app->getIdentity()->guest)
+			{
+				$this->app->getConfig()->set('caching', 0);
+			}
 
-		if($this->checkRules())
-		{
-			$this->caching = $this->app->getConfig()->get('caching');
+			if($this->checkRules())
+			{
+				$this->caching = $this->app->getConfig()->get('caching');
 
-			$this->app->getConfig()->set('caching', 0);
+				$this->app->getConfig()->set('caching', 0);
+			}
 		}
 	}
 
@@ -350,10 +353,9 @@ class plgSystemJUPWA extends CMSPlugin
 			return;
 		}
 
-		$view        = $this->app->input->get('view');
-		$integration = PluginHelper::importPlugin('jupwa');
-		$component   = $this->app->input->getCmd('option');
-		$use_access  = $this->app->triggerEvent('onJUPWAAccess', [ $component ]);
+		$view       = $this->app->input->get('view');
+		$component  = $this->app->input->getCmd('option');
+		$use_access = $this->app->triggerEvent('onJUPWAAccess', [ $component ]);
 
 		if($component === 'com_finder')
 		{
