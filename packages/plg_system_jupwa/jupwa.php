@@ -243,10 +243,6 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->params->get('joomla_cache', 0) == 1)
 		{
 			$this->app->allowCache(true);
-			if($this->params->get('pragma', 0) == 1)
-			{
-				$this->app->setHeader('Pragma', 'public', true);
-			}
 
 			if($this->params->get('cachecontrol', 0) == 1)
 			{
