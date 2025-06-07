@@ -12,6 +12,11 @@
                 pattern="%d.%m.%Y" />
     </tstamp>
 
+	<tstamp>
+	    <format property="YEAR"
+	            pattern="%Y" />
+    </tstamp>
+
     <property name="build"
               value="build" />
     <property name="temp"
@@ -184,6 +189,27 @@
                 <include name="**/**" />
             </fileset>
         </zip>
+
+		<exec command="sha256sum ${dist}/pkg_jupwa_v${VERSION}.zip | awk '{print $1}'"
+		      outputProperty="archive.sha256"
+		      checkreturn="true" />
+
+	    <copy file="build_update.xml"
+	          tofile="update.xml">
+
+            <filterchain>
+                <replacetokens>
+	                 <token key="cheksum"
+	                        value="${archive.sha256}" />
+                    <token key="version"
+                           value="${VERSION}" />
+                    <token key="date"
+                           value="${DATE}" />
+	                <token key="year"
+	                       value="${YEAR}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
 
         <echo msg="Removing old files..." />
         <delete dir="${build}" />
