@@ -204,6 +204,8 @@
 		      outputProperty="archive.sha256"
 		      checkreturn="true" />
 
+	    <delete file="update.xml" />
+
 	    <copy file="build_update.xml"
 	          tofile="update.xml">
 
