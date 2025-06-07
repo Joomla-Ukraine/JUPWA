@@ -5,7 +5,7 @@
  * @version       1.x
  * @package       JUPWA\Classes
  * @author        Denys D. Nosov (denys@joomla-ua.org)
- * @copyright (C) 2023-2024 by Denys D. Nosov (https://joomla-ua.org)
+ * @copyright (C) 2023-2025 by Denys D. Nosov (https://joomla-ua.org)
  * @license       GNU General Public License version 2 or later; see LICENSE.md
  *
  * Copyright 2011-2016 Chris Jean & iThemes

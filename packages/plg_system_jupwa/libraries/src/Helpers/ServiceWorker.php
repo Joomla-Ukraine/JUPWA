@@ -5,7 +5,7 @@
  * @version       1.x
  * @package       JUPWA
  * @author        Denys D. Nosov (denys@joomla-ua.org)
- * @copyright (C) 2023-2024 by Denys D. Nosov (https://joomla-ua.org)
+ * @copyright (C) 2023-2025 by Denys D. Nosov (https://joomla-ua.org)
  * @license       GNU General Public License version 2 or later; see LICENSE.md
  *
  **/
@@ -44,9 +44,6 @@ class ServiceWorker
 			$pwa_offline = Util::tmpl('offline', [
 				'app' => $app
 			]);
-
-			$html        = '<div style="margin: 30px;align-content: center">' . date('Y') . ' &copy; With ♥️ <a href="https://joomla-ua.org">Joomla! Україна</a></div>';
-			$pwa_offline = str_replace('</body>', $html, $pwa_offline);
 
 			file_put_contents(JPATH_SITE . '/offline.php', $pwa_offline);
 		}

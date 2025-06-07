@@ -5,7 +5,7 @@
  * @version       1.x
  * @package       JUPWA
  * @author        Denys D. Nosov (denys@joomla-ua.org)
- * @copyright (C) 2023-2024 by Denys D. Nosov (https://joomla-ua.org)
+ * @copyright (C) 2023-2025 by Denys D. Nosov (https://joomla-ua.org)
  * @license       GNU General Public License version 2 or later; see LICENSE.md
  *
  * @formatter:off
@@ -56,6 +56,8 @@ $data = (object) $displayData;
 <button type="button">⤾ Reload</button>
 
 <p><small><?php echo $data->app->get('sitename'); ?></small></p>
+
+<div style="margin: 30px;align-content: center"><?= date('Y'); ?> &copy; With ♥️ <a href="https://joomla-ua.org">Joomla! Україна</a></div>
 
 <script>
     document.querySelector('button').addEventListener('click', () => {

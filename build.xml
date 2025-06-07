@@ -3,7 +3,7 @@
          basedir=".">
 
     <property name="VERSION"
-              value="2.3.0" />
+              value="2.3.1" />
     <property name="JOOMLA"
               value="4.0" />
 
@@ -60,6 +60,8 @@
                            value="${VERSION}" />
                     <token key="date"
                            value="${DATE}" />
+	                <token key="year"
+	                       value="${YEAR}" />
                 </replacetokens>
             </filterchain>
         </copy>
@@ -80,6 +82,8 @@
                            value="${VERSION}" />
                     <token key="date"
                            value="${DATE}" />
+	                <token key="year"
+	                       value="${YEAR}" />
                 </replacetokens>
             </filterchain>
         </copy>
@@ -98,6 +102,8 @@
                            value="${VERSION}" />
                     <token key="date"
                            value="${DATE}" />
+	                <token key="year"
+	                       value="${YEAR}" />
                 </replacetokens>
             </filterchain>
         </copy>
@@ -116,6 +122,8 @@
                            value="${VERSION}" />
                     <token key="date"
                            value="${DATE}" />
+	                <token key="year"
+	                       value="${YEAR}" />
                 </replacetokens>
             </filterchain>
         </copy>
@@ -134,6 +142,8 @@
 					       value="${VERSION}" />
 					<token key="date"
 					       value="${DATE}" />
+					<token key="year"
+					       value="${YEAR}" />
 				</replacetokens>
 			</filterchain>
 		</copy>
