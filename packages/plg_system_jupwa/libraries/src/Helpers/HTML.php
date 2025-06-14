@@ -23,7 +23,7 @@ class HTML
 	 *
 	 * @since 1.0
 	 */
-	public static function text(string $text): ?string
+	public static function text($text): ?string
 	{
 		$text = rtrim($text, ' ');
 		$text = trim($text);

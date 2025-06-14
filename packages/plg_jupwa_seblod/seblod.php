@@ -244,9 +244,9 @@ class PlgJUPWASeblod extends CMSPlugin
 			$cck            = new SeblodAPI();
 			$content        = $cck->loadContent($id)->properties;
 			$cck_id         = $cck->loadContent($id)->id;
-			$seblod_images  = $attr[ 'params' ]->get('seblod_images');
-			$seblod_gallery = $attr[ 'params' ]->get('seblod_gallery');
-			$seblod_intro   = $attr[ 'params' ]->get('seblod_intro');
+			$seblod_images  = $attr[ 'params' ]->get('seblod_images') ?? '';
+			$seblod_gallery = $attr[ 'params' ]->get('seblod_gallery') ?? '';
+			$seblod_intro   = $attr[ 'params' ]->get('seblod_intro') ?? '';
 
 			if($multilang === true)
 			{
@@ -265,7 +265,7 @@ class PlgJUPWASeblod extends CMSPlugin
 				foreach($_rows as $_row)
 				{
 					$_image = trim($_row);
-					$_image = $content->{$_image};
+					$_image = $content->{$_image} ?? '';
 
 					if($_image)
 					{
@@ -371,14 +371,14 @@ class PlgJUPWASeblod extends CMSPlugin
 
 				if($titles)
 				{
-					$title           = $titles->{$lang_tag};
-					$data[ 'title' ] = $content->{$title};
+					$title           = $titles->{$lang_tag} ?? '';
+					$data[ 'title' ] = $content->{$title} ?? '';
 				}
 
 				if($descriptions)
 				{
-					$desc           = $descriptions->{$lang_tag};
-					$data[ 'desc' ] = $content->{$desc};
+					$desc           = $descriptions->{$lang_tag} ?? '';
+					$data[ 'desc' ] = $content->{$desc} ?? '';
 				}
 			}
 

@@ -23,7 +23,7 @@ class URL
 	 *
 	 * @since 1.0
 	 */
-	public static function is_url(string $url): bool
+	public static function is_url($url): bool
 	{
 		$html = false;
 		if(filter_var($url, FILTER_VALIDATE_URL))
