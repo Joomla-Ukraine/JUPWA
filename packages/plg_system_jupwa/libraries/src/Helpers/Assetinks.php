@@ -40,10 +40,15 @@ class Assetinks
 				Folder::create($folder);
 			}
 
-			$data           = Data::$assetlinks;
-			$data[ 'site' ] = Uri::root() . 'manifest.webmanifest';
+			$data               = Data::$assetlinks;
+			$data[ 'relation' ] = [ 'delegate_permission/common.handle_all_urls' ];
+			$data[ 'target' ]   = [
+				'namespace'                => 'android_app',
+				'package_name'             => $option[ 'param' ][ 'assetlinks_package_name' ],
+				'sha256_cert_fingerprints' => [ $option[ 'param' ][ 'assetlinks_sha256' ] ],
+			];
 
-			$data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+			$data = json_encode([ $data ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
 			File::write($file_assetlinks, $data);
 		}
