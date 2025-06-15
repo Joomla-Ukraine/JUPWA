@@ -175,12 +175,7 @@ class Data
 		'edge_side_panel'             => []
 	];
 
-	public static array $assetlinks = [
-		[
-			'relation' => [],
-			'target'   => []
-		]
-	];
+	public static array $assetlinks = [];
 
 	public static string $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js';
 
