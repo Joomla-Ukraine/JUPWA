@@ -17,13 +17,13 @@
 
     <scriptfile>script.php</scriptfile>
 
-    <update>https://joomla-ua.org/update/plg/jupwa.xml</update>
+    <update>https://raw.githubusercontent.com/Joomla-Ukraine/JUPWA/refs/heads/main/update.xml</update>
     <updateservers>
         <server type="extension"
                 priority="1"
                 name="JUPWA">
             <![CDATA[https://raw.githubusercontent.com/Joomla-Ukraine/JUPWA/refs/heads/main/update.xml]]>
-            </server>
+        </server>
     </updateservers>
 
     <files folder="packages">

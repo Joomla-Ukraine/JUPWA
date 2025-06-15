@@ -3,7 +3,7 @@
          basedir=".">
 
     <property name="VERSION"
-              value="2.3.1" />
+              value="2.3.2" />
     <property name="JOOMLA"
               value="4.0" />
 
@@ -35,7 +35,6 @@
     </target>
 
     <target name="temp">
-
         <copy todir="${temp}/language">
             <fileset dir="language">
                 <include name="**" />
@@ -47,11 +46,9 @@
                 <include name="**" />
             </fileset>
         </copy>
-
     </target>
 
     <target name="replace">
-
         <copy file="pkg_jupwa.xml"
               todir="${build}">
             <filterchain>
@@ -151,11 +148,9 @@
 		<delete file="${temp}/plg_jupwa_seblod/seblod.xml" />
 		<copy file="${temp}/temp/plg_jupwa_seblod/seblod.xml"
 		      todir="${temp}/plg_jupwa_seblod" />
-
     </target>
 
     <target name="pack-plugins">
-
         <mkdir dir="${build}/packages" />
 
         <zip destfile="${build}/packages/plg_system_jupwa.zip"
@@ -189,7 +184,6 @@
 
         <copy file="script.php"
               todir="${build}" />
-
     </target>
 
     <target name="dist"
@@ -208,7 +202,6 @@
 
 	    <copy file="build_update.xml"
 	          tofile="update.xml">
-
             <filterchain>
                 <replacetokens>
 	                 <token key="cheksum"
@@ -226,15 +219,11 @@
         <echo msg="Removing old files..." />
         <delete dir="${build}" />
         <delete dir="${temp}" />
-
     </target>
 
-    <target name="clean"
-            description="clean up">
-
+    <target name="clean">
         <delete dir="${build}" />
         <delete dir="${temp}" />
-
     </target>
 
 </project>
