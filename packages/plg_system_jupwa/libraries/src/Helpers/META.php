@@ -252,7 +252,12 @@ class META
 
 		if($option[ 'params' ]->get('theme_color'))
 		{
-			$doc->setMetaData('theme-color', $option[ 'params' ]->get('theme_color'));
+			$doc->addCustomTag('<meta name="theme-color" content="' . $option[ 'params' ]->get('theme_color') . '" media="(prefers-color-scheme: light)">');
+		}
+
+		if($option[ 'params' ]->get('theme_color_dark'))
+		{
+			$doc->addCustomTag('<meta name="theme-color" content="' . $option[ 'params' ]->get('theme_color_dark') . '" media="(prefers-color-scheme: dark)">');
 		}
 
 		$file = 'favicons/browserconfig.xml';

@@ -1077,6 +1077,12 @@
 				        label="PLG_JUPWA_THEME_COLOR"
 		        />
 
+		         <field
+				         name="theme_color_dark"
+				         type="color"
+				         label="PLG_JUPWA_THEME_COLOR_DARK"
+		         />
+
 		        <field
 				        name="background_color"
 				        type="color"
