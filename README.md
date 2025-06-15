@@ -6,7 +6,7 @@
 
 ## Donate: Buy Me a Coffee
 
-* [Monobank (Google Pay or Bank Card)](https://send.monobank.ua/jar/7u4x6vNRZJ)
+* [Monobank (Google Pay, Apple Pay or Bank Card)](https://send.monobank.ua/jar/7u4x6vNRZJ)
 * [PayPal](https://www.paypal.com/donate/?hosted_button_id=WQJNDPDPDMKP8)
 
 ## JUPWA Documentation
@@ -35,11 +35,11 @@
 * Add Splash background
 * Add screenshots
 * Add shortcuts
-* Theme color
+* Theme color (light or dark)
 * Lightning fast
 * Support Android, iOS, Windows, Linux, MacOS etc.
 * Support sw.js template
-* Support ofline template
+* Support offline template
 * Support plugins integration
 
 ## Browser support
