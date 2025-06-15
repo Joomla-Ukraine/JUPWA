@@ -295,9 +295,9 @@ class Manifest
 			foreach($related_apps as $related_app)
 			{
 				$item[] = [
-					'platform' => $related_app->related_apps_platforms,
-					'url'      => $related_app->related_apps_url,
-					'id'       => $related_app->related_apps_id
+					'platform' => $related_app->related_apps_platforms ?? '',
+					'url'      => $related_app->related_apps_url ?? '',
+					'id'       => $related_app->related_apps_id ?? ''
 				];
 			}
 		}

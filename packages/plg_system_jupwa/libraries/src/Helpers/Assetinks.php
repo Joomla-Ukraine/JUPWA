@@ -12,7 +12,6 @@
 
 namespace JUPWA\Helpers;
 
-use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use JUPWA\Data\Data;

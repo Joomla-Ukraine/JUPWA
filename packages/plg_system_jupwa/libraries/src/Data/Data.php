@@ -205,6 +205,7 @@ class Data
 			'https://www.googleapis.com',
 		],
 		'google-maps'       => [
+			'https://www.google.com',
 			'https://maps.gstatic.com',
 			'https://maps.googleapis.com',
 			'https://fonts.gstatic.com',
