@@ -26,8 +26,10 @@
     </media>
 
     <languages>
-        <language tag="en-GB">language/en-GB.plg_system_jupwa.ini</language>
-        <language tag="en-GB">language/en-GB.plg_system_jupwa.sys.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_system_jupwa.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_system_jupwa.sys.ini</language>
+	    <language tag="uk-UA">language/uk-UA-/uk-UA.plg_system_jupwa.ini</language>
+        <language tag="uk-UA">language/uk-UA/uk-UA.plg_system_jupwa.sys.ini</language>
     </languages>
 
      <config>

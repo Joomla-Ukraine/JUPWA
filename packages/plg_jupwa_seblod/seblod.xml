@@ -19,8 +19,10 @@
 	</files>
 
 	<languages>
-        <language tag="en-GB">language/en-GB.plg_jupwa_seblod.ini</language>
-        <language tag="en-GB">language/en-GB.plg_jupwa_seblod.sys.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_jupwa_seblod.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_jupwa_seblod.sys.ini</language>
+		<language tag="uk-UA">language/uk-UA/uk-UA.plg_jupwa_seblod.ini</language>
+        <language tag="uk-UA">language/uk-UA/uk-UA.plg_jupwa_seblod.sys.ini</language>
     </languages>
 
 	 <config>
