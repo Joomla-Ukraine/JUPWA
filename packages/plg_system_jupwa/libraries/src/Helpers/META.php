@@ -250,6 +250,11 @@ class META
 			$doc->setMetaData('msapplication-TileColor', $option[ 'params' ]->get('msapplication_tilecolor'));
 		}
 
+		if($option[ 'params' ]->get('theme_color') && $option[ 'params' ]->get('theme_color_dark'))
+		{
+			$doc->addCustomTag('<meta name="color-scheme" content="light dark">');
+		}
+
 		if($option[ 'params' ]->get('theme_color'))
 		{
 			$doc->addCustomTag('<meta name="theme-color" content="' . $option[ 'params' ]->get('theme_color') . '" media="(prefers-color-scheme: light)">');
