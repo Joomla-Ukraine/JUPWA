@@ -35,7 +35,8 @@
 		            <field name="seblod_title"
 		                   size="50"
 		                   type="text"
-		                   label="PLG_JUPWA_SEBLOD_TITLE" />
+		                   label="PLG_JUPWA_SEBLOD_TITLE"
+		            />
 
 	                <field name="seblod_intro"
 	                       size="50"
