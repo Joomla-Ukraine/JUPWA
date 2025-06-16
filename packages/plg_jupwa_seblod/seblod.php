@@ -246,12 +246,14 @@ class PlgJUPWASeblod extends CMSPlugin
 			$cck_id         = $cck->loadContent($id)->id;
 			$seblod_images  = $attr[ 'params' ]->get('seblod_images') ?? '';
 			$seblod_gallery = $attr[ 'params' ]->get('seblod_gallery') ?? '';
+			$seblod_title   = $attr[ 'params' ]->get('seblod_title') ?? '';
 			$seblod_intro   = $attr[ 'params' ]->get('seblod_intro') ?? '';
 
 			if($multilang === true)
 			{
 				$lang_tag     = $lang->getTag();
 				$lang_code    = explode('-', $lang_tag)[ 0 ];
+				$seblod_title = str_replace('[lang]', $lang_code, $seblod_title);
 				$seblod_intro = str_replace('[lang]', $lang_code, $seblod_intro);
 			}
 
@@ -325,6 +327,24 @@ class PlgJUPWASeblod extends CMSPlugin
 				}
 
 				$article->introtext = implode($intro);
+			}
+
+			if($seblod_title)
+			{
+				$_rows = explode(',', $seblod_title);
+
+				$title = [];
+				foreach($_rows as $_row)
+				{
+					$_title = trim($_row);
+					$_title = $content->{$_title};
+					if($_title)
+					{
+						$title[] = $_title;
+					}
+				}
+
+				$article->title = implode($title);
 			}
 
 			$data[ 'title' ] = $article->title;

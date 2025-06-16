@@ -30,15 +30,20 @@
 
 	            <fieldset name="FIELDS">
 
-	                <field name="seblod_images"
-	                       size="50"
-	                       type="text"
-	                       label="PLG_JUPWA_SEBLOD_IMAGES" />
+		            <field name="seblod_title"
+		                   size="50"
+		                   type="text"
+		                   label="PLG_JUPWA_SEBLOD_TITLE" />
 
 	                <field name="seblod_intro"
 	                       size="50"
 	                       type="text"
 	                       label="PLG_JUPWA_SEBLOD_INTRO" />
+
+		            <field name="seblod_images"
+		                   size="50"
+		                   type="text"
+		                   label="PLG_JUPWA_SEBLOD_IMAGES" />
 
 	                <field name="seblod_gallery"
 	                       size="50"
