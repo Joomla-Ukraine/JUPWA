@@ -1072,6 +1072,17 @@
 	        <fieldset name="COLORS">
 
 		        <field
+				        name="use_color_scheme"
+				        layout="joomla.form.field.radio.switcher"
+				        type="radio"
+				        default="0"
+				        label="PLG_JUPWA_USE_COLOR_SCHEME"
+		        >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+		        <field
 				        name="theme_color"
 				        type="color"
 				        label="PLG_JUPWA_THEME_COLOR"
