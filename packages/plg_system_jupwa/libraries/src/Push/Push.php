@@ -26,7 +26,7 @@ class Push
 	 * @throws \JsonException
 	 * @since 1.0
 	 */
-	public static function sendNotification(string $serverKey, string $token, string $title, string $body, array $data = []): array
+	public static function send(string $serverKey, string $token, string $title, string $body, array $data = []): array
 	{
 		$url = 'https://fcm.googleapis.com/fcm/send';
 
