@@ -2,7 +2,7 @@
 <extension method="upgrade"
            type="plugin"
            group="ajax">
-	<name>PLG_AJAX_JUPWAPUSH</name>
+	<name>plg_ajax_jupwapush</name>
 	<creationDate>@date@</creationDate>
 	<copyright>(C) 2023-@year@ Denys Nosov, Joomla! Ukraine</copyright>
 	<license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License</license>
