@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Folder;
 
 class Pkg_JUPWAInstallerScript
@@ -48,13 +49,24 @@ class Pkg_JUPWAInstallerScript
 
 	public function postflight($type, $parent)
 	{
-		$db    = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
+
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__extensions');
 		$query->where($db->quoteName('folder') . ' = ' . $db->quote('jupwa'));
 		$db->setQuery($query);
-		$results = $db->loadObjectList();
+		$jupwa = $db->loadObjectList();
+
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__extensions');
+		$query->where($db->quoteName('folder') . ' = ' . $db->quote('ajax'));
+		$query->where($db->quoteName('name') . ' LIKE ' . $db->quote('%jupwa%'));
+		$db->setQuery($query);
+		$ajax = $db->loadObjectList();
+
+		$results = (object) array_merge((array) $jupwa, (array) $ajax);
 
 		$html = '<div class="main-card p-4">
 		<table class="table">
