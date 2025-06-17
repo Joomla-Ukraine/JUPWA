@@ -39,6 +39,9 @@
         <file type="plugin"
               id="jupwa_seblod"
               group="jupwa">plg_jupwa_seblod.zip</file>
+        <file type="plugin"
+              id="jupwa_jupwapush"
+              group="ajax">plg_ajax_jupwapush.zip</file>
     </files>
 
     <languages folder="language">
