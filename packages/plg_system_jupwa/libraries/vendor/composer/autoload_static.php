@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
+class ComposerStaticInit0173821745418a06b3361518b030e650
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -31,6 +31,10 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
         array (
             'FastImageSize\\' => 14,
         ),
+        'C' => 
+        array (
+            'Curl\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -55,10 +59,23 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
         array (
             0 => __DIR__ . '/..' . '/marc1706/fast-image-size/lib',
         ),
+        'Curl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl',
+        ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Curl\\ArrayUtil' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/ArrayUtil.php',
+        'Curl\\BaseCurl' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/BaseCurl.php',
+        'Curl\\CaseInsensitiveArray' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/CaseInsensitiveArray.php',
+        'Curl\\Curl' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/Curl.php',
+        'Curl\\Decoder' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/Decoder.php',
+        'Curl\\Encoder' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/Encoder.php',
+        'Curl\\MultiCurl' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/MultiCurl.php',
+        'Curl\\StringUtil' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/StringUtil.php',
+        'Curl\\Url' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/Url.php',
         'FastImageSize\\FastImageSize' => __DIR__ . '/..' . '/marc1706/fast-image-size/lib/FastImageSize.php',
         'FastImageSize\\Type\\TypeBase' => __DIR__ . '/..' . '/marc1706/fast-image-size/lib/Type/TypeBase.php',
         'FastImageSize\\Type\\TypeBmp' => __DIR__ . '/..' . '/marc1706/fast-image-size/lib/Type/TypeBmp.php',
@@ -246,6 +263,7 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
         'JUPWA\\Helpers\\Schema' => __DIR__ . '/../..' . '/src/Helpers/Schema.php',
         'JUPWA\\Helpers\\ServiceWorker' => __DIR__ . '/../..' . '/src/Helpers/ServiceWorker.php',
         'JUPWA\\Helpers\\URL' => __DIR__ . '/../..' . '/src/Helpers/URL.php',
+        'JUPWA\\Push\\Push' => __DIR__ . '/../..' . '/src/Push/Push.php',
         'JUPWA\\Thumbs\\Render' => __DIR__ . '/../..' . '/src/Thumbs/Render.php',
         'JUPWA\\Utils\\Image' => __DIR__ . '/../..' . '/src/Utils/Image.php',
         'JUPWA\\Utils\\Util' => __DIR__ . '/../..' . '/src/Utils/Util.php',
@@ -267,9 +285,9 @@ class ComposerStaticInit4b8d8882bc29fff50f41e65be4486188
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4b8d8882bc29fff50f41e65be4486188::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4b8d8882bc29fff50f41e65be4486188::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4b8d8882bc29fff50f41e65be4486188::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0173821745418a06b3361518b030e650::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0173821745418a06b3361518b030e650::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0173821745418a06b3361518b030e650::$classMap;
 
         }, null, ClassLoader::class);
     }

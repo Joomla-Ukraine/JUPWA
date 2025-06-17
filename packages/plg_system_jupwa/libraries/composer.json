@@ -33,13 +33,14 @@
     "sort-packages": true,
     "archive-format": "zip",
     "platform": {
-      "php": "7.4"
+      "php": "8.1"
     }
   },
   "prefer-stable": true,
   "require": {
-    "php": ">=7.4",
+    "php": ">=8.1",
     "intervention/image": "^2.7",
-    "marc1706/fast-image-size": "1.*"
+    "marc1706/fast-image-size": "1.*",
+    "php-curl-class/php-curl-class": "^12.0"
   }
 }

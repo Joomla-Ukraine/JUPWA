@@ -7,6 +7,15 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Curl\\ArrayUtil' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/ArrayUtil.php',
+    'Curl\\BaseCurl' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/BaseCurl.php',
+    'Curl\\CaseInsensitiveArray' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/CaseInsensitiveArray.php',
+    'Curl\\Curl' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/Curl.php',
+    'Curl\\Decoder' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/Decoder.php',
+    'Curl\\Encoder' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/Encoder.php',
+    'Curl\\MultiCurl' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/MultiCurl.php',
+    'Curl\\StringUtil' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/StringUtil.php',
+    'Curl\\Url' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/Url.php',
     'FastImageSize\\FastImageSize' => $vendorDir . '/marc1706/fast-image-size/lib/FastImageSize.php',
     'FastImageSize\\Type\\TypeBase' => $vendorDir . '/marc1706/fast-image-size/lib/Type/TypeBase.php',
     'FastImageSize\\Type\\TypeBmp' => $vendorDir . '/marc1706/fast-image-size/lib/Type/TypeBmp.php',
@@ -194,6 +203,7 @@ return array(
     'JUPWA\\Helpers\\Schema' => $baseDir . '/src/Helpers/Schema.php',
     'JUPWA\\Helpers\\ServiceWorker' => $baseDir . '/src/Helpers/ServiceWorker.php',
     'JUPWA\\Helpers\\URL' => $baseDir . '/src/Helpers/URL.php',
+    'JUPWA\\Push\\Push' => $baseDir . '/src/Push/Push.php',
     'JUPWA\\Thumbs\\Render' => $baseDir . '/src/Thumbs/Render.php',
     'JUPWA\\Utils\\Image' => $baseDir . '/src/Utils/Image.php',
     'JUPWA\\Utils\\Util' => $baseDir . '/src/Utils/Util.php',
