@@ -2,6 +2,8 @@
 
 module.exports = {
     plugins: [
+        require('postcss-merge-rules'),
+        require('postcss-sort-media-queries'),
         require('cssnano')({
             preset: [
                 'advanced', {

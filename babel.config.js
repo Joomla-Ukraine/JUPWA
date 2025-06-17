@@ -3,24 +3,14 @@
 module.exports = {
     presets: [
         [
-            "@babel/preset-env",
+            '@babel/preset-env',
             {
                 "modules": false,
                 "targets": {
                     "browsers": [
-                        '> 1%',
-                        'last 2 versions',
-                        'Firefox ESR',
+                        '> 0.2%'
                     ]
                 }
-            }
-        ]
-    ],
-    plugins: [
-        [
-            "@babel/plugin-transform-classes",
-            {
-                "loose": true
             }
         ]
     ]
