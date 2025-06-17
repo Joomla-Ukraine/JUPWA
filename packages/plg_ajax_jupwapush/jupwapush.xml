@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension method="upgrade"
+           type="plugin"
+           group="ajax">
+	<name>PLG_AJAX_JUPWAPUSH</name>
+	<creationDate>@date@</creationDate>
+	<copyright>(C) 2023-@year@ Denys Nosov, Joomla! Ukraine</copyright>
+	<license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License</license>
+    <author>Denys Nosov, Joomla! Ukraine</author>
+    <authorEmail>denys@joomla-ua.org</authorEmail>
+    <authorUrl>https://joomla-ua.org</authorUrl>
+    <version>@version@</version>
+	<description>PLG_AJAX_JUPWAPUSH_XML_DESCRIPTION</description>
+	<namespace path="src">JU\Plugin\Ajax\JUPWAPush</namespace>
+	<scriptfile>script.php</scriptfile>
+
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_ajax_jupwapush.ini</language>
+		<language tag="en-GB">en-GB/en-GB.plg_ajax_jupwapush.sys.ini</language>
+		<language tag="uk-UA">uk-UA/uk-UA.plg_ajax_jupwapush.ini</language>
+		<language tag="uk-UA">uk-UA/uk-UA.plg_ajax_jupwapush.sys.ini</language>
+	</languages>
+
+	<files>
+		<folder plugin="jupwapush">services</folder>
+		<folder>src</folder>
+	</files>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+			</fieldset>
+		</fields>
+	</config>
+</extension>
