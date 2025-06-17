@@ -148,6 +148,27 @@
 		<delete file="${temp}/plg_jupwa_seblod/seblod.xml" />
 		<copy file="${temp}/temp/plg_jupwa_seblod/seblod.xml"
 		      todir="${temp}/plg_jupwa_seblod" />
+
+	    <!---->
+
+	    <copy file="packages/plg_ajax_jupwapush/jupwapush.xml"
+	          todir="${temp}/temp/plg_ajax_jupwapush">
+            <filterchain>
+                <replacetokens>
+                    <token key="version"
+                           value="${VERSION}" />
+                    <token key="date"
+                           value="${DATE}" />
+	                <token key="year"
+	                       value="${YEAR}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <delete file="${temp}/plg_ajax_jupwapush/jupwapush.xml" />
+        <copy file="${temp}/temp/plg_ajax_jupwapush/jupwapush.xml"
+              todir="${temp}/plg_ajax_jupwapush" />
+
     </target>
 
     <target name="pack-plugins">
@@ -172,6 +193,11 @@
 		     description="plg_jupwa_seblod">
 			<fileset dir="${temp}/plg_jupwa_seblod" />
 		</zip>
+
+	    <zip destfile="${build}/packages/plg_ajax_jupwapush.zip"
+	         description="plg_ajax_jupwapush">
+            <fileset dir="${temp}/plg_ajax_jupwapush" />
+        </zip>
 
 	    <copy todir="${build}/language">
             <fileset dir="${temp}/language">
