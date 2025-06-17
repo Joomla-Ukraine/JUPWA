@@ -13,6 +13,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Folder;
 
@@ -49,7 +50,9 @@ class Pkg_JUPWAInstallerScript
 
 	public function postflight($type, $parent)
 	{
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
+		$db   = Factory::getContainer()->get(DatabaseInterface::class);
+		$app  = Factory::getApplication();
+		$lang = $app->getLanguage();
 
 		$query = $db->getQuery(true);
 		$query->select('*');
@@ -66,7 +69,15 @@ class Pkg_JUPWAInstallerScript
 		$db->setQuery($query);
 		$ajax = $db->loadObjectList();
 
-		$results = (object) array_merge((array) $jupwa, (array) $ajax);
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__extensions');
+		$query->where($db->quoteName('folder') . ' = ' . $db->quote('system'));
+		$query->where($db->quoteName('element') . ' = ' . $db->quote('jupwa'));
+		$db->setQuery($query);
+		$system = $db->loadObjectList();
+
+		$results = (object) array_merge((array) $system, (array) $jupwa, (array) $ajax);
 
 		$html = '<div class="main-card p-4">
 		<table class="table">
@@ -80,7 +91,10 @@ class Pkg_JUPWAInstallerScript
 
 		foreach($results as $result)
 		{
-			$html .= '<tr><td><strong>' . $result->name . '</strong></td><td>';
+			$lang->load($result->name, JPATH_ADMINISTRATOR);
+			$description = Text::_(json_decode($result->manifest_cache)->description);
+
+			$html .= '<tr><td><strong><a href="index.php?option=com_plugins&task=plugin.edit&extension_id=' . $result->extension_id . '" target="_blank">' . Text::_($result->name) . '</a></strong><br><small class="form-text">' . $description . '</small></td><td>';
 
 			if($result->enabled == 1)
 			{
