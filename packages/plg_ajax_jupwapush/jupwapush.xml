@@ -25,11 +25,4 @@
 		<folder plugin="jupwapush">services</folder>
 		<folder>src</folder>
 	</files>
-
-	<config>
-		<fields name="params">
-			<fieldset name="basic">
-			</fieldset>
-		</fields>
-	</config>
 </extension>
