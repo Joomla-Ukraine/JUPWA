@@ -46,17 +46,24 @@ class ServiceWorker
 			]);
 
 			file_put_contents(JPATH_SITE . '/offline.php', $pwa_offline);
+
+			Factory::getApplication()->enqueueMessage('File sw.js created successfully.', 'message');
+			Factory::getApplication()->enqueueMessage('File offline.php created successfully.', 'message');
 		}
 		else
 		{
 			if(file_exists(JPATH_SITE . '/sw.js'))
 			{
 				File::delete(JPATH_SITE . '/sw.js');
+
+				Factory::getApplication()->enqueueMessage('File sw.js deleted successfully.', 'message');
 			}
 
 			if(file_exists(JPATH_SITE . '/offline.php'))
 			{
 				File::delete(JPATH_SITE . '/offline.php');
+
+				Factory::getApplication()->enqueueMessage('File offline.php deleted successfully.', 'message');
 			}
 		}
 	}
