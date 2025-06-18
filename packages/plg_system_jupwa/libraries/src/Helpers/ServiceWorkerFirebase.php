@@ -35,7 +35,7 @@ class ServiceWorkerFirebase
 		$messagingSenderId = trim($option[ 'param' ][ 'messagingSenderId' ]) ?? '';
 		$appId             = trim($option[ 'param' ][ 'appId' ]) ?? '';
 
-		if($option[ 'param' ][ 'usepush' ] == 1 && $apiKey && $projectId && $messagingSenderId && $appId)
+		if($option[ 'param' ][ 'usepwa' ] == 0 && $option[ 'param' ][ 'usepush' ] == 1 && $apiKey && $projectId && $messagingSenderId && $appId)
 		{
 			$pwa_data = Util::tmpl('firebase-messaging-sw', [
 				'firebase_app'       => Data::$firebase_app,
@@ -58,7 +58,7 @@ class ServiceWorkerFirebase
 			{
 				File::delete(JPATH_SITE . '/firebase-messaging-sw.js');
 
-				Factory::getApplication()->enqueueMessage('File firebase-messaging-sw.js deleted successfully.', 'message');
+				Factory::getApplication()->enqueueMessage('File firebase-messaging-sw.js deleted successfully.', 'error');
 			}
 		}
 	}

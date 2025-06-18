@@ -32,6 +32,11 @@ class ServiceWorker
 	{
 		$app = Factory::getApplication();
 
+		$apiKey            = trim($option[ 'param' ][ 'apiKey' ]) ?? '';
+		$projectId         = trim($option[ 'param' ][ 'projectId' ]) ?? '';
+		$messagingSenderId = trim($option[ 'param' ][ 'messagingSenderId' ]) ?? '';
+		$appId             = trim($option[ 'param' ][ 'appId' ]) ?? '';
+
 		if($option[ 'param' ][ 'usepwa' ] == 1)
 		{
 			$pwa_data = Util::tmpl('sw', [
@@ -39,7 +44,24 @@ class ServiceWorker
 				'pwa_version' => Manifest::getVersion()
 			]);
 
-			file_put_contents(JPATH_SITE . '/sw.js', $pwa_data);
+			$pwa_firebase = '';
+			if($option[ 'param' ][ 'usepush' ] == 1 && $apiKey && $projectId && $messagingSenderId && $appId)
+			{
+				$pwa_firebase = Util::tmpl('firebase-messaging-sw', [
+					'firebase_app'       => Data::$firebase_app,
+					'firebase_messaging' => Data::$firebase_messaging,
+					'config'             => [
+						'apiKey'            => $apiKey,
+						'projectId'         => $projectId,
+						'messagingSenderId' => $messagingSenderId,
+						'appId'             => $appId,
+					]
+				]);
+
+				$pwa_firebase .= "\n\n";
+			}
+
+			file_put_contents(JPATH_SITE . '/sw.js', $pwa_data . $pwa_firebase);
 
 			$pwa_offline = Util::tmpl('offline', [
 				'app' => $app
@@ -56,14 +78,14 @@ class ServiceWorker
 			{
 				File::delete(JPATH_SITE . '/sw.js');
 
-				Factory::getApplication()->enqueueMessage('File sw.js deleted successfully.', 'message');
+				Factory::getApplication()->enqueueMessage('File sw.js deleted successfully.', 'error');
 			}
 
 			if(file_exists(JPATH_SITE . '/offline.php'))
 			{
 				File::delete(JPATH_SITE . '/offline.php');
 
-				Factory::getApplication()->enqueueMessage('File offline.php deleted successfully.', 'message');
+				Factory::getApplication()->enqueueMessage('File offline.php deleted successfully.', 'error');
 			}
 		}
 	}
