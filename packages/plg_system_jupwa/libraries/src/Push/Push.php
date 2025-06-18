@@ -15,25 +15,23 @@ class Push
 {
 	/**
 	 *
-	 * @param string $serverKey
-	 * @param string $token
-	 * @param string $title
-	 * @param string $body
-	 * @param array  $data
+	 * @param string      $serverKey
+	 * @param string      $token
+	 * @param string      $title
+	 * @param string      $body
+	 * @param string|null $image
+	 * @param array       $data
 	 *
 	 * @return array
 	 *
 	 * @throws \JsonException
 	 * @since 1.0
 	 */
-	public static function send(string $serverKey, string $token, string $title, string $body, array $data = []): array
+	public static function send(string $serverKey, string $token, string $title, string $body, string $image = null, array $data = []): array
 	{
 		$url = 'https://fcm.googleapis.com/fcm/send';
 
-		$curl = new Curl();
-		$curl->setHeader('Authorization', 'key=' . $serverKey);
-		$curl->setHeader('Content-Type', 'application/json');
-		$curl->post($url, [
+		$payload = [
 			'to'           => $token,
 			'notification' => [
 				'title' => $title,
@@ -41,7 +39,43 @@ class Push
 			],
 			'data'         => $data,
 			'priority'     => 'high',
-		]);
+		];
+
+		if($image)
+		{
+			// WebPush
+			$payload[ 'webpush' ] = [
+				'headers' => [
+					'image' => $image
+				],
+			];
+
+			// Android
+			$payload[ 'android' ] = [
+				'notification' => [
+					'imageUrl' => $image
+				],
+			];
+
+			// iOS / APNs
+			$payload[ 'apns' ] = [
+				'payload'     => [
+					'aps' => [
+						'mutable-content' => 1,
+					],
+				],
+				'fcm_options' => [
+					'image' => $image
+				],
+			];
+
+			$payload[ 'notification' ][ 'image' ] = $image;
+		}
+
+		$curl = new Curl();
+		$curl->setHeader('Authorization', 'key=' . $serverKey);
+		$curl->setHeader('Content-Type', 'application/json');
+		$curl->post($url, $payload);
 
 		if($curl->error)
 		{
