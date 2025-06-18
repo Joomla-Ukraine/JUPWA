@@ -49,8 +49,17 @@ class JFormFieldIntegration extends FormField
 		$db->setQuery($query);
 		$ajax = $db->loadObjectList();
 
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__extensions');
+		$query->where($db->quoteName('folder') . ' = ' . $db->quote('console'));
+		$query->where($db->quoteName('name') . ' LIKE ' . $db->quote('%jupwa%'));
+		$db->setQuery($query);
+		$console = $db->loadObjectList();
+
 		$html = '';
 		$html .= $this->getPluginsTable(Text::_('PLG_JUPWA_TITLE_GROUP_JUPWA'), $jupwa, $lang);
+		$html .= $this->getPluginsTable(Text::_('PLG_JUPWA_TITLE_GROUP_CONSOLE'), $console, $lang);
 		$html .= $this->getPluginsTable(Text::_('PLG_JUPWA_TITLE_GROUP_AJAX'), $ajax, $lang);
 
 		return $html;

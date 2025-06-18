@@ -72,12 +72,20 @@ class Pkg_JUPWAInstallerScript
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__extensions');
+		$query->where($db->quoteName('folder') . ' = ' . $db->quote('console'));
+		$query->where($db->quoteName('name') . ' LIKE ' . $db->quote('%jupwa%'));
+		$db->setQuery($query);
+		$console = $db->loadObjectList();
+
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__extensions');
 		$query->where($db->quoteName('folder') . ' = ' . $db->quote('system'));
 		$query->where($db->quoteName('element') . ' = ' . $db->quote('jupwa'));
 		$db->setQuery($query);
 		$system = $db->loadObjectList();
 
-		$results = (object) array_merge((array) $system, (array) $jupwa, (array) $ajax);
+		$results = (object) array_merge((array) $system, (array) $jupwa, (array) $console, (array) $ajax);
 
 		$html = '<div class="main-card p-4">
 		<table class="table">
