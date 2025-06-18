@@ -20,7 +20,7 @@ $data = (object) $displayData;
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>You are offline - <?php echo $data->app->get('sitename'); ?></title>
+	<title>You are offline - <?= $data->app->get('sitename'); ?></title>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -55,7 +55,7 @@ $data = (object) $displayData;
 
 <button type="button">⤾ Reload</button>
 
-<p><small><?php echo $data->app->get('sitename'); ?></small></p>
+<p><small><?= $data->app->get('sitename'); ?></small></p>
 
 <div style="margin: 30px;align-content: center"><?= date('Y'); ?> &copy; With ♥️ <a href="https://joomla-ua.org">Joomla! Україна</a></div>
 

@@ -366,78 +366,7 @@
 
             </fieldset>
 
-	        <fieldset name="ICONS">
-
-		        <field type="note"
-		               name="thumb1"
-		               class="alert alert-info w-100"
-		               description="PLG_JUPWA_THUMBS"
-		               showon="thumbs:0"
-		        />
-
-		        <field type="note"
-		               name="thumb11"
-		               class="alert alert-danger w-100"
-		               description="PLG_JUPWA_THUMBS2"
-		               showon="thumbs:1"
-		        />
-
-		        <field name="thumbs"
-		               type="radio"
-		               layout="joomla.form.field.radio.switcher"
-		               default="0"
-		               label="PLG_JUPWA_USE_THUMB"
-		        >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
-		        </field>
-
-		        <field name="manifest_icon_background_color"
-		               type="radio"
-		               layout="joomla.form.field.radio.switcher"
-		               default="0"
-		               label="PLG_JUPWA_USE_BACKGROUND_COLOR_FOR_MANIFEST_ICON"
-		               showon="thumbs:1"
-		        >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
-		        </field>
-
-		        <field name="source_icon_sm"
-		               type="media"
-		               preview_width="100"
-		               preview_height="100"
-		               directory="jupwa/icon"
-		               label="PLG_JUPWA_SOURCE_ICON_SM"
-		        />
-
-		        <field name="source_icon"
-		               type="media"
-		               preview_width="100"
-		               preview_height="100"
-		               directory="jupwa/icon"
-		               label="PLG_JUPWA_SOURCE_ICON"
-		        />
-
-		        <field name="source_icon_svg"
-		               type="media"
-		               preview_width="100"
-		               preview_height="100"
-		               directory="jupwa/icon"
-		               label="PLG_JUPWA_SOURCE_ICON_SVG"
-		        />
-
-		        <field name="source_icon_svg_pin"
-		               type="media"
-		               preview_width="100"
-		               preview_height="100"
-		               directory="jupwa/icon"
-		               label="PLG_JUPWA_SOURCE_ICON_SVG_PIN"
-		        />
-
-	        </fieldset>
-
-            <fieldset name="SCHEMA">
+	        <fieldset name="SCHEMA">
 
                 <fieldset name="SCHEMA_SEARCH">
 
@@ -564,7 +493,7 @@
 
             </fieldset>
 
-            <fieldset name="OG">
+	        <fieldset name="OG">
 
 				<fieldset name="JUPWA_OG">
 
@@ -763,6 +692,128 @@
 	            </fieldset>
 
             </fieldset>
+
+	        <fieldset name="ICONS">
+
+		        <field type="note"
+		               name="thumb1"
+		               class="alert alert-info w-100"
+		               description="PLG_JUPWA_THUMBS"
+		               showon="thumbs:0"
+		        />
+
+		        <field type="note"
+		               name="thumb11"
+		               class="alert alert-danger w-100"
+		               description="PLG_JUPWA_THUMBS2"
+		               showon="thumbs:1"
+		        />
+
+		        <field name="thumbs"
+		               type="radio"
+		               layout="joomla.form.field.radio.switcher"
+		               default="0"
+		               label="PLG_JUPWA_USE_THUMB"
+		        >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+		        </field>
+
+		        <field name="manifest_icon_background_color"
+		               type="radio"
+		               layout="joomla.form.field.radio.switcher"
+		               default="0"
+		               label="PLG_JUPWA_USE_BACKGROUND_COLOR_FOR_MANIFEST_ICON"
+		               showon="thumbs:1"
+		        >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+		        </field>
+
+		        <field name="source_icon_sm"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON_SM"
+		        />
+
+		        <field name="source_icon"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON"
+		        />
+
+		        <field name="source_icon_svg"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON_SVG"
+		        />
+
+		        <field name="source_icon_svg_pin"
+		               type="media"
+		               preview_width="100"
+		               preview_height="100"
+		               directory="jupwa/icon"
+		               label="PLG_JUPWA_SOURCE_ICON_SVG_PIN"
+		        />
+
+	        </fieldset>
+
+	        <fieldset name="COLORS">
+
+		        <field
+				        name="use_color_scheme"
+				        layout="joomla.form.field.radio.switcher"
+				        type="radio"
+				        default="0"
+				        label="PLG_JUPWA_USE_COLOR_SCHEME"
+		        >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+		        <field
+				        name="theme_color"
+				        type="color"
+				        label="PLG_JUPWA_THEME_COLOR"
+		        />
+
+		         <field
+				         name="theme_color_dark"
+				         type="color"
+				         label="PLG_JUPWA_THEME_COLOR_DARK"
+		         />
+
+		        <field
+				        name="background_color"
+				        type="color"
+				        label="PLG_JUPWA_META_BG_COLOR_COLOR"
+		        />
+
+		        <field
+				        name="ioscolor"
+				        type="color"
+				        label="PLG_JUPWA_IOSCOLOR"
+		        />
+
+		        <field
+				        name="maskiconcolor"
+				        type="color"
+				        label="PLG_JUPWA_MASKICONCOLOR"
+		        />
+
+		        <field
+				        name="msapplication_tilecolor"
+				        type="color"
+				        label="PLG_JUPWA_MSAPPLICATION_TILECOLOR"
+		        />
+
+	        </fieldset>
 
             <fieldset name="PWA_MANIFEST">
 
@@ -1078,6 +1129,82 @@
 
 	            </fieldset>
 
+		        <fieldset name="SHOTCUTS">
+
+		        <field type="note"
+		               name="thumb2"
+		               class="alert alert-info w-100"
+		               description="PLG_JUPWA_THUMBS"
+		               showon="thumbs:0"
+		        />
+
+		        <field
+				        name="shortcuts"
+				        type="subform"
+				        multiple="true"
+				        min="0"
+				        layout="joomla.form.field.subform.repeatable-table"
+				        label="PLG_JUPWA_MANIFEST_SHOTCUTS"
+		        >
+			        <form>
+				        <field
+						        name="item"
+						        type="menuitem"
+						        default="0"
+						        state="1"
+						        published="1"
+						        label="PLG_JUPWA_PWA_MENUITEM"
+				        >
+			                    <option value="">JDEFAULT</option>
+				        </field>
+
+				        <field name="language"
+				               type="contentlanguage"
+				               label="JFIELD_LANGUAGE_LABEL"
+				        >
+							<option value="*">JALL</option>
+						</field>
+
+				        <field name="icons"
+				               type="media"
+				               preview_width="100"
+				               preview_height="100"
+				               directory="jupwa/icons"
+				               label="PLG_JUPWA_PWA_MENUITEM_ICON"
+				        />
+			        </form>
+		        </field>
+
+	        </fieldset>
+
+	            <fieldset name="SCREENSHOTS">
+
+		        <field type="note"
+		               name="thumb2"
+		               class="alert alert-info w-100"
+		               description="PLG_JUPWA_THUMBS"
+		               showon="thumbs:0"
+		        />
+
+		        <field
+				        name="screenshots"
+				        type="subform"
+				        multiple="true"
+				        min="0"
+				        layout="joomla.form.field.subform.repeatable-table"
+				        label="PLG_JUPWA_MANIFEST_SCREENSHOTS"
+		        >
+			        <form>
+				        <field name="screen"
+				               type="media"
+				               directory="jupwa/screenshots"
+				               label="PLG_JUPWA_MANIFEST_SCREEN"
+				        />
+						</form>
+					</field>
+
+	        </fieldset>
+
             </fieldset>
 
 	        <fieldset name="NOTIFICATIONS">
@@ -1156,33 +1283,7 @@
 			               showon="usepush:1"
 			        />
 
-	        </fieldset>
-
-	        <fieldset name="SCREENSHOTS">
-
-		        <field type="note"
-		               name="thumb2"
-		               class="alert alert-info w-100"
-		               description="PLG_JUPWA_THUMBS"
-		               showon="thumbs:0"
-		        />
-
-		        <field
-				        name="screenshots"
-				        type="subform"
-				        multiple="true"
-				        min="0"
-				        layout="joomla.form.field.subform.repeatable-table"
-				        label="PLG_JUPWA_MANIFEST_SCREENSHOTS"
-		        >
-			        <form>
-				        <field name="screen"
-				               type="media"
-				               directory="jupwa/screenshots"
-				               label="PLG_JUPWA_MANIFEST_SCREEN"
-				        />
-						</form>
-					</field>
+	            </fieldset>
 
 	        </fieldset>
 

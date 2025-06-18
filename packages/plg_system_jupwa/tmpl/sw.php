@@ -20,7 +20,7 @@ $data = (object) $displayData;
 const CACHE = 'jupwa-pages';
 const offlineFallbackPage = "/offline.php";
 
-importScripts('<?php echo $data->workbox; ?>');
+importScripts('<?= $data->workbox; ?>');
 
 const {registerRoute, setCatchHandler} = workbox.routing;
 const {NetworkFirst, StaleWhileRevalidate, CacheFirst} = workbox.strategies;
