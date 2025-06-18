@@ -2,11 +2,14 @@
 
 const webpack = require('webpack'),
     path = require('path'),
-    argv = require('yargs').argv;
+    yargs = require('yargs/yargs');
 
-const chalk = require("chalk"),
-    ProgressBarPlugin = require("progress-bar-webpack-plugin"),
-    MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+const {hideBin} = require('yargs/helpers'),
+    argv = yargs(hideBin(process.argv)).argv;
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+    CssMinimizerPlugin = require('css-minimizer-webpack-plugin'),
+    ImageMinimizerPlugin = require("image-minimizer-webpack-plugin"),
     TerserPlugin = require('terser-webpack-plugin'),
     CopyWebpackPlugin = require('copy-webpack-plugin'),
     ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin'),
@@ -45,14 +48,12 @@ const rulesJS = {
         exclude: /(node_modules)/,
         include: path.resolve(__dirname, 'src/js'),
         use: [
-            'thread-loader',
             'babel-loader'
         ]
     },
     rulesStyle = {
         test: /\.(sa|sc|c)ss$/,
         use: [
-            'style-loader',
             MiniCssExtractPlugin.loader,
             {
                 loader: 'css-loader',
@@ -73,6 +74,13 @@ const rulesJS = {
             }
         ]
     },
+    rulesImg = {
+        test: /\.(jpe?g|png|gif|svg|webp|avif)$/,
+        type: 'asset/resource',
+        generator: {
+            filename: 'img/[name][ext][query]'
+        }
+    },
     rulesStyleDev = {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -91,10 +99,7 @@ const rulesJS = {
         ],
     };
 
-const pluginProgressBar = new ProgressBarPlugin({
-        format: `  :msg [:bar] ${chalk.green.bold(":percent")} (:elapsed s)`,
-    }),
-    pluginClean = new CleanWebpackPlugin({
+const pluginClean = new CleanWebpackPlugin({
         default: cleanDirs
     }),
     pluginMiniCss = new MiniCssExtractPlugin({
@@ -115,53 +120,74 @@ const pluginProgressBar = new ProgressBarPlugin({
             ]
         }
     ]),
+    pluginImageMin = new ImageMinimizerPlugin({
+        minimizer: [
+            {
+                implementation: ImageMinimizerPlugin.imageminMinify,
+                options: {
+                    plugins: [
+                        ["gifsicle", {interlaced: true}],
+                        ["jpegtran", {progressive: true}],
+                        ["optipng", {optimizationLevel: 5}],
+                    ],
+                },
+            },
+            {
+                implementation: ImageMinimizerPlugin.svgoMinify,
+                options: {
+                    encodeOptions: {
+                        multipass: true,
+                        plugins: [
+                            {
+                                name: 'preset-default',
+                                params: {
+                                    overrides: {
+                                        removeViewBox: false
+                                    },
+                                },
+                            }
+                        ],
+                    },
+                },
+            },
+        ],
+    }),
     pluginTerser = new TerserPlugin({
+        minify: TerserPlugin.swcMinify,
         terserOptions: {
             parse: {
                 ecma: 8
             },
             compress: {
                 ecma: 5,
-                warnings: false,
+                collapse_vars: false,
                 comparisons: false,
+                computed_props: false,
+                drop_console: false,
+                hoist_props: false,
                 inline: 2,
-                drop_console: true,
-                module: false,
-                ie8: false,
                 keep_classnames: undefined,
                 keep_fnames: true,
-                arrows: false,
-                collapse_vars: false,
-                computed_props: false,
-                hoist_funs: false,
-                hoist_props: false,
-                hoist_vars: false,
-                loops: false,
+                module: false,
                 negate_iife: false,
-                properties: false,
-                reduce_funcs: false,
                 reduce_vars: false,
-                switches: false,
-                toplevel: false,
+                reduce_funcs: false,
                 typeofs: false,
-                booleans: true,
-                if_return: true,
-                sequences: true,
-                unused: true,
-                conditionals: true,
-                dead_code: true,
-                evaluate: true
+                unused: true
             },
             mangle: {
-                safari10: true
+                safari10: true,
+                toplevel: true,
             },
+            keep_fnames: false,
+            toplevel: true,
             output: {
                 ecma: 5,
                 comments: false
             }
         },
-        parallel: 4,
-        extractComments: false
+        parallel: true,
+        extractComments: false,
     });
 
 const watchOptions = {
@@ -176,6 +202,7 @@ const watchOptions = {
 const configProd = {
     mode: 'production',
     entry: entry,
+    target: ['web', 'es2017'],
     output: output,
     cache: {
         type: "filesystem"
@@ -189,7 +216,8 @@ const configProd = {
     module: {
         rules: [
             rulesJS,
-            rulesStyle
+            rulesStyle,
+            rulesImg
         ]
     },
     plugins: [
@@ -198,7 +226,6 @@ const configProd = {
                 NODE_ENV: JSON.stringify('production')
             }
         }),
-        pluginProgressBar,
         pluginClean,
         pluginMiniCss,
         pluginMCP,
@@ -212,7 +239,9 @@ const configProd = {
         usedExports: true,
         minimize: true,
         minimizer: [
-            pluginTerser
+            pluginTerser,
+            pluginImageMin,
+            new CssMinimizerPlugin()
         ]
     },
     stats: 'errors-only'
@@ -239,7 +268,6 @@ const configDev = {
                 NODE_ENV: JSON.stringify('development')
             }
         }),
-        pluginProgressBar,
         pluginMiniCss,
         pluginReplace,
         pluginMCP
