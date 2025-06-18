@@ -1080,102 +1080,81 @@
 
             </fieldset>
 
-	        <fieldset name="COLORS">
+	        <fieldset name="NOTIFICATIONS">
 
-		        <field
-				        name="use_color_scheme"
-				        layout="joomla.form.field.radio.switcher"
-				        type="radio"
-				        default="0"
-				        label="PLG_JUPWA_USE_COLOR_SCHEME"
-		        >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
-	                </field>
+		        <fieldset name="PUSH_NOTIFICATIONS">
 
-		        <field
-				        name="theme_color"
-				        type="color"
-				        label="PLG_JUPWA_THEME_COLOR"
-		        />
+			        <field name="usepush"
+			               type="radio"
+			               layout="joomla.form.field.radio.switcher"
+			               default="0"
+			               label="PLG_JUPWA_USEPUSH">
+		                    <option value="0">JNO</option>
+		                    <option value="1">JYES</option>
+			        </field>
 
-		         <field
-				         name="theme_color_dark"
-				         type="color"
-				         label="PLG_JUPWA_THEME_COLOR_DARK"
-		         />
+			        <field name="apiKey"
+			               size="50"
+			               type="text"
+			               label="PLG_JUPWA_PUSH_APIKEY"
+			               showon="usepush:1"
+			        />
 
-		        <field
-				        name="background_color"
-				        type="color"
-				        label="PLG_JUPWA_META_BG_COLOR_COLOR"
-		        />
+			        <field name="projectId"
+			               size="50"
+			               type="text"
+			               label="PLG_JUPWA_PUSH_PROJECTID"
+			               showon="usepush:1"
+			        />
 
-		        <field
-				        name="ioscolor"
-				        type="color"
-				        label="PLG_JUPWA_IOSCOLOR"
-		        />
+			        <field name="messagingSenderId"
+			               size="50"
+			               type="text"
+			               label="PLG_JUPWA_PUSH_SENDERID"
+			               showon="usepush:1"
+			        />
 
-		        <field
-				        name="maskiconcolor"
-				        type="color"
-				        label="PLG_JUPWA_MASKICONCOLOR"
-		        />
+			        <field name="appId"
+			               size="50"
+			               type="text"
+			               label="PLG_JUPWA_PUSH_APPID"
+			               showon="usepush:1"
+			        />
 
-		        <field
-				        name="msapplication_tilecolor"
-				        type="color"
-				        label="PLG_JUPWA_MSAPPLICATION_TILECOLOR"
-		        />
+			        <field name="vapidKey_wp"
+			               size="50"
+			               type="text"
+			               label="PLG_JUPWA_PUSH_VAPIDKEY_WP"
+			               showon="usepush:1"
+			        />
 
-	        </fieldset>
+			        <field name="privateKey_wp"
+			               size="50"
+			               type="text"
+			               label="PLG_JUPWA_PUSH_PRIVATEKEY_WP"
+			               showon="usepush:1"
+			        />
 
-	        <fieldset name="SHOTCUTS">
+			        <field name="measurementId"
+			               size="50"
+			               type="text"
+			               label="PLG_JUPWA_PUSH_MEASUREMENTID"
+			               showon="usepush:1"
+			        />
 
-		        <field type="note"
-		               name="thumb2"
-		               class="alert alert-info w-100"
-		               description="PLG_JUPWA_THUMBS"
-		               showon="thumbs:0"
-		        />
+			        <field name="authDomain"
+			               size="50"
+			               type="text"
+			               label="PLG_JUPWA_PUSH_AUTHDOMAIN"
+			               showon="usepush:1"
+			        />
 
-		        <field
-				        name="shortcuts"
-				        type="subform"
-				        multiple="true"
-				        min="0"
-				        layout="joomla.form.field.subform.repeatable-table"
-				        label="PLG_JUPWA_MANIFEST_SHOTCUTS"
-		        >
-			        <form>
-				        <field
-						        name="item"
-						        type="menuitem"
-						        default="0"
-						        state="1"
-						        published="1"
-						        label="PLG_JUPWA_PWA_MENUITEM"
-				        >
-			                    <option value="">JDEFAULT</option>
-				        </field>
-
-				        <field name="language"
-				               type="contentlanguage"
-				               label="JFIELD_LANGUAGE_LABEL"
-				        >
-							<option value="*">JALL</option>
-						</field>
-
-				        <field name="icons"
-				               type="media"
-				               preview_width="100"
-				               preview_height="100"
-				               directory="jupwa/icons"
-				               label="PLG_JUPWA_PWA_MENUITEM_ICON"
-				        />
-			        </form>
-		        </field>
+			        <field name="storageBucket"
+			               size="50"
+			               type="text"
+			               label="PLG_JUPWA_PUSH_STORAGEBUCKET"
+			               showon="usepush:1"
+			        />
 
 	        </fieldset>
 
