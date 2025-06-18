@@ -29,7 +29,7 @@ class ServiceWorkerFirebase
 	 */
 	public static function create(array $option = []): void
 	{
-		if($option[ 'param' ][ 'usepwa' ] == 1)
+		if($option[ 'param' ][ 'usepush' ] == 1)
 		{
 			$pwa_data = Util::tmpl('sw', [
 				'workbox'     => Data::$workbox,
