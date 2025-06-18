@@ -50,8 +50,8 @@ class JFormFieldIntegration extends FormField
 		$ajax = $db->loadObjectList();
 
 		$html = '';
-		$html .= $this->getPluginsTable('JUPWA Plugins', $jupwa, $lang);
-		$html .= $this->getPluginsTable('JUPWA Ajax Plugins', $ajax, $lang);
+		$html .= $this->getPluginsTable(Text::_('PLG_JUPWA_TITLE_GROUP_JUPWA'), $jupwa, $lang);
+		$html .= $this->getPluginsTable(Text::_('PLG_JUPWA_TITLE_GROUP_AJAX'), $ajax, $lang);
 
 		return $html;
 	}
@@ -61,10 +61,10 @@ class JFormFieldIntegration extends FormField
 		$html = '
 		<h3>' . $name . '</h3>
 		<table class="table">
-		  <thead class="table-light">
+		  <thead>
 		    <tr>
-		      <th scope="col">Extensions</th>
-		      <th scope="col">Status</th>
+		      <th scope="col">' . Text::_('PLG_JUPWA_TITLE_EXTENSIONS') . '</th>
+		      <th scope="col">' . Text::_('PLG_JUPWA_TITLE_STATUS') . '</th>
 		    </tr>
 		  </thead>
 		<tbody>';

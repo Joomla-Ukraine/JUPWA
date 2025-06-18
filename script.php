@@ -81,10 +81,10 @@ class Pkg_JUPWAInstallerScript
 
 		$html = '<div class="main-card p-4">
 		<table class="table">
-		  <thead class="table-light">
+		  <thead>
 		    <tr>
-		      <th scope="col">Extensions</th>
-		      <th scope="col">Status</th>
+		      <th scope="col">' . Text::_('PLG_JUPWA_TITLE_EXTENSIONS') . '</th>
+		      <th scope="col">' . Text::_('PLG_JUPWA_TITLE_STATUS') . '</th>
 		    </tr>
 		  </thead>
 		<tbody>';
