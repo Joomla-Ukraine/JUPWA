@@ -262,7 +262,6 @@ class ComposerStaticInit0173821745418a06b3361518b030e650
         'JUPWA\\Helpers\\PWAInstall' => __DIR__ . '/../..' . '/src/Helpers/PWAInstall.php',
         'JUPWA\\Helpers\\Schema' => __DIR__ . '/../..' . '/src/Helpers/Schema.php',
         'JUPWA\\Helpers\\ServiceWorker' => __DIR__ . '/../..' . '/src/Helpers/ServiceWorker.php',
-        'JUPWA\\Helpers\\ServiceWorkerFirebase' => __DIR__ . '/../..' . '/src/Helpers/ServiceWorkerFirebase.php',
         'JUPWA\\Helpers\\URL' => __DIR__ . '/../..' . '/src/Helpers/URL.php',
         'JUPWA\\Push\\Push' => __DIR__ . '/../..' . '/src/Push/Push.php',
         'JUPWA\\Thumbs\\Render' => __DIR__ . '/../..' . '/src/Thumbs/Render.php',

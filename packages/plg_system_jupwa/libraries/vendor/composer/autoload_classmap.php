@@ -202,7 +202,6 @@ return array(
     'JUPWA\\Helpers\\PWAInstall' => $baseDir . '/src/Helpers/PWAInstall.php',
     'JUPWA\\Helpers\\Schema' => $baseDir . '/src/Helpers/Schema.php',
     'JUPWA\\Helpers\\ServiceWorker' => $baseDir . '/src/Helpers/ServiceWorker.php',
-    'JUPWA\\Helpers\\ServiceWorkerFirebase' => $baseDir . '/src/Helpers/ServiceWorkerFirebase.php',
     'JUPWA\\Helpers\\URL' => $baseDir . '/src/Helpers/URL.php',
     'JUPWA\\Push\\Push' => $baseDir . '/src/Push/Push.php',
     'JUPWA\\Thumbs\\Render' => $baseDir . '/src/Thumbs/Render.php',

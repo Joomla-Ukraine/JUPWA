@@ -11,22 +11,18 @@
  * @formatter:off
  **/
 
-defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\Uri\Uri;defined('_JEXEC') or die('Restricted access');
 
 /** @var array $displayData */
 $data = (object) $displayData;
+$site = str_replace('/administrator','',Uri::base());
 
 ?>
-
-
 // Firebase settings
 workbox.routing.registerRoute(
 	({ url }) => !url.href.includes('fcm.googleapis.com'),
 	new workbox.strategies.NetworkFirst()
 );
-
-importScripts('<?= $data->firebase_app; ?>');
-importScripts('<?= $data->firebase_messaging; ?>');
 
 firebase.initializeApp({
 	apiKey: '<?= $data->config['apiKey']; ?>',
@@ -38,6 +34,14 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(payload => {
-	const { title, body } = payload.notification;
-	self.registration.showNotification(title, { body });
+	console.log('[sw.js] Received background message:', payload);
+
+	const notificationTitle = payload.notification?.title || 'Background Message';
+	const notificationOptions = {
+		body: payload.notification?.body || 'Background message body.',
+		icon: '<?= $site; ?>favicons/icon_180.png'
+	};
+	self.registration.showNotification(notificationTitle, notificationOptions);
 });
+
+console.log('Service Worker loaded with Workbox and Firebase');
