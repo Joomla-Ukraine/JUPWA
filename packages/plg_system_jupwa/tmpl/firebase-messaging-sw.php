@@ -17,6 +17,14 @@ defined('_JEXEC') or die('Restricted access');
 $data = (object) $displayData;
 
 ?>
+
+
+// Firebase settings
+workbox.routing.registerRoute(
+	({ url }) => !url.href.includes('fcm.googleapis.com'),
+	new workbox.strategies.NetworkFirst()
+);
+
 importScripts('<?= $data->firebase_app; ?>');
 importScripts('<?= $data->firebase_messaging; ?>');
 
