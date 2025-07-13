@@ -15,10 +15,10 @@
 	<scriptfile>script.php</scriptfile>
 
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.plg_ajax_jupwapush.ini</language>
-		<language tag="en-GB">en-GB/en-GB.plg_ajax_jupwapush.sys.ini</language>
-		<language tag="uk-UA">uk-UA/uk-UA.plg_ajax_jupwapush.ini</language>
-		<language tag="uk-UA">uk-UA/uk-UA.plg_ajax_jupwapush.sys.ini</language>
+		<language tag="en-GB">en-GB/plg_ajax_jupwapush.ini</language>
+		<language tag="en-GB">en-GB/plg_ajax_jupwapush.sys.ini</language>
+		<language tag="uk-UA">uk-UA/plg_ajax_jupwapush.ini</language>
+		<language tag="uk-UA">uk-UA/plg_ajax_jupwapush.sys.ini</language>
 	</languages>
 
 	<files>
