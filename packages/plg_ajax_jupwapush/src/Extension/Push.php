@@ -47,7 +47,7 @@ class Push extends CMSPlugin implements SubscriberInterface
 	}
 
 	/**
-	 * @param   \Joomla\Event\Event  $event
+	 * @param \Joomla\Event\Event $event
 	 *
 	 * @return void
 	 *
@@ -91,10 +91,11 @@ class Push extends CMSPlugin implements SubscriberInterface
 	}
 
 	/**
-	 * @param   \Joomla\Event\Event  $event
+	 * @param \Joomla\Event\Event $event
 	 *
 	 * @return void
 	 *
+	 * @throws \Exception
 	 * @since 1.0.0
 	 */
 	public function onAjaxJUPWAPushUnsubscribe(Event $event): void
@@ -138,7 +139,8 @@ class Push extends CMSPlugin implements SubscriberInterface
 	}
 
 	/**
-	 * @param $user_id
+	 * @param int    $user_id
+	 * @param string $fcm_token
 	 *
 	 * @return int
 	 *
@@ -163,32 +165,32 @@ class Push extends CMSPlugin implements SubscriberInterface
 	 * @param $app
 	 * @param $event
 	 *
-	 * @return bool|void
+	 * @return void
 	 *
 	 * @throws \Exception
 	 * @since 1.0.0
 	 */
-	protected function auth($app, $event)
+	protected function auth($app, $event): void
 	{
 		Session::checkToken() or $this->returnError($event, Text::_('JINVALID_TOKEN'), 403);
 
 		$user = $app->getIdentity();
-		if($_SERVER[ 'REQUEST_METHOD' ] !== 'POST' || $user->guest != 1)
+		if($_SERVER[ 'REQUEST_METHOD' ] !== 'POST' || $user->guest == 1)
 		{
 			$this->returnError($event, Text::_('PLG_AJAX_JUPWAPUSH_ERROR'), 400);
 		}
 	}
 
 	/**
-	 * @param   \Joomla\Event\Event  $event
+	 * @param \Joomla\Event\Event    $event
 	 * @param                        $message
-	 * @param   int                  $code
+	 * @param int                    $code
 	 *
 	 *
 	 * @throws \Exception
 	 * @since 1.0.0
 	 */
-	protected function returnError(Event $event, $message, int $code = 500)
+	protected function returnError(Event $event, $message, int $code = 500): void
 	{
 		Factory::getApplication()->enqueueMessage($message, 'error');
 
