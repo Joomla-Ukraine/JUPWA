@@ -81,7 +81,7 @@ class Push extends CMSPlugin implements SubscriberInterface
 			}
 			else
 			{
-				$this->returnError($event, Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBED'), 200);
+				$event->setArgument('result', Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBED'));
 			}
 		}
 		else
@@ -124,11 +124,11 @@ class Push extends CMSPlugin implements SubscriberInterface
 				$db->setQuery($query);
 				$db->execute();
 
-				$event->setArgument('result', 'Ви відписалися від сповіщень!');
+				$event->setArgument('result', Text::_('PLG_AJAX_JUPWAPUSH_UNSUBSCRIBED'));
 			}
 			else
 			{
-				$this->returnError($event, 'Ви не відписані', 200);
+				$this->returnError($event, Text::_('PLG_AJAX_JUPWAPUSH_NOT_UNSUBSCRIBED'), 200);
 			}
 		}
 		else
