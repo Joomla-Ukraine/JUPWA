@@ -28,6 +28,12 @@ use Joomla\Event\SubscriberInterface;
 class Push extends CMSPlugin implements SubscriberInterface
 {
 	/**
+	 * @since  1.0.0
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+
+	/**
 	 * @return array
 	 *
 	 * @since 1.0.0
