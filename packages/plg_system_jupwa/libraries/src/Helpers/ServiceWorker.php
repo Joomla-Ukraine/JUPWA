@@ -37,20 +37,36 @@ class ServiceWorker
 		$messagingSenderId = trim($option[ 'param' ][ 'messagingSenderId' ]) ?? '';
 		$appId             = trim($option[ 'param' ][ 'appId' ]) ?? '';
 
+		$import_scripts = "";
+		if($option[ 'param' ][ 'usepwa' ] == 1)
+		{
+			$import_scripts .= "importScripts('" . Data::$workbox . "');\n";
+		}
+
+		if($option[ 'param' ][ 'usepush' ] == 1)
+		{
+			$import_scripts .= "importScripts('" . Data::$firebase_app . "');\n";
+			$import_scripts .= "importScripts('" . Data::$firebase_messaging . "');\n";
+		}
+
+		if($option[ 'param' ][ 'usepwa' ] == 1 || $option[ 'param' ][ 'usepush' ] == 1)
+		{
+			$import_scripts .= "\n\n";
+		}
+
 		if($option[ 'param' ][ 'usepwa' ] == 1)
 		{
 			$pwa_data = Util::tmpl('sw', [
-				'workbox'     => Data::$workbox,
 				'pwa_version' => Manifest::getVersion()
 			]);
 
 			$pwa_firebase = '';
 			if($option[ 'param' ][ 'usepush' ] == 1 && $apiKey && $projectId && $messagingSenderId && $appId)
 			{
-				$pwa_firebase = Util::tmpl('firebase-messaging-sw', [
-					'firebase_app'       => Data::$firebase_app,
-					'firebase_messaging' => Data::$firebase_messaging,
-					'config'             => [
+				$pwa_firebase .= "\n\n";
+
+				$pwa_firebase .= Util::tmpl('firebase-messaging-sw', [
+					'config' => [
 						'apiKey'            => $apiKey,
 						'projectId'         => $projectId,
 						'messagingSenderId' => $messagingSenderId,
@@ -61,7 +77,7 @@ class ServiceWorker
 				$pwa_firebase .= "\n\n";
 			}
 
-			file_put_contents(JPATH_SITE . '/sw.js', $pwa_data . $pwa_firebase);
+			file_put_contents(JPATH_SITE . '/sw.js', $import_scripts . $pwa_data . $pwa_firebase);
 
 			$pwa_offline = Util::tmpl('offline', [
 				'app' => $app
