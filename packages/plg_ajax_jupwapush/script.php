@@ -26,7 +26,7 @@ class plgAjaxJUPWAPushInstallerScript
 	/**
 	 * Called during installation
 	 *
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 * @param JAdapterInstance $adapter The object responsible for running this script
 	 *
 	 * @return  bool  True on success
 	 * @throws \Exception
@@ -39,7 +39,7 @@ class plgAjaxJUPWAPushInstallerScript
 		$query = "CREATE TABLE IF NOT EXISTS `#__jupwa_push_users` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `user_id` INT(11) NOT NULL,
-    		`fcm_token` varchar(255) NOT NULL,
+    		`fcm_token` varchar(500) NOT NULL,
             `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`),
     		KEY `user_id` (`user_id`),
@@ -94,7 +94,7 @@ class plgAjaxJUPWAPushInstallerScript
 	/**
 	 * Called during uninstallation
 	 *
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 * @param JAdapterInstance $adapter The object responsible for running this script
 	 *
 	 * @return  bool  True on success
 	 * @throws \Exception
