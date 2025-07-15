@@ -27,10 +27,10 @@
     </media>
 
     <languages>
-        <language tag="en-GB">language/en-GB/en-GB.plg_system_jupwa.ini</language>
-        <language tag="en-GB">language/en-GB/en-GB.plg_system_jupwa.sys.ini</language>
-	    <language tag="uk-UA">language/uk-UA/uk-UA.plg_system_jupwa.ini</language>
-        <language tag="uk-UA">language/uk-UA/uk-UA.plg_system_jupwa.sys.ini</language>
+        <language tag="en-GB">language/en-GB/plg_system_jupwa.ini</language>
+        <language tag="en-GB">language/en-GB/plg_system_jupwa.sys.ini</language>
+	    <language tag="uk-UA">language/uk-UA/plg_system_jupwa.ini</language>
+        <language tag="uk-UA">language/uk-UA/plg_system_jupwa.sys.ini</language>
     </languages>
 
      <config addfieldpath="/plugins/system/jupwa/fields">
@@ -1121,6 +1121,18 @@
 				            type="radio"
 				            default="0"
 				            label="PLG_JUPWA_PWAINSTALL_DISABLECHROME"
+				            showon="usepwainstall:1"
+		            >
+	                    <option value="0">JNO</option>
+	                    <option value="1">JYES</option>
+	                </field>
+
+		            <field
+				            name="pwainstall_localstorage"
+				            layout="joomla.form.field.radio.switcher"
+				            type="radio"
+				            default="1"
+				            label="PLG_JUPWA_PWAINSTALL_LOCALSTORAGE"
 				            showon="usepwainstall:1"
 		            >
 	                    <option value="0">JNO</option>
