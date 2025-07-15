@@ -21,7 +21,7 @@ const {version} = require('./package.json'),
     distPath = path.join(__dirname, './packages/plg_system_jupwa/media/jupwa');
 
 const entry = {
-        jupwa: path.resolve(__dirname, './src/js/index.js')
+        'jupwa': path.resolve(__dirname, './src/js/index.js')
     },
     output = {
         filename: `./js/[name].${version}.js`,
@@ -114,8 +114,8 @@ const pluginClean = new CleanWebpackPlugin({
             files: ['jupwa.php'],
             rules: [
                 {
-                    search: /\$jupwa_install_version = '(.*?)';/ig,
-                    replace: '$jupwa_install_version = \'' + version + '\';'
+                    search: /\$jupwa_js_version = '(.*?)';/ig,
+                    replace: '$jupwa_js_version = \'' + version + '\';'
                 }
             ]
         }
@@ -155,9 +155,6 @@ const pluginClean = new CleanWebpackPlugin({
     pluginTerser = new TerserPlugin({
         minify: TerserPlugin.swcMinify,
         terserOptions: {
-            parse: {
-                ecma: 8
-            },
             compress: {
                 ecma: 5,
                 collapse_vars: false,
