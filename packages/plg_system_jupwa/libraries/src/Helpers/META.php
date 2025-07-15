@@ -206,7 +206,7 @@ class META
 
 		foreach($icons[ 'apple-touch-icon' ] as $icon)
 		{
-			$file = 'favicons/icon_' . $icon . '.png';
+			$file = 'favicons/appleicon_' . $icon . '.png';
 			if(file_exists(JPATH_SITE . '/' . $file))
 			{
 				$href = Uri::root() . $file;

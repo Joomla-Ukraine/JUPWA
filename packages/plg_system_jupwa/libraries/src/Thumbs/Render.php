@@ -50,6 +50,12 @@ class Render
 			'icon' => $option[ 'source_icon_sm' ]
 		]);
 
+		$appleicons = self::appleicons([
+			'size'  => Data::$favicons[ 'apple-touch-icon' ],
+			'icon'  => $option[ 'source_icon_sm' ],
+			'color' => $option[ 'maskiconcolor' ],
+		]);
+
 		$icons_b = [];
 		if($option[ 'source_icon' ] && !file_exists($source_icon))
 		{
@@ -63,6 +69,7 @@ class Render
 			'favicon_root'     => $favicon->root,
 			'favicon_favicons' => $favicon->favicons,
 			'icons'            => array_merge($icons_s, $icons_b),
+			'appleicons'       => $appleicons,
 			'manifest_icons'   => self::manifest_icons($option),
 			'shortcuts'        => self::shortcuts($option)
 		];
@@ -247,6 +254,36 @@ class Render
 				'height' => $icon,
 				'ratio'  => 1.11,
 				'color'  => $option[ 'manifest_icon_background_color' ] == 1 ? $option[ 'background_color' ] : null
+			]);
+		}
+
+		return $image;
+	}
+
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function appleicons(array $option = []): array
+	{
+		$icons  = $option[ 'size' ];
+		$source = self::image($option[ 'icon' ]);
+		$name   = (isset($option[ 'name' ]) && $option[ 'name' ] ? $option[ 'name' ] : 'icon');
+
+		$image = [];
+		foreach($icons as $icon)
+		{
+			$out     = 'favicons/apple' . $name . '_' . $icon . '.png';
+			$image[] = Image::render_image($source, $out, [
+				'width'  => $icon,
+				'height' => $icon,
+				'ratio'  => 1.3,
+				'color'  => $option[ 'color' ] ? : null
 			]);
 		}
 
