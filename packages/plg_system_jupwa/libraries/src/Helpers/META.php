@@ -210,7 +210,7 @@ class META
 			if(file_exists(JPATH_SITE . '/' . $file))
 			{
 				$href = Uri::root() . $file;
-				$doc->addHeadLink($href, 'apple-touch-icon', 'rel', [ 'sizes' => $icon . 'x' . $icon ]);
+				$doc->addCustomTag('<link href="' . $href . '" rel="apple-touch-icon" sizes="' . $icon . 'x' . $icon . '">');
 			}
 		}
 
