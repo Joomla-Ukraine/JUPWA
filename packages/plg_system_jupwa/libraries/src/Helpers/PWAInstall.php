@@ -18,6 +18,18 @@ class PWAInstall
 {
 	public static function panel($params): string
 	{
-		return '<pwa-install id="pwa-install"' . ($params->get('pwainstall_disablechrome') == 1 ? ' disable-chrome="true"' : '') . ' manifest-url="' . Uri::root() . 'manifest.webmanifest"></pwa-install>';
+		$disable_chrome = '';
+		if($params->get('pwainstall_disablechrome') == 1)
+		{
+			$disable_chrome = ' disable-chrome="true"';
+		}
+
+		$local_storage = '';
+		if($params->get('pwainstall_localstorage') == 1)
+		{
+			$local_storage = ' use-local-storage="true"';
+		}
+
+		return '<pwa-install id="pwa-install"' . $disable_chrome . $local_storage . ' manifest-url="' . Uri::root() . 'manifest.webmanifest"></pwa-install>';
 	}
 }
