@@ -29,7 +29,6 @@ use JUPWA\Helpers\OG;
 use JUPWA\Helpers\PWAInstall;
 use JUPWA\Helpers\Schema;
 use JUPWA\Helpers\ServiceWorker;
-use JUPWA\Helpers\ServiceWorkerFirebase;
 use JUPWA\Thumbs\Render;
 
 require_once __DIR__ . '/libraries/vendor/autoload.php';
@@ -84,7 +83,6 @@ class plgSystemJUPWA extends CMSPlugin
 
 			Manifest::addVersion();
 			ServiceWorker::create([ 'param' => $post_param ]);
-			ServiceWorkerFirebase::create([ 'param' => $post_param ]);
 
 			if($post_param[ 'thumbs' ] == 1 && ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save'))
 			{
@@ -316,17 +314,29 @@ class plgSystemJUPWA extends CMSPlugin
 			return;
 		}
 
+		$wa               = $doc->getWebAssetManager();
+		$jupwa_js_version = '2.0.2';
+
+		if($this->params->get('usepush') == 1)
+		{
+			/*			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_js_version . '.js', [ 'version' => false ], [
+							'defer'         => 'defer',
+							'fetchpriority' => 'auto'
+						]);
+
+						$doc->addHeadLink(Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_js_version . '.js', 'preload prefetch', 'rel', [
+							'as' => 'script'
+						]);*/
+		}
+
 		if($this->params->get('usepwainstall') == 1)
 		{
-			$wa                    = $doc->getWebAssetManager();
-			$jupwa_install_version = '2.0.1';
-
-			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_install_version . '.js', [ 'version' => false ], [
+			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_js_version . '.js', [ 'version' => false ], [
 				'defer'         => 'defer',
 				'fetchpriority' => 'auto'
 			]);
 
-			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_install_version . '.js', 'preload prefetch', 'rel', [
+			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_js_version . '.js', 'preload prefetch', 'rel', [
 				'as' => 'script'
 			]);
 		}
