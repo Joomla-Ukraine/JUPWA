@@ -39,6 +39,7 @@
   "prefer-stable": true,
   "require": {
     "php": ">=8.1",
+    "google/auth": "^1.47",
     "intervention/image": "^2.7",
     "marc1706/fast-image-size": "1.*",
     "php-curl-class/php-curl-class": "^12.0"
