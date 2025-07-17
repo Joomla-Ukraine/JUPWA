@@ -1299,6 +1299,53 @@
 
 	        </fieldset>
 
+	        <fieldset name="APPS">
+
+	            <fieldset name="ANDROID">
+
+					<field
+							name="use_assetlinks"
+							layout="joomla.form.field.radio.switcher"
+							type="radio"
+							default="1"
+							label="PLG_JUPWA_USE_ASSETLINKS"
+					>
+			            <option value="0">JNO</option>
+			            <option value="1">JYES</option>
+					</field>
+
+					<field name="assetlinks_package_name"
+					       type="text"
+					       label="PLG_JUPWA_ASSETLINKS_PACKAGE_NAME"
+					       description="PLG_JUPWA_ASSETLINKS_PACKAGE_NAME_DESC"
+					       showon="use_assetlinks:1"
+					/>
+
+			        <field name="assetlinks_sha256"
+			               type="text"
+			               label="PLG_JUPWA_ASSETLINKS_SHA256"
+			               description="PLG_JUPWA_ASSETLINKS_SHA256_DESC"
+			               showon="use_assetlinks:1"
+			        />
+
+		             <field name="googleplay"
+		                    type="text"
+		                    label="PLG_JUPWA_GOOGLEPLAY_APP"
+		             />
+
+	            </fieldset>
+
+		        <fieldset name="IOS">
+
+			        <field name="appstore"
+			               type="text"
+			               label="PLG_JUPWA_APPSTORE_APP"
+			        />
+
+	            </fieldset>
+
+	        </fieldset>
+
         </fields>
     </config>
 </extension>

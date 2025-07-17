@@ -31,6 +31,9 @@ class META
 	{
 		self::manifest();
 
+		self::appstore([ 'params' => $option[ 'params' ] ]);
+		self::googleplay([ 'params' => $option[ 'params' ] ]);
+
 		self::preconnect([ 'params' => $option[ 'params' ] ]);
 		self::preloads([ 'params' => $option[ 'params' ] ]);
 
@@ -42,6 +45,46 @@ class META
 		self::splash([ 'params' => $option[ 'params' ] ]);
 
 		self::pwa([ 'params' => $option[ 'params' ] ]);
+	}
+
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function appstore(array $option = []): void
+	{
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
+
+		if(trim($option[ 'params' ]->get('appstore')) !== '')
+		{
+			$doc->setMetaData('apple-itunes-app', 'app-id=' . trim($option[ 'params' ]->get('appstore')));
+		}
+	}
+
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function googleplay(array $option = []): void
+	{
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
+
+		if(trim($option[ 'params' ]->get('googleplay')) !== '')
+		{
+			$doc->setMetaData('google-play-app', 'app-id=' . trim($option[ 'params' ]->get('googleplay')));
+		}
 	}
 
 	/**
