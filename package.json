@@ -1,7 +1,7 @@
 {
   "name": "jupwa",
   "sideEffects": true,
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "JUPWA",
   "private": true,
   "scripts": {
@@ -43,7 +43,7 @@
     "sass-loader": "^16.0.5",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.14",
-    "webpack": "^5.100.1",
+    "webpack": "^5.100.2",
     "webpack-cli": "^6.0.1",
     "yargs": "^18.0.0"
   },
