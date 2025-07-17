@@ -1,0 +1,52 @@
+.jupwa-notification {
+	position: fixed;
+	padding: 15px 20px;
+	border-radius: 5px;
+	color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+	z-index: 1000;
+	transition: opacity 0.5s ease-in-out;
+	max-width: 300px;
+	
+	.top-left {
+		top: 20px;
+		left: 20px;
+	}
+	
+	.top-right {
+		top: 20px;
+		right: 20px;
+	}
+	
+	.bottom-left {
+		bottom: 20px;
+		left: 20px;
+	}
+	
+	.bottom-right {
+		bottom: 20px;
+		right: 20px;
+	}
+	
+	.center {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	
+	.success {
+		background-color: #4caf50;
+	}
+	
+	.error {
+		background-color: #f44336;
+	}
+	
+	.info {
+		background-color: #2196f3;
+	}
+	
+	.warning {
+		background-color: #ff9800;
+	}
+}
