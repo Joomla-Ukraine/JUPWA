@@ -21,18 +21,19 @@ const {version} = require('./package.json'),
     distPath = path.join(__dirname, './packages/plg_system_jupwa/media/jupwa');
 
 const entry = {
-        'jupwa': path.resolve(__dirname, './src/js/index.js')
+        'jupwa': path.resolve(__dirname, './src/js/index.js'),
+        'push': path.resolve(__dirname, './src/js/push.js')
     },
     output = {
         filename: `./js/[name].${version}.js`,
         path: distPath,
-        //publicPath: './media/jupwa',
         chunkFilename: `./js/[name].${version}.js`,
         pathinfo: false
     };
 
 const cleanDirs = [
-        '**/packages/plg_system_jupwa/media/jupwa/js/*'
+        '**/packages/plg_system_jupwa/media/jupwa/js/*',
+        '**/packages/plg_system_jupwa/media/jupwa/css/*'
     ],
     copyFiles = {
         patterns: [

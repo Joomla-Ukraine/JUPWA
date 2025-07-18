@@ -315,18 +315,18 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		$wa               = $doc->getWebAssetManager();
-		$jupwa_js_version = '2.0.3';
+		$jupwa_js_version = '2.0.5';
 
 		if($this->params->get('usepush') == 1)
 		{
-			/*			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_js_version . '.js', [ 'version' => false ], [
-							'defer'         => 'defer',
-							'fetchpriority' => 'auto'
-						]);
+			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js', [ 'version' => false ], [
+				'defer'         => 'defer',
+				'fetchpriority' => 'auto'
+			]);
 
-						$doc->addHeadLink(Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_js_version . '.js', 'preload prefetch', 'rel', [
-							'as' => 'script'
-						]);*/
+			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js', 'preload prefetch', 'rel', [
+				'as' => 'script'
+			]);
 		}
 
 		if($this->params->get('usepwainstall') == 1)
