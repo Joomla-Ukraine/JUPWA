@@ -40,6 +40,8 @@ class META
 		self::meta_apple([ 'params' => $option[ 'params' ] ]);
 		self::meta_ms([ 'params' => $option[ 'params' ] ]);
 
+		self::facebook([ 'params' => $option[ 'params' ] ]);
+
 		self::icons();
 
 		self::splash([ 'params' => $option[ 'params' ] ]);
