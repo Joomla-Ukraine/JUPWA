@@ -12,7 +12,10 @@ namespace JUPWA\Push;
 use Exception;
 use Google\Auth\Credentials\ServiceAccountCredentials;
 use GuzzleHttp\Client;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use JUPWA\Helpers\Manifest;
 
 class Push
 {
@@ -81,5 +84,43 @@ class Push
 		]);
 
 		return json_decode($response->getBody(), true);
+	}
+
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function render(array $option = []): void
+	{
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
+
+		if($option[ 'params' ][ 'usepush' ] == 1)
+		{
+			$pwa_version = Manifest::getVersion();
+			$pwapush     = [
+				'firebase' => [
+					'apiKey'            => $option[ 'params' ][ 'apiKey' ],
+					'projectId'         => $option[ 'params' ][ 'projectId' ],
+					'messagingSenderId' => $option[ 'params' ][ 'messagingSenderId' ],
+					'appId'             => $option[ 'params' ][ 'appId' ],
+					'vapidKey'          => $option[ 'params' ][ 'vapidKey' ]
+				],
+				'csrf'     => Session::getFormToken(),
+				'sw'       => Uri::base() . 'sw.js?v=' . $pwa_version,
+				'api'      => [
+					'subscribe'   => Uri::base() . 'index.php?option=com_ajax&plugin=JUPWAPushSubscribe&format=json',
+					'unsubscribe' => Uri::base() . 'index.php?option=com_ajax&plugin=JUPWAPushUnsubscribe&format=json'
+				]
+			];
+			$pwapush     = json_encode($pwapush);
+
+			$doc->addCustomTag('<script id="pwapush" type="application/json">' . $pwapush . '</script>');
+		}
 	}
 }
