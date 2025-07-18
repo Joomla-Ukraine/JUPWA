@@ -441,6 +441,8 @@ class plgSystemJUPWA extends CMSPlugin
 			$this->app->triggerEvent('onJUPWAOG', [ $this->params ]);
 		}
 
+		Push::render([ 'params' => $this->params ]);
+
 		META::render([ 'params' => $this->params ]);
 
 		Schema::global([ 'params' => $this->params ]);
