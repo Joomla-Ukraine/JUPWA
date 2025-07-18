@@ -424,7 +424,7 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		META::render([ 'params' => $this->params ]);
-		META::facebook([ 'params' => $this->params ]);
+
 		Schema::global([ 'params' => $this->params ]);
 	}
 
