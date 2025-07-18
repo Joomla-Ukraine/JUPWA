@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use JUPWA\Data\Data;
 use JUPWA\Helpers\Assetinks;
 use JUPWA\Helpers\BrowserConfig;
 use JUPWA\Helpers\Facebook;
@@ -29,6 +30,7 @@ use JUPWA\Helpers\OG;
 use JUPWA\Helpers\PWAInstall;
 use JUPWA\Helpers\Schema;
 use JUPWA\Helpers\ServiceWorker;
+use JUPWA\Push\Push;
 use JUPWA\Thumbs\Render;
 
 require_once __DIR__ . '/libraries/vendor/autoload.php';
@@ -319,11 +321,27 @@ class plgSystemJUPWA extends CMSPlugin
 
 		if($this->params->get('usepush') == 1)
 		{
+			$doc->addHeadLink('https://www.gstatic.com', 'dns-prefetch preconnect');
+
+			$wa->registerAndUseScript('firebase_app', Data::$firebase_app, [ 'version' => false ], [
+				'defer'         => 'defer',
+				'fetchpriority' => 'auto'
+			]);
+			$wa->registerAndUseScript('firebase_messaging', Data::$firebase_messaging, [ 'version' => false ], [
+				'defer'         => 'defer',
+				'fetchpriority' => 'auto'
+			]);
 			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js', [ 'version' => false ], [
 				'defer'         => 'defer',
 				'fetchpriority' => 'auto'
 			]);
 
+			$doc->addHeadLink(Data::$firebase_app, 'preload prefetch', 'rel', [
+				'as' => 'script'
+			]);
+			$doc->addHeadLink(Data::$firebase_messaging, 'preload prefetch', 'rel', [
+				'as' => 'script'
+			]);
 			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js', 'preload prefetch', 'rel', [
 				'as' => 'script'
 			]);
