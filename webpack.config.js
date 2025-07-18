@@ -26,7 +26,7 @@ const entry = {
     output = {
         filename: `./js/[name].${version}.js`,
         path: distPath,
-        publicPath: './packages/plg_system_jupwa/media/jupwa',
+        //publicPath: './media/jupwa',
         chunkFilename: `./js/[name].${version}.js`,
         pathinfo: false
     };
