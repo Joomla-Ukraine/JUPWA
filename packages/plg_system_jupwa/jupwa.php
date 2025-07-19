@@ -317,7 +317,7 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		$wa               = $doc->getWebAssetManager();
-		$jupwa_js_version = '2.0.8';
+		$jupwa_js_version = '2.0.9';
 
 		if($this->params->get('usepush') == 1)
 		{
