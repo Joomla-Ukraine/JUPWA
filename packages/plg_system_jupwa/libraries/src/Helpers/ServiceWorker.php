@@ -86,14 +86,9 @@ class ServiceWorker
 
 			file_put_contents(JPATH_SITE . '/offline.php', $pwa_offline);
 
-			Factory::getApplication()->enqueueMessage('File sw.js created successfully.', 'message');
-			Factory::getApplication()->enqueueMessage('File offline.php created successfully.', 'message');
-
 			if($option[ 'param' ][ 'usepush' ] == 1 && $firebaseServiceAccount !== '')
 			{
 				file_put_contents(JPATH_SITE . '/.well-known/jupwa/firebase-service-account.json', $firebaseServiceAccount);
-
-				Factory::getApplication()->enqueueMessage('File firebase-service-account.json created successfully.', 'message');
 			}
 		}
 		else

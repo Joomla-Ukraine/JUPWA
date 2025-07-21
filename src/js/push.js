@@ -33,9 +33,6 @@ import jupwaNotification from './modules/notification';
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', async () => {
                     if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone) {
-                        const pwaInstall = document.getElementsByTagName('pwa-install')[0];
-                        pwaInstall.showDialog();
-
                         unsubscribeButton.disabled = false;
                         subscribeButton.disabled = true;
 
