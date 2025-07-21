@@ -13,6 +13,7 @@ use Exception;
 use Google\Auth\Credentials\ServiceAccountCredentials;
 use GuzzleHttp\Client;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Helpers\Manifest;
@@ -116,6 +117,17 @@ class Push
 				'api'      => [
 					'subscribe'   => Uri::base() . 'index.php?option=com_ajax&plugin=JUPWAPushSubscribe&format=json',
 					'unsubscribe' => Uri::base() . 'index.php?option=com_ajax&plugin=JUPWAPushUnsubscribe&format=json'
+				],
+				'lang'     => [
+					'addToMainDisplay' => Text::_('PLG_JUPWA_ADD_TO_MAIN_DISPLAY'),
+					'notSupport'       => Text::_('PLG_JUPWA_NOT_SUPPORT'),
+					'notGranted'       => Text::_('PLG_JUPWA_NOT_GRANTED'),
+					'swNotSupport'     => Text::_('PLG_JUPWA_SW_NOT_SUPPORT'),
+					'subscribe'        => Text::_('PLG_JUPWA_SUBSCRIBE'),
+					'unsubscribe'      => Text::_('PLG_JUPWA_UNSUBSCRIBE'),
+					'tokenNotLoad'     => Text::_('PLG_JUPWA_TOKEN_NOT_LOAD'),
+					'tokenNotFound'    => Text::_('PLG_JUPWA_TOKEN_NOT_FOUND'),
+					'permissionDenied' => Text::_('PLG_JUPWA_PERMISION_DENIED'),
 				]
 			];
 			$pwapush     = json_encode($pwapush);

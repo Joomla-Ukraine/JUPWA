@@ -15,6 +15,7 @@ export async function subscribe(params = {}) {
             });
 
             if (token) {
+                jupwaNotification(params.lang.subscribe);
                 await sendToken({
                     token: token,
                     csrfToken: params.csrfToken,
@@ -29,14 +30,14 @@ export async function subscribe(params = {}) {
 
                 //jupwaNotification('Ви підписалися на сповіщення');
             } else {
-                jupwaNotification('Токен не отримано. Запросіть дозвіл.');
+                jupwaNotification(params.lang.tokenNotLoad, 'warning');
             }
 
         } else {
-            jupwaNotification('Дозвіл на сповіщення відхилено.');
+            jupwaNotification(params.lang.permissionDenied, 'error');
         }
 
     } catch (err) {
-        jupwaNotification(`Помилка: ${err.message}`);
+        jupwaNotification(err.message, 'error');
     }
 }

@@ -17,6 +17,6 @@ export async function sendToken(params = {}) {
         });
 
     } catch (err) {
-        jupwaNotification(`>Помилка: ${err.message}`);
+        jupwaNotification(err.message, 'error');
     }
 }

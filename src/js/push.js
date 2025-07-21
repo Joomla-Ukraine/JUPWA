@@ -24,6 +24,8 @@ import jupwaNotification from './modules/notification';
                 urlSubscribe = jupwaFirebase.api.subscribe,
                 urlUnSubscribe = jupwaFirebase.api.unsubscribe;
 
+            const lang = jupwaFirebase.lang;
+
             const app = initializeApp(firebaseConfig),
                 messaging = getMessaging(app);
 
@@ -37,7 +39,7 @@ import jupwaNotification from './modules/notification';
 
                         subscribeButton.disabled = true;
 
-                        jupwaNotification('Додайте сайт на головний екран, щоб увімкнути сповіщення.');
+                        jupwaNotification(lang.addToMainDisplay);
 
                         return;
                     }
@@ -45,8 +47,7 @@ import jupwaNotification from './modules/notification';
                     swRegistration = await navigator.serviceWorker.register(urlSW);
 
                     if (!('PushManager' in window)) {
-
-                        jupwaNotification('Push-сповіщення не підтримуються в цьому браузері.');
+                        jupwaNotification(lang.notSupport);
 
                         subscribeButton.disabled = true;
 
@@ -62,7 +63,7 @@ import jupwaNotification from './modules/notification';
                             subscribeButton.disabled = true;
                         }
                     } else {
-                        jupwaNotification('Дозвіл на сповіщення відхилено. Натисніть кнопку, щоб запитати знову.');
+                        jupwaNotification(lang.notGranted);
                     }
                 });
 
@@ -70,7 +71,7 @@ import jupwaNotification from './modules/notification';
                 subscribeButton.disabled = true;
                 unsubscribeButton.disabled = true;
 
-                jupwaNotification('Service Worker не підтримується в цьому браузері.');
+                jupwaNotification(lang.swNotSupport);
             }
 
             onMessage(messaging, (payload) => {

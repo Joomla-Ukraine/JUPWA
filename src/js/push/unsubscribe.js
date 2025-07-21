@@ -12,6 +12,7 @@ export async function unsubscribe(params = {}) {
         });
 
         if (token) {
+            jupwaNotification(params.lang.unsubscribe);
             await deleteToken(params.messaging);
 
             await deleteFCMToken({
@@ -30,10 +31,10 @@ export async function unsubscribe(params = {}) {
             params.unsubscribeButton.disabled = true;
             params.subscribeButton.disabled = false;
         } else {
-            jupwaNotification('Немає токена для видалення');
+            jupwaNotification(params.lang.tokenNotFound, 'warning');
         }
 
     } catch (err) {
-        jupwaNotification(`Помилка при відписці: ${err.message}`);
+        jupwaNotification(err.message, 'error');
     }
 }

@@ -15,6 +15,6 @@ export async function deleteFCMToken(params = {}) {
         });
 
     } catch (err) {
-        jupwaNotification(`Помилка видалення токена з сервера: ${err.message}`);
+        jupwaNotification(err.message, 'error');
     }
 }
