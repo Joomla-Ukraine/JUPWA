@@ -317,21 +317,16 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		$wa               = $doc->getWebAssetManager();
-		$jupwa_js_version = '2.0.9';
+		$jupwa_js_version = '2.0.27';
 
 		if($this->params->get('usepush') == 1)
 		{
 			$doc->addHeadLink('https://www.gstatic.com', 'dns-prefetch preconnect');
 
-			$wa->registerAndUseScript('firebase_app', Data::$firebase_app, [ 'version' => false ], [
-				'defer'         => 'defer',
-				'fetchpriority' => 'auto'
-			]);
-			$wa->registerAndUseScript('firebase_messaging', Data::$firebase_messaging, [ 'version' => false ], [
-				'defer'         => 'defer',
-				'fetchpriority' => 'auto'
-			]);
-			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js', [ 'version' => false ], [
+			$doc->addStyleSheet(Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css?v=' . time());
+			$doc->addHeadLink(Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', 'preload prefetch', 'rel', [ 'as' => 'style' ]);
+
+			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js?v=' . time(), [ 'version' => false ], [
 				'defer'         => 'defer',
 				'fetchpriority' => 'auto'
 			]);

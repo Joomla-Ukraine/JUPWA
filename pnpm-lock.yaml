@@ -17,6 +17,9 @@ importers:
       firebase:
         specifier: ^12.0.0
         version: 12.0.0
+      simple-notify:
+        specifier: ^1.0.6
+        version: 1.0.6
     devDependencies:
       '@babel/core':
         specifier: ^7.28.0
@@ -3195,6 +3198,9 @@ packages:
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+
+  simple-notify@1.0.6:
+    resolution: {integrity: sha512-/nO2zwJvMls7MoViV8WpzJccI3LTOM4DfCc21gqtHJEzU1kKMHIBofj9AwjdVrosK+R2nJYJ8F/ImFLAdZpyAw==}
 
   slash@5.1.0:
     resolution: {integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==}
@@ -6883,6 +6889,8 @@ snapshots:
   signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
+
+  simple-notify@1.0.6: {}
 
   slash@5.1.0: {}
 
