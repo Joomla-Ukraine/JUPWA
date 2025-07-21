@@ -1,25 +1,13 @@
 "use strict";
 
-import '../../scss/notification.scss';
+import Notify from 'simple-notify'
 
-export default function jupwaNotification(message, duration = 3000, position = 'top-right', styleClass = 'info') {
+export default function jupwaNotification(message, duration = 6000, position = 'right top', status = 'info') {
 
-    const notification = document.createElement('div');
-
-    notification.className = `jupwa-notification ${position} ${styleClass}`;
-    notification.textContent = message;
-
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.style.opacity = '1';
-    }, 100);
-
-    setTimeout(() => {
-        notification.style.opacity = '0';
-
-        setTimeout(() => {
-            notification.remove();
-        }, 500);
-    }, duration);
+    return new Notify({
+        status: status,
+        title: message,
+        position: position,
+        autotimeout: duration
+    });
 }

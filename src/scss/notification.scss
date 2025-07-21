@@ -1,52 +1,71 @@
+@import '~simple-notify/dist/simple-notify.css';
+
+.sn-notifications-container {
+	width: auto;
+	
+	--sn-success-color: rgb(111, 207, 151);
+	--sn-success-progress-color: rgb(84, 170, 120);
+	--sn-error-color: rgb(235, 87, 87);
+	--sn-error-progress-color: rgb(192, 69, 69);
+	--sn-warning-color: rgb(242, 201, 76);
+	--sn-warning-progress-color: rgb(196, 166, 79);
+	--sn-info-color: rgb(97, 178, 255);
+	--sn-info-progress-color: rgb(38, 150, 249);
+	
+	--sn-notifications-gap: 40px;
+	--sn-notifications-padding: 40px;
+}
+
+/*
 .jupwa-notification {
 	position: fixed;
 	padding: 15px 20px;
 	border-radius: 5px;
-	color: white;
+	background: #fff;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-	z-index: 1000;
+	z-index: 10000;
 	transition: opacity 0.5s ease-in-out;
 	max-width: 300px;
 	
-	.top-left {
+	&.top-left {
 		top: 20px;
 		left: 20px;
 	}
 	
-	.top-right {
+	&.top-right {
 		top: 20px;
 		right: 20px;
 	}
 	
-	.bottom-left {
+	&.bottom-left {
 		bottom: 20px;
 		left: 20px;
 	}
 	
-	.bottom-right {
+	&.bottom-right {
 		bottom: 20px;
 		right: 20px;
 	}
 	
-	.center {
+	&.center {
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
 	
-	.success {
-		background-color: #4caf50;
+	&.success {
+		color: #4caf50;
 	}
 	
-	.error {
-		background-color: #f44336;
+	&.error {
+		color: #f44336;
 	}
 	
-	.info {
-		background-color: #2196f3;
+	&.info {
+		color: #2196f3;
 	}
 	
 	.warning {
-		background-color: #ff9800;
+		color: #ff9800;
 	}
-}
+}*/
