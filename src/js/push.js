@@ -32,11 +32,11 @@ import jupwaNotification from './modules/notification';
             let swRegistration = null;
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', async () => {
-
                     if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone) {
                         const pwaInstall = document.getElementsByTagName('pwa-install')[0];
-
                         pwaInstall.showDialog();
+
+                        unsubscribeButton.disabled = false;
                         subscribeButton.disabled = true;
 
                         jupwaNotification(lang.addToMainDisplay);
@@ -48,7 +48,6 @@ import jupwaNotification from './modules/notification';
 
                     if (!('PushManager' in window)) {
                         jupwaNotification(lang.notSupport);
-
                         subscribeButton.disabled = true;
 
                         return;
