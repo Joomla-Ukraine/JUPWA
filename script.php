@@ -46,6 +46,20 @@ class Pkg_JUPWAInstallerScript
 		Folder::create(JPATH_SITE . '/images/jupwa/screenshots');
 		Folder::create(JPATH_SITE . '/images/jupwa/watermark');
 
+		$path    = JPATH_SITE . '/media/jupwa/';
+		$folders = [
+			$path . 'css',
+			$path . 'js'
+		];
+
+		foreach($folders as $folder)
+		{
+			if(is_dir($folder))
+			{
+				$this->unlinkRecursive($folder);
+			}
+		}
+
 		return true;
 	}
 
@@ -122,5 +136,40 @@ class Pkg_JUPWAInstallerScript
 		echo $html;
 
 		return true;
+	}
+
+	/**
+	 * @param $dir
+	 * @param $deleteRootToo
+	 *
+	 *
+	 * @since version
+	 */
+	private function unlinkRecursive($dir, $deleteRootToo = 1): void
+	{
+		if(!$dh = opendir($dir))
+		{
+			return;
+		}
+
+		while(($obj = readdir($dh)) !== false)
+		{
+			if($obj === '.' || $obj === '..')
+			{
+				continue;
+			}
+
+			if(!unlink($dir . '/' . $obj))
+			{
+				$this->unlinkRecursive($dir . '/' . $obj, true);
+			}
+		}
+
+		closedir($dh);
+
+		if($deleteRootToo)
+		{
+			rmdir($dir);
+		}
 	}
 }
