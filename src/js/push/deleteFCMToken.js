@@ -11,9 +11,8 @@ export async function deleteFCMToken(params = {}) {
         await axios.post(params.urlUnSubscribe, formData, {
             headers: {'X-CSRF-Token': params.csrfToken}
         }).then(response => {
-            jupwaNotification(response.data.data);
+            localStorage.removeItem('jupwaFCMToken');
         });
-
     } catch (err) {
         jupwaNotification(err.message, 'error');
     }

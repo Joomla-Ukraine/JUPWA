@@ -16,12 +16,12 @@ import jupwaNotification from './modules/notification';
             unsubscribeButton = document.getElementById('unsubscribeButton');
 
         if (jupwaConfigs) {
-
             const jupwaFirebase = JSON.parse(jupwaConfigs.textContent),
                 firebaseConfig = jupwaFirebase.firebase,
                 csrfToken = jupwaFirebase.csrf,
-                urlSW = jupwaFirebase.sw,
-                urlSubscribe = jupwaFirebase.api.subscribe,
+                urlSW = jupwaFirebase.sw;
+
+            const urlSubscribe = jupwaFirebase.api.subscribe,
                 urlUnSubscribe = jupwaFirebase.api.unsubscribe;
 
             const lang = jupwaFirebase.lang;
@@ -35,8 +35,8 @@ import jupwaNotification from './modules/notification';
 
                     if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone) {
                         const pwaInstall = document.getElementsByTagName('pwa-install')[0];
-                        pwaInstall.showDialog();
 
+                        pwaInstall.showDialog();
                         subscribeButton.disabled = true;
 
                         jupwaNotification(lang.addToMainDisplay);
@@ -54,9 +54,7 @@ import jupwaNotification from './modules/notification';
                         return;
                     }
 
-                    if (Notification.permission === 'default') {
-                        // 'Перевірка кнопок'
-                    } else if (Notification.permission === 'granted') {
+                    if (Notification.permission === 'granted') {
                         const tokenStorage = localStorage.getItem('jupwaFCMToken');
                         if (tokenStorage) {
                             unsubscribeButton.disabled = false;
@@ -66,7 +64,6 @@ import jupwaNotification from './modules/notification';
                         jupwaNotification(lang.notGranted);
                     }
                 });
-
             } else {
                 subscribeButton.disabled = true;
                 unsubscribeButton.disabled = true;
@@ -85,7 +82,6 @@ import jupwaNotification from './modules/notification';
                 }
 
                 jupwaNotification(`${payload.notification.title} — ${payload.notification.body}`);
-
             });
 
             subscribeButton.addEventListener('click', () => {
@@ -98,7 +94,8 @@ import jupwaNotification from './modules/notification';
                     subscribeButton: subscribeButton,
                     messaging: messaging,
                     firebaseConfig: firebaseConfig,
-                    swRegistration: swRegistration
+                    swRegistration: swRegistration,
+                    lang: lang
                 });
             });
 
@@ -112,10 +109,10 @@ import jupwaNotification from './modules/notification';
                     subscribeButton: subscribeButton,
                     messaging: messaging,
                     firebaseConfig: firebaseConfig,
-                    swRegistration: swRegistration
+                    swRegistration: swRegistration,
+                    lang: lang
                 });
             });
         }
-
     });
 })();

@@ -12,10 +12,7 @@ export async function sendToken(params = {}) {
             headers: {'X-CSRF-Token': params.csrfToken}
         }).then(response => {
             localStorage.setItem('jupwaFCMToken', params.token);
-
-            jupwaNotification(response.data.data);
         });
-
     } catch (err) {
         jupwaNotification(err.message, 'error');
     }

@@ -12,28 +12,23 @@ export async function unsubscribe(params = {}) {
         });
 
         if (token) {
-            jupwaNotification(params.lang.unsubscribe);
-            await deleteToken(params.messaging);
+            params.unsubscribeButton.disabled = true;
+            params.subscribeButton.disabled = false;
 
+            jupwaNotification(params.lang.unsubscribe);
+
+            await deleteToken(params.messaging);
             await deleteFCMToken({
                 token: token,
                 csrfToken: params.csrfToken,
                 urlSW: params.urlSW,
-                urlUnSubscribe: params.urlUnSubscribe,
-                messageDiv: params.tokenDiv,
-                errorDiv: params.errorDiv,
+                urlUnSubscribe: params.urlUnSubscribe
             });
 
             localStorage.removeItem('jupwaFCMToken');
-
-            //jupwaNotification('Ви успішно відписалися від сповіщень');
-
-            params.unsubscribeButton.disabled = true;
-            params.subscribeButton.disabled = false;
         } else {
             jupwaNotification(params.lang.tokenNotFound, 'warning');
         }
-
     } catch (err) {
         jupwaNotification(err.message, 'error');
     }

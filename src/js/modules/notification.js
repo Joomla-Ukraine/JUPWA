@@ -2,7 +2,7 @@
 
 import Notify from 'simple-notify'
 
-export default function jupwaNotification(message, duration = 6000, position = 'right top', status = 'info') {
+export default function jupwaNotification(message, status = 'info', duration = 6000, position = 'right top') {
 
     return new Notify({
         status: status,
