@@ -31,6 +31,8 @@ class META
 	{
 		self::manifest();
 
+		self::speculationrules([ 'params' => $option[ 'params' ] ]);
+		
 		self::appstore([ 'params' => $option[ 'params' ] ]);
 		self::googleplay([ 'params' => $option[ 'params' ] ]);
 
@@ -47,6 +49,55 @@ class META
 		self::splash([ 'params' => $option[ 'params' ] ]);
 
 		self::pwa([ 'params' => $option[ 'params' ] ]);
+	}
+
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function speculationrules(array $option = []): void
+	{
+		$app  = Factory::getApplication();
+		$user = $app->getIdentity();
+		$doc  = $app->getDocument();
+
+		if($user->guest == 1 && $option[ 'params' ]->get('use_speculationrules') == 1)
+		{
+			$prerender = [
+				'prerender' => [
+					[
+						'source'    => 'document',
+						'where'     => [
+							'and' => [
+								[
+									'href_matches' => '/*'
+								],
+
+							]
+						],
+						'eagerness' => 'moderate'
+					]
+				]
+			];
+
+			if(trim($option[ 'params' ]->get('speculationrules_class')) !== '')
+			{
+				$speculation_class = str_replace('.', '', trim($option[ 'params' ]->get('speculationrules_class')));
+
+				$prerender[ 'prerender' ][ 0 ][ 'where' ][ 'and' ][] = [
+					'not' => [
+						'selector_matches' => '.' . $speculation_class
+					]
+				];
+			}
+
+			$doc->addCustomTag('<script type="speculationrules">' . json_encode($prerender, JSON_UNESCAPED_SLASHES) . '</script>');
+		}
 	}
 
 	/**
