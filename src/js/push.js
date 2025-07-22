@@ -33,7 +33,7 @@ import jupwaNotification from './modules/notification';
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', async () => {
                     if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone) {
-                        unsubscribeButton.disabled = false;
+                        unsubscribeButton.disabled = true;
                         subscribeButton.disabled = true;
 
                         jupwaNotification(lang.addToMainDisplay);
