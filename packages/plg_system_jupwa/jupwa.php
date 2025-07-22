@@ -324,6 +324,7 @@ class plgSystemJUPWA extends CMSPlugin
 			$doc->addHeadLink('https://www.gstatic.com', 'dns-prefetch preconnect');
 
 			$doc->addStyleSheet(Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css?v=' . time());
+			$wa->registerAndUseStyle('push', Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', [ 'version' => false ]);
 			$doc->addHeadLink(Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', 'preload prefetch', 'rel', [ 'as' => 'style' ]);
 
 			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js?v=' . time(), [ 'version' => false ], [
