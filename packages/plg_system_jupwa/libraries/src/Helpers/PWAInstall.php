@@ -30,6 +30,18 @@ class PWAInstall
 			$local_storage = ' use-local-storage="true"';
 		}
 
-		return '<pwa-install id="pwa-install"' . $disable_chrome . $local_storage . ' manifest-url="' . Uri::root() . 'manifest.webmanifest"></pwa-install>';
+		$name = '';
+		if($params->get('manifest_name'))
+		{
+			$name = ' name="' . htmlentities($params->get('manifest_name')) . '"';
+		}
+
+		$description = '';
+		if($params->get('manifest_desc'))
+		{
+			$description = ' description="' . htmlentities($params->get('manifest_desc')) . '"';
+		}
+
+		return '<pwa-install id="pwa-install"' . $name . $description . $disable_chrome . $local_storage . ' manifest-url="' . Uri::root() . 'manifest.webmanifest"></pwa-install>';
 	}
 }
