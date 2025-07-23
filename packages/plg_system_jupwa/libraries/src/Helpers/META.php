@@ -32,7 +32,7 @@ class META
 		self::manifest();
 
 		self::speculationrules([ 'params' => $option[ 'params' ] ]);
-		
+
 		self::appstore([ 'params' => $option[ 'params' ] ]);
 		self::googleplay([ 'params' => $option[ 'params' ] ]);
 
@@ -312,8 +312,8 @@ class META
 
 		$doc->setMetaData('mobile-web-app-capable', 'yes');
 		$doc->setMetaData('apple-mobile-web-app-capable', 'yes');
-		$doc->setMetaData('application-name', ($option[ 'params' ]->get('manifest_sname') ? : $option[ 'params' ]->get('manifest_name')));
-		$doc->setMetaData('apple-mobile-web-app-title', ($option[ 'params' ]->get('manifest_sname') ? : $option[ 'params' ]->get('manifest_name')));
+		$doc->setMetaData('application-name', ($option[ 'params' ]->get('manifest_name') ? : $option[ 'params' ]->get('manifest_name')));
+		$doc->setMetaData('apple-mobile-web-app-title', ($option[ 'params' ]->get('manifest_name') ? : $option[ 'params' ]->get('manifest_name')));
 
 		if($option[ 'params' ]->get('source_icon_svg_pin') && $option[ 'params' ]->get('maskiconcolor'))
 		{
