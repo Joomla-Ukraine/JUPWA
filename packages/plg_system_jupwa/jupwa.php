@@ -20,7 +20,6 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Data\Data;
 use JUPWA\Helpers\Assetinks;
-use JUPWA\Helpers\BrowserConfig;
 use JUPWA\Helpers\Facebook;
 use JUPWA\Helpers\HTML;
 use JUPWA\Helpers\Images;
@@ -72,8 +71,6 @@ class plgSystemJUPWA extends CMSPlugin
 		if($this->option === 'com_plugins' && $this->layout === 'edit' && isset($post[ 'jform' ][ 'params' ]) && $extension_id == $this->plg->id)
 		{
 			$post_param = $post[ 'jform' ][ 'params' ];
-
-			BrowserConfig::create($post_param);
 
 			Manifest::create([
 				'param'       => $post_param,

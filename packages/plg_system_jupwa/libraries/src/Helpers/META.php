@@ -344,13 +344,6 @@ class META
 		{
 			$doc->addCustomTag('<meta name="theme-color" content="' . $option[ 'params' ]->get('theme_color_dark') . '" media="(prefers-color-scheme: dark)">');
 		}
-
-		$file = 'favicons/browserconfig.xml';
-		if(file_exists(JPATH_SITE . '/' . $file))
-		{
-			$href = Uri::root() . $file;
-			$doc->setMetaData('msapplication-config', $href);
-		}
 	}
 
 	/**
