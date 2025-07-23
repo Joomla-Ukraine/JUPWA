@@ -60,6 +60,31 @@ class META
 	 * @throws \Exception
 	 * @since 1.0
 	 */
+	public static function splash(array $option = []): void
+	{
+		$app = Factory::getApplication();
+		$doc = $app->getDocument();
+
+		if($option[ 'params' ][ 'source_icon_sm' ])
+		{
+			$pwaicons = [
+
+			];
+			$pwaicons = json_encode($pwaicons);
+
+			$doc->addCustomTag('<script id="pwaiconss" type="application/json">' . $pwaicons . '</script>');
+		}
+	}
+
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function speculationrules(array $option = []): void
 	{
 		$app  = Factory::getApplication();
@@ -253,34 +278,6 @@ class META
 			if($preconnect->url)
 			{
 				$doc->addHeadLink($preconnect->url, 'dns-prefetch preconnect');
-			}
-		}
-	}
-
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function splash(array $option = []): void
-	{
-		$app   = Factory::getApplication();
-		$doc   = $app->getDocument();
-		$icons = Data::$splash;
-
-		foreach($icons as $icon)
-		{
-			$file = 'favicons/splash_' . $icon[ 'width' ] . 'x' . $icon[ 'height' ] . '.png';
-			if(file_exists(JPATH_SITE . '/' . $file))
-			{
-				$href = Uri::root() . $file;
-				$doc->addHeadLink($href, 'apple-touch-startup-image', 'rel', [
-					'media' => 'screen and (device-width: ' . $icon[ 'd_width' ] . 'px) and (device-height: ' . $icon[ 'd_height' ] . 'px) and (-webkit-device-pixel-ratio: 2) and (orientation: ' . $icon[ 'orientation' ] . ')'
-				]);
 			}
 		}
 	}
