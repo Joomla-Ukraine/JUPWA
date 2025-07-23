@@ -389,48 +389,6 @@
 
 	        <fieldset name="SCHEMA">
 
-                <fieldset name="SCHEMA_SEARCH">
-
-	                <field name="schema_search"
-	                       type="radio"
-	                       layout="joomla.form.field.radio.switcher"
-	                       default="0"
-	                       label="PLG_JUPWA_SCHEMA_USE_SEARCH"
-	                >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
-	                </field>
-
-	                <field name="schema_search_query"
-	                       size="50"
-	                       type="text"
-	                       label="PLG_JUPWA_SCHEMA_SEARCH_QUERY"
-	                       showon="schema_search:1"
-	                />
-
- 	            </fieldset>
-
-	            <fieldset name="SCHEMA_SITENAME">
-
-	                <field name="schema_sitename"
-	                       type="radio"
-	                       layout="joomla.form.field.radio.switcher"
-	                       default="0"
-	                       label="PLG_JUPWA_SCHEMA_USE_SITENAME"
-	                >
-	                    <option value="0">JNO</option>
-	                    <option value="1">JYES</option>
-	                </field>
-
-	                <field name="schema_sitename_alt"
-	                       size="50"
-	                       type="text"
-	                       label="PLG_JUPWA_SCHEMA_SITENAME_ALT"
-	                       showon="schema_sitename:1"
-	                />
-
- 	            </fieldset>
-
 	            <fieldset name="SCHEMA_SPEAKABLE">
 
 	                <field name="use_speakable"
