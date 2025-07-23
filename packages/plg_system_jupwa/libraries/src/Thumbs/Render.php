@@ -117,46 +117,6 @@ class Render
 	 *
 	 * @param array $option
 	 *
-	 * @return \Intervention\Image\Image|string
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function og_default(array $option = []): \Intervention\Image\Image|string
-	{
-		$source = 'media/jupwa/image/jupwa.png';
-		$out    = 'favicons/og_cover.png';
-
-		if(!$option[ 'source_icon' ])
-		{
-			return $source;
-		}
-
-		$icon = self::image($option[ 'source_icon' ]);
-
-		if(extension_loaded('imagick') && class_exists('Imagick'))
-		{
-			IImage::configure([ 'driver' => 'imagick' ]);
-		}
-
-		$image = IImage::make(JPATH_SITE . '/' . $source);
-		$logo  = IImage::make(JPATH_SITE . '/' . $icon);
-
-		$logo->resize(950, 550, function ($constraint)
-		{
-			$constraint->aspectRatio();
-			$constraint->upsize();
-		});
-
-		$image->insert($logo, 'center');
-
-		return $image->save(JPATH_SITE . '/' . $out);
-	}
-
-	/**
-	 *
-	 * @param array $option
-	 *
 	 * @return string
 	 *
 	 * @throws \Exception
