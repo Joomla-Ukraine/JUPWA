@@ -86,10 +86,11 @@ class plgSystemJUPWA extends CMSPlugin
 			if($post_param[ 'thumbs' ] == 1 && ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save'))
 			{
 				Render::create($post_param, $this->app);
-			}
-			elseif(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
-			{
-				$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+
+				if(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
+				{
+					$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+				}
 			}
 		}
 	}
@@ -324,7 +325,7 @@ class plgSystemJUPWA extends CMSPlugin
 			$wa->registerAndUseStyle('push', Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', [ 'version' => false ]);
 			$doc->addHeadLink(Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', 'preload prefetch', 'rel', [ 'as' => 'style' ]);
 
-			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js?v=' . time(), [ 'version' => false ], [
+			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js', [ 'version' => false ], [
 				'defer'         => 'defer',
 				'fetchpriority' => 'auto'
 			]);
