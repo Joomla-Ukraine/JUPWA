@@ -309,16 +309,6 @@ class META
 		$doc->setMetaData('apple-mobile-web-app-capable', 'yes');
 		$doc->setMetaData('application-name', ($option[ 'params' ]->get('manifest_name') ? : $option[ 'params' ]->get('manifest_name')));
 		$doc->setMetaData('apple-mobile-web-app-title', ($option[ 'params' ]->get('manifest_name') ? : $option[ 'params' ]->get('manifest_name')));
-
-		if($option[ 'params' ]->get('source_icon_svg_pin') && $option[ 'params' ]->get('maskiconcolor'))
-		{
-			$file = $option[ 'params' ]->get('source_icon_svg_pin');
-			if(file_exists(JPATH_SITE . '/' . $file))
-			{
-				$href = Uri::root() . $file;
-				$doc->addHeadLink($href, 'mask-icon', 'rel', [ 'color' => $option[ 'params' ]->get('maskiconcolor') ]);
-			}
-		}
 	}
 
 	/**
