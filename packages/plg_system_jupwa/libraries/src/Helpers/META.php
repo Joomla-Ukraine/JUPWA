@@ -46,8 +46,6 @@ class META
 
 		self::icons();
 
-		self::splash([ 'params' => $option[ 'params' ] ]);
-
 		self::pwa([ 'params' => $option[ 'params' ] ]);
 	}
 
