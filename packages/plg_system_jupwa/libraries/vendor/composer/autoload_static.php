@@ -402,7 +402,6 @@ class ComposerStaticInit0173821745418a06b3361518b030e650
         'JUPWA\\Classes\\PHP_ICO' => __DIR__ . '/../..' . '/src/Classes/PHP_ICO.php',
         'JUPWA\\Data\\Data' => __DIR__ . '/../..' . '/src/Data/Data.php',
         'JUPWA\\Helpers\\Assetinks' => __DIR__ . '/../..' . '/src/Helpers/Assetinks.php',
-        'JUPWA\\Helpers\\BrowserConfig' => __DIR__ . '/../..' . '/src/Helpers/BrowserConfig.php',
         'JUPWA\\Helpers\\Facebook' => __DIR__ . '/../..' . '/src/Helpers/Facebook.php',
         'JUPWA\\Helpers\\Folders' => __DIR__ . '/../..' . '/src/Helpers/Folders.php',
         'JUPWA\\Helpers\\HTML' => __DIR__ . '/../..' . '/src/Helpers/HTML.php',

@@ -305,7 +305,6 @@ return array(
     'JUPWA\\Classes\\PHP_ICO' => $baseDir . '/src/Classes/PHP_ICO.php',
     'JUPWA\\Data\\Data' => $baseDir . '/src/Data/Data.php',
     'JUPWA\\Helpers\\Assetinks' => $baseDir . '/src/Helpers/Assetinks.php',
-    'JUPWA\\Helpers\\BrowserConfig' => $baseDir . '/src/Helpers/BrowserConfig.php',
     'JUPWA\\Helpers\\Facebook' => $baseDir . '/src/Helpers/Facebook.php',
     'JUPWA\\Helpers\\Folders' => $baseDir . '/src/Helpers/Folders.php',
     'JUPWA\\Helpers\\HTML' => $baseDir . '/src/Helpers/HTML.php',
