@@ -49,55 +49,6 @@ class Schema
 		$app = Factory::getApplication();
 		$doc = $app->getDocument();
 
-		if($option[ 'params' ]->get('schema_search') == 1 && $option[ 'params' ]->get('schema_search_query'))
-		{
-			$json = Util::LD([
-				'@context'        => 'https://schema.org',
-				'@type'           => 'WebSite',
-				'name'            => $app->get('sitename'),
-				'url'             => Uri::base(),
-				'potentialAction' => [
-					'@type'       => 'SearchAction',
-					'target'      => $option[ 'params' ]->get('schema_search_query') . '{search_term_string}',
-					'query-input' => 'required name=search_term_string'
-				]
-			]);
-
-			$doc->addCustomTag($json);
-		}
-
-		if($option[ 'params' ]->get('schema_sitename') == 1 && $option[ 'params' ]->get('schema_search') != 1)
-		{
-			$option_sitename_alt = $option[ 'params' ]->get('schema_sitename_alt');
-
-			$json = Util::LD([
-				'@context'      => 'https://schema.org',
-				'@type'         => 'WebSite',
-				'name'          => $app->get('sitename'),
-				'alternateName' => $option_sitename_alt,
-				'url'           => Uri::base()
-			]);
-
-			$doc->addCustomTag($json);
-		}
-
-		if($option[ 'params' ]->get('schema_logo') == 1)
-		{
-			$file = 'favicons/icon_512.png';
-			if(file_exists(JPATH_SITE . '/' . $file))
-			{
-				$logo = Uri::root() . $file;
-				$json = Util::LD([
-					'@context' => 'https://schema.org',
-					'@type'    => 'Organization',
-					'url'      => Uri::base(),
-					'logo'     => $logo
-				]);
-
-				$doc->addCustomTag($json);
-			}
-		}
-
 		if($option[ 'params' ]->get('schema_social'))
 		{
 			$socials = (array) $option[ 'params' ]->get('schema_social_link');
