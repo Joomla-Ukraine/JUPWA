@@ -325,11 +325,6 @@ class META
 		$app = Factory::getApplication();
 		$doc = $app->getDocument();
 
-		if($option[ 'params' ]->get('msapplication_tilecolor'))
-		{
-			$doc->setMetaData('msapplication-TileColor', $option[ 'params' ]->get('msapplication_tilecolor'));
-		}
-
 		if($option[ 'params' ]->get('use_color_scheme') == 1)
 		{
 			$doc->addCustomTag('<meta name="color-scheme" content="light dark">');
