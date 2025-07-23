@@ -12,7 +12,6 @@
 
 namespace JUPWA\Thumbs;
 
-use Intervention\Image\ImageManagerStatic as IImage;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
@@ -78,9 +77,7 @@ class Render
 		if($option[ 'source_icon' ] && !file_exists($source_icon))
 		{
 			$json_ext = [
-				'splash'       => self::splash($option),
-				'article_logo' => self::article_logo($option),
-				'og_default'   => self::og_default($option)
+				'article_logo' => self::article_logo($option)
 			];
 		}
 
@@ -185,43 +182,6 @@ class Render
 			'ratio'    => 0.6,
 			'r'        => 15
 		]);
-	}
-
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return array
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function splash(array $option = []): array
-	{
-		if(!$option[ 'source_icon' ])
-		{
-			return [];
-		}
-
-		$icons  = Data::$splash;
-		$source = self::image($option[ 'source_icon' ]);
-
-		$image = [];
-		foreach($icons as $icon)
-		{
-			$width  = $icon[ 'width' ];
-			$height = $icon[ 'height' ];
-			$out    = 'favicons/splash_' . $width . 'x' . $height . '.png';
-
-			$image[] = Image::render_image($source, $out, [
-				'width'  => $width,
-				'height' => $height,
-				'ratio'  => 1.15,
-				'color'  => $option[ 'ioscolor' ]
-			]);
-		}
-
-		return $image;
 	}
 
 	/**
