@@ -285,7 +285,11 @@ class Render
 			$source      = JPATH_SITE . '/' . self::image($option[ 'source_icon_sm' ]);
 			$destination = JPATH_SITE . '/favicon.ico';
 			$favicons    = JPATH_SITE . '/favicons/favicon.ico';
-			$ico_lib     = new PHP_ICO($source, [ [ 32, 32 ], [ 64, 64 ] ]);
+			$ico_lib     = new PHP_ICO($source, [
+				[ 16, 16 ],
+				[ 32, 32 ],
+				[ 48, 48 ]
+			]);
 
 			$is_favicon = [ 'root' => '' ];
 			if($ico_lib->save_ico($destination))
