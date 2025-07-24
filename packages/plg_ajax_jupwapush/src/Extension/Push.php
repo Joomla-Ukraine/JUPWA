@@ -62,18 +62,21 @@ class Push extends CMSPlugin implements SubscriberInterface
 
 			$this->auth($app, $event);
 
-			$db   = Factory::getContainer()->get(DatabaseInterface::class);
-			$user = $app->getIdentity();
-			$post = (object) $app->input->post->getArray();
-
-			$user_id   = $user->id;
+			$db        = Factory::getContainer()->get(DatabaseInterface::class);
+			$user      = $app->getIdentity();
+			$post      = (object) $app->input->post->getArray();
 			$fcm_token = $post->fcm_token;
+			$chek      = $this->checkUser($fcm_token);
 
-			$chek = $this->checkUser($user_id, $fcm_token);
 			if($chek == 0)
 			{
-				$obj            = new \stdClass();
-				$obj->user_id   = $user_id;
+				$obj = new \stdClass();
+
+				if($user->guest == 0)
+				{
+					$obj->user_id = $user->id;
+				}
+
 				$obj->fcm_token = $fcm_token;
 				$db->insertObject('#__jupwa_push_users', $obj);
 
@@ -106,22 +109,29 @@ class Push extends CMSPlugin implements SubscriberInterface
 
 			$this->auth($app, $event);
 
-			$db   = Factory::getContainer()->get(DatabaseInterface::class);
-			$user = $app->getIdentity();
-			$post = (object) $app->input->post->getArray();
-
-			$user_id   = $user->id;
+			$db        = Factory::getContainer()->get(DatabaseInterface::class);
+			$user      = $app->getIdentity();
+			$post      = (object) $app->input->post->getArray();
 			$fcm_token = $post->fcm_token;
+			$chek      = $this->checkUser($fcm_token);
 
-			$chek = $this->checkUser($user_id, $fcm_token);
 			if($chek > 0)
 			{
 				$query = $db->getQuery(true);
 				$query->delete($db->quoteName('#__jupwa_push_users'));
-				$query->where([
-					$db->quoteName('user_id') . '=' . $db->quote($user_id),
-					$db->quoteName('fcm_token') . '=' . $db->quote($fcm_token)
-				]);
+
+				if($user->guest == 1)
+				{
+					$query->where($db->quoteName('fcm_token') . '=' . $db->quote($fcm_token));
+				}
+				else
+				{
+					$query->where([
+						$db->quoteName('user_id') . '=' . $db->quote($user->id),
+						$db->quoteName('fcm_token') . '=' . $db->quote($fcm_token)
+					]);
+				}
+
 				$db->setQuery($query);
 				$db->execute();
 
@@ -139,21 +149,19 @@ class Push extends CMSPlugin implements SubscriberInterface
 	}
 
 	/**
-	 * @param int    $user_id
 	 * @param string $fcm_token
 	 *
 	 * @return int
 	 *
 	 * @since 1.0
 	 */
-	protected function checkUser(int $user_id, string $fcm_token): int
+	protected function checkUser(string $fcm_token): int
 	{
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
 		$query->select([ '*' ]);
 		$query->from($db->quoteName('#__jupwa_push_users'));
-		$query->where($db->quoteName('user_id') . ' = ' . $db->Quote($user_id));
 		$query->where($db->quoteName('fcm_token') . ' = ' . $db->Quote($fcm_token));
 		$db->setQuery($query);
 		$db->execute();
@@ -173,9 +181,8 @@ class Push extends CMSPlugin implements SubscriberInterface
 	protected function auth($app, $event): void
 	{
 		Session::checkToken() or $this->returnError($event, Text::_('JINVALID_TOKEN'), 403);
-
-		$user = $app->getIdentity();
-		if($_SERVER[ 'REQUEST_METHOD' ] !== 'POST' || $user->guest == 1)
+		
+		if($_SERVER[ 'REQUEST_METHOD' ] !== 'POST')
 		{
 			$this->returnError($event, Text::_('PLG_AJAX_JUPWAPUSH_ERROR'), 400);
 		}
