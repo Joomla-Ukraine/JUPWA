@@ -18,7 +18,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
 use JUPWA\Data\Data;
 use JUPWA\Thumbs\Render;
 
@@ -103,16 +102,13 @@ class Manifest
 	 */
 	public static function addVersion(): void
 	{
-		$path = JPATH_SITE . '/favicons';
-		Folder::create($path);
-
 		$json = [
 			'version' => hash('crc32b', time()),
 		];
 
 		$json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
-		File::write($path . '/version.json', $json);
+		File::write(JPATH_SITE . '/favicons/version.json', $json);
 	}
 
 	/**

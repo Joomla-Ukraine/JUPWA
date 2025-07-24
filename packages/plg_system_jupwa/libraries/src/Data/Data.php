@@ -29,12 +29,6 @@ class Data
 		180
 	];
 
-	public static array $icons = [
-		192,
-		310,
-		512
-	];
-
 	public static array $favicons = [
 		'apple-touch-icon' => [ 180, 192 ],
 		'icon'             => [ 16, 32, 96, 192 ]

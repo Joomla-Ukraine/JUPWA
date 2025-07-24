@@ -55,19 +55,10 @@ class Render
 			'color' => $option[ 'maskiconcolor' ],
 		]);
 
-		$icons_b = [];
-		if($option[ 'source_icon' ] && !file_exists($source_icon))
-		{
-			$icons_b = self::icons([
-				'size' => Data::$icons,
-				'icon' => ($option[ 'source_icon' ] !== '' ? $option[ 'source_icon' ] : $option[ 'source_icon_sm' ])
-			]);
-		}
-
 		$json = [
 			'favicon_root'     => $favicon->root,
 			'favicon_favicons' => $favicon->favicons,
-			'icons'            => array_merge($icons_s, $icons_b),
+			'icons'            => $icons_s,
 			'appleicons'       => $appleicons,
 			'manifest_icons'   => self::manifest_icons($option),
 			'splash_icons'     => self::splash_icons($option),
@@ -207,8 +198,8 @@ class Render
 		{
 			$out     = 'favicons/sicon_' . $icon . '.png';
 			$image[] = Image::render($source, $out, [
-				'width'  => $icon,
-				'height' => $icon,
+				'width'  => 512,
+				'height' => 512
 			]);
 		}
 

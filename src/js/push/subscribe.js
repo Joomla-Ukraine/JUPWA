@@ -18,8 +18,6 @@ export async function subscribe(params = {}) {
                 params.unsubscribeButton.disabled = false;
                 params.subscribeButton.disabled = true;
 
-                jupwaNotification(params.lang.subscribe);
-
                 await sendToken({
                     token: token,
                     csrfToken: params.csrfToken,

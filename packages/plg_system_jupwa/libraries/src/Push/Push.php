@@ -124,7 +124,6 @@ class Push
 					'notSupport'       => Text::_('PLG_JUPWA_NOT_SUPPORT'),
 					'notGranted'       => Text::_('PLG_JUPWA_NOT_GRANTED'),
 					'swNotSupport'     => Text::_('PLG_JUPWA_SW_NOT_SUPPORT'),
-					'subscribe'        => Text::_('PLG_JUPWA_SUBSCRIBE'),
 					'unsubscribe'      => Text::_('PLG_JUPWA_UNSUBSCRIBE'),
 					'tokenNotLoad'     => Text::_('PLG_JUPWA_TOKEN_NOT_LOAD'),
 					'tokenNotFound'    => Text::_('PLG_JUPWA_TOKEN_NOT_FOUND'),
