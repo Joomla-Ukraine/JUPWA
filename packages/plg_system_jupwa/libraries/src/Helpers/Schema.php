@@ -124,7 +124,7 @@ class Schema
 				'author'           => [
 					'@type' => 'Person',
 					'name'  => $option[ 'article' ]->author,
-					'url'   => (isset($url) ? : '')
+					'url'   => (isset($url) && $url ? $url : '')
 				],
 				'publisher'        => [
 					'@type' => 'Organization',

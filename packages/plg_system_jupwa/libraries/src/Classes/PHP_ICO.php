@@ -173,7 +173,7 @@ class PHP_ICO
 	 */
 	public function _get_ico_data(): bool|string
 	{
-		if(!is_array($this->_images) || empty($this->_images))
+		if(empty($this->_images))
 		{
 			return false;
 		}

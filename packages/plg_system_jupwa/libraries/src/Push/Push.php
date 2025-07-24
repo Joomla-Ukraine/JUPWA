@@ -30,6 +30,7 @@ class Push
 	 * @return array
 	 *
 	 * @throws \GuzzleHttp\Exception\GuzzleException
+	 * @throws \Exception
 	 * @since 1.0
 	 */
 	public static function send(string $token, string $title, string $body, array $data = []): array

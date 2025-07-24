@@ -15,6 +15,7 @@ namespace JUPWA\Helpers;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Data\Data;
+use JUPWA\Thumbs\Render;
 
 class META
 {
@@ -44,7 +45,7 @@ class META
 
 		self::facebook([ 'params' => $option[ 'params' ] ]);
 
-		self::icons();
+		self::icons([ 'params' => $option[ 'params' ] ]);
 
 		self::pwa([ 'params' => $option[ 'params' ] ]);
 		self::splash([ 'params' => $option[ 'params' ] ]);
@@ -294,9 +295,10 @@ class META
 	 */
 	public static function meta_apple(array $option = []): void
 	{
-		$app   = Factory::getApplication();
-		$doc   = $app->getDocument();
-		$icons = Data::$favicons;
+		$app      = Factory::getApplication();
+		$doc      = $app->getDocument();
+		$app_name = $option[ 'params' ]->get('manifest_name') ? : $option[ 'params' ]->get('manifest_name');
+		$icons    = Data::$favicons;
 
 		foreach($icons[ 'apple-touch-icon' ] as $icon)
 		{
@@ -310,8 +312,8 @@ class META
 
 		$doc->setMetaData('mobile-web-app-capable', 'yes');
 		$doc->setMetaData('apple-mobile-web-app-capable', 'yes');
-		$doc->setMetaData('application-name', ($option[ 'params' ]->get('manifest_name') ? : $option[ 'params' ]->get('manifest_name')));
-		$doc->setMetaData('apple-mobile-web-app-title', ($option[ 'params' ]->get('manifest_name') ? : $option[ 'params' ]->get('manifest_name')));
+		$doc->setMetaData('application-name', $app_name);
+		$doc->setMetaData('apple-mobile-web-app-title', $app_name);
 	}
 
 	/**
@@ -346,12 +348,14 @@ class META
 
 	/**
 	 *
+	 * @param array $option
+	 *
 	 * @return void
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function icons(): void
+	public static function icons(array $option = []): void
 	{
 		$app   = Factory::getApplication();
 		$doc   = $app->getDocument();
@@ -375,6 +379,14 @@ class META
 		{
 			$href = Uri::root() . $file;
 			$doc->addHeadLink($href, 'shortcut icon');
+		}
+
+		if($option[ 'params' ]->get('source_icon_svg'))
+		{
+			$href = Uri::root() . Render::image($option[ 'params' ]->get('source_icon_svg'));
+			$doc->addHeadLink($href, 'icon', 'rel', [
+				'type' => 'image/svg+xml'
+			]);
 		}
 	}
 
