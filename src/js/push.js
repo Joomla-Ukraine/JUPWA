@@ -108,7 +108,7 @@ import jupwaNotification from './modules/notification';
                     });
                 }
 
-                jupwaNotification(`${payload.notification.title} — ${payload.notification.body}`);
+                jupwaNotification(payload.notification.title, payload.notification.body);
             });
         }
     });
