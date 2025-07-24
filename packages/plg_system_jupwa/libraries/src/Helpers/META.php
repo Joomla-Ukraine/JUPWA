@@ -47,6 +47,7 @@ class META
 		self::icons();
 
 		self::pwa([ 'params' => $option[ 'params' ] ]);
+		self::splash([ 'params' => $option[ 'params' ] ]);
 	}
 
 	/**
@@ -65,12 +66,14 @@ class META
 
 		if($option[ 'params' ][ 'source_icon_sm' ])
 		{
+			$icon     = Uri::root() . 'favicons/sicon_512.png';
 			$pwaicons = [
-
+				'icon'  => $icon,
+				'color' => $option[ 'params' ][ 'ioscolor' ] ? : '#ffffff',
 			];
 			$pwaicons = json_encode($pwaicons);
 
-			$doc->addCustomTag('<script id="pwaiconss" type="application/json">' . $pwaicons . '</script>');
+			$doc->addCustomTag('<script id="pwaicons" type="application/json">' . $pwaicons . '</script>');
 		}
 	}
 

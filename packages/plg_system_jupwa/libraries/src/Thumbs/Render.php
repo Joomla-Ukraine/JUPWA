@@ -70,6 +70,7 @@ class Render
 			'icons'            => array_merge($icons_s, $icons_b),
 			'appleicons'       => $appleicons,
 			'manifest_icons'   => self::manifest_icons($option),
+			'splash_icons'     => self::splash_icons($option),
 			'shortcuts'        => self::shortcuts($option)
 		];
 
@@ -174,6 +175,40 @@ class Render
 				'height' => $icon,
 				'ratio'  => 1.11,
 				'color'  => $option[ 'manifest_icon_background_color' ] == 1 ? $option[ 'background_color' ] : null
+			]);
+		}
+
+		return $image;
+	}
+
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function splash_icons(array $option = []): array
+	{
+		if(!$option[ 'source_icon' ])
+		{
+			return [];
+		}
+
+		$icons = Data::$splash_icons;
+
+		$source_icon = ($option[ 'source_icon_sm' ] !== '' ? $option[ 'source_icon_sm' ] : $option[ 'source_icon' ]);
+		$source      = self::image($source_icon);
+
+		$image = [];
+		foreach($icons as $icon)
+		{
+			$out     = 'favicons/sicon_' . $icon . '.png';
+			$image[] = Image::render($source, $out, [
+				'width'  => $icon,
+				'height' => $icon,
 			]);
 		}
 

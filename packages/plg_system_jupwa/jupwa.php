@@ -206,9 +206,12 @@ class plgSystemJUPWA extends CMSPlugin
 		$buffer = preg_replace($regex, '', $buffer);
 		$this->checkBuffer($buffer);
 
-		$regex  = '#<link href=".*?" rel="icon" type="image/svg\+xml".*?>#m';
-		$buffer = preg_replace($regex, '', $buffer);
-		$this->checkBuffer($buffer);
+		if(!$this->params->get('source_icon_svg'))
+		{
+			$regex  = '#<link href=".*?" rel="icon" type="image/svg\+xml".*?>#m';
+			$buffer = preg_replace($regex, '', $buffer);
+			$this->checkBuffer($buffer);
+		}
 
 		$buffer = str_replace("	\n", '', $buffer);
 		$this->checkBuffer($buffer);

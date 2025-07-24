@@ -47,6 +47,10 @@ class Data
 		1024
 	];
 
+	public static array $splash_icons = [
+		512
+	];
+
 	public static array $manifest = [
 		'name'                        => '',
 		'short_name'                  => '',
