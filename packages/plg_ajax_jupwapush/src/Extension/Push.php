@@ -70,17 +70,22 @@ class Push extends CMSPlugin implements SubscriberInterface
 
 			if($chek == 0)
 			{
-				$obj = new \stdClass();
+				$response = \JUPWA\Push\Push::send($fcm_token, Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'), 'Тепер ви отримуватимете сповіщення!', [ 'time' => (string) time() ]);
 
-				if($user->guest == 0)
+				if(isset($response[ 'name' ]) && $response[ 'name' ])
 				{
-					$obj->user_id = $user->id;
+					$obj = new \stdClass();
+
+					if($user->guest == 0)
+					{
+						$obj->user_id = $user->id;
+					}
+
+					$obj->fcm_token = $fcm_token;
+					$db->insertObject('#__jupwa_push_users', $obj);
+
+					$event->setArgument('result', Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'));
 				}
-
-				$obj->fcm_token = $fcm_token;
-				$db->insertObject('#__jupwa_push_users', $obj);
-
-				$event->setArgument('result', Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'));
 			}
 			else
 			{
@@ -181,7 +186,7 @@ class Push extends CMSPlugin implements SubscriberInterface
 	protected function auth($app, $event): void
 	{
 		Session::checkToken() or $this->returnError($event, Text::_('JINVALID_TOKEN'), 403);
-		
+
 		if($_SERVER[ 'REQUEST_METHOD' ] !== 'POST')
 		{
 			$this->returnError($event, Text::_('PLG_AJAX_JUPWAPUSH_ERROR'), 400);
