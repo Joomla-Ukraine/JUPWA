@@ -72,6 +72,16 @@ class plgSystemJUPWA extends CMSPlugin
 		{
 			$post_param = $post[ 'jform' ][ 'params' ];
 
+			if($post_param[ 'thumbs' ] == 1 && ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save'))
+			{
+				Render::create($post_param, $this->app);
+
+				if(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
+				{
+					$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+				}
+			}
+
 			Manifest::create([
 				'param'       => $post_param,
 				'site'        => $this->app->get('sitename'),
@@ -82,16 +92,6 @@ class plgSystemJUPWA extends CMSPlugin
 
 			Manifest::addVersion();
 			ServiceWorker::create([ 'param' => $post_param ]);
-
-			if($post_param[ 'thumbs' ] == 1 && ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save'))
-			{
-				Render::create($post_param, $this->app);
-
-				if(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
-				{
-					$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
-				}
-			}
 		}
 	}
 
