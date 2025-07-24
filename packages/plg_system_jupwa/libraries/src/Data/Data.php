@@ -19,14 +19,15 @@ class Data
 		32,
 		48,
 		72,
-		76,
 		96,
 		120,
 		144,
 		152,
 		150,
 		168,
-		180
+		180,
+		192,
+		512
 	];
 
 	public static array $favicons = [
@@ -35,10 +36,9 @@ class Data
 	];
 
 	public static array $manifest_icons = [
+		180,
 		192,
-		384,
-		512,
-		1024
+		512
 	];
 
 	public static array $splash_icons = [
