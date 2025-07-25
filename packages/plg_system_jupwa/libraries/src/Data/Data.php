@@ -73,7 +73,7 @@ class Data
 
 	public static array $assetlinks = [];
 
-	public static string $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js';
+	public static string $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.3.0/workbox-sw.js';
 
 	public static string $firebase_app = 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js';
 	public static string $firebase_messaging = 'https://www.gstatic.com/firebasejs/12.0.0/firebase-messaging-compat.js';
