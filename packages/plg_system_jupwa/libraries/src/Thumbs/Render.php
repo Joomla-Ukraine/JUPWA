@@ -41,17 +41,19 @@ class Render
 
 		Folder::create($path);
 
-		$favicon     = self::ico([ 'source_icon_sm' => $option[ 'source_icon_sm' ] ]);
+		$icon_sm = ($option[ 'source_icon_sm' ] ? : 'media/jupwa/image/logo.png');
+
+		$favicon     = self::ico([ 'source_icon_sm' => $icon_sm ]);
 		$source_icon = JPATH_SITE . '/' . $option[ 'source_icon' ];
 
 		$icons_s = self::icons([
 			'size' => Data::$icons_sm,
-			'icon' => $option[ 'source_icon_sm' ]
+			'icon' => $icon_sm
 		]);
 
 		$appleicons = self::appleicons([
 			'size'  => Data::$favicons[ 'apple-touch-icon' ],
-			'icon'  => $option[ 'source_icon_sm' ],
+			'icon'  => $icon_sm,
 			'color' => $option[ 'maskiconcolor' ],
 		]);
 
@@ -60,8 +62,8 @@ class Render
 			'favicon_favicons' => $favicon->favicons,
 			'icons'            => $icons_s,
 			'appleicons'       => $appleicons,
-			'manifest_icons'   => self::manifest_icons($option),
-			'splash_icons'     => self::splash_icons($option),
+			'manifest_icons'   => self::manifest_icons($icon_sm, $option),
+			'splash_icons'     => self::splash_icons($icon_sm),
 			'shortcuts'        => self::shortcuts($option)
 		];
 
@@ -138,6 +140,7 @@ class Render
 
 	/**
 	 *
+	 * @param       $icon_sm
 	 * @param array $option
 	 *
 	 * @return array
@@ -145,17 +148,15 @@ class Render
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function manifest_icons(array $option = []): array
+	public static function manifest_icons($icon_sm, array $option = []): array
 	{
-		if(!$option[ 'source_icon' ])
+		if(!$icon_sm)
 		{
 			return [];
 		}
 
-		$icons = Data::$manifest_icons;
-
-		$source_icon = ($option[ 'source_icon_sm' ] !== '' ? $option[ 'source_icon_sm' ] : $option[ 'source_icon' ]);
-		$source      = self::image($source_icon);
+		$icons  = Data::$manifest_icons;
+		$source = self::image($icon_sm);
 
 		$image = [];
 		foreach($icons as $icon)
@@ -174,24 +175,22 @@ class Render
 
 	/**
 	 *
-	 * @param array $option
+	 * @param $icon_sm
 	 *
 	 * @return array
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function splash_icons(array $option = []): array
+	public static function splash_icons($icon_sm): array
 	{
-		if(!$option[ 'source_icon' ])
+		if(!$icon_sm)
 		{
 			return [];
 		}
 
-		$icons = Data::$splash_icons;
-
-		$source_icon = ($option[ 'source_icon_sm' ] !== '' ? $option[ 'source_icon_sm' ] : $option[ 'source_icon' ]);
-		$source      = self::image($source_icon);
+		$icons  = Data::$splash_icons;
+		$source = self::image($icon_sm);
 
 		$image = [];
 		foreach($icons as $icon)
