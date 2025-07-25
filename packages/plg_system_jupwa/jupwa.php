@@ -72,7 +72,7 @@ class plgSystemJUPWA extends CMSPlugin
 		{
 			$post_param = $post[ 'jform' ][ 'params' ];
 
-			if($post_param[ 'thumbs' ] == 1 && ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save'))
+			if($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save')
 			{
 				Render::create($post_param, $this->app);
 
