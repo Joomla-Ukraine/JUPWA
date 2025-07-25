@@ -141,7 +141,7 @@ class META
 		$app = Factory::getApplication();
 		$doc = $app->getDocument();
 
-		if(trim($option[ 'params' ]->get('appstore')) !== '')
+		if($option[ 'params' ]->get('appstore') !== null)
 		{
 			$doc->setMetaData('apple-itunes-app', 'app-id=' . trim($option[ 'params' ]->get('appstore')));
 		}
@@ -161,7 +161,7 @@ class META
 		$app = Factory::getApplication();
 		$doc = $app->getDocument();
 
-		if(trim($option[ 'params' ]->get('googleplay')) !== '')
+		if($option[ 'params' ]->get('googleplay') !== null)
 		{
 			$doc->setMetaData('google-play-app', 'app-id=' . trim($option[ 'params' ]->get('googleplay')));
 		}
@@ -181,12 +181,12 @@ class META
 		$app = Factory::getApplication();
 		$doc = $app->getDocument();
 
-		if($option[ 'params' ]->get('fbpage') !== '')
+		if($option[ 'params' ]->get('fbpage') !== null)
 		{
 			$doc->setMetaData('article:publisher', $option[ 'params' ]->get('fbpage'), 'property');
 		}
 
-		if($option[ 'params' ]->get('fbapp') !== '')
+		if($option[ 'params' ]->get('fbapp') !== null)
 		{
 			$doc->setMetaData('fb:app_id', $option[ 'params' ]->get('fbapp'), 'property');
 		}
