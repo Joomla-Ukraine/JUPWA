@@ -25,7 +25,6 @@ class Push
 	 * @param string $token
 	 * @param string $title
 	 * @param string $body
-	 * @param array  $data
 	 *
 	 * @return array
 	 *
@@ -33,7 +32,7 @@ class Push
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function send(string $token, string $title, string $body, array $data = []): array
+	public static function send(string $token, string $title, string $body): array
 	{
 		$serviceAccountFile = JPATH_ROOT . '/.well-known/jupwa/firebase-service-account.json';
 		$scopes             = [ 'https://www.googleapis.com/auth/firebase.messaging' ];
@@ -42,7 +41,7 @@ class Push
 
 		if(empty($authToken[ 'access_token' ]))
 		{
-			throw new Exception('Не удалось получить access token');
+			throw new Exception('Access token error');
 		}
 
 		$accessToken = $authToken[ 'access_token' ];
@@ -65,7 +64,6 @@ class Push
 						'title' => $title,
 						'body'  => $body,
 					],
-					'data'         => $data,
 					'android'      => [
 						'notification' => [
 							'image' => Uri::base() . 'favicons/icon_180.png'
