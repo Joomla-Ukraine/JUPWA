@@ -52,6 +52,11 @@ const rulesJS = {
             'babel-loader'
         ]
     },
+    rulesHTML = {
+        test: /\.html$/i,
+        exclude: /(node_modules)/,
+        loader: 'html-loader',
+    },
     rulesStyle = {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -213,6 +218,7 @@ const configProd = {
     },
     module: {
         rules: [
+            rulesHTML,
             rulesJS,
             rulesStyle,
             rulesImg
@@ -256,6 +262,7 @@ const configDev = {
     watchOptions: watchOptions,
     module: {
         rules: [
+            rulesHTML,
             rulesJS,
             rulesStyleDev
         ]

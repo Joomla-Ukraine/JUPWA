@@ -1,5 +1,6 @@
 "use strict";
 
+import "../scss/style.scss";
 import '../scss/notification.scss';
 
 import {initializeApp} from 'firebase/app';
@@ -7,6 +8,7 @@ import {getMessaging, onMessage} from "firebase/messaging";
 import {subscribe} from './push/subscribe';
 import {unsubscribe} from './push/unsubscribe';
 import jupwaNotification from './modules/notification';
+import {widget} from "./modules/widget";
 
 (() => {
     document.addEventListener('DOMContentLoaded', async () => {
