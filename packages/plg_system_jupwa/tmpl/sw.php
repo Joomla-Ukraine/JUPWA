@@ -11,7 +11,7 @@
  * @formatter:off
  **/
 
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die();
 
 /** @var array $displayData */
 $data = (object) $displayData;

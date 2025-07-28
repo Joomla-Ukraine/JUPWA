@@ -11,7 +11,7 @@
  * @formatter:off
  **/
 
-use Joomla\CMS\Uri\Uri;defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\Uri\Uri;defined('_JEXEC') or die();
 
 /** @var array $displayData */
 $data = (object) $displayData;
