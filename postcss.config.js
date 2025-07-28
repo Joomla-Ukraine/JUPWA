@@ -2,6 +2,7 @@
 
 module.exports = {
     plugins: [
+        require('tailwindcss'),
         require('postcss-merge-rules'),
         require('postcss-sort-media-queries'),
         require('cssnano')({

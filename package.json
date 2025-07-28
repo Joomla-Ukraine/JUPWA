@@ -1,7 +1,7 @@
 {
   "name": "jupwa",
   "sideEffects": true,
-  "version": "2.0.49",
+  "version": "2.0.92",
   "description": "JUPWA",
   "private": true,
   "scripts": {
@@ -45,6 +45,7 @@
     "svg-sprite-loader": "^6.0.11",
     "svg-transform-loader": "^2.0.13",
     "svgo-loader": "^4.0.0",
+    "tailwindcss": "^3.4.17",
     "terser-webpack-plugin": "^5.3.14",
     "webpack": "^5.100.2",
     "webpack-cli": "^6.0.1",
