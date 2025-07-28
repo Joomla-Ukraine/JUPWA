@@ -131,6 +131,18 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		/*
+		 * PWA Install
+		 */
+		if($this->params->get('usepush') == 1)
+		{
+			$widget = Util::tmpl('widget');
+			$widget = '<template id="jupwa-widget">' . $widget . '</template>';
+			$buffer = str_replace('</body>', $widget . '</body>', $buffer);
+
+			$this->checkBuffer($buffer);
+		}
+
+		/*
 		 * Replace <html> for support OG-tags
 		 */
 		if($this->params->get('og') == 1)
