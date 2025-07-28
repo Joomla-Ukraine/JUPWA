@@ -18,6 +18,8 @@ export async function subscribe(params = {}) {
                 params.unsubscribeButton.disabled = false;
                 params.subscribeButton.disabled = true;
 
+                params.widgetButton.classList.add('jupwa-button-subscrided');
+
                 await sendToken({
                     token: token,
                     csrfToken: params.csrfToken,

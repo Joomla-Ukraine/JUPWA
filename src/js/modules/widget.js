@@ -1,14 +1,22 @@
 "use strict";
 
-import template from '../html/template.html';
-
 export class widget {
-    constructor(translate) {
-        const widget = this.render(translate);
+    constructor() {
+        const tmpl = document.getElementById('jupwa-widget');
 
-        this.container = widget;
-        this.toggleButton = widget.querySelector('.jupwa-widget-button');
-        this.menu = widget.querySelector('.jupwa-widget-panel');
+        if (!tmpl || !(tmpl instanceof HTMLTemplateElement)) {
+            return;
+        }
+
+        const widgetContent = tmpl.content.cloneNode(true);
+
+        this.container = document.createElement('div');
+        this.container.classList.add('jupwa-widget-container');
+        this.container.appendChild(widgetContent);
+        document.body.appendChild(this.container);
+
+        this.toggleButton = this.container.querySelector('.jupwa-button');
+        this.menu = this.container.querySelector('.jupwa-panel');
 
         this.isOpen = false;
         this.openedWithKeyboard = false;
@@ -16,19 +24,11 @@ export class widget {
         this.init();
     }
 
-    render(translate) {
-        const container = document.createElement('div');
-        container.className = 'jupwa-widget';
-        document.body.appendChild(container);
-
-        container.innerHTML = template.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, key) => {
-            return translate[key] ?? `{{${key}}}`;
-        });
-
-        return container;
-    }
-
     init() {
+        if (!this.toggleButton || !this.menu) {
+            return;
+        }
+
         this.toggleButton.addEventListener('click', () => this.toggle());
         this.toggleButton.addEventListener('keydown', (e) => this.onToggleKeydown(e));
         document.addEventListener('click', (e) => this.onClickOutside(e));
@@ -37,30 +37,26 @@ export class widget {
 
     toggle(open = !this.isOpen) {
         this.isOpen = open;
-
         this.update();
     }
 
     open() {
         this.toggle(true);
-        if (this.openedWithKeyboard) {
-            this.focusFirstItem();
-        }
     }
 
     close() {
         this.isOpen = false;
         this.openedWithKeyboard = false;
-
         this.update();
     }
 
     update() {
-        this.menu.classList.toggle('jupwa-widget-show', !this.isOpen);
+        this.menu.classList.toggle('jupwa-hidden', !this.isOpen);
         this.toggleButton.setAttribute('aria-expanded', String(this.isOpen));
+        this.toggleButton.classList.toggle('jupwa-button-subscrided', this.isOpen || this.openedWithKeyboard);
 
-        this.toggleButton.classList.toggle('text-on-surface-strong', this.isOpen || this.openedWithKeyboard);
-        this.toggleButton.classList.toggle('text-on-surface', !(this.isOpen || this.openedWithKeyboard));
+        /*
+        this.toggleButton.classList.toggle('text-on-surface', !(this.isOpen || this.openedWithKeyboard));*/
     }
 
     onToggleKeydown(e) {
@@ -82,13 +78,5 @@ export class widget {
         if (e.key === 'Escape') {
             this.close();
         }
-    }
-
-    focusFirstItem() {
-        this.focusItem(0);
-    }
-
-    focusItem(index) {
-        this.items[index]?.focus();
     }
 }

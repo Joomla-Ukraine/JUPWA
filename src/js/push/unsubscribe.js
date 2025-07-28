@@ -15,6 +15,8 @@ export async function unsubscribe(params = {}) {
             params.unsubscribeButton.disabled = true;
             params.subscribeButton.disabled = false;
 
+            // params.widgetButton.classList.add('jupwa-button-subscrided');
+
             jupwaNotification(params.lang.unsubscribe);
 
             await deleteToken(params.messaging);

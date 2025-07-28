@@ -104,33 +104,34 @@ class Push
 		{
 			$pwa_version = Manifest::getVersion();
 			$pwapush     = [
-				'firebase' => [
+				'firebase'     => [
 					'apiKey'            => $option[ 'params' ][ 'apiKey' ],
 					'projectId'         => $option[ 'params' ][ 'projectId' ],
 					'messagingSenderId' => $option[ 'params' ][ 'messagingSenderId' ],
 					'appId'             => $option[ 'params' ][ 'appId' ],
 					'vapidKey'          => $option[ 'params' ][ 'vapidKey' ]
 				],
-				'csrf'     => Session::getFormToken(),
-				'sw'       => Uri::base() . 'sw.js?v=' . $pwa_version,
-				'api'      => [
+				'csrf'         => Session::getFormToken(),
+				'sw'           => Uri::base() . 'sw.js?v=' . $pwa_version,
+				'api'          => [
 					'subscribe'   => Uri::base() . 'index.php?option=com_ajax&plugin=JUPWAPushSubscribe&format=json',
 					'unsubscribe' => Uri::base() . 'index.php?option=com_ajax&plugin=JUPWAPushUnsubscribe&format=json'
 				],
-				'lang'     => [
+				'localisation' => [
 					'addToMainDisplay' => Text::_('PLG_JUPWA_ADD_TO_MAIN_DISPLAY'),
 					'notSupport'       => Text::_('PLG_JUPWA_NOT_SUPPORT'),
 					'notGranted'       => Text::_('PLG_JUPWA_NOT_GRANTED'),
 					'swNotSupport'     => Text::_('PLG_JUPWA_SW_NOT_SUPPORT'),
+					'subscribe'        => Text::_('PLG_JUPWA_SUBSCRIBE'),
 					'unsubscribe'      => Text::_('PLG_JUPWA_UNSUBSCRIBE'),
 					'tokenNotLoad'     => Text::_('PLG_JUPWA_TOKEN_NOT_LOAD'),
 					'tokenNotFound'    => Text::_('PLG_JUPWA_TOKEN_NOT_FOUND'),
-					'permissionDenied' => Text::_('PLG_JUPWA_PERMISION_DENIED'),
+					'permissionDenied' => Text::_('PLG_JUPWA_PERMISION_DENIED')
 				]
 			];
 			$pwapush     = json_encode($pwapush);
 
-			$doc->addCustomTag('<script id="pwapush" type="application/json">' . $pwapush . '</script>');
+			$doc->addCustomTag('<script id="jupwa-push-setting" type="application/json">' . $pwapush . '</script>');
 		}
 	}
 }
