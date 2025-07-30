@@ -1119,6 +1119,17 @@
 		                    <option value="1">JYES</option>
 			        </field>
 
+			        <field name="usepush_for_jusers"
+			               type="radio"
+			               layout="joomla.form.field.radio.switcher"
+			               default="0"
+			               label="PLG_JUPWA_USEPUSH_FOR_JUSERS"
+			               showon="usepush:1"
+			        >
+		                    <option value="0">JNO</option>
+		                    <option value="1">JYES</option>
+			        </field>
+
 			        <field name="apiKey"
 			               size="50"
 			               type="text"

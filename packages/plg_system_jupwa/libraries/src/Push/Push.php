@@ -97,13 +97,12 @@ class Push
 	 */
 	public static function render(array $option = []): void
 	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
-
-		if($option[ 'params' ][ 'usepush' ] == 1)
+		if(self::isPush($option))
 		{
+			$doc         = Factory::getApplication()->getDocument();
 			$pwa_version = Manifest::getVersion();
-			$pwapush     = [
+
+			$pwapush = [
 				'firebase'     => [
 					'apiKey'            => $option[ 'params' ][ 'apiKey' ],
 					'projectId'         => $option[ 'params' ][ 'projectId' ],
@@ -129,9 +128,29 @@ class Push
 					'permissionDenied' => Text::_('PLG_JUPWA_PERMISION_DENIED')
 				]
 			];
-			$pwapush     = json_encode($pwapush);
+			$pwapush = json_encode($pwapush);
 
 			$doc->addCustomTag('<script id="jupwa-push-setting" type="application/json">' . $pwapush . '</script>');
 		}
+	}
+
+	public static function isPush(array $option = [])
+	{
+		if($option[ 'params' ][ 'usepush' ] == 1)
+		{
+			if($option[ 'params' ][ 'usepush_for_jusers' ] == 1)
+			{
+				$user = Factory::getApplication()->getIdentity();
+
+				if($user->guest == 1)
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 }

@@ -131,9 +131,9 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		/*
-		 * PWA Install
+		 * PWA Widget
 		 */
-		if($this->params->get('usepush') == 1)
+		if(Push::isPush([ 'params' => $this->params ]))
 		{
 			$widget = Util::tmpl('widget');
 			$widget = '<template id="jupwa-widget">' . $widget . '</template>';
@@ -330,9 +330,9 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		$wa               = $doc->getWebAssetManager();
-		$jupwa_js_version = '2.0.27';
+		$jupwa_js_version = '2.0.104';
 
-		if($this->params->get('usepush') == 1)
+		if(Push::isPush([ 'params' => $this->params ]))
 		{
 			$doc->addHeadLink('https://www.gstatic.com', 'dns-prefetch preconnect');
 
