@@ -1,163 +1,167 @@
 "use strict";
 
 import "../scss/style.scss";
-import '../scss/notification.scss';
-import {initializeApp} from 'firebase/app';
-import {getMessaging, onMessage} from "firebase/messaging";
-import {subscribe} from './push/subscribe';
-import {unsubscribe} from './push/unsubscribe';
-import jupwaNotification from './modules/notification';
-import {widget} from "./modules/widget";
+import "../scss/notification.scss";
+
+import {initFirebase} from "./push/initFirebase";
+import {registerSW} from "./push/registerSW";
+import jupwaNotification from "./push/utils/notification";
+import {getConfig, isIOSandNotStandalone, supportsPush, supportsSW} from "./push/utils/env";
+import {createButtonController} from "./push/ui/buttonController";
+import {createWidgetController} from "./push/ui/widgetController";
+import {onMessage} from "firebase/messaging";
 
 (() => {
-    document.addEventListener('DOMContentLoaded', async () => {
+    document.addEventListener("DOMContentLoaded", async () => {
+        const cfg = getConfig("jupwa-push-setting");
 
-        const jupwaConfigs = document.getElementById('jupwa-push-setting');
-
-        let subscribeButton = document.getElementById('jupwa-subscribe-btn'),
-            unsubscribeButton = document.getElementById('jupwa-unsubscribe-btn'),
-            widgetButton = document.getElementById('jupwa-button');
-
-        if (!jupwaConfigs || !jupwaConfigs.textContent) {
+        if (!cfg) {
             return;
         }
 
-        if (jupwaConfigs) {
-            const jupwaFirebase = JSON.parse(jupwaConfigs.textContent),
-                firebaseConfig = jupwaFirebase.firebase,
-                csrfToken = jupwaFirebase.csrf,
-                urlSW = jupwaFirebase.sw,
-                lang = jupwaFirebase.localisation;
+        const {
+            firebase: firebaseConfig,
+            csrf: csrfToken,
+            sw: urlSW,
+            localisation: lang,
+            api: {subscribe: urlSubscribe, unsubscribe: urlUnSubscribe} = {},
+        } = cfg;
 
-            const urlSubscribe = jupwaFirebase.api.subscribe,
-                urlUnSubscribe = jupwaFirebase.api.unsubscribe;
+        const pageSubscribeBtn = document.getElementById("jupwa-subscribe-btn");
+        const pageUnsubscribeBtn = document.getElementById("jupwa-unsubscribe-btn");
+        const haveBothPageButtons = Boolean(pageSubscribeBtn && pageUnsubscribeBtn);
 
-            if (!(subscribeButton || unsubscribeButton)) {
-                new widget();
+        let subscribeButton = pageSubscribeBtn || null;
+        let unsubscribeButton = pageUnsubscribeBtn || null;
+        let widgetButton = document.getElementById("jupwa-button") || null;
 
-                subscribeButton = document.getElementById('jupwa-subscribe-btn');
-                unsubscribeButton = document.getElementById('jupwa-unsubscribe-btn');
-                widgetButton = document.getElementById('jupwa-button');
+        if (!haveBothPageButtons) {
+            const widget = createWidgetController();
+
+            if (widget) {
+                subscribeButton = widget.subscribeButton;
+                unsubscribeButton = widget.unsubscribeButton;
+                widgetButton = widget.widgetButton;
             }
-
-            const app = initializeApp(firebaseConfig),
-                messaging = getMessaging(app);
-
-            let swRegistration = null;
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', async () => {
-                    if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone) {
-                        if (subscribeButton) {
-                            subscribeButton.disabled = true;
-                        }
-
-                        if (unsubscribeButton) {
-                            unsubscribeButton.disabled = true;
-                        }
-
-                        widgetButton.classList.add('jupwa-button-subscrided');
-
-                        jupwaNotification(lang.addToMainDisplay);
-
-                        return;
-                    }
-
-                    swRegistration = await navigator.serviceWorker.register(urlSW);
-
-                    if (!('PushManager' in window)) {
-                        jupwaNotification(lang.notSupport);
-
-                        if (subscribeButton) {
-                            subscribeButton.disabled = true;
-                        }
-
-                        widgetButton.classList.add('jupwa-button-subscrided');
-
-                        return;
-                    }
-
-                    widgetButton.classList.remove('jupwa-button-subscrided');
-                    
-                    if (Notification.permission === 'granted') {
-                        const tokenStorage = localStorage.getItem('jupwaFCMToken');
-                        if (tokenStorage) {
-                            if (unsubscribeButton) {
-                                unsubscribeButton.disabled = false;
-                            }
-
-                            if (subscribeButton) {
-                                subscribeButton.disabled = true;
-                            }
-
-                            widgetButton.classList.add('jupwa-button-subscrided');
-                        }
-                    } else {
-                        jupwaNotification(lang.notGranted);
-
-                        widgetButton.classList.add('jupwa-button-subscrided');
-                    }
-                });
-            } else {
-                if (unsubscribeButton) {
-                    unsubscribeButton.disabled = true;
-                }
-
-                if (subscribeButton) {
-                    subscribeButton.disabled = true;
-                }
-
-                widgetButton.classList.add('jupwa-button-subscrided');
-
-                jupwaNotification(lang.swNotSupport);
-            }
-
-            if (subscribeButton) {
-                subscribeButton.addEventListener('click', () => {
-                    subscribe({
-                        csrfToken: csrfToken,
-                        urlSW: urlSW,
-                        urlSubscribe: urlSubscribe,
-                        urlUnSubscribe: urlUnSubscribe,
-                        widgetButton: widgetButton,
-                        unsubscribeButton: unsubscribeButton,
-                        subscribeButton: subscribeButton,
-                        messaging: messaging,
-                        firebaseConfig: firebaseConfig,
-                        swRegistration: swRegistration,
-                        lang: lang
-                    });
-                });
-            }
-
-            if (unsubscribeButton) {
-                unsubscribeButton.addEventListener('click', () => {
-                    unsubscribe({
-                        csrfToken: csrfToken,
-                        urlSW: urlSW,
-                        urlSubscribe: urlSubscribe,
-                        urlUnSubscribe: urlUnSubscribe,
-                        widgetButton: widgetButton,
-                        unsubscribeButton: unsubscribeButton,
-                        subscribeButton: subscribeButton,
-                        messaging: messaging,
-                        firebaseConfig: firebaseConfig,
-                        swRegistration: swRegistration,
-                        lang: lang
-                    });
-                });
-            }
-
-            onMessage(messaging, (payload) => {
-                const {title, body, image} = payload.notification;
-                if (Notification.permission === 'granted') {
-                    new Notification(title, {
-                        body,
-                        icon: image || '/favicon.ico'
-                    });
-                }
-
-                jupwaNotification(payload.notification.title, payload.notification.body);
-            });
         }
+
+        if (!subscribeButton || !unsubscribeButton) {
+            return;
+        }
+
+        if (isIOSandNotStandalone()) {
+            subscribeButton.disabled = true;
+            unsubscribeButton.disabled = true;
+
+            if (widgetButton) {
+                widgetButton.classList.add("jupwa-button-subscrided");
+            }
+
+            jupwaNotification(lang.addToMainDisplay);
+
+            return;
+        }
+
+        if (!supportsSW()) {
+            subscribeButton.disabled = true;
+            unsubscribeButton.disabled = true;
+
+            if (widgetButton) {
+                widgetButton.classList.add("jupwa-button-subscrided");
+            }
+
+            jupwaNotification(lang.swNotSupport);
+
+            return;
+        }
+
+        let swRegistration = null;
+        try {
+            swRegistration = await registerSW(urlSW);
+        } catch (e) {
+            subscribeButton.disabled = true;
+            unsubscribeButton.disabled = true;
+
+            if (widgetButton) {
+                widgetButton.classList.add("jupwa-button-subscrided");
+            }
+
+            jupwaNotification(e?.message || lang.swNotSupport, "error");
+
+            return;
+        }
+
+        if (!supportsPush()) {
+            subscribeButton.disabled = true;
+
+            if (widgetButton) {
+                widgetButton.classList.add("jupwa-button-subscrided");
+            }
+
+            jupwaNotification(lang.notSupport);
+        }
+
+        const messaging = initFirebase(firebaseConfig);
+        const tokenStorage = localStorage.getItem("jupwaFCMToken");
+
+        if (Notification.permission === "granted" && tokenStorage) {
+            unsubscribeButton.disabled = false;
+            subscribeButton.disabled = true;
+
+            if (widgetButton) {
+                widgetButton.classList.add("jupwa-button-subscrided");
+            }
+        } else if (Notification.permission === "denied") {
+            unsubscribeButton.disabled = true;
+            subscribeButton.disabled = false;
+
+            if (widgetButton) {
+                widgetButton.classList.add("jupwa-button-subscrided");
+            }
+
+            jupwaNotification(lang.notGranted);
+        } else {
+            unsubscribeButton.disabled = !tokenStorage;
+            subscribeButton.disabled = !!tokenStorage;
+
+            if (widgetButton && !tokenStorage) {
+                widgetButton.classList.remove("jupwa-button-subscrided");
+            }
+        }
+
+        createButtonController({
+            subscribeButton,
+            unsubscribeButton,
+            widgetButton,
+            lang,
+            csrfToken,
+            urlSW,
+            urlSubscribe,
+            urlUnSubscribe,
+            messaging,
+            firebaseConfig,
+            swRegistration,
+        });
+
+        onMessage(messaging, (payload) => {
+            const notif = payload?.notification;
+
+            if (!notif) {
+                return;
+            }
+
+            const {title, body, image} = notif;
+
+            if (Notification.permission === "granted") {
+                try {
+                    new Notification(title || "", {body, icon: image || "/favicon.ico"});
+                } catch (_) {
+                }
+            }
+
+            if (title || body) {
+                jupwaNotification(title || "", body || "");
+            }
+        });
     });
 })();
