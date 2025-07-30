@@ -10,7 +10,7 @@
  *
  **/
 
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
@@ -31,6 +31,7 @@ use JUPWA\Helpers\Schema;
 use JUPWA\Helpers\ServiceWorker;
 use JUPWA\Push\Push;
 use JUPWA\Thumbs\Render;
+use JUPWA\Utils\Util;
 
 require_once __DIR__ . '/libraries/vendor/autoload.php';
 
@@ -336,7 +337,6 @@ class plgSystemJUPWA extends CMSPlugin
 		{
 			$doc->addHeadLink('https://www.gstatic.com', 'dns-prefetch preconnect');
 
-			//$doc->addStyleSheet(Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css');
 			$wa->registerAndUseStyle('push', Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', [ 'version' => false ]);
 			$doc->addHeadLink(Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', 'preload prefetch', 'rel', [ 'as' => 'style' ]);
 
