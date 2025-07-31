@@ -4,10 +4,6 @@ import {deleteToken, getToken} from "firebase/messaging";
 import {deleteFCMToken} from "./deleteFCMToken";
 import jupwaNotification from "./utils/notification";
 
-/**
- * Відписка без повторної реєстрації SW:
- * використовує переданий swRegistration та messaging.
- */
 export async function unsubscribe(params = {}) {
     const {
         messaging,
@@ -33,13 +29,21 @@ export async function unsubscribe(params = {}) {
 
         if (!token) {
             jupwaNotification(lang.tokenNotFound, "warning");
+
             return;
         }
 
-        // Оптимістичне оновлення UI
-        if (unsubscribeButton) unsubscribeButton.disabled = true;
-        if (subscribeButton) subscribeButton.disabled = false;
-        if (widgetButton) widgetButton.classList.remove("jupwa-button-subscrided");
+        if (unsubscribeButton) {
+            unsubscribeButton.hidden = true;
+        }
+
+        if (subscribeButton) {
+            subscribeButton.hidden = false;
+        }
+
+        if (widgetButton) {
+            widgetButton.classList.remove("jupwa-button-subscrided");
+        }
 
         jupwaNotification(lang.unsubscribe);
 

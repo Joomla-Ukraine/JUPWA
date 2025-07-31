@@ -4,10 +4,6 @@ import {getToken} from "firebase/messaging";
 import {sendToken} from "./sendToken";
 import jupwaNotification from "./utils/notification";
 
-/**
- * Підписка без повторної реєстрації SW:
- * використовує переданий swRegistration та messaging.
- */
 export async function subscribe(params = {}) {
     const {
         messaging,
@@ -47,11 +43,11 @@ export async function subscribe(params = {}) {
         }
 
         if (unsubscribeButton) {
-            unsubscribeButton.disabled = false;
+            unsubscribeButton.hidden = false;
         }
 
         if (subscribeButton) {
-            subscribeButton.disabled = true;
+            subscribeButton.hidden = true;
         }
 
         if (widgetButton) {

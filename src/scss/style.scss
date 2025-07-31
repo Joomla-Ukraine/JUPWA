@@ -58,6 +58,25 @@
 	gap: 1.25rem;
 }
 
+.jupwa-information {
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	
+	li {
+		display: flex;
+		gap: .5rem;
+		font-size: 0.938rem !important;
+	}
+	
+	svg {
+		color: #15803d;
+	}
+}
+
 .jupwa-header {
 	font-size: 1.25rem;
 	font-weight: 500;
@@ -149,16 +168,6 @@
 		
 		&:focus {
 			box-shadow: 0 0 0 4px rgba(239, 246, 255, 0.5);
-		}
-		
-		&:disabled {
-			color: #8e949c;
-			background-color: transparent;
-			border: 1px solid #cbd5e1;
-			
-			&:hover {
-				background-color: #cbd5e1;
-			}
 		}
 	}
 }

@@ -50,8 +50,8 @@ import {onMessage} from "firebase/messaging";
         }
 
         if (isIOSandNotStandalone()) {
-            subscribeButton.disabled = true;
-            unsubscribeButton.disabled = true;
+            subscribeButton.hidden = true;
+            unsubscribeButton.hidden = true;
 
             if (widgetButton) {
                 widgetButton.classList.add("jupwa-button-subscrided");
@@ -63,8 +63,8 @@ import {onMessage} from "firebase/messaging";
         }
 
         if (!supportsSW()) {
-            subscribeButton.disabled = true;
-            unsubscribeButton.disabled = true;
+            subscribeButton.hidden = true;
+            unsubscribeButton.hidden = true;
 
             if (widgetButton) {
                 widgetButton.classList.add("jupwa-button-subscrided");
@@ -79,8 +79,8 @@ import {onMessage} from "firebase/messaging";
         try {
             swRegistration = await registerSW(urlSW);
         } catch (e) {
-            subscribeButton.disabled = true;
-            unsubscribeButton.disabled = true;
+            subscribeButton.hidden = true;
+            unsubscribeButton.hidden = true;
 
             if (widgetButton) {
                 widgetButton.classList.add("jupwa-button-subscrided");
@@ -92,7 +92,7 @@ import {onMessage} from "firebase/messaging";
         }
 
         if (!supportsPush()) {
-            subscribeButton.disabled = true;
+            subscribeButton.hidden = true;
 
             if (widgetButton) {
                 widgetButton.classList.add("jupwa-button-subscrided");
@@ -105,15 +105,15 @@ import {onMessage} from "firebase/messaging";
         const tokenStorage = localStorage.getItem("jupwaFCMToken");
 
         if (Notification.permission === "granted" && tokenStorage) {
-            unsubscribeButton.disabled = false;
-            subscribeButton.disabled = true;
+            unsubscribeButton.hidden = false;
+            subscribeButton.hidden = true;
 
             if (widgetButton) {
                 widgetButton.classList.add("jupwa-button-subscrided");
             }
         } else if (Notification.permission === "denied") {
-            unsubscribeButton.disabled = true;
-            subscribeButton.disabled = false;
+            unsubscribeButton.hidden = true;
+            subscribeButton.hidden = false;
 
             if (widgetButton) {
                 widgetButton.classList.add("jupwa-button-subscrided");
@@ -121,8 +121,8 @@ import {onMessage} from "firebase/messaging";
 
             jupwaNotification(lang.notGranted);
         } else {
-            unsubscribeButton.disabled = !tokenStorage;
-            subscribeButton.disabled = !!tokenStorage;
+            unsubscribeButton.hidden = !tokenStorage;
+            subscribeButton.hidden = !!tokenStorage;
 
             if (widgetButton && !tokenStorage) {
                 widgetButton.classList.remove("jupwa-button-subscrided");
