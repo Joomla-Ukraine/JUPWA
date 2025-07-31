@@ -296,7 +296,6 @@
 			                name="preconnect"
 			                type="subform"
 			                multiple="true"
-			                class="span6"
 			                label="PLG_JUPWA_PRECONNECT_CUSTOM"
 			                layout="joomla.form.field.subform.repeatable-table"
 	                >
@@ -318,7 +317,6 @@
 			                name="preloads"
 			                type="subform"
 			                multiple="true"
-			                class="span6"
 			                label="PLG_JUPWA_PRELOAD_CUSTOM"
 			                layout="joomla.form.field.subform.repeatable-table"
 	                >
@@ -327,6 +325,7 @@
 								    name="url"
 								    type="text"
 								    label="URL"
+								    class="w-100"
 								    required="true"
 						    />
 
@@ -639,7 +638,6 @@
 				            name="fbadmin"
 				            type="subform"
 				            multiple="true"
-				            class="span2"
 				            label="PLG_JUPWA_FBADMIN"
 				            layout="joomla.form.field.subform.repeatable-table"
 				            showon="fb:1"
