@@ -7,7 +7,7 @@
   "scripts": {
     "icons": "webpack --config webpack.config.icons.js --mode none --progress && rimraf ./packages/plg_system_jupwa/media/jupwa/sprite",
     "dev": "webpack --mode development",
-    "build": "webpack --mode production --progress"
+    "build": "webpack --mode production --progress  && webpack --config webpack.config.icons.js --mode none --progress && rimraf ./packages/plg_system_jupwa/media/jupwa/sprite"
   },
   "author": "Denys Nosov",
   "homepage": "https://github.com/Joomla-Ukraine/JUPWA",
