@@ -23,6 +23,7 @@
 	<media folder="media/jupwa"
 	       destination="jupwa">
         <folder>css</folder>
+        <folder>icons</folder>
         <folder>image</folder>
         <folder>js</folder>
     </media>
