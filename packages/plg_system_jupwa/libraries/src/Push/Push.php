@@ -9,7 +9,6 @@
 
 namespace JUPWA\Push;
 
-use Exception;
 use Google\Auth\Credentials\ServiceAccountCredentials;
 use GuzzleHttp\Client;
 use Joomla\CMS\Factory;
@@ -42,11 +41,11 @@ class Push
 
 		if(empty($authToken[ 'access_token' ]))
 		{
-			throw new Exception('Access token error');
+			throw new \RuntimeException('Access token error');
 		}
 
 		$accessToken = $authToken[ 'access_token' ];
-		$json        = json_decode(file_get_contents($serviceAccountFile), true);
+		$json        = json_decode(file_get_contents($serviceAccountFile), true, 512, JSON_THROW_ON_ERROR);
 		$projectId   = $json[ 'project_id' ];
 
 		$client = new Client([
@@ -84,7 +83,7 @@ class Push
 			]
 		]);
 
-		return json_decode($response->getBody(), true);
+		return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
 	}
 
 	/**

@@ -18,7 +18,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
-use JUPWA\Data\Data;
 use JUPWA\Helpers\Assetinks;
 use JUPWA\Helpers\Facebook;
 use JUPWA\Helpers\HTML;
@@ -56,7 +55,6 @@ class plgSystemJUPWA extends CMSPlugin
 		$this->loadLanguage();
 
 		$this->app = Factory::getApplication();
-
 		if($this->app->isClient('site'))
 		{
 			return;
@@ -105,9 +103,7 @@ class plgSystemJUPWA extends CMSPlugin
 				'site'        => $this->app->get('sitename'),
 				'description' => $this->app->get('MetaDesc'),
 			]);
-
 			Assetinks::create([ 'param' => $post_param ]);
-
 			Manifest::addVersion();
 			ServiceWorker::create([ 'param' => $post_param ]);
 		}
