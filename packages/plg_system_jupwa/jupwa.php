@@ -352,8 +352,6 @@ class plgSystemJUPWA extends CMSPlugin
 
 		if(Push::isPush([ 'params' => $this->params ]))
 		{
-			$doc->addHeadLink('https://www.gstatic.com', 'dns-prefetch preconnect');
-
 			$wa->registerAndUseStyle('push', Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', [ 'version' => false ]);
 			$doc->addHeadLink(Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', 'preload prefetch', 'rel', [ 'as' => 'style' ]);
 
@@ -362,12 +360,6 @@ class plgSystemJUPWA extends CMSPlugin
 				'fetchpriority' => 'auto'
 			]);
 
-			$doc->addHeadLink(Data::$firebase_app, 'preload prefetch', 'rel', [
-				'as' => 'script'
-			]);
-			$doc->addHeadLink(Data::$firebase_messaging, 'preload prefetch', 'rel', [
-				'as' => 'script'
-			]);
 			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js', 'preload prefetch', 'rel', [
 				'as' => 'script'
 			]);
