@@ -1129,6 +1129,24 @@
 		                    <option value="1">JYES</option>
 			        </field>
 
+			        <field
+					        name="push_widget_info"
+					        type="subform"
+					        multiple="true"
+					        label="PLG_JUPWA_PUSH_WIDGET_INFO"
+					        layout="joomla.form.field.subform.repeatable-table"
+					        showon="usepush:1"
+			        >
+		                <form>
+						    <field
+								    name="text"
+								    type="text"
+								    label="PLG_JUPWA_PUSH_WIDGET_INFO_TEXT"
+								    class="w-100"
+						    />
+						</form>
+	                </field>
+
 			        <field name="apiKey"
 			               size="50"
 			               type="text"
