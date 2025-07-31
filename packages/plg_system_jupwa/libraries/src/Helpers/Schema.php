@@ -44,49 +44,6 @@ class Schema
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function global(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
-
-		if($option[ 'params' ]->get('schema_social'))
-		{
-			$socials = (array) $option[ 'params' ]->get('schema_social_link');
-			if($socials)
-			{
-				$social_link = [];
-				foreach($socials as $social)
-				{
-					$social_link[] = $social->link;
-				}
-
-				if($social_link)
-				{
-					$json = Util::LD([
-						'@context' => 'https://schema.org',
-						'@type'    => $option[ 'params' ]->get('schema_social_type'),
-						'name'     => $option[ 'params' ]->get('schema_social_type') === 'Person' ? $option[ 'params' ]->get('schema_social_person') : $app->get('sitename'),
-						'url'      => Uri::base(),
-						'sameAs'   => [
-							$social_link
-						]
-					]);
-
-					$doc->addCustomTag($json);
-				}
-			}
-		}
-	}
-
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
 	public static function article_news(array $option = []): void
 	{
 		$app    = Factory::getApplication();
