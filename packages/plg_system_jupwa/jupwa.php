@@ -81,6 +81,23 @@ class plgSystemJUPWA extends CMSPlugin
 				{
 					$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
 				}
+
+				if($post_param[ 'usepush' ] == 1)
+				{
+					$data = [
+						$post_param[ 'firebaseServiceAccount' ],
+						$post_param[ 'apiKey' ],
+						$post_param[ 'projectId' ],
+						$post_param[ 'messagingSenderId' ],
+						$post_param[ 'appId' ],
+						$post_param[ 'vapidKey_wp' ]
+					];
+
+					if(!Util::checkFields($data))
+					{
+						$this->app->enqueueMessage(Text::_('PLG_JUPWA_REQUIRED_FILEDS_FOR_PUSH'), 'danger');
+					}
+				}
 			}
 
 			Manifest::create([

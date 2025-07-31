@@ -17,6 +17,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Helpers\Manifest;
+use JUPWA\Utils\Util;
 
 class Push
 {
@@ -134,6 +135,15 @@ class Push
 		}
 	}
 
+	/**
+	 *
+	 * @param array $option
+	 *
+	 * @return bool
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
 	public static function isPush(array $option = [])
 	{
 		if($option[ 'params' ][ 'usepush' ] == 1)
@@ -146,6 +156,20 @@ class Push
 				{
 					return false;
 				}
+			}
+
+			$data = [
+				$option[ 'params' ][ 'firebaseServiceAccount' ],
+				$option[ 'params' ][ 'apiKey' ],
+				$option[ 'params' ][ 'projectId' ],
+				$option[ 'params' ][ 'messagingSenderId' ],
+				$option[ 'params' ][ 'appId' ],
+				$option[ 'params' ][ 'vapidKey_wp' ]
+			];
+
+			if(!Util::checkFields($data))
+			{
+				return false;
 			}
 
 			return true;

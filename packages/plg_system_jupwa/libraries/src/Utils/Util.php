@@ -94,4 +94,20 @@ class Util
 
 		return substr($header, 9, 3);
 	}
+
+	/**
+	 *
+	 * @param array $fields
+	 * @param bool  $requireAll
+	 *
+	 * @return bool
+	 *
+	 * @since 1.0
+	 */
+	public static function checkFields(array $fields, bool $requireAll = true): bool
+	{
+		$filtered = array_filter($fields);
+
+		return $requireAll ? count($filtered) === count($fields) : !empty($filtered);
+	}
 }
