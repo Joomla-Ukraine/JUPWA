@@ -15,10 +15,10 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die();
 
-$svg = Uri::base() . 'media/jupwa/icons/icons.svg';
 /** @var array $displayData */
 $data  = (object) $displayData;
 $items = (array) $data->params->get('push_widget_info');
+$svg   = Uri::base() . 'media/jupwa/icons/icons.svg?v=' . $data->version;
 
 ?>
 <div id="jupwa-widget" class="jupwa-widget">
