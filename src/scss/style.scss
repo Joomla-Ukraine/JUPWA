@@ -1,8 +1,8 @@
 .jupwa-widget {
 	position: fixed;
 	z-index: 50;
+	left: 1.875rem;
 	bottom: 2.5rem;
-	left: 2.5rem;
 	width: fit-content;
 }
 
@@ -16,7 +16,7 @@
 	padding: 0.25rem;
 	background-color: #fff;
 	border-radius: 9999px;
-	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1),
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15),
 	0 4px 6px -2px rgba(0, 0, 0, 0.05);
 	display: inline-flex;
 	align-items: center;
@@ -37,22 +37,25 @@
 }
 
 .jupwa-button-subscrided {
-	background-color: #cbd5e1 !important;
 	color: #64748b !important;
-	opacity: 0.7 !important;
-	cursor: pointer;
+	opacity: 0.95 !important;
 }
 
 .jupwa-panel {
 	position: absolute;
 	bottom: 4.5rem;
-	width: 18rem;
+	width: 18.438rem;
 	overflow: hidden;
 	border-radius: 0.375rem;
 	background-color: white;
 	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15),
 	0 4px 6px -2px rgba(0, 0, 0, 0.05);
 	padding: 1rem;
+}
+
+.jupwa-head {
+	border-bottom: 1px solid rgba(220, 38, 38, 0.5);
+	padding-bottom: 13px;
 }
 
 .jupwa-hidden {
@@ -80,7 +83,7 @@
 	}
 	
 	svg {
-		color: #15803d;
+		color: #059669;
 	}
 }
 
@@ -174,7 +177,7 @@
 		cursor: pointer;
 		
 		&:focus {
-			box-shadow: 0 0 0 4px rgba(239, 246, 255, 0.5);
+			box-shadow: 0 0 0 4px rgba(239, 246, 255, 0.7);
 		}
 	}
 }
