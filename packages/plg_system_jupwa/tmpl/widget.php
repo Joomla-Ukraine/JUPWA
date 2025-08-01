@@ -29,7 +29,7 @@ $svg   = Uri::base() . 'media/jupwa/icons/icons.svg?v=' . $data->version;
 	</button>
 	<div class="jupwa-panel jupwa-hidden" role="menu">
 		<div class="jupwa-info">
-			<div>
+			<div class="jupwa-head">
 				<div class="jupwa-header"><?= Text::_('PLG_JUPWA_WIDGET_HEADER') ?></div>
 				<div class="jupwa-subheader"><?= Text::_('PLG_JUPWA_WIDGET_SUBHEADER') ?></div>
 			</div>
