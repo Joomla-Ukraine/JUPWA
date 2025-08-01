@@ -33,7 +33,8 @@ export function createWidgetController() {
     if (widgetButton && widgetRoot) {
         const panel = widgetRoot.querySelector(".jupwa-panel");
 
-        widgetButton.addEventListener("click", () => {
+
+        widgetButton.addEventListener("click", (event) => {
             if (!panel) {
                 return;
             }
@@ -43,6 +44,21 @@ export function createWidgetController() {
                 "aria-expanded",
                 panel.classList.contains("jupwa-hidden") ? "false" : "true"
             );
+
+            event.stopPropagation();
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!panel || panel.classList.contains("jupwa-hidden")) {
+                return;
+            }
+
+            if (panel.contains(event.target) || widgetButton.contains(event.target)) {
+                return;
+            }
+
+            panel.classList.add("jupwa-hidden");
+            widgetButton.setAttribute("aria-expanded", "false");
         });
     }
 
