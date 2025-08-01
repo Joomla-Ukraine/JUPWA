@@ -94,6 +94,8 @@ class plgSystemJUPWA extends CMSPlugin
 					{
 						$this->app->enqueueMessage(Text::_('PLG_JUPWA_REQUIRED_FILEDS_FOR_PUSH'), 'danger');
 					}
+
+					Push::checkAjaxPlugin();
 				}
 			}
 

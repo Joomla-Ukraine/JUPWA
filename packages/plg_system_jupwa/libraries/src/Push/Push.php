@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 use JUPWA\Helpers\Manifest;
 use JUPWA\Utils\Util;
 
@@ -175,5 +176,39 @@ class Push
 		}
 
 		return false;
+	}
+
+	/**
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0
+	 */
+	public static function checkAjaxPlugin(): void
+	{
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+
+		$query->select([ 'extension_id', 'enabled' ]);
+		$query->from($db->quoteName('#__extensions'));
+		$query->where($db->quoteName('name') . ' = ' . $db->Quote('plg_ajax_jupwapush'));
+		$query->where($db->quoteName('folder') . ' = ' . $db->Quote('ajax'));
+		$db->setQuery($query);
+		$db->execute();
+		$status = $db->loadObject();
+
+		if($status->enabled == 0)
+		{
+			$object               = new \stdClass();
+			$object->extension_id = $status->extension_id;
+			$object->enabled      = 1;
+			$result               = $db->updateObject('#__extensions', $object, 'extension_id', true);
+
+			if($result)
+			{
+				Factory::getApplication()->enqueueMessage('Enable Ajax Plugin "JUPWA. Push"');
+			}
+		}
 	}
 }
