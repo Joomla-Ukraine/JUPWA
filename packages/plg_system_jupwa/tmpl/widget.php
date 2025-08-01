@@ -68,6 +68,8 @@ $svg   = Uri::base() . 'media/jupwa/icons/icons.svg?v=' . $data->version;
 				</div>
 			<?php endif; ?>
 
+			<div class="jupwa-alert" id="jupwa-alert" hidden></div>
+
 			<div class="jupwa-action">
 				<button id="jupwa-subscribe-btn" class="jupwa-subscribe"><?= Text::_('PLG_JUPWA_WIDGET_SUBSCRIBE_BUTTON') ?></button>
 				<button id="jupwa-unsubscribe-btn" class="jupwa-unsubscribe"><?= Text::_('PLG_JUPWA_WIDGET_UNSUBSCRIBE_BUTTON') ?></button>

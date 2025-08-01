@@ -13,6 +13,7 @@ export function createWidgetController() {
             subscribeButton: widgetRoot.querySelector("#jupwa-subscribe-btn"),
             unsubscribeButton: widgetRoot.querySelector("#jupwa-unsubscribe-btn"),
             widgetButton: widgetRoot.querySelector("#jupwa-button"),
+            widgetAlert: widgetRoot.querySelector("#jupwa-alert"),
         };
     }
 
@@ -25,6 +26,7 @@ export function createWidgetController() {
     }
 
     const widgetButton = widgetRoot.querySelector("#jupwa-button");
+    const widgetAlert = widgetRoot.querySelector("#jupwa-alert");
     const subscribeButton = widgetRoot.querySelector("#jupwa-subscribe-btn");
     const unsubscribeButton = widgetRoot.querySelector("#jupwa-unsubscribe-btn");
 
@@ -44,5 +46,5 @@ export function createWidgetController() {
         });
     }
 
-    return {widgetButton, subscribeButton, unsubscribeButton};
+    return {widgetButton, widgetAlert, subscribeButton, unsubscribeButton};
 }

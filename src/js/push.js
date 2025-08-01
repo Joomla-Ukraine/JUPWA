@@ -34,6 +34,7 @@ import {onMessage} from "firebase/messaging";
         let subscribeButton = pageSubscribeBtn || null;
         let unsubscribeButton = pageUnsubscribeBtn || null;
         let widgetButton = document.getElementById("jupwa-button") || null;
+        let widgetAlert = document.getElementById("jupwa-alert") || null;
 
         if (!haveBothPageButtons) {
             const widget = createWidgetController();
@@ -42,6 +43,7 @@ import {onMessage} from "firebase/messaging";
                 subscribeButton = widget.subscribeButton;
                 unsubscribeButton = widget.unsubscribeButton;
                 widgetButton = widget.widgetButton;
+                widgetAlert = widget.widgetAlert;
             }
         }
 
@@ -53,11 +55,14 @@ import {onMessage} from "firebase/messaging";
             subscribeButton.hidden = true;
             unsubscribeButton.hidden = true;
 
+            if (widgetAlert) {
+                widgetAlert.hidden = false;
+                widgetAlert.innerHTML = lang.addToMainDisplay;
+            }
+
             if (widgetButton) {
                 widgetButton.classList.add("jupwa-button-subscrided");
             }
-
-            jupwaNotification(lang.addToMainDisplay);
 
             return;
         }
@@ -70,7 +75,10 @@ import {onMessage} from "firebase/messaging";
                 widgetButton.classList.add("jupwa-button-subscrided");
             }
 
-            jupwaNotification(lang.swNotSupport);
+            if (widgetAlert) {
+                widgetAlert.hidden = false;
+                widgetAlert.innerHTML = lang.swNotSupport;
+            }
 
             return;
         }
@@ -86,7 +94,10 @@ import {onMessage} from "firebase/messaging";
                 widgetButton.classList.add("jupwa-button-subscrided");
             }
 
-            jupwaNotification(e?.message || lang.swNotSupport, "error");
+            if (widgetAlert) {
+                widgetAlert.hidden = false;
+                widgetAlert.innerHTML = e?.message || lang.swNotSupport;
+            }
 
             return;
         }
@@ -98,7 +109,10 @@ import {onMessage} from "firebase/messaging";
                 widgetButton.classList.add("jupwa-button-subscrided");
             }
 
-            jupwaNotification(lang.notSupport);
+            if (widgetAlert) {
+                widgetAlert.hidden = false;
+                widgetAlert.innerHTML = lang.notSupport;
+            }
         }
 
         const messaging = initFirebase(firebaseConfig);
@@ -119,7 +133,10 @@ import {onMessage} from "firebase/messaging";
                 widgetButton.classList.add("jupwa-button-subscrided");
             }
 
-            jupwaNotification(lang.notGranted);
+            if (widgetAlert) {
+                widgetAlert.hidden = false;
+                widgetAlert.innerHTML = lang.notGranted;
+            }
         } else {
             unsubscribeButton.hidden = !tokenStorage;
             subscribeButton.hidden = !!tokenStorage;
