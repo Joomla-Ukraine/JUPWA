@@ -29,6 +29,13 @@
 	}
 }
 
+@media (max-width: 960px) {
+	.jupwa-button {
+		width: 3.75rem;
+		height: 3.75rem;
+	}
+}
+
 .jupwa-button-subscrided {
 	background-color: #cbd5e1 !important;
 	color: #64748b !important;
