@@ -26,7 +26,6 @@ use JUPWA\Helpers\Manifest;
 use JUPWA\Helpers\META;
 use JUPWA\Helpers\OG;
 use JUPWA\Helpers\PWAInstall;
-use JUPWA\Helpers\Schema;
 use JUPWA\Helpers\ServiceWorker;
 use JUPWA\Push\Push;
 use JUPWA\Thumbs\Render;
