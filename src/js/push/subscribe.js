@@ -54,8 +54,6 @@ export async function subscribe(params = {}) {
             widgetButton.classList.add("jupwa-button-subscrided");
         }
 
-        jupwaNotification(lang.subscribe);
-
         await sendToken({
             token,
             csrfToken,
