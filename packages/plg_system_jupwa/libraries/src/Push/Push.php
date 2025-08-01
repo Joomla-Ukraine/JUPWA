@@ -144,7 +144,7 @@ class Push
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function isPush(array $option = [])
+	public static function isPush(array $option = []): bool
 	{
 		if($option[ 'params' ][ 'usepush' ] == 1)
 		{
