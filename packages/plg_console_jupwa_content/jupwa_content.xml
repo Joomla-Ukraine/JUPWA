@@ -21,4 +21,16 @@
         <folder plugin="jupwa_content">services</folder>
         <folder>src</folder>
     </files>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+                <field
+		                name="live_site"
+		                type="text"
+		                label="Domain"
+                />
+			</fieldset>
+		</fields>
+	</config>
 </extension>
