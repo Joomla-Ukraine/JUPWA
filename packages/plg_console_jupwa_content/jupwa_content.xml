@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin"
+           group="console"
+           method="upgrade">
+    <name>plg_console_jupwa_content</name>
+    <author>Denys Nosov</author>
+    <creationDate>@date@</creationDate>
+    <copyright>(C) Denys Nosov</copyright>
+    <license>GNU General Public License version 3 or later</license>
+    <authorEmail>denys@joomla-ua.org</authorEmail>
+    <version>@version@</version>
+    <description>PLG_CONSOLE_JUPWACONTENT_DESCRIPTION</description>
+    <namespace path="src">JU\Plugin\Console\JUPWAContent</namespace>
+
+    <languages folder="language">
+		<language tag="en-GB">en-GB/plg_console_jupwa_content.ini</language>
+		<language tag="en-GB">en-GB/plg_console_jupwa_content.sys.ini</language>
+	</languages>
+
+    <files>
+        <folder plugin="jupwa_content">services</folder>
+        <folder>src</folder>
+    </files>
+</extension>

@@ -71,6 +71,26 @@
 
 	    <!---->
 
+	    <copy file="packages/plg_console_jupwa_content/jupwa_content.xml"
+	          todir="${temp}/temp/plg_console_jupwa_content">
+            <filterchain>
+                <replacetokens>
+                    <token key="version"
+                           value="${VERSION}" />
+                    <token key="date"
+                           value="${DATE}" />
+	                <token key="year"
+	                       value="${YEAR}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <delete file="${temp}/plg_console_jupwa_content/jupwa_content.xml" />
+        <copy file="${temp}/temp/plg_console_jupwa_content/jupwa_content.xml"
+              todir="${temp}/plg_console_jupwa_content" />
+
+	    <!---->
+
 	    <copy file="packages/plg_system_jupwa/jupwa.xml"
 	          todir="${temp}/temp/plg_system_jupwa">
             <filterchain>
@@ -177,6 +197,11 @@
         <zip destfile="${build}/packages/plg_system_jupwa.zip"
              description="plg_jupwa">
             <fileset dir="${temp}/plg_system_jupwa" />
+        </zip>
+
+	    <zip destfile="${build}/packages/plg_console_jupwa_content.zip"
+	         description="plg_console_jupwa_content">
+            <fileset dir="${temp}/plg_console_jupwa_content" />
         </zip>
 
         <zip destfile="${build}/packages/plg_jupwa_content.zip"
