@@ -61,17 +61,18 @@ class plgAjaxJUPWAPushInstallerScript
 
 		$query = "CREATE TABLE IF NOT EXISTS `#__jupwa_push_orders` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
-            `user_id` INT(11) NOT NULL,
+            `user_id` INT(11) NOT NULL DEFAULT 0,
     		`status` INT(11) NOT NULL DEFAULT 0,
-      		`object_group` VARCHAR(155) NOT NULL,
-    		`order_id` INT(11) NOT NULL,
-    		`order_desc` VARCHAR(155) NOT NULL,
-    		`order_url` VARCHAR(500) NOT NULL,
+      		`object_group` VARCHAR(155) DEFAULT NULL,
+    		`object_id` INT(11) NOT NULL DEFAULT 0,
+    		`order_id` INT(11) NOT NULL DEFAULT 0,
+    		`order_url` VARCHAR(500) DEFAULT NULL,
             `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`),
     		KEY `user_id` (`user_id`),
     		KEY `status` (`status`),
     		KEY `object_group` (`object_group`),
+    		KEY `object_id` (`object_id`),
     		KEY `order_id` (`order_id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
