@@ -400,6 +400,7 @@ class ComposerStaticInit0173821745418a06b3361518b030e650
         'Intervention\\Image\\Size' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Size.php',
         'JUPWA\\Classes\\Minify' => __DIR__ . '/../..' . '/src/Classes/Minify.php',
         'JUPWA\\Classes\\PHP_ICO' => __DIR__ . '/../..' . '/src/Classes/PHP_ICO.php',
+        'JUPWA\\Console\\Console' => __DIR__ . '/../..' . '/src/Console/Console.php',
         'JUPWA\\Data\\Data' => __DIR__ . '/../..' . '/src/Data/Data.php',
         'JUPWA\\Helpers\\Assetinks' => __DIR__ . '/../..' . '/src/Helpers/Assetinks.php',
         'JUPWA\\Helpers\\Facebook' => __DIR__ . '/../..' . '/src/Helpers/Facebook.php',

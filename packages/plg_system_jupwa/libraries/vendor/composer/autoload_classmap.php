@@ -303,6 +303,7 @@ return array(
     'Intervention\\Image\\Size' => $vendorDir . '/intervention/image/src/Intervention/Image/Size.php',
     'JUPWA\\Classes\\Minify' => $baseDir . '/src/Classes/Minify.php',
     'JUPWA\\Classes\\PHP_ICO' => $baseDir . '/src/Classes/PHP_ICO.php',
+    'JUPWA\\Console\\Console' => $baseDir . '/src/Console/Console.php',
     'JUPWA\\Data\\Data' => $baseDir . '/src/Data/Data.php',
     'JUPWA\\Helpers\\Assetinks' => $baseDir . '/src/Helpers/Assetinks.php',
     'JUPWA\\Helpers\\Facebook' => $baseDir . '/src/Helpers/Facebook.php',
