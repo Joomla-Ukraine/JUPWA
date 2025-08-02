@@ -29,6 +29,7 @@
     <files folder="packages">
         <file type="plugin"
               id="plg_system_jupwa"
+              group="system">plg_system_jupwa.zip</file>
         <file type="plugin"
               id="plg_jupwa_content"
               group="jupwa">plg_jupwa_content.zip</file>
