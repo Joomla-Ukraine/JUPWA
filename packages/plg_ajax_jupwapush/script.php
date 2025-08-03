@@ -38,7 +38,7 @@ class plgAjaxJUPWAPushInstallerScript
 
 		$query = "CREATE TABLE IF NOT EXISTS `#__jupwa_push_users` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
-            `user_id` INT(11) NOT NULL,
+            `user_id` INT(11) NOT NULL DEFAULT '0',
     		`fcm_token` varchar(500) NOT NULL,
             `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`),
