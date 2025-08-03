@@ -1,7 +1,7 @@
 {
   "name": "jupwa",
   "sideEffects": true,
-  "version": "2.0.115",
+  "version": "2.0.140",
   "description": "JUPWA",
   "private": true,
   "scripts": {
