@@ -70,7 +70,7 @@ class Push extends CMSPlugin implements SubscriberInterface
 
 			if($chek == 0)
 			{
-				$response = \JUPWA\Push\Push::send($fcm_token, Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'), 'Тепер ви отримуватимете сповіщення!', [ 'time' => (string) time() ]);
+				$response = \JUPWA\Push\Push::send($fcm_token, Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'), 'Тепер ви отримуватимете сповіщення!');
 
 				if(isset($response[ 'name' ]) && $response[ 'name' ])
 				{

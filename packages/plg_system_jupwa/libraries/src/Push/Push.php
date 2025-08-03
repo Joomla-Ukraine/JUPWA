@@ -33,7 +33,7 @@ class Push
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function send(string $token, string $title, string $body): array
+	public static function send(string $token, string $title, string $body = '', string $link = ''): array
 	{
 		$serviceAccountFile = JPATH_ROOT . '/.well-known/jupwa/firebase-service-account.json';
 		$scopes             = [ 'https://www.googleapis.com/auth/firebase.messaging' ];
@@ -57,32 +57,21 @@ class Push
 			],
 		]);
 
-		$response = $client->post('v1/projects/' . $projectId . '/messages:send', [
+		$data = [
 			'json' => [
 				'message' => [
-					'token'        => $token,
-					'notification' => [
-						'title' => $title,
-						'body'  => $body,
+					'token' => $token,
+					'data'  => [
+						'title'        => $title,
+						'body'         => $body,
+						'image'        => Uri::base() . 'favicons/icon_192.png',
+						'click_action' => $link ? : Uri::base(),
 					],
-					'android'      => [
-						'notification' => [
-							'image' => Uri::base() . 'favicons/icon_180.png'
-						]
-					],
-					'webpush'      => [
-						'notification' => [
-							'image' => Uri::base() . 'favicons/icon_180.png'
-						]
-					],
-					'apns'         => [
-						'fcm_options' => [
-							'image' => Uri::base() . 'favicons/icon_180.png'
-						]
-					]
 				]
 			]
-		]);
+		];
+
+		$response = $client->post('v1/projects/' . $projectId . '/messages:send', $data);
 
 		return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
 	}

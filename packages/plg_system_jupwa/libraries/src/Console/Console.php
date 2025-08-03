@@ -9,8 +9,10 @@
 
 namespace JUPWA\Console;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
+use JUPWA\Push\Push;
 use stdClass;
 
 class Console
@@ -20,11 +22,30 @@ class Console
 	 * @param array $result
 	 *
 	 * @return mixed
+	 * @throws \GuzzleHttp\Exception\GuzzleException
 	 * @since 1.0.0
 	 */
-	public static function send(array $result = [])
+	public static function send(array $result = []): mixed
 	{
 		$db = Factory::getContainer()->get(DatabaseInterface::class);
+
+		$items = self::tokens($result[ 'user' ]);
+
+		foreach($items as $item)
+		{
+			try
+			{
+				$title = $result[ 'title' ] ? : '';
+				$desc  = $result[ 'desc' ] ? : '';
+				$link  = $result[ 'link' ] ? : '';
+
+				Push::send($item->fcm_token, $title, $desc, $link);
+			}
+			catch (Exception $e)
+			{
+				self::remove_tokens($item->fcm_token);
+			}
+		}
 
 		$order               = new stdClass();
 		$order->status       = 1;
@@ -32,9 +53,44 @@ class Console
 		$order->object_id    = $result[ 'id' ];
 		$order->order_url    = $result[ 'link' ];
 
-		$resultID = $db->insertObject('#__jupwa_push_orders', $order);
+		return $db->insertObject('#__jupwa_push_orders', $order);
+	}
 
-		return $resultID;
+	/**
+	 *
+	 * @param string $token
+	 *
+	 * @since 1.0.0
+	 */
+	private static function remove_tokens(string $token): void
+	{
+		$db    = Factory::getContainer()->get('DatabaseDriver');
+		$query = $db->getQuery(true);
+		$query->delete($db->quoteName('#__jupwa_push_users'));
+		$query->where($db->quoteName('fcm_token') . ' = ' . $db->Quote($token));
+		$db->setQuery($query);
+		$db->execute();
+	}
+
+	/**
+	 *
+	 * @param int $user
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public static function tokens(int $user = 0): array
+	{
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+
+		$query->select([ 'fcm_token' ]);
+		$query->from($db->quoteName('#__jupwa_push_users'));
+		$query->where($db->quoteName('user_id') . ' = ' . $db->Quote($user));
+		$db->setQuery($query);
+		$db->execute();
+
+		return $db->loadObjectList();
 	}
 
 	/**

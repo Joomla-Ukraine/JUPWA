@@ -24,7 +24,6 @@ use Joomla\Console\Command\AbstractCommand;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseInterface;
 use JUPWA\Console\Console;
-use JUPWA\Thumbs\Render;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -118,8 +117,6 @@ class JUPWAContentCommand extends AbstractCommand
 		$this->addOption('live_site', "s", InputOption::VALUE_OPTIONAL, "live_site");
 		$this->addOption('catid', "c", InputOption::VALUE_OPTIONAL, "catid");
 		$this->addOption('featured', "f", InputOption::VALUE_OPTIONAL, "featured");
-		$this->addOption('show_image', "si", InputOption::VALUE_OPTIONAL, "show_image");
-		$this->addOption('image_source', "is", InputOption::VALUE_OPTIONAL, "image_source");
 
 		$this->setDescription(Text::_('PLG_CONSOLE_JUPWACONTENT_DESCRIPTION'));
 	}
@@ -145,12 +142,10 @@ class JUPWAContentCommand extends AbstractCommand
 
 		$params  = $this->getParams();
 		$options = [
-			'action'       => $action,
-			'live_site'    => Console::command($params, $input, 'live_site'),
-			'catid'        => Console::command($params, $input, 'catid'),
-			'featured'     => Console::command($params, $input, 'featured'),
-			'image_source' => Console::command($params, $input, 'image_source'),
-			'show_image'   => Console::command($params, $input, 'show_image'),
+			'action'    => $action,
+			'live_site' => Console::command($params, $input, 'live_site'),
+			'catid'     => Console::command($params, $input, 'catid'),
+			'featured'  => Console::command($params, $input, 'featured')
 		];
 
 		switch($action)
@@ -179,11 +174,9 @@ class JUPWAContentCommand extends AbstractCommand
 	 */
 	private function content(array $options = []): void
 	{
-		$live_site    = $options[ "live_site" ];
-		$image_source = $options[ "image_source" ];
+		$live_site = $options[ "live_site" ];
 
 		$items = $this->sql_query($options);
-
 		foreach($items as $item)
 		{
 			$slug     = $item->id . ($item->alias ? ':' . $item->alias : '');
@@ -202,10 +195,11 @@ class JUPWAContentCommand extends AbstractCommand
 			if($check == 0)
 			{
 				$result = [
+					'user'  => 0,
 					'id'    => $item->id,
-					'title' => $item->title,
-					'link'  => $link,
-					'img'   => $this->img($item, $live_site, $image_source),
+					'title' => $item->category,
+					'desc'  => $item->title,
+					'link'  => $link
 				];
 
 				Console::send($result);
@@ -222,22 +216,16 @@ class JUPWAContentCommand extends AbstractCommand
 	 */
 	private function sql_query($options): array
 	{
-		$action       = $options[ "action" ];
-		$catid        = $options[ "catid" ];
-		$featured     = $options[ "featured" ];
-		$image_source = $options[ "image_source" ];
-		$show_image   = $options[ "show_image" ];
+		$action   = $options[ "action" ];
+		$catid    = $options[ "catid" ];
+		$featured = $options[ "featured" ];
 
 		$this->query->select([
 			'a.id',
 			'a.state',
 			'a.alias',
 			'a.title',
-			'a.images',
-			'a.introtext',
-			'a.fulltext',
-			'a.publish_up',
-			'a.publish_down'
+			'cc.title AS category'
 		]);
 		$this->query->where($this->db->quoteName('a.state') . ' = ' . $this->db->Quote('1'));
 
@@ -270,11 +258,6 @@ class JUPWAContentCommand extends AbstractCommand
 			$this->query->where($this->db->quoteName('a.language') . ' IN (' . $this->db->Quote($this->lang->getTag()) . ',' . $this->db->quote('*') . ')');
 		}
 
-		if(($image_source == 0 || $image_source == 1) && $show_image == 1)
-		{
-			$this->query->select([ 'a.images' ]);
-		}
-
 		if($featured == 1)
 		{
 			$this->query->select([ 'a.featured' ]);
@@ -286,6 +269,8 @@ class JUPWAContentCommand extends AbstractCommand
 		{
 			$this->query->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ')');
 		}
+
+		$this->query->join('LEFT', '#__categories AS cc ON cc.id = a.catid');
 
 		$this->query->where($this->db->quoteName('a.featured') . ' = ' . $this->db->Quote($featured));
 
@@ -299,62 +284,6 @@ class JUPWAContentCommand extends AbstractCommand
 		$this->db->setQuery($this->query, 0, 1);
 
 		return $this->db->loadObjectList();
-	}
-
-	/**
-	 *
-	 * @param $item
-	 * @param $live_site
-	 * @param $image_source
-	 *
-	 * @return mixed
-	 * @throws \Exception
-	 * @since 1.0.0
-	 */
-	private function img($item, $live_site, $image_source): mixed
-	{
-		$img = '';
-		if(($image_source == 0) && preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $item->introtext . $item->fulltext, $img))
-		{
-			$img = $img[ 2 ];
-		}
-
-		if($image_source == 0 || $image_source == 1 || $image_source == 2 || $image_source == 3)
-		{
-			$images = json_decode($item->images);
-			if(is_object($images))
-			{
-				$intro_image    = Render::image($images->image_intro ?? '');
-				$fulltext_image = Render::image($images->image_fulltext ?? '');
-
-				if($image_source === '1')
-				{
-					if($intro_image)
-					{
-						$img = htmlspecialchars($intro_image);
-					}
-					elseif($fulltext_image)
-					{
-						$img = htmlspecialchars($fulltext_image);
-					}
-				}
-				elseif($image_source === '2' && $intro_image)
-				{
-					$img = htmlspecialchars($intro_image);
-				}
-				elseif($image_source === '3' && $fulltext_image)
-				{
-					$img = htmlspecialchars($fulltext_image);
-				}
-			}
-		}
-
-		if($img)
-		{
-			$img = $live_site . '/' . $img;
-		}
-
-		return $img;
 	}
 
 	/**

@@ -33,15 +33,28 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(payload => {
-	console.log('[sw.js] Received background message:', payload);
+self.addEventListener('notificationclick', function(event) {
+	event.notification.close();
 
-	const notificationTitle = payload.notification?.title || 'Background Message';
-	const notificationOptions = {
-		body: payload.notification?.body || 'Background message body.',
-		icon: '<?= $site; ?>favicons/icon_180.png'
-	};
-	self.registration.showNotification(notificationTitle, notificationOptions);
+	const clickAction = event.notification.data?.click_action;
+
+	if (clickAction) {
+		event.waitUntil(clients.openWindow(clickAction));
+	} else {
+		event.waitUntil(clients.openWindow('https://sci314.com/news'));
+	}
 });
 
-console.log('Service Worker loaded with Workbox and Firebase');
+messaging.onBackgroundMessage(payload => {
+	const { title, body, click_action } = payload.data || {};
+
+	const notificationOptions = {
+		body: body || '',
+		icon: '<?= $site; ?>favicons/icon_192.png' || '/favicon.ico',
+		data: {
+			click_action: click_action || 'https://sci314.com'
+		}
+	};
+
+	self.registration.showNotification(title || 'Повідомлення', notificationOptions);
+});
