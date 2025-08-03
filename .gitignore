@@ -1,3 +1,6 @@
 /.idea/
 /dist/
 /node_modules/
+/dev_sandbox/
+/packages/src/scss/_style.scss
+
