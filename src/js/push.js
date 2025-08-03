@@ -161,7 +161,41 @@ import {onMessage} from "firebase/messaging";
         });
 
         onMessage(messaging, (payload) => {
-            const notif = payload?.notification;
+            const notif = payload?.data;
+
+            if (!notif) {
+                return;
+            }
+
+            const {title, body, image, url} = notif;
+
+            if (document.visibilityState === "hidden") {
+                if (Notification.permission === "granted") {
+                    const notification = new Notification(title || '', {
+                        body: body || '',
+                        icon: image || "/favicon.ico",
+                        data: {url}
+                    });
+
+                    notification.onclick = (event) => {
+                        event.preventDefault();
+                        
+                        if (url) {
+                            window.open(url, "_blank");
+                        }
+                    };
+                }
+            }
+
+            if (title || body) {
+                jupwaNotification(title || '', body || '');
+            }
+        });
+
+
+        /*
+        onMessage(messaging, (payload) => {
+            const notif = payload?.data;
 
             if (!notif) {
                 return;
@@ -169,10 +203,12 @@ import {onMessage} from "firebase/messaging";
 
             const {title, body, image} = notif;
 
-            if (Notification.permission === "granted") {
-                try {
-                    new Notification(title || "", {body, icon: image || "/favicon.ico"});
-                } catch (_) {
+            if (document.visibilityState === "hidden") {
+                if (Notification.permission === "granted") {
+                    try {
+                        new Notification(title || "", {body, icon: image || "/favicon.ico"});
+                    } catch (_) {
+                    }
                 }
             }
 
@@ -180,5 +216,6 @@ import {onMessage} from "firebase/messaging";
                 jupwaNotification(title || "", body || "");
             }
         });
+        */
     });
 })();

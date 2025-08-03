@@ -33,28 +33,41 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-self.addEventListener('notificationclick', function(event) {
-	event.notification.close();
-
-	const clickAction = event.notification.data?.click_action;
-
-	if (clickAction) {
-		event.waitUntil(clients.openWindow(clickAction));
-	} else {
-		event.waitUntil(clients.openWindow('https://sci314.com/news'));
-	}
-});
-
 messaging.onBackgroundMessage(payload => {
-	const { title, body, click_action } = payload.data || {};
+	const data = payload.data || {};
+
+	const title = data.title || 'Новина';
+	const body = data.body || 'Тіло';
+	const icon = data.image || '<?= $site; ?>favicons/icon_192.png';
+	const click_action = data.click_action || '';
 
 	const notificationOptions = {
-		body: body || '',
-		icon: '<?= $site; ?>favicons/icon_192.png' || '/favicon.ico',
+		body: body,
+		icon: icon,
 		data: {
-			click_action: click_action || 'https://sci314.com'
+			click_action
 		}
 	};
 
-	self.registration.showNotification(title || 'Повідомлення', notificationOptions);
+	self.registration.showNotification(title, notificationOptions);
+});
+
+self.addEventListener('notificationclick', function(event) {
+	event.notification.close();
+
+	const url = event.notification?.data?.click_action || '/';
+
+	event.waitUntil(
+		clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientList => {
+			for (const client of clientList) {
+				if (client.url === url && 'focus' in client) {
+					return client.focus();
+				}
+			}
+
+			if (clients.openWindow) {
+				return clients.openWindow(url);
+			}
+		})
+	);
 });
