@@ -36,10 +36,10 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage(payload => {
 	const data = payload.data || {};
 
-	const title = data.title || 'Новина';
-	const body = data.body || 'Тіло';
+	const title = data.title || '-';
+	const body = data.body || '-';
 	const icon = data.image || '<?= $site; ?>favicons/icon_192.png';
-	const click_action = data.click_action || '';
+	const click_action = data.click_action || '<?= $site; ?>';
 
 	const notificationOptions = {
 		body: body,

@@ -65,7 +65,7 @@ class Push
 						'title'        => $title,
 						'body'         => $body,
 						'image'        => Uri::base() . 'favicons/icon_192.png',
-						'click_action' => $link ? : Uri::base(),
+						'click_action' => $link ? : Uri::base()
 					],
 				]
 			]

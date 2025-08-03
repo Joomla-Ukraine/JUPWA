@@ -167,21 +167,23 @@ import {onMessage} from "firebase/messaging";
                 return;
             }
 
-            const {title, body, image, url} = notif;
+            const {title, body, image, click_action} = notif;
 
             if (document.visibilityState === "hidden") {
                 if (Notification.permission === "granted") {
                     const notification = new Notification(title || '', {
                         body: body || '',
                         icon: image || "/favicon.ico",
-                        data: {url}
+                        data: {
+                            url: click_action || ''
+                        }
                     });
 
                     notification.onclick = (event) => {
                         event.preventDefault();
-                        
-                        if (url) {
-                            window.open(url, "_blank");
+
+                        if (click_action) {
+                            window.open(click_action, "_blank");
                         }
                     };
                 }
@@ -191,31 +193,5 @@ import {onMessage} from "firebase/messaging";
                 jupwaNotification(title || '', body || '');
             }
         });
-
-
-        /*
-        onMessage(messaging, (payload) => {
-            const notif = payload?.data;
-
-            if (!notif) {
-                return;
-            }
-
-            const {title, body, image} = notif;
-
-            if (document.visibilityState === "hidden") {
-                if (Notification.permission === "granted") {
-                    try {
-                        new Notification(title || "", {body, icon: image || "/favicon.ico"});
-                    } catch (_) {
-                    }
-                }
-            }
-
-            if (title || body) {
-                jupwaNotification(title || "", body || "");
-            }
-        });
-        */
     });
 })();
