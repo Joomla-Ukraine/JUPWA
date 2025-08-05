@@ -125,10 +125,10 @@ class Console
 	 * @param $input
 	 * @param $command
 	 *
-	 * @return string|null
+	 * @return string|array|null
 	 * @since 1.0.0
 	 */
-	public static function command($params, $input, $command): ?string
+	public static function command($params, $input, $command): array|string|null
 	{
 		$option = $params->get($command, null);
 		if($input->getOption($command))
