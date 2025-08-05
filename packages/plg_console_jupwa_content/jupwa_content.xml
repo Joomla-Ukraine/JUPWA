@@ -9,7 +9,7 @@
     <license>GNU General Public License version 3 or later</license>
     <authorEmail>denys@joomla-ua.org</authorEmail>
     <version>@version@</version>
-    <description>PLG_CONSOLE_JUPWACONTENT_DESCRIPTION</description>
+    <description>PLG_CONSOLE_JUPWA_CONTENT_DESCRIPTION</description>
     <namespace path="src">JU\Plugin\Console\JUPWAContent</namespace>
 
     <languages folder="language">
@@ -28,8 +28,33 @@
                 <field
 		                name="live_site"
 		                type="text"
-		                label="Domain"
+		                label="PLG_CONSOLE_JUPWA_CONTENT_DOMAIN"
                 />
+
+				<field
+						name="catid"
+						type="category"
+						extension="com_content"
+						multiple="true"
+						size="10"
+						label="JCATEGORY"
+						layout="joomla.form.field.list-fancy-select"
+						filter="intarray"
+				>
+                    <option value="">JOPTION_ALL_CATEGORIES</option>
+                </field>
+
+				<field
+						name="featured"
+						type="radio"
+						layout="joomla.form.field.radio.switcher"
+						label="PLG_CONSOLE_JUPWA_CONTENT_FEATURED"
+						default="0"
+						filter="integer"
+				>
+                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
 			</fieldset>
 		</fields>
 	</config>
