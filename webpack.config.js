@@ -44,15 +44,7 @@ const cleanDirs = [
         ]
     };
 
-const rulesJS = {
-        test: /\.js$/,
-        exclude: /(node_modules)/,
-        include: path.resolve(__dirname, 'src/js'),
-        use: [
-            'babel-loader'
-        ]
-    },
-    rulesStyle = {
+const rulesStyle = {
         test: /\.(sa|sc|c)ss$/,
         use: [
             MiniCssExtractPlugin.loader,
@@ -200,7 +192,7 @@ const watchOptions = {
 const configProd = {
     mode: 'production',
     entry: entry,
-    target: ['web', 'es2017'],
+    target: ['web', 'es2020'],
     output: output,
     cache: {
         type: "filesystem"
@@ -213,7 +205,6 @@ const configProd = {
     },
     module: {
         rules: [
-            rulesJS,
             rulesStyle,
             rulesImg
         ]
@@ -248,6 +239,7 @@ const configProd = {
 const configDev = {
     mode: 'development',
     entry: entry,
+    target: ['web', 'es2020'],
     output: output,
     cache: {
         type: "filesystem"
@@ -256,7 +248,6 @@ const configDev = {
     watchOptions: watchOptions,
     module: {
         rules: [
-            rulesJS,
             rulesStyleDev
         ]
     },

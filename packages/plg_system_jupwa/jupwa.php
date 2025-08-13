@@ -150,7 +150,7 @@ class plgSystemJUPWA extends CMSPlugin
 		 */
 		if(Push::isPush([ 'params' => $this->params ]))
 		{
-			$jupwa_js_version = '2.0.142';
+			$jupwa_js_version = '2.0.143';
 			$widget           = Util::tmpl('widget', [
 				'params'  => $this->params,
 				'version' => $jupwa_js_version
@@ -349,7 +349,7 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		$wa               = $doc->getWebAssetManager();
-		$jupwa_js_version = '2.0.142';
+		$jupwa_js_version = '2.0.143';
 
 		if(Push::isPush([ 'params' => $this->params ]))
 		{
