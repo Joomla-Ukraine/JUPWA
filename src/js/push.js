@@ -169,6 +169,10 @@ import {onMessage} from "firebase/messaging";
 
             const {title, body, image, click_action} = notif;
 
+            if (title || body) {
+                jupwaNotification(title || '', body || '');
+            }
+
             if (document.visibilityState === "hidden") {
                 if (Notification.permission === "granted") {
                     const notification = new Notification(title || '', {
@@ -187,10 +191,6 @@ import {onMessage} from "firebase/messaging";
                         }
                     };
                 }
-            }
-
-            if (title || body) {
-                jupwaNotification(title || '', body || '');
             }
         });
     });

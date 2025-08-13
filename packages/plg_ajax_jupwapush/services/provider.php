@@ -26,7 +26,7 @@ use JU\Plugin\Ajax\JUPWAPush\Extension\Push;
 return new class() implements ServiceProviderInterface {
 
 	/**
-	 * @param   \Joomla\DI\Container  $container
+	 * @param \Joomla\DI\Container $container
 	 *
 	 * @return void
 	 *

@@ -118,7 +118,7 @@ class JUPWAContentCommand extends AbstractCommand
 		$this->addOption('catid', "c", InputOption::VALUE_OPTIONAL, "catid");
 		$this->addOption('featured', "f", InputOption::VALUE_OPTIONAL, "featured");
 
-		$this->setDescription(Text::_('PLG_CONSOLE_JUPWACONTENT_DESCRIPTION'));
+		$this->setDescription(Text::_('PLG_CONSOLE_JUPWA_CONTENT_DESCRIPTION'));
 	}
 
 	/**
