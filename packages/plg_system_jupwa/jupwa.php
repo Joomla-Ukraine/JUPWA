@@ -56,7 +56,7 @@ class plgSystemJUPWA extends CMSPlugin
 		$this->loadLanguage();
 
 		$this->app = Factory::getApplication();
-		if($this->app->isClient('site'))
+		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
@@ -120,7 +120,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterRender(): void
 	{
-		if(!$this->app->isClient('site'))
+		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
@@ -152,7 +152,7 @@ class plgSystemJUPWA extends CMSPlugin
 		 */
 		if(Push::isPush([ 'params' => $this->params ]))
 		{
-			$jupwa_js_version = '2.0.143';
+			$jupwa_js_version = '2.0.144';
 			$widget           = Util::tmpl('widget', [
 				'params'  => $this->params,
 				'version' => $jupwa_js_version
@@ -304,7 +304,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterRoute(): void
 	{
-		if(!$this->app->isClient('site'))
+		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
@@ -339,7 +339,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterDispatch(): void
 	{
-		if(!$this->app->isClient('site'))
+		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
@@ -351,7 +351,7 @@ class plgSystemJUPWA extends CMSPlugin
 		}
 
 		$wa               = $doc->getWebAssetManager();
-		$jupwa_js_version = '2.0.143';
+		$jupwa_js_version = '2.0.144';
 
 		if(Push::isPush([ 'params' => $this->params ]))
 		{
@@ -390,7 +390,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onBeforeCompileHead()
 	{
-		if(!$this->app->isClient('site'))
+		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
@@ -478,7 +478,7 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onContentPrepare($context, &$article)
 	{
-		if(!$this->app->isClient('site'))
+		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
