@@ -9,15 +9,15 @@
 
 namespace JU\Plugin\Console\JUPWAContent\Extension;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\Application\ApplicationEvents;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
 use JU\Plugin\Console\JUPWAContent\Console\JUPWAContentCommand;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+
+// phpcs:enable PSR1.Files.SideEffects
 
 final class JUPWAContent extends CMSPlugin implements SubscriberInterface
 {

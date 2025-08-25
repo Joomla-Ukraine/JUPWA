@@ -13,7 +13,9 @@
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * JUPWAPush script file.

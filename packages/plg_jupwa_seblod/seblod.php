@@ -18,7 +18,9 @@ use JUPWA\Helpers\Images;
 use JUPWA\Helpers\OG;
 use JUPWA\Helpers\Schema;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 require_once __DIR__ . '/SeblodAPI.php';
 

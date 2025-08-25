@@ -19,7 +19,10 @@ use JUPWA\Helpers\Images;
 use JUPWA\Helpers\OG;
 use JUPWA\Utils\Util;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+
+// phpcs:enable PSR1.Files.SideEffects
 
 #[AllowDynamicProperties]
 class PlgJUPWAJShopping extends CMSPlugin

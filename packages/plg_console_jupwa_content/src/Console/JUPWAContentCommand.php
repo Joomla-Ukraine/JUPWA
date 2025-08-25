@@ -9,11 +9,6 @@
 
 namespace JU\Plugin\Console\JUPWAContent\Console;
 
-// phpcs:disable PSR1.Files.SideEffects
-defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.
-
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Multilanguage;
@@ -29,6 +24,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * @since  1.0.0

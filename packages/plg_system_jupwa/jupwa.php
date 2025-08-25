@@ -10,8 +10,6 @@
  *
  **/
 
-defined('_JEXEC') or die();
-
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -30,6 +28,10 @@ use JUPWA\Helpers\ServiceWorker;
 use JUPWA\Push\Push;
 use JUPWA\Thumbs\Render;
 use JUPWA\Utils\Util;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 require_once __DIR__ . '/libraries/vendor/autoload.php';
 
