@@ -426,28 +426,22 @@ class plgSystemJUPWA extends CMSPlugin
 				$description = $this->coreTags()->description;
 				$img         = $this->coreTags($image)->img;
 
-				if($this->params->get('og') == 1)
-				{
-					OG::tag([
-						'params'       => $this->params,
-						'type'         => 'website',
-						'title'        => $title,
-						'image'        => $img->image,
-						'image_width'  => $img->width,
-						'image_height' => $img->height,
-						'description'  => $description
-					]);
-				}
+				OG::tag([
+					'params'       => $this->params,
+					'type'         => 'website',
+					'title'        => $title,
+					'image'        => $img->image,
+					'image_width'  => $img->width,
+					'image_height' => $img->height,
+					'description'  => $description
+				]);
 
-				if($this->params->get('tw') == 1)
-				{
-					OG::twitter([
-						'params'      => $this->params,
-						'title'       => $title,
-						'image'       => $image,
-						'description' => $description
-					]);
-				}
+				OG::twitter([
+					'params'      => $this->params,
+					'title'       => $title,
+					'image'       => $image,
+					'description' => $description
+				]);
 			}
 		}
 
