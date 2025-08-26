@@ -3,7 +3,7 @@
          basedir=".">
 
     <property name="VERSION"
-              value="2.4.0.119" />
+              value="2.5.0" />
     <property name="JOOMLA"
               value="4.0" />
 
@@ -68,6 +68,26 @@
 	    <delete file="${temp}/plg_system_jupwa/libraries/composer.json" />
         <delete file="${temp}/plg_system_jupwa/libraries/composer.lock" />
         <delete file="${temp}/plg_system_jupwa/libraries/vendor/marc1706/fast-image-size/composer.lock" />
+
+	    <!---->
+
+	    <!--<copy file="packages/plg_console_jupwa_seblod/jupwa_seblod.xml"
+	          todir="${temp}/temp/plg_console_jupwa_seblod">
+            <filterchain>
+                <replacetokens>
+                    <token key="version"
+                           value="${VERSION}" />
+                    <token key="date"
+                           value="${DATE}" />
+	                <token key="year"
+	                       value="${YEAR}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <delete file="${temp}/plg_console_jupwa_seblod/jupwa_seblod.xml" />
+        <copy file="${temp}/temp/plg_console_jupwa_seblod/jupwa_seblod.xml"
+              todir="${temp}/plg_console_jupwa_seblod" />-->
 
 	    <!---->
 
@@ -198,6 +218,11 @@
              description="plg_jupwa">
             <fileset dir="${temp}/plg_system_jupwa" />
         </zip>
+
+	    <!--<zip destfile="${build}/packages/plg_console_jupwa_seblod.zip"
+	         description="plg_console_jupwa_seblod">
+            <fileset dir="${temp}/plg_console_jupwa_seblod" />
+        </zip>-->
 
 	    <zip destfile="${build}/packages/plg_console_jupwa_content.zip"
 	         description="plg_console_jupwa_content">

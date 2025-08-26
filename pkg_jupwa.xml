@@ -45,6 +45,9 @@
         <file type="plugin"
               id="plg_console_jupwa_content"
               group="console">plg_console_jupwa_content.zip</file>
+	    <!--<file type="plugin"
+			  id="plg_console_jupwa_seblod"
+			  group="console">plg_console_jupwa_seblod.zip</file>-->
     </files>
 
     <languages folder="language">
