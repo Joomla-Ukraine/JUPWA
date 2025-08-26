@@ -400,6 +400,8 @@ class plgSystemJUPWA extends CMSPlugin
 			return;
 		}
 
+		PluginHelper::importPlugin('jupwa');
+
 		$view       = $this->app->input->get('view');
 		$component  = $this->app->input->getCmd('option');
 		$use_access = $this->app->triggerEvent('onJUPWAAccess', [ $component ]);
