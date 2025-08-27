@@ -56,7 +56,7 @@ class plgSystemJUPWA extends CMSPlugin
 		$this->loadLanguage();
 
 		$this->app = Factory::getApplication();
-		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
+		if($this->app->isClient('site'))
 		{
 			return;
 		}
@@ -120,7 +120,12 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterRender(): void
 	{
-		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
+
+		if(strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
@@ -304,7 +309,12 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterRoute(): void
 	{
-		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
+
+		if(strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
@@ -339,7 +349,12 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterDispatch(): void
 	{
-		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
+
+		if(strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
@@ -390,7 +405,12 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onBeforeCompileHead()
 	{
-		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
+
+		if(strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
@@ -474,7 +494,12 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onContentPrepare($context, &$article)
 	{
-		if($this->app->isClient('site') && strpos(Uri::current(), '/account') !== false)
+		if(!$this->app->isClient('site'))
+		{
+			return;
+		}
+
+		if(strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
