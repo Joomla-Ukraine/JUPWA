@@ -15,7 +15,7 @@
 
 ## Download
 
-[JUPWA v 2.1.3](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.1.3/pkg_jupwa_v2.1.3.zip)
+[JUPWA v 2.5.1](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.5.1/pkg_jupwa_v2.5.1.zip)
 
 ## Integration
 
@@ -25,6 +25,7 @@
 
 ## Features
 
+* Push Notifications based Firebase
 * OG-tags
 * Schema.org
 * SEO

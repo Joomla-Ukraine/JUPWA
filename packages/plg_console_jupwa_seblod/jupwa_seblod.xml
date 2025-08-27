@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin"
+           group="console"
+           method="upgrade">
+    <name>plg_console_jupwa_seblod</name>
+    <author>Denys Nosov</author>
+    <creationDate>@date@</creationDate>
+    <copyright>(C) Denys Nosov</copyright>
+    <license>GNU General Public License version 3 or later</license>
+    <authorEmail>denys@joomla-ua.org</authorEmail>
+    <version>@version@</version>
+    <description>PLG_CONSOLE_JUPWA_SEBLOD_DESCRIPTION</description>
+    <namespace path="src">JU\Plugin\Console\JUPWASeblod</namespace>
+
+    <languages folder="language">
+		<language tag="en-GB">en-GB/plg_console_jupwa_seblod.ini</language>
+		<language tag="en-GB">en-GB/plg_console_jupwa_seblod.sys.ini</language>
+	</languages>
+
+    <files>
+        <folder plugin="jupwa_seblod">services</folder>
+        <folder>src</folder>
+    </files>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+                <field
+		                name="live_site"
+		                type="text"
+		                label="PLG_CONSOLE_JUPWA_SEBLOD_DOMAIN"
+                />
+
+				<field
+						name="catid"
+						type="category"
+						extension="com_content"
+						multiple="true"
+						size="10"
+						label="JCATEGORY"
+						layout="joomla.form.field.list-fancy-select"
+						filter="intarray"
+				>
+                </field>
+
+				<field addfieldpath="/libraries/cck/construction/field"
+				       name="seblod_type"
+				       type="cck"
+				       construction="core_content_type"
+				       label="COM_CCK_CONFIG_TYPE"
+				       id="jform_trigger_type"
+				       class="inputbox"
+				/>
+
+	            <field name="seblod_menuitem"
+	                   type="menuitem"
+	                   label="JMENU"
+	            >
+	                <option value="">JDEFAULT</option>
+	            </field>
+
+				<field
+						name="featured"
+						type="radio"
+						layout="joomla.form.field.radio.switcher"
+						label="PLG_CONSOLE_JUPWA_SEBLOD_FEATURED"
+						default="0"
+						filter="integer"
+				>
+                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+			</fieldset>
+		</fields>
+	</config>
+</extension>

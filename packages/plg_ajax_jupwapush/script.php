@@ -157,7 +157,7 @@ class plgAjaxJUPWAPushInstallerScript
 
 			if(!(stripos($columnInfo->Type, 'varchar(155)') !== false && $columnInfo->Null === 'YES' && $columnInfo->Default === null))
 			{
-				$query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `order_url` `order_url` VARCHAR(155) DEFAULT NULL";
+				$query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `order_url` `order_url` VARCHAR(255) DEFAULT NULL";
 				$db->setQuery($query);
 				$db->execute();
 			}
