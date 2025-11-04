@@ -75,8 +75,8 @@ class Data
 
 	public static string $workbox = 'https://storage.googleapis.com/workbox-cdn/releases/7.3.0/workbox-sw.js';
 
-	public static string $firebase_app = 'https://www.gstatic.com/firebasejs/12.4.0/firebase-app-compat.js';
-	public static string $firebase_messaging = 'https://www.gstatic.com/firebasejs/12.4.0/firebase-messaging-compat.js';
+	public static string $firebase_app = 'https://www.gstatic.com/firebasejs/12.5.0/firebase-app-compat.js';
+	public static string $firebase_messaging = 'https://www.gstatic.com/firebasejs/12.5.0/firebase-messaging-compat.js';
 
 	public static array $preconnect = [
 		'google'            => [ 'https://www.google.com' ],
