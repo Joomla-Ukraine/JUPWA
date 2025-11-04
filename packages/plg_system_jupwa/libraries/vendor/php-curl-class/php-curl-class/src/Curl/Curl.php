@@ -6,7 +6,7 @@ namespace Curl;
 
 class Curl extends BaseCurl
 {
-    public const VERSION = '12.0.0';
+    public const VERSION = '12.0.1';
     public const DEFAULT_TIMEOUT = 30;
 
     public $curl = null;
@@ -235,9 +235,6 @@ class Curl extends BaseCurl
     #[\Override]
     public function close()
     {
-        if (is_resource($this->curl) || $this->curl instanceof \CurlHandle) {
-            curl_close($this->curl);
-        }
         $this->curl = null;
         $this->options = null;
         $this->userSetOptions = null;

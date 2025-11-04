@@ -140,7 +140,6 @@ class ComposerStaticInit0173821745418a06b3361518b030e650
         'Google\\Auth\\CacheTrait' => __DIR__ . '/..' . '/google/auth/src/CacheTrait.php',
         'Google\\Auth\\Cache\\FileSystemCacheItemPool' => __DIR__ . '/..' . '/google/auth/src/Cache/FileSystemCacheItemPool.php',
         'Google\\Auth\\Cache\\InvalidArgumentException' => __DIR__ . '/..' . '/google/auth/src/Cache/InvalidArgumentException.php',
-        'Google\\Auth\\Cache\\Item' => __DIR__ . '/..' . '/google/auth/src/Cache/Item.php',
         'Google\\Auth\\Cache\\MemoryCacheItemPool' => __DIR__ . '/..' . '/google/auth/src/Cache/MemoryCacheItemPool.php',
         'Google\\Auth\\Cache\\SysVCacheItemPool' => __DIR__ . '/..' . '/google/auth/src/Cache/SysVCacheItemPool.php',
         'Google\\Auth\\Cache\\TypedItem' => __DIR__ . '/..' . '/google/auth/src/Cache/TypedItem.php',

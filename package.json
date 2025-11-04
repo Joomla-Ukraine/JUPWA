@@ -51,8 +51,7 @@
   },
   "dependencies": {
     "@khmyznikov/pwa-install": "^0.5.8",
-    "axios": "^1.12.2",
-    "firebase": "^12.4.0",
+    "axios": "^1.13.1",
     "firebase": "^12.5.0",
     "simple-notify": "^1.0.6"
   }

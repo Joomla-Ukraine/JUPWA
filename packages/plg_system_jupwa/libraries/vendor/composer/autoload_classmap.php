@@ -43,7 +43,6 @@ return array(
     'Google\\Auth\\CacheTrait' => $vendorDir . '/google/auth/src/CacheTrait.php',
     'Google\\Auth\\Cache\\FileSystemCacheItemPool' => $vendorDir . '/google/auth/src/Cache/FileSystemCacheItemPool.php',
     'Google\\Auth\\Cache\\InvalidArgumentException' => $vendorDir . '/google/auth/src/Cache/InvalidArgumentException.php',
-    'Google\\Auth\\Cache\\Item' => $vendorDir . '/google/auth/src/Cache/Item.php',
     'Google\\Auth\\Cache\\MemoryCacheItemPool' => $vendorDir . '/google/auth/src/Cache/MemoryCacheItemPool.php',
     'Google\\Auth\\Cache\\SysVCacheItemPool' => $vendorDir . '/google/auth/src/Cache/SysVCacheItemPool.php',
     'Google\\Auth\\Cache\\TypedItem' => $vendorDir . '/google/auth/src/Cache/TypedItem.php',
