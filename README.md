@@ -15,7 +15,7 @@
 
 ## Download
 
-[JUPWA v 2.5.3](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.5.3/pkg_jupwa_v2.5.3.zip)
+[JUPWA v 2.5.4](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.5.4/pkg_jupwa_v2.5.4.zip)
 
 ## Integration
 
@@ -33,7 +33,7 @@
 * Offline mode
 * Add your site to home-screen
 * Add application icons
-* Add Splash background
+* Add Splash background for Android and iOS 26
 * Add screenshots
 * Add shortcuts
 * Theme color (light or dark)
