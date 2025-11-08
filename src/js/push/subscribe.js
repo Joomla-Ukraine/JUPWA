@@ -9,7 +9,6 @@ export async function subscribe(params = {}) {
         messaging,
         firebaseConfig,
         swRegistration,
-        urlSW,
         csrfToken,
         urlSubscribe,
         lang,
