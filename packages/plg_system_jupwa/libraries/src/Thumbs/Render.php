@@ -177,32 +177,25 @@ class Render
 	 *
 	 * @param $icon_sm
 	 *
-	 * @return array
+	 * @return string
 	 *
 	 * @throws \Exception
 	 * @since 1.0
 	 */
-	public static function splash_icons($icon_sm): array
+	public static function splash_icons($icon_sm): string
 	{
 		if(!$icon_sm)
 		{
-			return [];
+			return '';
 		}
 
-		$icons  = Data::$splash_icons;
 		$source = self::image($icon_sm);
+		$out    = 'favicons/sicon_512.png';
 
-		$image = [];
-		foreach($icons as $icon)
-		{
-			$out     = 'favicons/sicon_' . $icon . '.png';
-			$image[] = Image::render($source, $out, [
-				'width'  => 512,
-				'height' => 512
-			]);
-		}
-
-		return $image;
+		return Image::render($source, $out, [
+			'width'  => 512,
+			'height' => 512
+		]);
 	}
 
 	/**
