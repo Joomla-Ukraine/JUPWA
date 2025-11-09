@@ -57,6 +57,8 @@ class Push
 			],
 		]);
 
+		$domain = str_replace(JPATH_ROOT . '/cli', '', Uri::base());
+
 		$data = [
 			'json' => [
 				'message' => [
@@ -64,8 +66,8 @@ class Push
 					'data'  => [
 						'title'        => $title,
 						'body'         => $body,
-						'image'        => Uri::base() . 'favicons/icon_192.png',
-						'click_action' => $link ? : Uri::base()
+						'image'        => $domain . 'favicons/icon_192.png',
+						'click_action' => $link ? : $domain
 					],
 				]
 			]
