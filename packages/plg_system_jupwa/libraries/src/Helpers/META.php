@@ -30,6 +30,9 @@ class META
 	 */
 	public static function render(array $option = []): void
 	{
+		$pwa_version = Manifest::getVersion();
+		$pwa_version = '?v=' . $pwa_version;
+
 		self::manifest();
 
 		self::speculationrules([ 'params' => $option[ 'params' ] ]);
@@ -40,14 +43,25 @@ class META
 		self::preconnect([ 'params' => $option[ 'params' ] ]);
 		self::preloads([ 'params' => $option[ 'params' ] ]);
 
-		self::meta_apple([ 'params' => $option[ 'params' ] ]);
+		self::meta_apple([
+			'params'      => $option[ 'params' ],
+			'pwa_version' => $pwa_version
+		]);
+
 		self::meta_ms([ 'params' => $option[ 'params' ] ]);
 
 		self::facebook([ 'params' => $option[ 'params' ] ]);
 
-		self::icons([ 'params' => $option[ 'params' ] ]);
+		self::icons([
+			'params'      => $option[ 'params' ],
+			'pwa_version' => $pwa_version
+		]);
 
-		self::pwa([ 'params' => $option[ 'params' ] ]);
+		self::pwa([
+			'params'      => $option[ 'params' ],
+			'pwa_version' => $pwa_version
+		]);
+
 		self::splash([ 'params' => $option[ 'params' ] ]);
 	}
 
@@ -366,7 +380,7 @@ class META
 			$file = 'favicons/icon_' . $icon . '.png';
 			if(file_exists(JPATH_SITE . '/' . $file))
 			{
-				$href = Uri::root() . $file;
+				$href = Uri::root() . $file . $option[ 'pwa_version' ];
 				$doc->addHeadLink($href, 'icon', 'rel', [
 					'sizes' => $icon . 'x' . $icon,
 					'type'  => 'image/png'
@@ -377,13 +391,13 @@ class META
 		$file = 'favicons/favicon.ico';
 		if(file_exists(JPATH_SITE . '/' . $file))
 		{
-			$href = Uri::root() . $file;
+			$href = Uri::root() . $file . $option[ 'pwa_version' ];
 			$doc->addHeadLink($href, 'shortcut icon');
 		}
 
 		if($option[ 'params' ]->get('source_icon_svg'))
 		{
-			$href = Uri::root() . Render::image($option[ 'params' ]->get('source_icon_svg'));
+			$href = Uri::root() . Render::image($option[ 'params' ]->get('source_icon_svg')) . $option[ 'pwa_version' ];
 			$doc->addHeadLink($href, 'icon', 'rel', [
 				'type' => 'image/svg+xml'
 			]);
@@ -428,8 +442,7 @@ class META
 
 		if($option[ 'params' ]->get('usepwa', 0) == 1)
 		{
-			$pwa_version = Manifest::getVersion();
-			$pwajs       = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('" . Uri::base() . "sw.js?v=" . $pwa_version . "'); }); }";
+			$pwajs = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('" . Uri::base() . "sw.js" . $option[ 'pwa_version' ] . "'); }); }";
 
 			$doc->addScriptDeclaration($pwajs);
 		}
