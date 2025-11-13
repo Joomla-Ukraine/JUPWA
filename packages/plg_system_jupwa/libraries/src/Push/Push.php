@@ -26,14 +26,16 @@ class Push
 	 * @param string $token
 	 * @param string $title
 	 * @param string $body
+	 * @param string $domain
+	 * @param string $link
 	 *
 	 * @return array
 	 *
 	 * @throws \GuzzleHttp\Exception\GuzzleException
-	 * @throws \Exception
+	 * @throws \JsonException
 	 * @since 1.0
 	 */
-	public static function send(string $token, string $title, string $body = '', string $link = ''): array
+	public static function send(string $token, string $title, string $body = '', string $domain = '', string $link = ''): array
 	{
 		$serviceAccountFile = JPATH_ROOT . '/.well-known/jupwa/firebase-service-account.json';
 		$scopes             = [ 'https://www.googleapis.com/auth/firebase.messaging' ];
@@ -57,7 +59,8 @@ class Push
 			],
 		]);
 
-		$domain = str_replace(JPATH_ROOT . '/cli', '', Uri::base());
+		$domain = $domain ? : Uri::base();
+		$domain = str_replace(JPATH_ROOT . '/cli', '', $domain);
 
 		$data = [
 			'json' => [
