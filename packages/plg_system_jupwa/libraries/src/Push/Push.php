@@ -69,6 +69,23 @@ class Push
 						'image'        => $domain . 'favicons/icon_192.png',
 						'click_action' => $link ? : $domain
 					],
+					'apns'  => [
+						'headers' => [
+							'apns-priority'  => '10',
+							'apns-push-type' => 'alert'
+						],
+						'payload' => [
+							'aps' => [
+								'alert'           => [
+									'title' => $title,
+									'body'  => $body,
+								],
+								'sound'           => 'default',
+								'badge'           => 1,
+								'mutable-content' => 1
+							]
+						],
+					],
 				]
 			]
 		];
