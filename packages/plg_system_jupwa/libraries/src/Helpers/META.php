@@ -319,8 +319,18 @@ class META
 			$file = 'favicons/appleicon_' . $icon . '.png';
 			if(file_exists(JPATH_SITE . '/' . $file))
 			{
-				$href = Uri::root() . $file;
-				$doc->addCustomTag('<link href="' . $href . '" rel="apple-touch-icon" sizes="' . $icon . 'x' . $icon . '">');
+				$href = Uri::root() . $file . $option[ 'pwa_version' ];
+				$doc->addCustomTag('<link rel="apple-touch-icon" sizes="' . $icon . 'x' . $icon . '" href="' . $href . '">');
+			}
+		}
+
+		foreach($icons[ 'apple-touch-icon' ] as $icon)
+		{
+			$file = 'favicons/appleicon_' . $icon . '.png';
+			if(file_exists(JPATH_SITE . '/' . $file) && $icon == 180)
+			{
+				$href = Uri::root() . $file . $option[ 'pwa_version' ];
+				$doc->addCustomTag('<link rel="apple-touch-icon" href="' . $href . '">');
 			}
 		}
 
