@@ -34,6 +34,10 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(payload => {
+	if (payload.notification) {
+		return;
+	}
+
 	const data = payload.data || {};
 
 	const title = data.title || '-';
