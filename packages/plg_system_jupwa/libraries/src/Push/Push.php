@@ -61,6 +61,7 @@ class Push
 
 		$domain = $domain ? : Uri::base();
 		$domain = str_replace(JPATH_ROOT . '/cli', '', $domain);
+		$domain = $domain . '/';
 
 		$data = [
 			'json' => [
