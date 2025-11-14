@@ -4,6 +4,12 @@ import axios from "axios";
 import jupwaNotification from "./utils/notification";
 
 export async function sendToken(params = {}) {
+    const savedToken = localStorage.getItem("jupwaFCMToken");
+
+    if (savedToken === params.token) {
+        return;
+    }
+
     try {
         const formData = new FormData();
         formData.append("fcm_token", params.token);
