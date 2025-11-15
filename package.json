@@ -52,7 +52,7 @@
   "dependencies": {
     "@khmyznikov/pwa-install": "^0.5.8",
     "axios": "^1.13.2",
-    "firebase": "^12.5.0",
+    "firebase": "^12.6.0",
     "simple-notify": "^1.0.6"
   }
 }
