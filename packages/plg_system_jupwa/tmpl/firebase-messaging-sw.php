@@ -53,7 +53,7 @@ messaging.onBackgroundMessage(payload => {
 		}
 	};
 
-	self.registration.showNotification(title, notificationOptions);
+	return self.registration.showNotification(title, notificationOptions);
 });
 
 self.addEventListener('notificationclick', function(event) {
