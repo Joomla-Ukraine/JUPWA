@@ -70,22 +70,19 @@ class Push extends CMSPlugin implements SubscriberInterface
 
 			if($chek == 0)
 			{
-				$response = \JUPWA\Push\Push::send($fcm_token, Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'), 'Тепер ви отримуватимете сповіщення!');
+				\JUPWA\Push\Push::send($fcm_token, Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'), 'Тепер ви отримуватимете сповіщення!');
 
-				if(isset($response[ 'name' ]) && $response[ 'name' ])
+				$obj = new \stdClass();
+
+				if($user->guest == 0)
 				{
-					$obj = new \stdClass();
-
-					if($user->guest == 0)
-					{
-						$obj->user_id = $user->id;
-					}
-
-					$obj->fcm_token = $fcm_token;
-					$db->insertObject('#__jupwa_push_users', $obj);
-
-					$event->setArgument('result', Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'));
+					$obj->user_id = $user->id;
 				}
+
+				$obj->fcm_token = $fcm_token;
+				$db->insertObject('#__jupwa_push_users', $obj);
+
+				$event->setArgument('result', Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'));
 			}
 			else
 			{

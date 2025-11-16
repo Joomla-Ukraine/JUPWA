@@ -39,64 +39,146 @@ class Push
 	{
 		$serviceAccountFile = JPATH_ROOT . '/.well-known/jupwa/firebase-service-account.json';
 		$scopes             = [ 'https://www.googleapis.com/auth/firebase.messaging' ];
-		$credentials        = new ServiceAccountCredentials($scopes, $serviceAccountFile);
-		$authToken          = $credentials->fetchAuthToken();
 
-		if(empty($authToken[ 'access_token' ]))
+		try
 		{
-			throw new \RuntimeException('Access token error');
-		}
+			$credentials = new ServiceAccountCredentials($scopes, $serviceAccountFile);
+			$authToken   = $credentials->fetchAuthToken();
 
-		$accessToken = $authToken[ 'access_token' ];
-		$json        = json_decode(file_get_contents($serviceAccountFile), true, 512, JSON_THROW_ON_ERROR);
-		$projectId   = $json[ 'project_id' ];
+			if(empty($authToken[ 'access_token' ]))
+			{
+				throw new \RuntimeException('Access token error');
+			}
 
-		$client = new Client([
-			'base_uri' => 'https://fcm.googleapis.com/',
-			'headers'  => [
-				'Authorization' => 'Bearer ' . $accessToken,
-				'Content-Type'  => 'application/json',
-			],
-		]);
+			$accessToken = $authToken[ 'access_token' ];
+			$json        = json_decode(file_get_contents($serviceAccountFile), true, 512, JSON_THROW_ON_ERROR);
+			$projectId   = $json[ 'project_id' ];
 
-		$domain = $domain ? : Uri::base();
-		$domain = str_replace(JPATH_ROOT . '/cli', '', $domain);
-		$domain = $domain . '/';
+			$client = new Client([
+				'base_uri' => 'https://fcm.googleapis.com/',
+				'headers'  => [
+					'Authorization' => 'Bearer ' . $accessToken,
+					'Content-Type'  => 'application/json',
+				],
+			]);
 
-		$data = [
-			'json' => [
-				'message' => [
-					'token' => $token,
-					'data'  => [
-						'title'        => $title,
-						'body'         => $body,
-						'image'        => $domain . 'favicons/icon_192.png',
-						'click_action' => $link ? : $domain
-					],
-					'apns'  => [
-						'headers' => [
-							'apns-priority'  => '10',
-							'apns-push-type' => 'alert'
+			$domain = $domain ? : Uri::base();
+			$domain = str_replace(JPATH_ROOT . '/cli', '', $domain);
+			$domain = $domain . '/';
+
+			$data = [
+				'json' => [
+					'message' => [
+						'token' => $token,
+						'data'  => [
+							'title'        => $title,
+							'body'         => $body,
+							'image'        => $domain . 'favicons/icon_192.png',
+							'badge'        => $domain . 'favicons/icon_72.png',
+							'click_action' => $link ? : $domain
 						],
-						'payload' => [
-							'aps' => [
-								'alert'           => [
-									'title' => $title,
-									'body'  => $body,
-								],
-								'sound'           => 'default',
-								'badge'           => 1,
-								'mutable-content' => 1
-							]
+						'apns'  => [
+							'headers' => [
+								'apns-priority'  => '10',
+								'apns-push-type' => 'alert'
+							],
+							'payload' => [
+								'aps' => [
+									'alert'           => [
+										'title' => $title,
+										'body'  => $body,
+									],
+									'sound'           => 'default',
+									'badge'           => 0,
+									'mutable-content' => 1
+								]
+							],
 						],
-					],
+					]
 				]
-			]
-		];
+			];
 
-		$response = $client->post('v1/projects/' . $projectId . '/messages:send', $data);
+			$response = $client->post('v1/projects/' . $projectId . '/messages:send', $data);
 
-		return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+			$statusCode = $response->getStatusCode();
+			$body       = $response->getBody()->getContents();
+			$result     = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+
+			if($statusCode === 200)
+			{
+				return [
+					'success' => true,
+					'data'    => $result,
+					'code'    => 200
+				];
+			}
+
+			return [
+				'success' => false,
+				'error'   => 'Unexpected HTTP status: ' . $statusCode,
+				'code'    => $statusCode
+			];
+		}
+		catch (RequestException $e)
+		{
+			$statusCode   = $e->getResponse() ? $e->getResponse()->getStatusCode() : 0;
+			$errorBody    = $e->getResponse() ? $e->getResponse()->getBody()->getContents() : '';
+			$errorData    = $errorBody ? json_decode($errorBody, true) : null;
+			$errorMessage = $errorData[ 'error' ][ 'message' ] ?? $e->getMessage();
+
+			return match ($statusCode)
+			{
+				400 => [
+					'success' => false,
+					'error'   => 'Bad Request: ' . $errorMessage,
+					'code'    => 400
+				],
+				401 => [
+					'success' => false,
+					'error'   => 'Unauthorized: Invalid or expired access token',
+					'code'    => 401
+				],
+				403 => [
+					'success' => false,
+					'error'   => 'Forbidden: Permission denied',
+					'code'    => 403
+				],
+				404 => [
+					'success' => false,
+					'error'   => 'Not Found: Invalid project ID or endpoint',
+					'code'    => 404
+				],
+				429 => [
+					'success' => false,
+					'error'   => 'Too Many Requests: Rate limit exceeded',
+					'code'    => 429
+				],
+				500 => [
+					'success' => false,
+					'error'   => 'Internal Server Error: FCM service issue',
+					'code'    => 500
+				],
+				503 => [
+					'success' => false,
+					'error'   => 'Service Unavailable: FCM temporarily down',
+					'code'    => 503
+				],
+				default => [
+					'success' => false,
+					'error'   => 'HTTP Error: ' . $statusCode . ' - ' . $errorMessage,
+					'code'    => $statusCode
+				],
+			};
+
+		}
+		catch (\Exception $e)
+		{
+			return [
+				'success' => false,
+				'error'   => 'System Error: ' . $e->getMessage(),
+				'code'    => 500
+			];
+		}
 	}
 
 	/**

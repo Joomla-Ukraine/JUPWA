@@ -9,7 +9,6 @@
 
 namespace JUPWA\Console;
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use JUPWA\Push\Push;
@@ -33,15 +32,13 @@ class Console
 
 		foreach($items as $item)
 		{
-			try
-			{
-				$title = $result[ 'title' ] ? : '';
-				$desc  = $result[ 'desc' ] ? : '';
-				$link  = $result[ 'link' ] ? : '';
+			$title = $result[ 'title' ] ? : '';
+			$desc  = $result[ 'desc' ] ? : '';
+			$link  = $result[ 'link' ] ? : '';
 
-				Push::send($item->fcm_token, $title, $desc, $link);
-			}
-			catch (Exception $e)
+			$response = Push::send($item->fcm_token, $title, $desc, $link);
+			
+			if($response[ 'code' ] == 400 || $response[ 'code' ] == 404)
 			{
 				self::remove_tokens($item->fcm_token);
 			}
