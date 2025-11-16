@@ -43,11 +43,13 @@ messaging.onBackgroundMessage(payload => {
 	const title = data.title || '-';
 	const body = data.body || '-';
 	const icon = data.image || '<?= $site; ?>favicons/icon_192.png';
+	const badge = data.badge || '<?= $site; ?>favicons/icon_72.png';
 	const click_action = data.click_action || '<?= $site; ?>';
 
 	const notificationOptions = {
 		body: body,
 		icon: icon,
+		badge: badge,
 		data: {
 			click_action
 		}
@@ -65,6 +67,8 @@ self.addEventListener('notificationclick', function(event) {
 		clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientList => {
 			for (const client of clientList) {
 				if (client.url === url && 'focus' in client) {
+					client.postMessage({ action: 'clear-badge' });
+
 					return client.focus();
 				}
 			}
