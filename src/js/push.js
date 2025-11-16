@@ -202,7 +202,7 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
                     if (Notification.permission === "granted") {
                         const notification = new Notification(title || '', {
                             body: body || '',
-                            icon: image || "/favicon.ico",
+                            icon: image || '/favicon.ico',
                             data: {
                                 url: click_action || ''
                             }
@@ -212,6 +212,10 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
                             event.preventDefault();
 
                             if (click_action) {
+                                if ('setAppBadge' in navigator) {
+                                    navigator.setAppBadge(0);
+                                }
+
                                 window.open(click_action, "_blank");
                             }
                         };
