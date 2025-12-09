@@ -617,17 +617,17 @@
         },
         {
             "name": "php-curl-class/php-curl-class",
-            "version": "12.0.1",
-            "version_normalized": "12.0.1.0",
+            "version": "12.0.3",
+            "version_normalized": "12.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-curl-class/php-curl-class.git",
-                "reference": "6484fdde6b1f64ffe77ac6a4c088c7e08e18a7f8"
+                "reference": "f910932317aa002c535894ed198d7827cfa1de56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/6484fdde6b1f64ffe77ac6a4c088c7e08e18a7f8",
-                "reference": "6484fdde6b1f64ffe77ac6a4c088c7e08e18a7f8",
+                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/f910932317aa002c535894ed198d7827cfa1de56",
+                "reference": "f910932317aa002c535894ed198d7827cfa1de56",
                 "shasum": ""
             },
             "require": {
@@ -647,7 +647,7 @@
             "suggest": {
                 "ext-mbstring": "*"
             },
-            "time": "2025-11-03T18:05:05+00:00",
+            "time": "2025-11-24T19:36:44+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -694,7 +694,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-curl-class/php-curl-class/issues",
-                "source": "https://github.com/php-curl-class/php-curl-class/tree/12.0.1"
+                "source": "https://github.com/php-curl-class/php-curl-class/tree/12.0.3"
             },
             "install-path": "../php-curl-class/php-curl-class"
         },

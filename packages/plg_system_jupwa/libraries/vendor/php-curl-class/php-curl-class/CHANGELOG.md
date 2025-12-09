@@ -1,10 +1,22 @@
 # Change Log
 
+List of changes for PHP Curl Class (https://github.com/php-curl-class/php-curl-class).
+
 PHP Curl Class uses semantic versioning with version numbers written as `MAJOR.MINOR.PATCH`. You may safely update
 `MINOR` and `PATCH` version changes. It is recommended to review `MAJOR` changes prior to upgrade as there may be
 backwards-incompatible changes that will affect existing usage.
 
 <!-- CHANGELOG_PLACEHOLDER -->
+
+## 12.0.3 - 2025-11-24
+
+- Simplify MultiCurl execution loop ([#1017](https://github.com/php-curl-class/php-curl-class/pull/1017))
+- Use WeakMap for active handle tracking ([#1020](https://github.com/php-curl-class/php-curl-class/pull/1020))
+
+## 12.0.2 - 2025-11-18
+
+- Improve MultiCurl::waitUntilRequestQuotaAvailable ([#1016](https://github.com/php-curl-class/php-curl-class/pull/1016))
+- Fix rate limit ([#1015](https://github.com/php-curl-class/php-curl-class/pull/1015))
 
 ## 12.0.1 - 2025-11-03
 

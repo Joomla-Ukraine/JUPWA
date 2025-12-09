@@ -15,6 +15,7 @@ return array(
     'Curl\\Encoder' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/Encoder.php',
     'Curl\\MultiCurl' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/MultiCurl.php',
     'Curl\\StringUtil' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/StringUtil.php',
+    'Curl\\TimeUtil' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/TimeUtil.php',
     'Curl\\Url' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/Url.php',
     'FastImageSize\\FastImageSize' => $vendorDir . '/marc1706/fast-image-size/lib/FastImageSize.php',
     'FastImageSize\\Type\\TypeBase' => $vendorDir . '/marc1706/fast-image-size/lib/Type/TypeBase.php',
