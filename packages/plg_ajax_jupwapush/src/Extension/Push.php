@@ -41,9 +41,48 @@ class Push extends CMSPlugin implements SubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
+			'onAjaxJUPWAPushCheck'       => 'onAjaxJUPWAPushCheck',
 			'onAjaxJUPWAPushSubscribe'   => 'onAjaxJUPWAPushSubscribe',
 			'onAjaxJUPWAPushUnsubscribe' => 'onAjaxJUPWAPushUnsubscribe'
 		];
+	}
+
+	/**
+	 * @param \Joomla\Event\Event $event
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 * @since 1.0.0
+	 */
+	public function onAjaxJUPWAPushCheck(Event $event): void
+	{
+		if($_SERVER[ 'REQUEST_METHOD' ] === 'POST')
+		{
+			$app = Factory::getApplication();
+
+			$this->auth($app, $event);
+
+			$db        = Factory::getContainer()->get(DatabaseInterface::class);
+			$user      = $app->getIdentity();
+			$post      = (object) $app->input->post->getArray();
+			$fcm_token = $post->fcm_token;
+
+			$query = $db->getQuery(true);
+			$query->select([ '*' ]);
+			$query->from($db->quoteName('#__jupwa_push_users'));
+			$query->where($db->quoteName('user_id') . ' = ' . $db->Quote($user->id));
+			$query->where($db->quoteName('fcm_token') . ' = ' . $db->Quote($fcm_token));
+			$db->setQuery($query);
+			$db->execute();
+			$check = $db->getNumRows();
+
+			$event->setArgument('result', $check);
+		}
+		else
+		{
+			$this->returnError($event, Text::_('PLG_AJAX_JUPWAPUSH_ERROR'), 400);
+		}
 	}
 
 	/**
