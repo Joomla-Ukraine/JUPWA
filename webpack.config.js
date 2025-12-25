@@ -107,8 +107,8 @@ const pluginClean = new CleanWebpackPlugin({
             files: ['jupwa.php'],
             rules: [
                 {
-                    search: /\$jupwa_js_version = '(.*?)';/ig,
-                    replace: '$jupwa_js_version = \'' + version + '\';'
+                    search: /\$this->jupwa_js_version = '(.*?)';/ig,
+                    replace: '$this->jupwa_js_version = \'' + version + '\';'
                 }
             ]
         }

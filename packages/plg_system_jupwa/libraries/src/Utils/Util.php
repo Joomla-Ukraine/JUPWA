@@ -14,9 +14,27 @@ namespace JUPWA\Utils;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\Filesystem\File;
 
 class Util
 {
+	/**
+	 *
+	 * @return void
+	 *
+	 * @since 1.0
+	 */
+	public static function addVersion(): void
+	{
+		$json = [
+			'version' => hash('crc32b', time()),
+		];
+
+		$json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+		File::write(JPATH_SITE . '/favicons/assets.json', $json);
+	}
+
 	/**
 	 * @param          $name
 	 * @param array    $variables

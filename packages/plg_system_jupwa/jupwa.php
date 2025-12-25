@@ -55,6 +55,8 @@ class plgSystemJUPWA extends CMSPlugin
 
 		$this->loadLanguage();
 
+		$this->jupwa_js_version = '2.1.8';
+
 		$this->app = Factory::getApplication();
 		if($this->app->isClient('site'))
 		{
@@ -157,13 +159,12 @@ class plgSystemJUPWA extends CMSPlugin
 		 */
 		if(Push::isPush([ 'params' => $this->params ]))
 		{
-			$jupwa_js_version = '2.1.7';
-			$widget           = Util::tmpl('widget', [
+			$widget = Util::tmpl('widget', [
 				'params'  => $this->params,
-				'version' => $jupwa_js_version
+				'version' => $this->jupwa_js_version
 			]);
-			$widget           = '<template id="jupwa-widget">' . $widget . '</template>';
-			$buffer           = str_replace('</body>', $widget . '</body>', $buffer);
+			$widget = '<template id="jupwa-widget">' . $widget . '</template>';
+			$buffer = str_replace('</body>', $widget . '</body>', $buffer);
 
 			$this->checkBuffer($buffer);
 		}
@@ -365,32 +366,31 @@ class plgSystemJUPWA extends CMSPlugin
 			return;
 		}
 
-		$wa               = $doc->getWebAssetManager();
-		$jupwa_js_version = '2.1.7';
+		$wa = $doc->getWebAssetManager();
 
 		if(Push::isPush([ 'params' => $this->params ]))
 		{
-			$wa->registerAndUseStyle('push', Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', [ 'version' => false ]);
-			$doc->addHeadLink(Uri::root() . 'media/jupwa/css/app.push.' . $jupwa_js_version . '.css', 'preload prefetch', 'rel', [ 'as' => 'style' ]);
+			$wa->registerAndUseStyle('push', Uri::root() . 'media/jupwa/css/app.push.' . $this->jupwa_js_version . '.css', [ 'version' => false ]);
+			$doc->addHeadLink(Uri::root() . 'media/jupwa/css/app.push.' . $this->jupwa_js_version . '.css', 'preload prefetch', 'rel', [ 'as' => 'style' ]);
 
-			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js', [ 'version' => false ], [
+			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $this->jupwa_js_version . '.js', [ 'version' => false ], [
 				'defer'         => 'defer',
 				'fetchpriority' => 'auto'
 			]);
 
-			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/push.' . $jupwa_js_version . '.js', 'preload prefetch', 'rel', [
+			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/push.' . $this->jupwa_js_version . '.js', 'preload prefetch', 'rel', [
 				'as' => 'script'
 			]);
 		}
 
 		if($this->params->get('usepwainstall') == 1)
 		{
-			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_js_version . '.js', [ 'version' => false ], [
+			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $this->jupwa_js_version . '.js', [ 'version' => false ], [
 				'defer'         => 'defer',
 				'fetchpriority' => 'auto'
 			]);
 
-			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/jupwa.' . $jupwa_js_version . '.js', 'preload prefetch', 'rel', [
+			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/jupwa.' . $this->jupwa_js_version . '.js', 'preload prefetch', 'rel', [
 				'as' => 'script'
 			]);
 		}

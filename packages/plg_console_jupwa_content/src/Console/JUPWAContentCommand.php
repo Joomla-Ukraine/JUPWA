@@ -182,6 +182,7 @@ class JUPWAContentCommand extends AbstractCommand
 			$language = (Multilanguage::isEnabled() ? $item->language : '');
 			$link     = Route::_(RouteHelper::getArticleRoute($slug, $item->catid, $language));
 			$link     = str_replace(JPATH_CLI, '', $link);
+			$link     = str_replace('set/by/console/application/', '', $link);
 			$link     = $live_site . $link;
 
 			$check = Console::check([
