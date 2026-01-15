@@ -27,18 +27,18 @@ class Data
 		168,
 		180,
 		192,
-		512
+		512,
 	];
 
 	public static array $favicons = [
-		'apple-touch-icon' => [ 180, 192 ],
-		'icon'             => [ 16, 32, 96, 192 ]
+		'apple-touch-icon' => [180, 192],
+		'icon'             => [16, 32, 96, 192],
 	];
 
 	public static array $manifest_icons = [
 		180,
 		192,
-		512
+		512,
 	];
 
 	public static array $manifest = [
@@ -64,7 +64,7 @@ class Data
 		'handle_links'                => '',
 		'launch_handler'              => [],
 		'scope_extensions'            => [],
-		'edge_side_panel'             => []
+		'edge_side_panel'             => [],
 	];
 
 	public static array $assetlinks = [];
@@ -75,13 +75,13 @@ class Data
 	public static string $firebase_messaging = 'https://www.gstatic.com/firebasejs/12.8.0/firebase-messaging-compat.js';
 
 	public static array $preconnect = [
-		'google'            => [ 'https://www.google.com' ],
+		'google'            => ['https://www.google.com'],
 		'google-analytics'  => [
 			'https://www.google-analytics.com',
-			'https://www.googletagmanager.com'
+			'https://www.googletagmanager.com',
 		],
 		'google-fonts'      => [
-			'https://fonts.googleapis.com'
+			'https://fonts.googleapis.com',
 		],
 		'google-ads'        => [
 			'https://www.google.com',
@@ -90,7 +90,7 @@ class Data
 			'https://tpc.googlesyndication.com',
 			'https://adservice.google.com',
 			'https://partner.googleadservices.com',
-			'https://fonts.googleapis.com'
+			'https://fonts.googleapis.com',
 		],
 		'google-cse'        => [
 			'https://www.google.com',
@@ -106,8 +106,8 @@ class Data
 			'https://fonts.gstatic.com',
 			'https://fonts.googleapis.com',
 		],
-		'cloudflare'        => [ 'https://cdnjs.cloudflare.com' ],
-		'cloudflare-static' => [ 'https://static.cloudflareinsights.com' ],
+		'cloudflare'        => ['https://cdnjs.cloudflare.com'],
+		'cloudflare-static' => ['https://static.cloudflareinsights.com'],
 		'youtube'           => [
 			'https://www.youtube.com',
 			'https://i.ytimg.com',
@@ -117,7 +117,7 @@ class Data
 			'https://play.google.com',
 			'https://jnn-pa.googleapis.com',
 		],
-		'facebook'          => [ 'https://graph.facebook.com' ],
-		'twitter'           => [ 'https://platform.twitter.com' ],
+		'facebook'          => ['https://graph.facebook.com'],
+		'twitter'           => ['https://platform.twitter.com'],
 	];
 }
