@@ -14,14 +14,16 @@ namespace JUPWA\Helpers;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 
 class OG
 {
 	/**
 	 *
-	 * @param array $option
-	 * @param array $parameters
+	 * @param   array  $option
+	 * @param   array  $parameters
 	 *
 	 * @return void
 	 *
@@ -33,41 +35,77 @@ class OG
 		$app = Factory::getApplication();
 		$doc = $app->getDocument();
 
-		if(isset($option[ 'params' ]) && $option[ 'params' ]->get('og') == 1)
+		if (isset($option[ 'params' ]) && $option[ 'params' ]->get('og') == 1)
 		{
 			$app  = Factory::getApplication();
 			$lang = $app->getLanguage();
 
-			$doc->setMetaData('og:locale', str_replace('-', '_', $lang->getTag()), 'property');
+			$plugin      = PluginHelper::getPlugin('system', 'languagecode');
+			$mapping     = $plugin ? (new Registry($plugin->params))->toArray(
+			) : [];
+			$currentCode = strtolower($lang->getTag());
+
+			$local = $lang->getTag();
+			if (!empty($mapping[ $currentCode ]))
+			{
+				$local = $mapping[ $currentCode ];
+			}
+			$local = str_replace('-', '_', $local);
+
+			$doc->setMetaData('og:locale', $local, 'property');
 			$doc->setMetaData('og:type', $option[ 'type' ], 'property');
 			$doc->setMetaData('og:title', $option[ 'title' ], 'property');
-			$doc->setMetaData('og:description', $option[ 'description' ], 'property');
+			$doc->setMetaData(
+				'og:description',
+				$option[ 'description' ],
+				'property'
+			);
 			$doc->setMetaData('og:url', Uri::current(), 'property');
-			$doc->setMetaData('og:site_name', $app->get('sitename'), 'property');
+			$doc->setMetaData(
+				'og:site_name',
+				$app->get('sitename'),
+				'property'
+			);
 
-			if(isset($option[ 'image' ]))
+			if (isset($option[ 'image' ]))
 			{
-				$doc->setMetaData('og:image', HTMLHelper::cleanImageURL($option[ 'image' ])->url, 'property');
+				$doc->setMetaData(
+					'og:image',
+					HTMLHelper::cleanImageURL($option[ 'image' ])->url,
+					'property'
+				);
 
-				if((isset($option[ 'image_width' ]) && $option[ 'image_width' ] > 0) || (isset($option[ 'image_height' ]) && $option[ 'image_height' ] > 0))
+				if ((isset($option[ 'image_width' ]) && $option[ 'image_width' ] > 0) || (isset($option[ 'image_height' ]) && $option[ 'image_height' ] > 0))
 				{
-					$doc->setMetaData('og:image:width', $option[ 'image_width' ], 'property');
-					$doc->setMetaData('og:image:height', $option[ 'image_height' ], 'property');
+					$doc->setMetaData(
+						'og:image:width',
+						$option[ 'image_width' ],
+						'property'
+					);
+					$doc->setMetaData(
+						'og:image:height',
+						$option[ 'image_height' ],
+						'property'
+					);
 				}
 
-				$doc->setMetaData('og:image:alt', $option[ 'title' ], 'property');
+				$doc->setMetaData(
+					'og:image:alt',
+					$option[ 'title' ],
+					'property'
+				);
 			}
 
-			foreach($parameters as $k => $v)
+			foreach ($parameters as $k => $v)
 			{
-				$doc->setMetaData('og:' . $k, $v, 'property');
+				$doc->setMetaData('og:'.$k, $v, 'property');
 			}
 		}
 	}
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -79,36 +117,60 @@ class OG
 		$app = Factory::getApplication();
 		$doc = $app->getDocument();
 
-		if(isset($option[ 'params' ]) && $option[ 'params' ]->get('og') == 1)
+		if (isset($option[ 'params' ]) && $option[ 'params' ]->get('og') == 1)
 		{
-			if(isset($option[ 'article' ]->modified) && !($option[ 'article' ]->modified === '' || $option[ 'article' ]->modified === '0000-00-00 00:00:00'))
+			if (isset($option[ 'article' ]->modified) && !($option[ 'article' ]->modified === '' || $option[ 'article' ]->modified === '0000-00-00 00:00:00'))
 			{
-				$doc->setMetaData('og:updated_time', date('c', strtotime($option[ 'article' ]->modified)), 'property');
-				$doc->setMetaData('article:modified_time', date('c', strtotime($option[ 'article' ]->modified)), 'property');
+				$doc->setMetaData(
+					'og:updated_time',
+					date('c', strtotime($option[ 'article' ]->modified)),
+					'property'
+				);
+				$doc->setMetaData(
+					'article:modified_time',
+					date('c', strtotime($option[ 'article' ]->modified)),
+					'property'
+				);
 			}
 
-			if(isset($option[ 'article' ]->publish_up) !== '')
+			if (isset($option[ 'article' ]->publish_up) !== '')
 			{
-				$doc->setMetaData('article:published_time', date('c', strtotime($option[ 'article' ]->publish_up)), 'property');
+				$doc->setMetaData(
+					'article:published_time',
+					date('c', strtotime($option[ 'article' ]->publish_up)),
+					'property'
+				);
 			}
 
-			if(isset($option[ 'article' ]->category_title) !== '')
+			if (isset($option[ 'article' ]->category_title) !== '')
 			{
-				$doc->setMetaData('article:section', $option[ 'article' ]->category_title, 'property');
+				$doc->setMetaData(
+					'article:section',
+					$option[ 'article' ]->category_title,
+					'property'
+				);
 			}
 
-			if(isset($option[ 'article' ]->metakey) != '')
+			if (isset($option[ 'article' ]->metakey) != '')
 			{
-				if(Facebook::bot() === false)
+				if (Facebook::bot() === false)
 				{
-					$doc->setMetaData('news_keywords', $option[ 'article' ]->metakey, 'property');
+					$doc->setMetaData(
+						'news_keywords',
+						$option[ 'article' ]->metakey,
+						'property'
+					);
 				}
 
 				$_metakeys = explode(',', $option[ 'article' ]->metakey);
 				$i         = 0;
-				foreach($_metakeys as $_metakey)
+				foreach ($_metakeys as $_metakey)
 				{
-					$doc->setMetaData('article:tag_' . $i . '_', trim($_metakey), 'property');
+					$doc->setMetaData(
+						'article:tag_'.$i.'_',
+						trim($_metakey),
+						'property'
+					);
 					$i++;
 				}
 			}
@@ -117,7 +179,7 @@ class OG
 
 	/**
 	 *
-	 * @param array $option
+	 * @param   array  $option
 	 *
 	 * @return void
 	 *
@@ -129,38 +191,54 @@ class OG
 		$app = Factory::getApplication();
 		$doc = $app->getDocument();
 
-		if(isset($option[ 'params' ]) && $option[ 'params' ]->get('tw') == 1)
+		if (isset($option[ 'params' ]) && $option[ 'params' ]->get('tw') == 1)
 		{
 			$doc->setMetaData('twitter:card', 'summary_large_image');
 
-			if($option[ 'description' ])
+			if ($option[ 'description' ])
 			{
-				$doc->setMetaData('twitter:description', $option[ 'description' ]);
+				$doc->setMetaData(
+					'twitter:description',
+					$option[ 'description' ]
+				);
 			}
 
-			if($option[ 'title' ])
+			if ($option[ 'title' ])
 			{
 				$doc->setMetaData('twitter:title', $option[ 'title' ]);
 			}
 
-			if($option[ 'params' ]->get('twsite'))
+			if ($option[ 'params' ]->get('twsite'))
 			{
-				$doc->setMetaData('twitter:site', $option[ 'params' ]->get('twsite'));
+				$doc->setMetaData(
+					'twitter:site',
+					$option[ 'params' ]->get('twsite')
+				);
 			}
 
-			if($option[ 'params' ]->get('twcreator'))
+			if ($option[ 'params' ]->get('twcreator'))
 			{
-				$doc->setMetaData('twitter:creator', $option[ 'params' ]->get('twcreator'));
+				$doc->setMetaData(
+					'twitter:creator',
+					$option[ 'params' ]->get('twcreator')
+				);
 			}
 
-			if(isset($option[ 'image' ]))
+			if (isset($option[ 'image' ]))
 			{
 				$doc->setMetaData('twitter:image:src', $option[ 'image' ]);
 			}
 
-			if(isset($option[ 'youtube' ]) && $option[ 'youtube' ] && preg_match_all('#(youtube.com)/embed/([0-9A-Za-z]+)#i', $option[ 'youtube' ], $match))
+			if (isset($option[ 'youtube' ]) && $option[ 'youtube' ] && preg_match_all(
+					'#(youtube.com)/embed/([0-9A-Za-z]+)#i',
+					$option[ 'youtube' ],
+					$match
+				))
 			{
-				$doc->setMetaData('twitter:player', 'https://' . $match[ 0 ][ 0 ]);
+				$doc->setMetaData(
+					'twitter:player',
+					'https://'.$match[ 0 ][ 0 ]
+				);
 				$doc->setMetaData('twitter:player:width', '640');
 				$doc->setMetaData('twitter:player:height', '480');
 			}
