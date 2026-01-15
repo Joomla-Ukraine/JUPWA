@@ -15,8 +15,8 @@ importers:
         specifier: ^1.13.2
         version: 1.13.2
       firebase:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^12.8.0
+        version: 12.8.0
       simple-notify:
         specifier: ^1.0.6
         version: 1.0.6
