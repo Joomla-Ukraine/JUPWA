@@ -163,8 +163,8 @@ class plgSystemJUPWA extends CMSPlugin
 				'params'  => $this->params,
 				'version' => $this->jupwa_js_version
 			]);
-			$widget = '<template id="jupwa-widget">' . $widget . '</template>';
-			$buffer = str_replace('</body>', $widget . '</body>', $buffer);
+			$widget = '<template id="jupwa-widget-tpl">'.$widget.'</template>';
+			$buffer = str_replace('</body>', $widget.'</body>', $buffer);
 
 			$this->checkBuffer($buffer);
 		}

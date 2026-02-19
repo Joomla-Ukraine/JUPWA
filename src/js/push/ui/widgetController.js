@@ -1,7 +1,7 @@
 "use strict";
 
 export function createWidgetController() {
-    const tpl = document.getElementById("jupwa-widget");
+    const tpl = document.getElementById("jupwa-widget-tpl");
     if (!tpl || !(tpl instanceof HTMLTemplateElement)) {
         return null;
     }
