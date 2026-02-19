@@ -33,7 +33,7 @@ use JUPWA\Utils\Util;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-require_once __DIR__ . '/libraries/vendor/autoload.php';
+require_once __DIR__.'/libraries/vendor/autoload.php';
 
 #[AllowDynamicProperties]
 class plgSystemJUPWA extends CMSPlugin
@@ -55,10 +55,10 @@ class plgSystemJUPWA extends CMSPlugin
 
 		$this->loadLanguage();
 
-		$this->jupwa_js_version = '2.1.9';
+		$this->jupwa_js_version = '2.2.0';
 
 		$this->app = Factory::getApplication();
-		if($this->app->isClient('site'))
+		if ($this->app->isClient('site'))
 		{
 			return;
 		}
@@ -70,20 +70,23 @@ class plgSystemJUPWA extends CMSPlugin
 		$extension_id = $this->app->input->get('extension_id');
 		$post         = $this->app->input->post->getArray();
 
-		if($this->option === 'com_plugins' && $this->layout === 'edit' && isset($post[ 'jform' ][ 'params' ]) && $extension_id == $this->plg->id)
+		if ($this->option === 'com_plugins' && $this->layout === 'edit' && isset($post[ 'jform' ][ 'params' ]) && $extension_id == $this->plg->id)
 		{
 			$post_param = $post[ 'jform' ][ 'params' ];
 
-			if($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save')
+			if ($post[ 'task' ] === 'plugin.apply' || $post[ 'task' ] === 'plugin.save')
 			{
 				Render::create($post_param, $this->app);
 
-				if(!file_exists(JPATH_SITE . '/favicons/thumbs.json'))
+				if (!file_exists(JPATH_SITE.'/favicons/thumbs.json'))
 				{
-					$this->app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+					$this->app->enqueueMessage(
+						Text::_('PLG_JUPWA_THUMB_NOT_CREATED'),
+						'danger'
+					);
 				}
 
-				if($post_param[ 'usepush' ] == 1)
+				if ($post_param[ 'usepush' ] == 1)
 				{
 					$data = [
 						$post_param[ 'firebaseServiceAccount' ],
@@ -91,12 +94,15 @@ class plgSystemJUPWA extends CMSPlugin
 						$post_param[ 'projectId' ],
 						$post_param[ 'messagingSenderId' ],
 						$post_param[ 'appId' ],
-						$post_param[ 'vapidKey_wp' ]
+						$post_param[ 'vapidKey_wp' ],
 					];
 
-					if(!Util::checkFields($data))
+					if (!Util::checkFields($data))
 					{
-						$this->app->enqueueMessage(Text::_('PLG_JUPWA_REQUIRED_FILEDS_FOR_PUSH'), 'danger');
+						$this->app->enqueueMessage(
+							Text::_('PLG_JUPWA_REQUIRED_FILEDS_FOR_PUSH'),
+							'danger'
+						);
 					}
 
 					Push::checkAjaxPlugin();
@@ -108,9 +114,9 @@ class plgSystemJUPWA extends CMSPlugin
 				'site'        => $this->app->get('sitename'),
 				'description' => $this->app->get('MetaDesc'),
 			]);
-			Assetinks::create([ 'param' => $post_param ]);
+			Assetinks::create(['param' => $post_param]);
 			Manifest::addVersion();
-			ServiceWorker::create([ 'param' => $post_param ]);
+			ServiceWorker::create(['param' => $post_param]);
 		}
 	}
 
@@ -122,17 +128,17 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterRender(): void
 	{
-		if(!$this->app->isClient('site'))
+		if (!$this->app->isClient('site'))
 		{
 			return;
 		}
 
-		if(strpos(Uri::current(), '/account') !== false)
+		if (strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
 
-		if($this->app->getDocument()->getType() !== 'html')
+		if ($this->app->getDocument()->getType() !== 'html')
 		{
 			return;
 		}
@@ -147,9 +153,13 @@ class plgSystemJUPWA extends CMSPlugin
 		/*
 		 * PWA Install
 		 */
-		if($this->params->get('usepwainstall') == 1)
+		if ($this->params->get('usepwainstall') == 1)
 		{
-			$buffer = str_replace('</body>', PWAInstall::panel($this->params) . '</body>', $buffer);
+			$buffer = str_replace(
+				'</body>',
+				PWAInstall::panel($this->params).'</body>',
+				$buffer
+			);
 
 			$this->checkBuffer($buffer);
 		}
@@ -157,11 +167,11 @@ class plgSystemJUPWA extends CMSPlugin
 		/*
 		 * PWA Widget
 		 */
-		if(Push::isPush([ 'params' => $this->params ]))
+		if (Push::isPush(['params' => $this->params]))
 		{
 			$widget = Util::tmpl('widget', [
 				'params'  => $this->params,
-				'version' => $this->jupwa_js_version
+				'version' => $this->jupwa_js_version,
 			]);
 			$widget = '<template id="jupwa-widget-tpl">'.$widget.'</template>';
 			$buffer = str_replace('</body>', $widget.'</body>', $buffer);
@@ -172,21 +182,21 @@ class plgSystemJUPWA extends CMSPlugin
 		/*
 		 * Replace <html> for support OG-tags
 		 */
-		if($this->params->get('og') == 1)
+		if ($this->params->get('og') == 1)
 		{
 			$regex  = '#<html(.*?)>#m';
 			$buffer = preg_replace_callback($regex, [
 				HTML::class,
-				'tag_html'
+				'tag_html',
 			], $buffer);
 			$this->checkBuffer($buffer);
 
-			if(preg_match('#<!DOCTYPE html>#', $buffer))
+			if (preg_match('#<!DOCTYPE html>#', $buffer))
 			{
 				$buffer = str_replace([
 					'xmlns="http://www.w3.org/1999/xhtml"',
-					'  '
-				], [ '', ' ' ], $buffer);
+					'  ',
+				], ['', ' '], $buffer);
 				$this->checkBuffer($buffer);
 			}
 		}
@@ -194,7 +204,7 @@ class plgSystemJUPWA extends CMSPlugin
 		/*
 		 * Remove generator
 		 */
-		if($this->params->get('jgenerator') == 1)
+		if ($this->params->get('jgenerator') == 1)
 		{
 			$regex  = '#<meta name="generator" content="(.*?)".*?>#m';
 			$buffer = preg_replace($regex, '', $buffer);
@@ -205,7 +215,7 @@ class plgSystemJUPWA extends CMSPlugin
 		/*
 		 * Remove keywords
 		 */
-		if($this->params->get('keywords') == 1)
+		if ($this->params->get('keywords') == 1)
 		{
 			$regex  = '#<meta name="keywords" content="(.*?)".*?>#m';
 			$buffer = preg_replace($regex, '', $buffer);
@@ -216,10 +226,16 @@ class plgSystemJUPWA extends CMSPlugin
 		/*
 		 * Remove Joomla author
 		 */
-		if($this->params->get('jauthor') == 1)
+		if ($this->params->get('jauthor') == 1)
 		{
 			$regex  = '#<meta name="author" content="(.*?)".*?>#m';
-			$buffer = preg_replace($regex, '<meta name="author" content="' . $this->app->get('sitename') . '">', $buffer);
+			$buffer = preg_replace(
+				$regex,
+				'<meta name="author" content="'.$this->app->get(
+					'sitename'
+				).'">',
+				$buffer
+			);
 
 			$this->checkBuffer($buffer);
 		}
@@ -245,7 +261,7 @@ class plgSystemJUPWA extends CMSPlugin
 		$buffer = preg_replace($regex, '', $buffer);
 		$this->checkBuffer($buffer);
 
-		if(!$this->params->get('source_icon_svg'))
+		if (!$this->params->get('source_icon_svg'))
 		{
 			$regex  = '#<link href=".*?" rel="icon" type="image/svg\+xml".*?>#m';
 			$buffer = preg_replace($regex, '', $buffer);
@@ -258,7 +274,7 @@ class plgSystemJUPWA extends CMSPlugin
 		/*
 		 * Compress html
 		 */
-		if($this->params->get('htmlcompress') == 1)
+		if ($this->params->get('htmlcompress') == 1)
 		{
 			$buffer = HTML::compress($buffer);
 			$this->checkBuffer($buffer);
@@ -270,32 +286,38 @@ class plgSystemJUPWA extends CMSPlugin
 		 * Add cache support
 		 */
 		$exclusion = $this->params->get('cache_exclusion', '');
-		if($exclusion !== '')
+		if ($exclusion !== '')
 		{
 			$urls = explode("\r\n", $exclusion);
-			foreach($urls as $url)
+			foreach ($urls as $url)
 			{
-				if(strpos(Uri::current(), $url) !== false)
+				if (strpos(Uri::current(), $url) !== false)
 				{
 					return;
 				}
 			}
 		}
 
-		if($this->params->get('joomla_cache', 0) == 1)
+		if ($this->params->get('joomla_cache', 0) == 1)
 		{
 			$this->app->allowCache(true);
 
-			if($this->params->get('cachecontrol', 0) == 1)
+			if ($this->params->get('cachecontrol', 0) == 1)
 			{
-				$this->app->setHeader('Cache-Control', 'public, max-age=' . $this->params->get('expirestime'), true);
+				$this->app->setHeader(
+					'Cache-Control',
+					'public, max-age='.$this->params->get('expirestime'),
+					true
+				);
 			}
 
-			if($this->params->get('expires', 0) == 1)
+			if ($this->params->get('expires', 0) == 1)
 			{
 				$date = new DateTime();
 				$date->setTimezone(new DateTimeZone('GMT'));
-				$expireheader = $date->setTimestamp(time() + $this->params->get('expirestime'))->format('D, d M Y H:i:s T');
+				$expireheader = $date->setTimestamp(
+					time() + $this->params->get('expirestime')
+				)->format('D, d M Y H:i:s T');
 				$this->app->setHeader('Expires', $expireheader, true);
 			}
 		}
@@ -310,29 +332,29 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterRoute(): void
 	{
-		if(!$this->app->isClient('site'))
+		if (!$this->app->isClient('site'))
 		{
 			return;
 		}
 
-		if(strpos(Uri::current(), '/account') !== false)
+		if (strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
 
-		if($this->params->get('joomla_cache', 0) == 1)
+		if ($this->params->get('joomla_cache', 0) == 1)
 		{
-			if(strpos(JURI::current(), '/account') !== false)
+			if (strpos(JURI::current(), '/account') !== false)
 			{
 				$this->app->getConfig()->set('caching', 0);
 			}
 
-			if(!$this->app->getIdentity()->guest)
+			if (!$this->app->getIdentity()->guest)
 			{
 				$this->app->getConfig()->set('caching', 0);
 			}
 
-			if($this->checkRules())
+			if ($this->checkRules())
 			{
 				$this->caching = $this->app->getConfig()->get('caching');
 
@@ -350,49 +372,84 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onAfterDispatch(): void
 	{
-		if(!$this->app->isClient('site'))
+		if (!$this->app->isClient('site'))
 		{
 			return;
 		}
 
-		if(strpos(Uri::current(), '/account') !== false)
+		if (strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
 
 		$doc = $this->app->getDocument();
-		if(!($doc instanceof HtmlDocument))
+		if (!($doc instanceof HtmlDocument))
 		{
 			return;
 		}
 
 		$wa = $doc->getWebAssetManager();
 
-		if(Push::isPush([ 'params' => $this->params ]))
+		if (Push::isPush(['params' => $this->params]))
 		{
-			$wa->registerAndUseStyle('push', Uri::root() . 'media/jupwa/css/app.push.' . $this->jupwa_js_version . '.css', [ 'version' => false ]);
-			$doc->addHeadLink(Uri::root() . 'media/jupwa/css/app.push.' . $this->jupwa_js_version . '.css', 'preload prefetch', 'rel', [ 'as' => 'style' ]);
+			$wa->registerAndUseStyle(
+				'push',
+				Uri::root(
+				).'media/jupwa/css/app.push.'.$this->jupwa_js_version.'.css',
+				['version' => false]
+			);
+			$doc->addHeadLink(
+				Uri::root(
+				).'media/jupwa/css/app.push.'.$this->jupwa_js_version.'.css',
+				'preload prefetch',
+				'rel',
+				['as' => 'style']
+			);
 
-			$wa->registerAndUseScript('push', Uri::root() . 'media/jupwa/js/push.' . $this->jupwa_js_version . '.js', [ 'version' => false ], [
-				'defer'         => 'defer',
-				'fetchpriority' => 'auto'
-			]);
+			$wa->registerAndUseScript(
+				'push',
+				Uri::root(
+				).'media/jupwa/js/push.'.$this->jupwa_js_version.'.js',
+				['version' => false],
+				[
+					'defer'         => 'defer',
+					'fetchpriority' => 'auto',
+				]
+			);
 
-			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/push.' . $this->jupwa_js_version . '.js', 'preload prefetch', 'rel', [
-				'as' => 'script'
-			]);
+			$doc->addHeadLink(
+				Uri::root(
+				).'media/jupwa/js/push.'.$this->jupwa_js_version.'.js',
+				'preload prefetch',
+				'rel',
+				[
+					'as' => 'script',
+				]
+			);
 		}
 
-		if($this->params->get('usepwainstall') == 1)
+		if ($this->params->get('usepwainstall') == 1)
 		{
-			$wa->registerAndUseScript('jupwa', Uri::root() . 'media/jupwa/js/jupwa.' . $this->jupwa_js_version . '.js', [ 'version' => false ], [
-				'defer'         => 'defer',
-				'fetchpriority' => 'auto'
-			]);
+			$wa->registerAndUseScript(
+				'jupwa',
+				Uri::root(
+				).'media/jupwa/js/jupwa.'.$this->jupwa_js_version.'.js',
+				['version' => false],
+				[
+					'defer'         => 'defer',
+					'fetchpriority' => 'auto',
+				]
+			);
 
-			$doc->addHeadLink(Uri::root() . 'media/jupwa/js/jupwa.' . $this->jupwa_js_version . '.js', 'preload prefetch', 'rel', [
-				'as' => 'script'
-			]);
+			$doc->addHeadLink(
+				Uri::root(
+				).'media/jupwa/js/jupwa.'.$this->jupwa_js_version.'.js',
+				'preload prefetch',
+				'rel',
+				[
+					'as' => 'script',
+				]
+			);
 		}
 	}
 
@@ -405,17 +462,17 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onBeforeCompileHead()
 	{
-		if(!$this->app->isClient('site'))
+		if (!$this->app->isClient('site'))
 		{
 			return;
 		}
 
-		if(strpos(Uri::current(), '/account') !== false)
+		if (strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
 
-		if($this->app->getDocument()->getType() !== 'html')
+		if ($this->app->getDocument()->getType() !== 'html')
 		{
 			return;
 		}
@@ -424,22 +481,22 @@ class plgSystemJUPWA extends CMSPlugin
 
 		$view       = $this->app->input->get('view');
 		$component  = $this->app->input->getCmd('option');
-		$use_access = $this->app->triggerEvent('onJUPWAAccess', [ $component ]);
+		$use_access = $this->app->triggerEvent('onJUPWAAccess', [$component]);
 
-		if($component === 'com_finder')
+		if ($component === 'com_finder')
 		{
 			return true;
 		}
 
-		if($view !== 'article')
+		if ($view !== 'article')
 		{
 			$access = true;
-			foreach($use_access as $ua)
+			foreach ($use_access as $ua)
 			{
 				$access = $ua;
 			}
 
-			if($access === false)
+			if ($access === false)
 			{
 				$image       = $this->coreTags()->image;
 				$title       = $this->coreTags()->title;
@@ -453,34 +510,34 @@ class plgSystemJUPWA extends CMSPlugin
 					'image'        => $img->image,
 					'image_width'  => $img->width,
 					'image_height' => $img->height,
-					'description'  => $description
+					'description'  => $description,
 				]);
 
 				OG::twitter([
 					'params'      => $this->params,
 					'title'       => $title,
 					'image'       => $image,
-					'description' => $description
+					'description' => $description,
 				]);
 			}
 		}
 
 		// Integration
-		$this->app->triggerEvent('onJUPWASchema', [ $this->params ]);
+		$this->app->triggerEvent('onJUPWASchema', [$this->params]);
 
-		if($this->params->get('tw') == 1)
+		if ($this->params->get('tw') == 1)
 		{
-			$this->app->triggerEvent('onJUPWATwitter', [ $this->params ]);
+			$this->app->triggerEvent('onJUPWATwitter', [$this->params]);
 		}
 
-		if($this->params->get('og') == 1)
+		if ($this->params->get('og') == 1)
 		{
-			$this->app->triggerEvent('onJUPWAOG', [ $this->params ]);
+			$this->app->triggerEvent('onJUPWAOG', [$this->params]);
 		}
 
-		Push::render([ 'params' => $this->params ]);
+		Push::render(['params' => $this->params]);
 
-		META::render([ 'params' => $this->params ]);
+		META::render(['params' => $this->params]);
 	}
 
 	/**
@@ -494,25 +551,28 @@ class plgSystemJUPWA extends CMSPlugin
 	 */
 	public function onContentPrepare($context, &$article)
 	{
-		if(!$this->app->isClient('site'))
+		if (!$this->app->isClient('site'))
 		{
 			return;
 		}
 
-		if(strpos(Uri::current(), '/account') !== false)
+		if (strpos(Uri::current(), '/account') !== false)
 		{
 			return;
 		}
 
-		if($this->app->getDocument()->getType() !== 'html')
+		if ($this->app->getDocument()->getType() !== 'html')
 		{
 			return;
 		}
 
 		$integration = PluginHelper::importPlugin('jupwa');
-		$use_access  = $this->app->triggerEvent('onJUPWAAccess', [ $context ]);
+		$use_access  = $this->app->triggerEvent('onJUPWAAccess', [$context]);
 
-		if($context === 'com_finder.indexer' || ($integration && !in_array($context, $use_access)))
+		if ($context === 'com_finder.indexer' || ($integration && !in_array(
+					$context,
+					$use_access
+				)))
 		{
 			return true;
 		}
@@ -521,20 +581,20 @@ class plgSystemJUPWA extends CMSPlugin
 		$this->app->triggerEvent('onJUPWAArticleSchema', [
 			$article,
 			$this->params,
-			$context
+			$context,
 		]);
 		$this->app->triggerEvent('onJUPWAArticleTwitter', [
 			$article,
 			$this->params,
-			$context
+			$context,
 		]);
 		$this->app->triggerEvent('onJUPWAArticleOG', [
 			$article,
 			$this->params,
-			$context
+			$context,
 		]);
 
-		if($integration === null)
+		if ($integration === null)
 		{
 			$image       = $this->coreTags()->image;
 			$title       = $this->coreTags()->title;
@@ -548,14 +608,14 @@ class plgSystemJUPWA extends CMSPlugin
 				'image'        => $img->image,
 				'image_width'  => $img->width,
 				'image_height' => $img->height,
-				'description'  => $description
+				'description'  => $description,
 			]);
 
 			OG::twitter([
 				'params'      => $this->params,
 				'title'       => $title,
 				'image'       => $image,
-				'description' => $description
+				'description' => $description,
 			]);
 		}
 
@@ -563,7 +623,7 @@ class plgSystemJUPWA extends CMSPlugin
 	}
 
 	/**
-	 * @param null $plugin_image
+	 * @param   null  $plugin_image
 	 *
 	 * @return object
 	 * @throws \Exception
@@ -574,17 +634,22 @@ class plgSystemJUPWA extends CMSPlugin
 		$doc  = $this->app->getDocument();
 		$lang = $this->app->getLanguage();
 
-		$image = Images::display_default($this->params->get('selectimg', 0), $this->params->get('image', ''), $this->params->get('imagemain', ''));
+		$image = Images::display_default(
+			$this->params->get('selectimg', 0),
+			$this->params->get('image', ''),
+			$this->params->get('imagemain', '')
+		);
 
 		$title = HTML::text($doc->getTitle());
-		if($this->app->getMenu()->getActive() !== $this->app->getMenu()->getDefault($lang->getTag()))
+		if ($this->app->getMenu()->getActive() !== $this->app->getMenu(
+			)->getDefault($lang->getTag()))
 		{
 			$title = $this->app->getMenu()->getActive()->title;
 		}
 
 		$description = HTML::html($doc->getMetaData('description'));
 
-		if($plugin_image)
+		if ($plugin_image)
 		{
 			$image = $plugin_image;
 		}
@@ -595,23 +660,23 @@ class plgSystemJUPWA extends CMSPlugin
 			'title'       => $title,
 			'description' => $description,
 			'image'       => $image,
-			'img'         => $img
+			'img'         => $img,
 		];
 	}
 
 	/**
 	 * Check the buffer.
 	 *
-	 * @param string $buffer Buffer to be checked.
+	 * @param   string  $buffer  Buffer to be checked.
 	 *
 	 * @return  void
 	 * @since 1.0
 	 */
 	private function checkBuffer(string $buffer): void
 	{
-		if($buffer === null)
+		if ($buffer === null)
 		{
-			switch(preg_last_error())
+			switch (preg_last_error())
 			{
 				case PREG_BACKTRACK_LIMIT_ERROR:
 					$message = 'PHP regular expression limit reached (pcre.backtrack_limit)';
@@ -641,21 +706,26 @@ class plgSystemJUPWA extends CMSPlugin
 		$defs = str_replace("\r", "", $this->params->get('definitions', ''));
 		$defs = explode("\n", $defs);
 
-		foreach($defs as $def)
+		foreach ($defs as $def)
 		{
 			$result = $this->parseQueryString($def);
-			if(is_array($result))
+			if (is_array($result))
 			{
 				$found    = 0;
 				$required = count($result);
-				foreach($result as $key => $value)
+				foreach ($result as $key => $value)
 				{
-					if($this->app->getInput()->get($key) == $value || ($this->app->getInput()->get($key, null) !== null && $value === '?'))
+					if ($this->app->getInput()->get(
+							$key
+						) == $value || ($this->app->getInput()->get(
+								$key,
+								null
+							) !== null && $value === '?'))
 					{
 						$found++;
 					}
 				}
-				if($found == $required)
+				if ($found == $required)
 				{
 					return true;
 				}
@@ -676,9 +746,9 @@ class plgSystemJUPWA extends CMSPlugin
 	{
 		$op    = [];
 		$pairs = explode("&", $str);
-		foreach($pairs as $pair)
+		foreach ($pairs as $pair)
 		{
-			[ $k, $v ] = array_map("urldecode", explode("=", $pair));
+			[$k, $v] = array_map("urldecode", explode("=", $pair));
 			$op[ $k ] = $v;
 		}
 
