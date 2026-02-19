@@ -53,6 +53,7 @@
     "@khmyznikov/pwa-install": "^0.6.2",
     "axios": "^1.13.2",
     "firebase": "^12.8.0",
+    "firebase": "^12.9.0",
     "simple-notify": "^1.0.6"
   }
 }
