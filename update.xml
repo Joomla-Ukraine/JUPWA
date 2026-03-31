@@ -2,14 +2,14 @@
 <updates>
     <update>
         <name>JUPWA</name>
-        <description><![CDATA[JUPWA - Progressive Web Application (PWA) for Joomla!.<br />Update to JUPWA 2.5.11 now!<br /><span style="font-size: 85%;">2026 &copy; Joomla! Ukraine. All rights reserved!</span>]]></description>
+        <description><![CDATA[JUPWA - Progressive Web Application (PWA) for Joomla!.<br />Update to JUPWA 2.5.12 now!<br /><span style="font-size: 85%;">2026 &copy; Joomla! Ukraine. All rights reserved!</span>]]></description>
         <element>pkg_jupwa</element>
         <type>package</type>
-        <version>2.5.11</version>
+        <version>2.5.12</version>
         <infourl title="Joomla! Ukraine">https://github.com/Joomla-Ukraine/JUPWA</infourl>
         <downloads>
             <downloadurl type="full"
-                         format="zip">https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.5.11/pkg_jupwa_v2.5.11.zip</downloadurl>
+                         format="zip">https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.5.12/pkg_jupwa_v2.5.12.zip</downloadurl>
         </downloads>
         <tags>
             <tag>stable</tag>
@@ -22,6 +22,6 @@
         <targetplatform name="joomla"
                         version="4\.*|5\.*" />
         <php_minimum>8.1</php_minimum>
-        <sha256>50fb63e0cd12b04e3c9131160e10598a0fc0c5110fde1482c48aebae2f15ecfa</sha256>
+        <sha256>1a36d06aa1e97fe152642115f6cc97066b976b4357d9cb78b772a13721aa28b7</sha256>
     </update>
 </updates>

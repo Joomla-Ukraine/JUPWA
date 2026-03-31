@@ -3,47 +3,47 @@
          basedir=".">
 
     <property name="VERSION"
-              value="2.5.11" />
+              value="2.6.0"/>
     <property name="JOOMLA"
-              value="4.0" />
+              value="4.0"/>
 
     <tstamp>
         <format property="DATE"
-                pattern="%d.%m.%Y" />
+                pattern="%d.%m.%Y"/>
     </tstamp>
 
-	<tstamp>
-	    <format property="YEAR"
-	            pattern="%Y" />
+    <tstamp>
+        <format property="YEAR"
+                pattern="%Y"/>
     </tstamp>
 
     <property name="build"
-              value="build" />
+              value="build"/>
     <property name="temp"
-              value="temp" />
+              value="temp"/>
     <property name="dist"
-              value="dist" />
+              value="dist"/>
 
     <property name="filename"
-              value="pkg_jupwa_v${VERSION}.zip" />
+              value="pkg_jupwa_v${VERSION}.zip"/>
 
     <target name="init"
             depends="clean">
-        <mkdir dir="${build}" />
-        <mkdir dir="${temp}" />
-        <mkdir dir="${dist}" />
+        <mkdir dir="${build}"/>
+        <mkdir dir="${temp}"/>
+        <mkdir dir="${dist}"/>
     </target>
 
     <target name="temp">
         <copy todir="${temp}/language">
             <fileset dir="language">
-                <include name="**" />
+                <include name="**"/>
             </fileset>
         </copy>
 
         <copy todir="${temp}">
             <fileset dir="packages">
-                <include name="**" />
+                <include name="**"/>
             </fileset>
         </copy>
     </target>
@@ -54,33 +54,33 @@
             <filterchain>
                 <replacetokens>
                     <token key="version"
-                           value="${VERSION}" />
+                           value="${VERSION}"/>
                     <token key="date"
-                           value="${DATE}" />
-	                <token key="year"
-	                       value="${YEAR}" />
+                           value="${DATE}"/>
+                    <token key="year"
+                           value="${YEAR}"/>
                 </replacetokens>
             </filterchain>
         </copy>
 
-	    <!---->
+        <!---->
 
-	    <delete file="${temp}/plg_system_jupwa/libraries/composer.json" />
-        <delete file="${temp}/plg_system_jupwa/libraries/composer.lock" />
-        <delete file="${temp}/plg_system_jupwa/libraries/vendor/marc1706/fast-image-size/composer.lock" />
+        <delete file="${temp}/plg_system_jupwa/libraries/composer.json"/>
+        <delete file="${temp}/plg_system_jupwa/libraries/composer.lock"/>
+        <delete file="${temp}/plg_system_jupwa/libraries/vendor/marc1706/fast-image-size/composer.lock"/>
 
-	    <!---->
+        <!---->
 
-	    <!--<copy file="packages/plg_console_jupwa_seblod/jupwa_seblod.xml"
-	          todir="${temp}/temp/plg_console_jupwa_seblod">
+        <!--<copy file="packages/plg_console_jupwa_seblod/jupwa_seblod.xml"
+              todir="${temp}/temp/plg_console_jupwa_seblod">
             <filterchain>
                 <replacetokens>
                     <token key="version"
                            value="${VERSION}" />
                     <token key="date"
                            value="${DATE}" />
-	                <token key="year"
-	                       value="${YEAR}" />
+                    <token key="year"
+                           value="${YEAR}" />
                 </replacetokens>
             </filterchain>
         </copy>
@@ -89,217 +89,217 @@
         <copy file="${temp}/temp/plg_console_jupwa_seblod/jupwa_seblod.xml"
               todir="${temp}/plg_console_jupwa_seblod" />-->
 
-	    <!---->
+        <!---->
 
-	    <copy file="packages/plg_console_jupwa_content/jupwa_content.xml"
-	          todir="${temp}/temp/plg_console_jupwa_content">
+        <copy file="packages/plg_console_jupwa_content/jupwa_content.xml"
+              todir="${temp}/temp/plg_console_jupwa_content">
             <filterchain>
                 <replacetokens>
                     <token key="version"
-                           value="${VERSION}" />
+                           value="${VERSION}"/>
                     <token key="date"
-                           value="${DATE}" />
-	                <token key="year"
-	                       value="${YEAR}" />
+                           value="${DATE}"/>
+                    <token key="year"
+                           value="${YEAR}"/>
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <delete file="${temp}/plg_console_jupwa_content/jupwa_content.xml" />
+        <delete file="${temp}/plg_console_jupwa_content/jupwa_content.xml"/>
         <copy file="${temp}/temp/plg_console_jupwa_content/jupwa_content.xml"
-              todir="${temp}/plg_console_jupwa_content" />
+              todir="${temp}/plg_console_jupwa_content"/>
 
-	    <!---->
+        <!---->
 
-	    <copy file="packages/plg_system_jupwa/jupwa.xml"
-	          todir="${temp}/temp/plg_system_jupwa">
+        <copy file="packages/plg_system_jupwa/jupwa.xml"
+              todir="${temp}/temp/plg_system_jupwa">
             <filterchain>
                 <replacetokens>
                     <token key="version"
-                           value="${VERSION}" />
+                           value="${VERSION}"/>
                     <token key="date"
-                           value="${DATE}" />
-	                <token key="year"
-	                       value="${YEAR}" />
+                           value="${DATE}"/>
+                    <token key="year"
+                           value="${YEAR}"/>
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <delete file="${temp}/plg_system_jupwa/jupwa.xml" />
+        <delete file="${temp}/plg_system_jupwa/jupwa.xml"/>
         <copy file="${temp}/temp/plg_system_jupwa/jupwa.xml"
-              todir="${temp}/plg_system_jupwa" />
+              todir="${temp}/plg_system_jupwa"/>
 
-	    <!---->
+        <!---->
 
-	    <copy file="packages/plg_jupwa_content/content.xml"
-	          todir="${temp}/temp/plg_jupwa_content">
+        <copy file="packages/plg_jupwa_content/content.xml"
+              todir="${temp}/temp/plg_jupwa_content">
             <filterchain>
                 <replacetokens>
                     <token key="version"
-                           value="${VERSION}" />
+                           value="${VERSION}"/>
                     <token key="date"
-                           value="${DATE}" />
-	                <token key="year"
-	                       value="${YEAR}" />
+                           value="${DATE}"/>
+                    <token key="year"
+                           value="${YEAR}"/>
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <delete file="${temp}/plg_jupwa_content/content.xml" />
+        <delete file="${temp}/plg_jupwa_content/content.xml"/>
         <copy file="${temp}/temp/plg_jupwa_content/content.xml"
-              todir="${temp}/plg_jupwa_content" />
+              todir="${temp}/plg_jupwa_content"/>
 
-	    <!---->
+        <!---->
 
-	    <copy file="packages/plg_jupwa_jshopping/jshopping.xml"
-	          todir="${temp}/temp/plg_jupwa_jshopping">
+        <copy file="packages/plg_jupwa_jshopping/jshopping.xml"
+              todir="${temp}/temp/plg_jupwa_jshopping">
             <filterchain>
                 <replacetokens>
                     <token key="version"
-                           value="${VERSION}" />
+                           value="${VERSION}"/>
                     <token key="date"
-                           value="${DATE}" />
-	                <token key="year"
-	                       value="${YEAR}" />
+                           value="${DATE}"/>
+                    <token key="year"
+                           value="${YEAR}"/>
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <delete file="${temp}/plg_jupwa_jshopping/jshopping.xml" />
+        <delete file="${temp}/plg_jupwa_jshopping/jshopping.xml"/>
         <copy file="${temp}/temp/plg_jupwa_jshopping/jshopping.xml"
-              todir="${temp}/plg_jupwa_jshopping" />
+              todir="${temp}/plg_jupwa_jshopping"/>
 
-	    <!---->
+        <!---->
 
-	    <copy file="packages/plg_jupwa_seblod/seblod.xml"
-	          todir="${temp}/temp/plg_jupwa_seblod">
-			<filterchain>
-				<replacetokens>
-					<token key="version"
-					       value="${VERSION}" />
-					<token key="date"
-					       value="${DATE}" />
-					<token key="year"
-					       value="${YEAR}" />
-				</replacetokens>
-			</filterchain>
-		</copy>
-
-		<delete file="${temp}/plg_jupwa_seblod/seblod.xml" />
-		<copy file="${temp}/temp/plg_jupwa_seblod/seblod.xml"
-		      todir="${temp}/plg_jupwa_seblod" />
-
-	    <!---->
-
-	    <copy file="packages/plg_ajax_jupwapush/jupwapush.xml"
-	          todir="${temp}/temp/plg_ajax_jupwapush">
+        <copy file="packages/plg_jupwa_seblod/seblod.xml"
+              todir="${temp}/temp/plg_jupwa_seblod">
             <filterchain>
                 <replacetokens>
                     <token key="version"
-                           value="${VERSION}" />
+                           value="${VERSION}"/>
                     <token key="date"
-                           value="${DATE}" />
-	                <token key="year"
-	                       value="${YEAR}" />
+                           value="${DATE}"/>
+                    <token key="year"
+                           value="${YEAR}"/>
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <delete file="${temp}/plg_ajax_jupwapush/jupwapush.xml" />
+        <delete file="${temp}/plg_jupwa_seblod/seblod.xml"/>
+        <copy file="${temp}/temp/plg_jupwa_seblod/seblod.xml"
+              todir="${temp}/plg_jupwa_seblod"/>
+
+        <!---->
+
+        <copy file="packages/plg_ajax_jupwapush/jupwapush.xml"
+              todir="${temp}/temp/plg_ajax_jupwapush">
+            <filterchain>
+                <replacetokens>
+                    <token key="version"
+                           value="${VERSION}"/>
+                    <token key="date"
+                           value="${DATE}"/>
+                    <token key="year"
+                           value="${YEAR}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <delete file="${temp}/plg_ajax_jupwapush/jupwapush.xml"/>
         <copy file="${temp}/temp/plg_ajax_jupwapush/jupwapush.xml"
-              todir="${temp}/plg_ajax_jupwapush" />
+              todir="${temp}/plg_ajax_jupwapush"/>
 
     </target>
 
     <target name="pack-plugins">
-        <mkdir dir="${build}/packages" />
+        <mkdir dir="${build}/packages"/>
 
         <zip destfile="${build}/packages/plg_system_jupwa.zip"
              description="plg_jupwa">
-            <fileset dir="${temp}/plg_system_jupwa" />
+            <fileset dir="${temp}/plg_system_jupwa"/>
         </zip>
 
-	    <!--<zip destfile="${build}/packages/plg_console_jupwa_seblod.zip"
-	         description="plg_console_jupwa_seblod">
+        <!--<zip destfile="${build}/packages/plg_console_jupwa_seblod.zip"
+             description="plg_console_jupwa_seblod">
             <fileset dir="${temp}/plg_console_jupwa_seblod" />
         </zip>-->
 
-	    <zip destfile="${build}/packages/plg_console_jupwa_content.zip"
-	         description="plg_console_jupwa_content">
-            <fileset dir="${temp}/plg_console_jupwa_content" />
+        <zip destfile="${build}/packages/plg_console_jupwa_content.zip"
+             description="plg_console_jupwa_content">
+            <fileset dir="${temp}/plg_console_jupwa_content"/>
         </zip>
 
         <zip destfile="${build}/packages/plg_jupwa_content.zip"
              description="plg_jupwa_content">
-            <fileset dir="${temp}/plg_jupwa_content" />
+            <fileset dir="${temp}/plg_jupwa_content"/>
         </zip>
 
         <zip destfile="${build}/packages/plg_jupwa_jshopping.zip"
              description="plg_jupwa_jshopping">
-            <fileset dir="${temp}/plg_jupwa_jshopping" />
+            <fileset dir="${temp}/plg_jupwa_jshopping"/>
         </zip>
 
-		<zip destfile="${build}/packages/plg_jupwa_seblod.zip"
-		     description="plg_jupwa_seblod">
-			<fileset dir="${temp}/plg_jupwa_seblod" />
-		</zip>
-
-	    <zip destfile="${build}/packages/plg_ajax_jupwapush.zip"
-	         description="plg_ajax_jupwapush">
-            <fileset dir="${temp}/plg_ajax_jupwapush" />
+        <zip destfile="${build}/packages/plg_jupwa_seblod.zip"
+             description="plg_jupwa_seblod">
+            <fileset dir="${temp}/plg_jupwa_seblod"/>
         </zip>
 
-	    <copy todir="${build}/language">
+        <zip destfile="${build}/packages/plg_ajax_jupwapush.zip"
+             description="plg_ajax_jupwapush">
+            <fileset dir="${temp}/plg_ajax_jupwapush"/>
+        </zip>
+
+        <copy todir="${build}/language">
             <fileset dir="${temp}/language">
-                <include name="**" />
+                <include name="**"/>
             </fileset>
         </copy>
 
-	    <copy file="pkg_jupwa.xml"
-	          todir="${build}" />
+        <copy file="pkg_jupwa.xml"
+              todir="${build}"/>
 
         <copy file="script.php"
-              todir="${build}" />
+              todir="${build}"/>
     </target>
 
     <target name="dist"
             depends="init, temp, replace, pack-plugins">
         <zip destfile="${dist}/${filename}">
             <fileset dir="${build}/">
-                <include name="**/**" />
+                <include name="**/**"/>
             </fileset>
         </zip>
 
-		<exec command="sha256sum ${dist}/pkg_jupwa_v${VERSION}.zip | awk '{print $1}'"
-		      outputProperty="archive.sha256"
-		      checkreturn="true" />
+        <exec command="sha256sum ${dist}/pkg_jupwa_v${VERSION}.zip | awk '{print $1}'"
+              outputProperty="archive.sha256"
+              checkreturn="true"/>
 
-	    <delete file="update.xml" />
+        <delete file="update.xml"/>
 
-	    <copy file="build_update.xml"
-	          tofile="update.xml">
+        <copy file="build_update.xml"
+              tofile="update.xml">
             <filterchain>
                 <replacetokens>
-	                 <token key="cheksum"
-	                        value="${archive.sha256}" />
+                    <token key="cheksum"
+                           value="${archive.sha256}"/>
                     <token key="version"
-                           value="${VERSION}" />
+                           value="${VERSION}"/>
                     <token key="date"
-                           value="${DATE}" />
-	                <token key="year"
-	                       value="${YEAR}" />
+                           value="${DATE}"/>
+                    <token key="year"
+                           value="${YEAR}"/>
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <echo msg="Removing old files..." />
-        <delete dir="${build}" />
-        <delete dir="${temp}" />
+        <echo msg="Removing old files..."/>
+        <delete dir="${build}"/>
+        <delete dir="${temp}"/>
     </target>
 
     <target name="clean">
-        <delete dir="${build}" />
-        <delete dir="${temp}" />
+        <delete dir="${build}"/>
+        <delete dir="${temp}"/>
     </target>
 
 </project>
