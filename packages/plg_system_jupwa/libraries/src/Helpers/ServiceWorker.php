@@ -19,100 +19,113 @@ use JUPWA\Utils\Util;
 
 class ServiceWorker
 {
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function create(array $option = []): void
-	{
-		$app = Factory::getApplication();
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function create(array $option = []): void
+    {
+        $app = Factory::getApplication();
 
-		$apiKey                 = trim($option[ 'param' ][ 'apiKey' ]) ?? '';
-		$projectId              = trim($option[ 'param' ][ 'projectId' ]) ?? '';
-		$messagingSenderId      = trim($option[ 'param' ][ 'messagingSenderId' ]) ?? '';
-		$appId                  = trim($option[ 'param' ][ 'appId' ]) ?? '';
-		$firebaseServiceAccount = trim($option[ 'param' ][ 'firebaseServiceAccount' ]) ?? '';
+        $apiKey = trim($option['param']['apiKey']) ?? '';
+        $projectId = trim($option['param']['projectId']) ?? '';
+        $messagingSenderId = trim($option['param']['messagingSenderId']) ?? '';
+        $appId = trim($option['param']['appId']) ?? '';
+        $firebaseServiceAccount = trim($option['param']['firebaseServiceAccount']) ?? '';
 
-		$import_scripts = "";
-		if($option[ 'param' ][ 'usepwa' ] == 1)
-		{
-			$import_scripts .= "importScripts('" . Data::$workbox . "');\n";
-		}
+        $import_scripts = "";
+        if ($option['param']['usepwa'] == 1) {
+            $import_scripts .= "importScripts('".Data::$workbox."');\n";
+        }
 
-		if($option[ 'param' ][ 'usepush' ] == 1)
-		{
-			$import_scripts .= "importScripts('" . Data::$firebase_app . "');\n";
-			$import_scripts .= "importScripts('" . Data::$firebase_messaging . "');\n";
-		}
+        if ($option['param']['usepush'] == 1) {
+            $import_scripts .= "importScripts('".Data::$firebase_app."');\n";
+            $import_scripts .= "importScripts('".Data::$firebase_messaging."');\n";
+        }
 
-		if($option[ 'param' ][ 'usepwa' ] == 1 || $option[ 'param' ][ 'usepush' ] == 1)
-		{
-			$import_scripts .= "\n\n";
-		}
+        if (
+            $option['param']['usepwa'] == 1 ||
+            $option['param']['usepush'] == 1
+        ) {
+            $import_scripts .= "\n\n";
+        }
 
-		if($option[ 'param' ][ 'usepwa' ] == 1)
-		{
-			$pwa_data = Util::tmpl('sw', [
-				'pwa_version' => Manifest::getVersion()
-			]);
+        if ($option['param']['usepwa'] == 1) {
+            $pwa_data = Util::tmpl('sw', [
+                'pwa_version' => Manifest::getVersion(),
+            ]);
 
-			$pwa_firebase = '';
-			if($option[ 'param' ][ 'usepush' ] == 1 && $apiKey && $projectId && $messagingSenderId && $appId)
-			{
-				$pwa_firebase .= "\n\n";
+            $pwa_firebase = '';
+            if (
+                $option['param']['usepush'] == 1 &&
+                $apiKey &&
+                $projectId &&
+                $messagingSenderId &&
+                $appId
+            ) {
+                $pwa_firebase .= "\n\n";
 
-				$pwa_firebase .= Util::tmpl('firebase-messaging-sw', [
-					'config' => [
-						'apiKey'            => $apiKey,
-						'projectId'         => $projectId,
-						'messagingSenderId' => $messagingSenderId,
-						'appId'             => $appId,
-					]
-				]);
+                $pwa_firebase .= Util::tmpl('firebase-messaging-sw', [
+                    'config' => [
+                        'apiKey' => $apiKey,
+                        'projectId' => $projectId,
+                        'messagingSenderId' => $messagingSenderId,
+                        'appId' => $appId,
+                    ],
+                ]);
 
-				$pwa_firebase .= "\n\n";
-			}
+                $pwa_firebase .= "\n\n";
+            }
 
-			file_put_contents(JPATH_SITE . '/sw.js', $import_scripts . $pwa_data . $pwa_firebase);
+            file_put_contents(
+                JPATH_SITE.'/sw.js',
+                $import_scripts.$pwa_data.$pwa_firebase
+            );
 
-			$pwa_offline = Util::tmpl('offline', [
-				'app' => $app
-			]);
+            $pwa_offline = Util::tmpl('offline', [
+                'app' => $app,
+            ]);
 
-			file_put_contents(JPATH_SITE . '/offline.php', $pwa_offline);
+            file_put_contents(
+                JPATH_SITE.'/offline.php',
+                $pwa_offline
+            );
 
-			if($option[ 'param' ][ 'usepush' ] == 1 && $firebaseServiceAccount !== '')
-			{
-				file_put_contents(JPATH_SITE . '/.well-known/jupwa/firebase-service-account.json', $firebaseServiceAccount);
-			}
-		}
-		else
-		{
-			if(file_exists(JPATH_SITE . '/sw.js'))
-			{
-				File::delete(JPATH_SITE . '/sw.js');
+            if (
+                $option['param']['usepush'] == 1 &&
+                $firebaseServiceAccount !== ''
+            ) {
+                file_put_contents(
+                    JPATH_SITE.'/.well-known/jupwa/firebase-service-account.json',
+                    $firebaseServiceAccount
+                );
+            }
+        } else {
+            if (file_exists(JPATH_SITE.'/sw.js')) {
+                File::delete(JPATH_SITE.'/sw.js');
 
-				Factory::getApplication()->enqueueMessage('File sw.js deleted successfully.', 'error');
-			}
+                Factory::getApplication()->enqueueMessage('File sw.js deleted successfully.', 'error');
+            }
 
-			if(file_exists(JPATH_SITE . '/offline.php'))
-			{
-				File::delete(JPATH_SITE . '/offline.php');
+            if (file_exists(JPATH_SITE.'/offline.php')) {
+                File::delete(JPATH_SITE.'/offline.php');
 
-				Factory::getApplication()->enqueueMessage('File offline.php deleted successfully.', 'error');
-			}
+                Factory::getApplication()->enqueueMessage('File offline.php deleted successfully.', 'error');
+            }
 
-			if(file_exists(JPATH_SITE . '/.well-known/jupwa/firebase-service-account.json'))
-			{
-				File::delete(JPATH_SITE . '/.well-known/jupwa/firebase-service-account.json');
+            if (file_exists(JPATH_SITE.'/.well-known/jupwa/firebase-service-account.json')) {
+                File::delete(JPATH_SITE.'/.well-known/jupwa/firebase-service-account.json');
 
-				Factory::getApplication()->enqueueMessage('File firebase-service-account.json deleted successfully.', 'error');
-			}
-		}
-	}
+                Factory::getApplication()->enqueueMessage(
+                    'File firebase-service-account.json deleted successfully.',
+                    'error'
+                );
+            }
+        }
+    }
 }

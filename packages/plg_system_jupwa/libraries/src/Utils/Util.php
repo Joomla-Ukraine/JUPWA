@@ -36,21 +36,6 @@ class Util
 		File::write(JPATH_SITE . '/favicons/assets.json', $json);
 	}
 
-	/**
-	 * @param          $name
-	 * @param array    $variables
-	 *
-	 * @return string
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function tmpl($name, array $variables = []): string
-	{
-		$template = Factory::getApplication()->getTemplate();
-		$search   = JPATH_SITE . '/templates/' . $template . '/html/jupwa/';
-		$tmpl     = JPATH_SITE . '/plugins/system/jupwa/tmpl/';
-		$filename = $search . '/' . $name . '.php';
     /**
      * @param          $name
      * @param array $variables
