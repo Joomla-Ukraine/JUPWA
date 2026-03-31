@@ -115,6 +115,7 @@ class ComposerStaticInit71ae34f82165b1cf4f0ef95c2cc04a6b
         'Curl\\TimeUtil' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/TimeUtil.php',
         'Curl\\Url' => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl/Url.php',
         'FastImageSize\\FastImageSize' => __DIR__ . '/..' . '/marc1706/fast-image-size/lib/FastImageSize.php',
+        'FastImageSize\\ImageReader' => __DIR__ . '/..' . '/marc1706/fast-image-size/lib/ImageReader.php',
         'FastImageSize\\Type\\TypeBase' => __DIR__ . '/..' . '/marc1706/fast-image-size/lib/Type/TypeBase.php',
         'FastImageSize\\Type\\TypeBmp' => __DIR__ . '/..' . '/marc1706/fast-image-size/lib/Type/TypeBmp.php',
         'FastImageSize\\Type\\TypeGif' => __DIR__ . '/..' . '/marc1706/fast-image-size/lib/Type/TypeGif.php',

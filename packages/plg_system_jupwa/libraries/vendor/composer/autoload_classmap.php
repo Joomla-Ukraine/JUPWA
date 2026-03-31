@@ -18,6 +18,7 @@ return array(
     'Curl\\TimeUtil' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/TimeUtil.php',
     'Curl\\Url' => $vendorDir . '/php-curl-class/php-curl-class/src/Curl/Url.php',
     'FastImageSize\\FastImageSize' => $vendorDir . '/marc1706/fast-image-size/lib/FastImageSize.php',
+    'FastImageSize\\ImageReader' => $vendorDir . '/marc1706/fast-image-size/lib/ImageReader.php',
     'FastImageSize\\Type\\TypeBase' => $vendorDir . '/marc1706/fast-image-size/lib/Type/TypeBase.php',
     'FastImageSize\\Type\\TypeBmp' => $vendorDir . '/marc1706/fast-image-size/lib/Type/TypeBmp.php',
     'FastImageSize\\Type\\TypeGif' => $vendorDir . '/marc1706/fast-image-size/lib/Type/TypeGif.php',
