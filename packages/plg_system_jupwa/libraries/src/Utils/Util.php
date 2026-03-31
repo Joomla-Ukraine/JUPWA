@@ -14,6 +14,7 @@ namespace JUPWA\Utils;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\File;
 
 class Util
@@ -50,14 +51,41 @@ class Util
 		$search   = JPATH_SITE . '/templates/' . $template . '/html/jupwa/';
 		$tmpl     = JPATH_SITE . '/plugins/system/jupwa/tmpl/';
 		$filename = $search . '/' . $name . '.php';
+    /**
+     * @param          $name
+     * @param array $variables
+     *
+     * @return string
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function tmpl(
+        $name,
+        array $variables = []
+    ): string {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-		if(file_exists($filename))
-		{
-			return (new FileLayout($name, $search))->render($variables);
-		}
+        $query = $db->getQuery(true)
+            ->select('template')
+            ->from('#__template_styles')
+            ->where('client_id = 0')
+            ->where('home = 1');
+        $db->setQuery($query);
+        $template = $db->loadResult();
 
-		return (new FileLayout($name, $tmpl))->render($variables);
-	}
+        if ($template) {
+            $search = JPATH_SITE.'/templates/'.$template.'/html/jupwa/';
+            $tmpl = JPATH_SITE.'/plugins/system/jupwa/tmpl/';
+            $filename = $search.$name.'.php';
+
+            if (file_exists($filename)) {
+                return (new FileLayout($name, $search))->render($variables);
+            }
+        }
+
+        return (new FileLayout($name, $tmpl))->render($variables);
+    }
 
 	/**
 	 * @param array $json
