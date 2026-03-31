@@ -15,7 +15,7 @@
 
 ## Download
 
-[JUPWA v 2.6.0](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.6.0/pkg_jupwa_v2.6.0.zip)
+[JUPWA v 2.6.1](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.6.1/pkg_jupwa_v2.6.1.zip)
 
 ## Integration
 
