@@ -1,6 +1,6 @@
 "use strict";
 
-import axios from "axios";
+import wretch from 'wretch';
 import jupwaNotification from "./utils/notification";
 
 export async function sendToken(params = {}) {
@@ -14,9 +14,13 @@ export async function sendToken(params = {}) {
         const formData = new FormData();
         formData.append("fcm_token", params.token);
 
-        await axios.post(params.urlSubscribe, formData, {
-            headers: {"X-CSRF-Token": params.csrfToken},
-        });
+        await wretch(params.urlSubscribe)
+            .headers({
+                "X-CSRF-Token": params.csrfToken
+            })
+            .body(formData)
+            .post()
+            .res();
 
         localStorage.setItem("jupwaFCMToken", params.token);
     } catch (err) {
