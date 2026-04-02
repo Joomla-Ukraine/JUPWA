@@ -82,7 +82,7 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
 
                 if (widgetAlert) {
                     widgetAlert.hidden = false;
-                    widgetAlert.innerHTML = lang.addToMainDisplay;
+                    widgetAlert.textContent = lang.addToMainDisplay;
                 }
 
                 if (widgetButton) {
@@ -102,7 +102,7 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
 
                 if (widgetAlert) {
                     widgetAlert.hidden = false;
-                    widgetAlert.innerHTML = lang.swNotSupport;
+                    widgetAlert.textContent = lang.swNotSupport;
                 }
 
                 return;
@@ -121,7 +121,7 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
 
                 if (widgetAlert) {
                     widgetAlert.hidden = false;
-                    widgetAlert.innerHTML = e?.message || lang.swNotSupport;
+                    widgetAlert.textContent = e?.message || lang.swNotSupport;
                 }
 
                 return;
@@ -136,7 +136,7 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
 
                 if (widgetAlert) {
                     widgetAlert.hidden = false;
-                    widgetAlert.innerHTML = lang.notSupport;
+                    widgetAlert.textContent = lang.notSupport;
                 }
             }
 
@@ -160,7 +160,7 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
 
                 if (widgetAlert) {
                     widgetAlert.hidden = false;
-                    widgetAlert.innerHTML = lang.notGranted;
+                    widgetAlert.textContent = lang.notGranted;
                 }
             } else {
                 unsubscribeButton.hidden = !tokenStorage;
