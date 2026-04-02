@@ -17,6 +17,11 @@
   },
   "keywords": [],
   "license": "ISC",
+  "pnpm": {
+    "overrides": {
+      "jpegtran-bin": "^7.0.0"
+    }
+  },
   "devDependencies": {
     "@swc/core": "^1.15.21",
     "clean-webpack-plugin": "^4.0.0",
