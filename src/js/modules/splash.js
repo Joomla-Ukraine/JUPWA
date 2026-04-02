@@ -1,7 +1,11 @@
 "use strict";
 
+/**
+ * @param {string} icon
+ * @param {string} color
+ */
 export default function iOSSplash(icon, color = 'white') {
-    
+
     if (typeof icon !== 'string' || icon.length === 0) {
         throw new Error('Invalid icon URL provided');
     }
