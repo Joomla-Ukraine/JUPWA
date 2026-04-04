@@ -31,7 +31,7 @@ class URL
     /**
      * @param $html
      *
-     * @return string|string[]|null
+     * @return string
      *
      * @since 1.0
      */
