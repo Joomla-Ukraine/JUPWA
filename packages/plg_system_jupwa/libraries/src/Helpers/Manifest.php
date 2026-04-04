@@ -130,39 +130,41 @@ class Manifest
 		return '';
 	}
 
-	/**
-	 *
-	 * @return array
-	 *
-	 * @since 1.0
-	 */
-	private static function icons(): array
-	{
-		$sizes = Data::$manifest_icons;
+    /**
+     *
+     * @return array
+     *
+     * @since 1.0
+     */
+    private static function icons(): array
+    {
+        $sizes = Data::$manifest_icons;
+        $icons = [];
+        $sitePath = JPATH_SITE.'/';
+        $rootUri = Uri::root();
 
-		$icons = [];
-		foreach($sizes as $size)
-		{
-			$file = 'favicons/micon_' . $size . '.png';
-			if(file_exists(JPATH_SITE . '/' . $file))
-			{
-				$icons[] = [
-					'src'     => Uri::root() . $file,
-					'sizes'   => $size . 'x' . $size,
-					'type'    => 'image/png',
-					'purpose' => 'any'
-				];
-				$icons[] = [
-					'src'     => Uri::root() . $file,
-					'sizes'   => $size . 'x' . $size,
-					'type'    => 'image/png',
-					'purpose' => 'maskable'
-				];
-			}
-		}
+        foreach ($sizes as $size) {
+            $files = [
+                'any' => 'favicons/micon_'.$size.'.png',
+                'maskable' => 'favicons/maskable_'.$size.'.png',
+            ];
 
-		return $icons;
-	}
+            foreach ($files as $purpose => $filePath) {
+                if (file_exists($sitePath.$filePath)) {
+                    $v = self::getVersion();
+
+                    $icons[] = [
+                        'src' => $rootUri.$filePath.'?v='.$v,
+                        'sizes' => $size.'x'.$size,
+                        'type' => 'image/png',
+                        'purpose' => $purpose,
+                    ];
+                }
+            }
+        }
+
+        return $icons;
+    }
 
 	/**
 	 *
