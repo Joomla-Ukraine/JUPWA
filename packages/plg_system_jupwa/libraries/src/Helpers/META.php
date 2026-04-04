@@ -38,7 +38,7 @@ class META
 
         $pwa_version = '?v='.Manifest::getVersion();
 
-        self::manifest();
+        self::manifest($pwa_version);
 
         self::speculationrules(['params' => $params]);
 
@@ -509,7 +509,7 @@ class META
      * @throws \Exception
      * @since 1.0
      */
-    public static function manifest(): void
+    public static function manifest(string $version): void
     {
         $app = Factory::getApplication();
         $doc = $app->getDocument();
@@ -517,7 +517,7 @@ class META
         $file = 'manifest.webmanifest';
 
         if (file_exists(JPATH_SITE.'/'.$file)) {
-            $href = Uri::root().$file;
+            $href = Uri::root().$file.$version;
 
             $doc->addHeadLink($href, 'manifest', 'rel', [
                 'crossorigin' => 'use-credentials',
