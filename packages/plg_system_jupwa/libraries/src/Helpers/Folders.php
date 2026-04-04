@@ -16,40 +16,34 @@ use Joomla\Filesystem\Folder;
 
 class Folders
 {
-	/**
-	 * @param $path
-	 *
-	 * @return array
-	 *
-	 * @since 1.0
-	 */
-	public static function files($path): array
-	{
-		$folder = JPATH_BASE . $path;
+    /**
+     * @param $path
+     *
+     * @return array
+     *
+     * @since 1.0
+     */
+    public static function files($path): array
+    {
+        $cleanPath = trim($path, DIRECTORY_SEPARATOR.' ');
+        $fullPath = Path::clean(JPATH_SITE.DIRECTORY_SEPARATOR.$cleanPath);
 
-		if(!(file_exists($folder) && is_dir($folder)))
-		{
-			Folder::create($folder);
-		}
+        if (!Folder::exists($fullPath) && !Folder::create($fullPath)) {
+            return [];
+        }
 
-		$files = [];
-		$dir   = opendir($folder);
-		while(false !== ($currentFile = readdir($dir)))
-		{
-			if($currentFile === '.' || $currentFile === '..')
-			{
-				continue;
-			}
+        $filter = '\.(?:jpg|jpeg|png|gif|webp)$';
+        $files = Folder::files($fullPath, $filter);
 
-			if(preg_match('/\.(jpg|jpeg|png|gif|webp)/', strtolower($currentFile)))
-			{
-				$file    = $path . '/' . $currentFile;
-				$files[] = trim($file, '/');
-			}
-		}
+        if (empty($files)) {
+            return [];
+        }
 
-		closedir($dir);
-
-		return $files;
-	}
+        return array_map(
+            static function ($file) use ($cleanPath) {
+                return str_replace(DIRECTORY_SEPARATOR, '/', $cleanPath.'/'.$file);
+            },
+            $files
+        );
+    }
 }

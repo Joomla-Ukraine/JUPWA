@@ -19,442 +19,537 @@ use JUPWA\Thumbs\Render;
 
 class META
 {
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function render(array $option = []): void
-	{
-		$pwa_version = Manifest::getVersion();
-		$pwa_version = '?v=' . $pwa_version;
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function render(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
 
-		self::manifest();
+        if (!$params) {
+            return;
+        }
 
-		self::speculationrules([ 'params' => $option[ 'params' ] ]);
+        $pwa_version = '?v='.Manifest::getVersion();
 
-		self::appstore([ 'params' => $option[ 'params' ] ]);
-		self::googleplay([ 'params' => $option[ 'params' ] ]);
+        self::manifest();
 
-		self::preconnect([ 'params' => $option[ 'params' ] ]);
-		self::preloads([ 'params' => $option[ 'params' ] ]);
+        self::speculationrules(['params' => $params]);
 
-		self::meta_apple([
-			'params'      => $option[ 'params' ],
-			'pwa_version' => $pwa_version
-		]);
+        self::appstore(['params' => $params]);
+        self::googleplay(['params' => $params]);
 
-		self::meta_ms([ 'params' => $option[ 'params' ] ]);
+        self::preconnect(['params' => $params]);
+        self::preloads(['params' => $params]);
 
-		self::facebook([ 'params' => $option[ 'params' ] ]);
+        self::meta_apple([
+            'params' => $params,
+            'pwa_version' => $pwa_version,
+        ]);
 
-		self::icons([
-			'params'      => $option[ 'params' ],
-			'pwa_version' => $pwa_version
-		]);
+        self::meta_ms(['params' => $params]);
 
-		self::pwa([
-			'params'      => $option[ 'params' ],
-			'pwa_version' => $pwa_version
-		]);
+        self::facebook(['params' => $params]);
 
-		self::splash([ 'params' => $option[ 'params' ] ]);
-	}
+        self::icons([
+            'params' => $params,
+            'pwa_version' => $pwa_version,
+        ]);
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function splash(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
+        self::pwa([
+            'params' => $params,
+            'pwa_version' => $pwa_version,
+        ]);
 
-		if($option[ 'params' ][ 'source_icon_sm' ])
-		{
-			$icon     = Uri::root() . 'favicons/sicon_512.png';
-			$pwaicons = [
-				'icon'  => $icon,
-				'color' => $option[ 'params' ][ 'ioscolor' ] ? : '#ffffff',
-			];
-			$pwaicons = json_encode($pwaicons);
+        self::splash(['params' => $params]);
+    }
 
-			$doc->addCustomTag('<script id="pwaicons" type="application/json">' . $pwaicons . '</script>');
-		}
-	}
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function splash(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function speculationrules(array $option = []): void
-	{
-		$app  = Factory::getApplication();
-		$user = $app->getIdentity();
-		$doc  = $app->getDocument();
+        if (!$params) {
+            return;
+        }
 
-		if($user->guest == 1 && $option[ 'params' ]->get('use_speculationrules') == 1)
-		{
-			$prerender = [
-				'prerender' => [
-					[
-						'source'    => 'document',
-						'where'     => [
-							'and' => [
-								[
-									'href_matches' => '/*'
-								],
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
 
-							]
-						],
-						'eagerness' => 'moderate'
-					]
-				]
-			];
+        if ($params['source_icon_sm']) {
+            $icon = Uri::root().'favicons/sicon_512.png';
 
-			if(trim($option[ 'params' ]->get('speculationrules_class')) !== '')
-			{
-				$speculation_class = str_replace('.', '', trim($option[ 'params' ]->get('speculationrules_class')));
+            $pwaicons = [
+                'icon' => $icon,
+                'color' => $params['ioscolor'] ?: '#ffffff',
+            ];
 
-				$prerender[ 'prerender' ][ 0 ][ 'where' ][ 'and' ][] = [
-					'not' => [
-						'selector_matches' => '.' . $speculation_class
-					]
-				];
-			}
+            $pwaicons = json_encode($pwaicons);
 
-			$doc->addCustomTag('<script type="speculationrules">' . json_encode($prerender, JSON_UNESCAPED_SLASHES) . '</script>');
-		}
-	}
+            $doc->addCustomTag('<script id="pwaicons" type="application/json">'.$pwaicons.'</script>');
+        }
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function appstore(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function speculationrules(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
 
-		if($option[ 'params' ]->get('appstore') !== null)
-		{
-			$doc->setMetaData('apple-itunes-app', 'app-id=' . trim($option[ 'params' ]->get('appstore')));
-		}
-	}
+        if (!$params) {
+            return;
+        }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function googleplay(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
+        $app = Factory::getApplication();
+        $user = $app->getIdentity();
+        $doc = $app->getDocument();
 
-		if($option[ 'params' ]->get('googleplay') !== null)
-		{
-			$doc->setMetaData('google-play-app', 'app-id=' . trim($option[ 'params' ]->get('googleplay')));
-		}
-	}
+        if ($user->guest == 1 && $params->get('use_speculationrules') == 1) {
+            $prerender = [
+                'prerender' => [
+                    [
+                        'source' => 'document',
+                        'where' => [
+                            'and' => [
+                                [
+                                    'href_matches' => '/*',
+                                ],
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function facebook(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
+                            ],
+                        ],
+                        'eagerness' => 'moderate',
+                    ],
+                ],
+            ];
 
-		if($option[ 'params' ]->get('fbpage') !== null)
-		{
-			$doc->setMetaData('article:publisher', $option[ 'params' ]->get('fbpage'), 'property');
-		}
+            if (trim($params->get('speculationrules_class')) !== '') {
+                $speculation_class = str_replace('.', '', trim($params->get('speculationrules_class')));
 
-		if($option[ 'params' ]->get('fbapp') !== null)
-		{
-			$doc->setMetaData('fb:app_id', $option[ 'params' ]->get('fbapp'), 'property');
-		}
+                $prerender['prerender'][0]['where']['and'][] = [
+                    'not' => [
+                        'selector_matches' => '.'.$speculation_class,
+                    ],
+                ];
+            }
 
-		$fbadmins = (array) $option[ 'params' ]->get('fbadmin');
-		$i        = 0;
-		foreach($fbadmins as $fbadmin)
-		{
-			if($fbadmin->id)
-			{
-				$doc->setMetaData('fb:admins_' . ($i + 1), $fbadmin->id, 'property');
-			}
-			$i++;
-		}
-	}
+            $doc->addCustomTag(
+                '<script type="speculationrules">'.json_encode($prerender, JSON_UNESCAPED_SLASHES).'</script>'
+            );
+        }
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function preloads(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function appstore(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
 
-		$preloads = (array) $option[ 'params' ]->get('preloads');
-		foreach($preloads as $preload)
-		{
-			if($preload->url)
-			{
-				$preload_as   = [ 'as' => $preload->as ];
-				$preload_type = [];
-				if($preload->type)
-				{
-					$preload_type = [ 'type' => $preload->type ];
-				}
+        if (!$params) {
+            return;
+        }
 
-				$preload_co = [];
-				if($preload->crossorigin)
-				{
-					$preload_co = [ 'crossorigin' => $preload->crossorigin ];
-				}
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
 
-				$preload_media = [];
-				if($preload->media)
-				{
-					$preload_media = [ 'media' => $preload->media ];
-				}
+        if ($params->get('appstore') !== null) {
+            $doc->setMetaData('apple-itunes-app', 'app-id='.trim($params->get('appstore')));
+        }
+    }
 
-				$_preload = array_merge($preload_as, $preload_type, $preload_co, $preload_media);
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function googleplay(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
 
-				$doc->addHeadLink($preload->url, 'preload prefetch', 'rel', [ $_preload ]);
-			}
-		}
-	}
+        if (!$params) {
+            return;
+        }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function preconnect(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
 
-		$preconnect = Data::$preconnect;
-		foreach($preconnect as $key => $val)
-		{
-			if($option[ 'params' ]->get('precnct-' . $key) == 1)
-			{
-				foreach($val as $link)
-				{
-					$doc->addHeadLink($link, 'dns-prefetch preconnect');
-				}
-			}
-		}
+        if ($params->get('googleplay') !== null) {
+            $doc->setMetaData(
+                'google-play-app',
+                'app-id='.trim($params->get('googleplay'))
+            );
+        }
+    }
 
-		$preconnects = (array) $option[ 'params' ]->get('preconnect');
-		foreach($preconnects as $preconnect)
-		{
-			if($preconnect->url)
-			{
-				$doc->addHeadLink($preconnect->url, 'dns-prefetch preconnect');
-			}
-		}
-	}
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function facebook(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function meta_apple(array $option = []): void
-	{
-		$app      = Factory::getApplication();
-		$doc      = $app->getDocument();
-		$app_name = $option[ 'params' ]->get('manifest_name') ? : $option[ 'params' ]->get('manifest_name');
-		$icons    = Data::$favicons;
+        if (!$params) {
+            return;
+        }
 
-		foreach($icons[ 'apple-touch-icon' ] as $icon)
-		{
-			$file = 'favicons/appleicon_' . $icon . '.png';
-			if(file_exists(JPATH_SITE . '/' . $file))
-			{
-				$href = Uri::root() . $file . $option[ 'pwa_version' ];
-				$doc->addCustomTag('<link rel="apple-touch-icon" sizes="' . $icon . 'x' . $icon . '" href="' . $href . '">');
-			}
-		}
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
 
-		foreach($icons[ 'apple-touch-icon' ] as $icon)
-		{
-			$file = 'favicons/appleicon_' . $icon . '.png';
-			if(file_exists(JPATH_SITE . '/' . $file) && $icon == 180)
-			{
-				$href = Uri::root() . $file . $option[ 'pwa_version' ];
-				$doc->addCustomTag('<link rel="apple-touch-icon" href="' . $href . '">');
-			}
-		}
+        if ($params->get('fbpage') !== null) {
+            $doc->setMetaData(
+                'article:publisher',
+                $params->get('fbpage'),
+                'property'
+            );
+        }
 
-		$doc->setMetaData('mobile-web-app-capable', 'yes');
-		$doc->setMetaData('apple-mobile-web-app-capable', 'yes');
-		$doc->setMetaData('application-name', $app_name);
-		$doc->setMetaData('apple-mobile-web-app-title', $app_name);
-	}
+        if ($params->get('fbapp') !== null) {
+            $doc->setMetaData(
+                'fb:app_id',
+                $params->get('fbapp'),
+                'property'
+            );
+        }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function meta_ms(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
+        $fbadmins = (array)$params->get('fbadmin');
+        $i = 0;
+        foreach ($fbadmins as $fbadmin) {
+            if ($fbadmin->id) {
+                $doc->setMetaData(
+                    'fb:admins_'.($i + 1),
+                    $fbadmin->id,
+                    'property'
+                );
+            }
+            $i++;
+        }
+    }
 
-		if($option[ 'params' ]->get('use_color_scheme') == 1)
-		{
-			$doc->addCustomTag('<meta name="color-scheme" content="light dark">');
-		}
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function preloads(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
 
-		if($option[ 'params' ]->get('theme_color'))
-		{
-			$doc->addCustomTag('<meta name="theme-color" content="' . $option[ 'params' ]->get('theme_color') . '" media="(prefers-color-scheme: light)">');
-		}
+        if (!$params) {
+            return;
+        }
 
-		if($option[ 'params' ]->get('theme_color_dark'))
-		{
-			$doc->addCustomTag('<meta name="theme-color" content="' . $option[ 'params' ]->get('theme_color_dark') . '" media="(prefers-color-scheme: dark)">');
-		}
-	}
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function icons(array $option = []): void
-	{
-		$app   = Factory::getApplication();
-		$doc   = $app->getDocument();
-		$icons = Data::$favicons;
+        $preloads = (array)$params->get('preloads');
+        foreach ($preloads as $preload) {
+            if ($preload->url) {
+                $preload_as = ['as' => $preload->as];
+                $preload_type = [];
 
-		foreach($icons[ 'icon' ] as $icon)
-		{
-			$file = 'favicons/icon_' . $icon . '.png';
-			if(file_exists(JPATH_SITE . '/' . $file))
-			{
-				$href = Uri::root() . $file . $option[ 'pwa_version' ];
-				$doc->addHeadLink($href, 'icon', 'rel', [
-					'sizes' => $icon . 'x' . $icon,
-					'type'  => 'image/png'
-				]);
-			}
-		}
+                if ($preload->type) {
+                    $preload_type = ['type' => $preload->type];
+                }
 
-		$file = 'favicons/favicon.ico';
-		if(file_exists(JPATH_SITE . '/' . $file))
-		{
-			$href = Uri::root() . $file . $option[ 'pwa_version' ];
-			$doc->addHeadLink($href, 'shortcut icon');
-		}
+                $preload_co = [];
+                if ($preload->crossorigin) {
+                    $preload_co = ['crossorigin' => $preload->crossorigin];
+                }
 
-		if($option[ 'params' ]->get('source_icon_svg'))
-		{
-			$href = Uri::root() . Render::image($option[ 'params' ]->get('source_icon_svg')) . $option[ 'pwa_version' ];
-			$doc->addHeadLink($href, 'icon', 'rel', [
-				'type' => 'image/svg+xml'
-			]);
-		}
-	}
+                $preload_media = [];
+                if ($preload->media) {
+                    $preload_media = ['media' => $preload->media];
+                }
 
-	/**
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function manifest(): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
+                $_preload = array_merge(
+                    $preload_as,
+                    $preload_type,
+                    $preload_co,
+                    $preload_media
+                );
 
-		$file = 'manifest.webmanifest';
-		if(file_exists(JPATH_SITE . '/' . $file))
-		{
-			$href = Uri::root() . $file;
-			$doc->addHeadLink($href, 'manifest', 'rel', [
-				'crossorigin' => 'use-credentials'
-			]);
-		}
-	}
+                $doc->addHeadLink(
+                    $preload->url,
+                    'preload prefetch',
+                    'rel',
+                    [$_preload]
+                );
+            }
+        }
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function pwa(array $option = []): void
-	{
-		$app = Factory::getApplication();
-		$doc = $app->getDocument();
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function preconnect(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
 
-		if($option[ 'params' ]->get('usepwa', 0) == 1)
-		{
-			$pwajs = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('" . Uri::base() . "sw.js" . $option[ 'pwa_version' ] . "'); }); }";
+        if (!$params) {
+            return;
+        }
 
-			$doc->addScriptDeclaration($pwajs);
-		}
-	}
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+
+        $preconnect = Data::$preconnect;
+        foreach ($preconnect as $key => $val) {
+            if ($params->get('precnct-'.$key) == 1) {
+                foreach ($val as $link) {
+                    $doc->addHeadLink(
+                        $link,
+                        'dns-prefetch preconnect'
+                    );
+                }
+            }
+        }
+
+        $preconnects = (array)$params->get('preconnect');
+        foreach ($preconnects as $preconnect) {
+            if ($preconnect->url) {
+                $doc->addHeadLink(
+                    $preconnect->url,
+                    'dns-prefetch preconnect'
+                );
+            }
+        }
+    }
+
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function meta_apple(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
+
+        if (!$params) {
+            return;
+        }
+
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+        $app_name = $params->get('manifest_name') ?: $params->get('manifest_name');
+        $icons = Data::$favicons;
+
+        foreach ($icons['apple-touch-icon'] as $icon) {
+            $file = 'favicons/appleicon_'.$icon.'.png';
+
+            if (file_exists(JPATH_SITE.'/'.$file)) {
+                $href = Uri::root().$file.$option['pwa_version'];
+
+                $doc->addCustomTag('<link rel="apple-touch-icon" sizes="'.$icon.'x'.$icon.'" href="'.$href.'">');
+            }
+        }
+
+        foreach ($icons['apple-touch-icon'] as $icon) {
+            $file = 'favicons/appleicon_'.$icon.'.png';
+
+            if (file_exists(JPATH_SITE.'/'.$file) && $icon == 180) {
+                $href = Uri::root().$file.$option['pwa_version'];
+
+                $doc->addCustomTag('<link rel="apple-touch-icon" href="'.$href.'">');
+            }
+        }
+
+        $doc->setMetaData('mobile-web-app-capable', 'yes');
+        $doc->setMetaData('apple-mobile-web-app-capable', 'yes');
+        $doc->setMetaData('application-name', $app_name);
+        $doc->setMetaData('apple-mobile-web-app-title', $app_name);
+    }
+
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function meta_ms(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
+
+        if (!$params) {
+            return;
+        }
+
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+
+        if ($params->get('use_color_scheme') == 1) {
+            $doc->addCustomTag('<meta name="color-scheme" content="light dark">');
+        }
+
+        if ($params->get('theme_color')) {
+            $doc->addCustomTag(
+                '<meta name="theme-color" content="'.$params->get(
+                    'theme_color'
+                ).'" media="(prefers-color-scheme: light)">'
+            );
+        }
+
+        if ($params->get('theme_color_dark')) {
+            $doc->addCustomTag(
+                '<meta name="theme-color" content="'.$params->get(
+                    'theme_color_dark'
+                ).'" media="(prefers-color-scheme: dark)">'
+            );
+        }
+    }
+
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function icons(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
+
+        if (!$params) {
+            return;
+        }
+
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+        $icons = Data::$favicons;
+
+        foreach ($icons['icon'] as $icon) {
+            $file = 'favicons/icon_'.$icon.'.png';
+
+            if (file_exists(JPATH_SITE.'/'.$file)) {
+                $href = Uri::root().$file.$option['pwa_version'];
+
+                $doc->addHeadLink($href, 'icon', 'rel', [
+                    'sizes' => $icon.'x'.$icon,
+                    'type' => 'image/png',
+                ]);
+            }
+        }
+
+        $file = 'favicons/favicon.ico';
+
+        if (file_exists(JPATH_SITE.'/'.$file)) {
+            $href = Uri::root().$file.$option['pwa_version'];
+
+            $doc->addHeadLink($href, 'shortcut icon');
+        }
+
+        if ($params->get('source_icon_svg')) {
+            $href = Uri::root().Render::image($params->get('source_icon_svg')).$option['pwa_version'];
+
+            $doc->addHeadLink($href, 'icon', 'rel', [
+                'type' => 'image/svg+xml',
+            ]);
+        }
+    }
+
+    /**
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function manifest(): void
+    {
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+
+        $file = 'manifest.webmanifest';
+
+        if (file_exists(JPATH_SITE.'/'.$file)) {
+            $href = Uri::root().$file;
+
+            $doc->addHeadLink($href, 'manifest', 'rel', [
+                'crossorigin' => 'use-credentials',
+            ]);
+        }
+    }
+
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function pwa(array $option = []): void
+    {
+        $params = $option['params'] ?? null;
+
+        if (!$params) {
+            return;
+        }
+
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+
+        if ($params->get('usepwa', 0) == 1) {
+            $pwajs = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('".Uri::base(
+                )."sw.js".$option['pwa_version']."'); }); }";
+
+            $doc->addScriptDeclaration($pwajs);
+        }
+    }
 }

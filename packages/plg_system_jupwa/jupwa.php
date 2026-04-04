@@ -46,7 +46,7 @@ class plgSystemJUPWA extends CMSPlugin
      * @param $subject
      * @param $config
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
     public function __construct(
@@ -113,7 +113,7 @@ class plgSystemJUPWA extends CMSPlugin
                 'site' => $this->app->get('sitename'),
                 'description' => $this->app->get('MetaDesc'),
             ]);
-            
+
             AssetLinks::create(['param' => $post_param]);
             Manifest::addVersion();
             ServiceWorker::create(['param' => $post_param]);
@@ -123,7 +123,7 @@ class plgSystemJUPWA extends CMSPlugin
     /**
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
     public function onAfterRender(): void
@@ -309,7 +309,7 @@ class plgSystemJUPWA extends CMSPlugin
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
     public function onAfterRoute(): void
@@ -323,7 +323,7 @@ class plgSystemJUPWA extends CMSPlugin
         }
 
         if ($this->params->get('joomla_cache', 0) == 1) {
-            if (strpos(JURI::current(), '/account') !== false) {
+            if (strpos(Uri::current(), '/account') !== false) {
                 $this->app->getConfig()->set('caching', 0);
             }
 
@@ -343,7 +343,7 @@ class plgSystemJUPWA extends CMSPlugin
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
     public function onAfterDispatch(): void
@@ -422,7 +422,7 @@ class plgSystemJUPWA extends CMSPlugin
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
     public function onBeforeCompileHead(): void
@@ -502,7 +502,7 @@ class plgSystemJUPWA extends CMSPlugin
      *
      * @return true|void
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
     public function onContentPrepare(
@@ -587,7 +587,7 @@ class plgSystemJUPWA extends CMSPlugin
      * @param null $plugin_image
      *
      * @return object
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
     private function coreTags($plugin_image = null): object
@@ -672,7 +672,7 @@ class plgSystemJUPWA extends CMSPlugin
                 foreach ($result as $key => $value) {
                     if (
                         $this->app->getInput()->get($key) == $value ||
-                        ($this->app->getInput()->get($key, null) !== null && $value === '?')
+                        ($this->app->getInput()->get($key) !== null && $value === '?')
                     ) {
                         $found++;
                     }

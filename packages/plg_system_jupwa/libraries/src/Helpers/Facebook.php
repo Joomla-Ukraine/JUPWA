@@ -12,57 +12,57 @@
 
 namespace JUPWA\Helpers;
 
+use Exception;
 use Joomla\CMS\Factory;
 
 class Facebook
 {
-	/**
-	 * @return bool
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function bot(): bool
-	{
-		$fb = false;
-		if(!empty($_SERVER[ 'HTTP_USER_AGENT' ]))
-		{
-			$pattern = strtolower('#facebookscraper|facebookexternalhit|facebook|Facebot#x');
-			if(preg_match($pattern, strtolower($_SERVER[ 'HTTP_USER_AGENT' ])))
-			{
-				$fb = true;
-			}
-		}
+    /**
+     * @return bool
+     *
+     * @since 1.0
+     */
+    public static function bot(): bool
+    {
+        return self::matchUserAgent('facebookscraper|facebookexternalhit|facebook|facebot');
+    }
 
-		return $fb;
-	}
+    /**
+     * @return bool
+     *
+     * @throws Exception
+     * @since 1.0
+     */
+    public static function fix(): bool
+    {
+        if (self::matchUserAgent('facebookexternalhit|linkedinbot')) {
+            $app = Factory::getApplication();
 
-	/**
-	 * @return bool
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function fix(): bool
-	{
-		$app = Factory::getApplication();
+            if ($app->get('gzip') === 1) {
+                $app->set('gzip', 0);
 
-		$unsupported = false;
-		if(!empty($_SERVER[ 'HTTP_USER_AGENT' ]))
-		{
-			$pattern = strtolower('#facebookexternalhit|LinkedInBot#x');
+                return true;
+            }
+        }
 
-			if(preg_match($pattern, strtolower($_SERVER[ 'HTTP_USER_AGENT' ])))
-			{
-				$unsupported = true;
-			}
-		}
+        return false;
+    }
 
-		if($app->get('gzip', 0) == 1 && $unsupported === true)
-		{
-			$app->set('gzip', 0);
-		}
+    /**
+     * @param string $pattern
+     * @return bool
+     *
+     * @throws Exception
+     * @since 1.0
+     */
+    private static function matchUserAgent(string $pattern): bool
+    {
+        $ua = Factory::getApplication()->input->server->getString('HTTP_USER_AGENT', '');
 
-		return true;
-	}
+        if (empty($ua)) {
+            return false;
+        }
+
+        return (bool)preg_match('#'.$pattern.'#i', $ua);
+    }
 }

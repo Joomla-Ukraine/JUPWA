@@ -22,21 +22,54 @@ class AssetLinks
      *
      * @param array $option
      *
-     * @return void
+     * @return bool
      *
      * @since 1.0
      */
-    public static function create(array $option = []): void
+    public static function create(array $option = []): bool
     {
+        $params = $options['param'] ?? [];
+
+        if (($params['use_assetlinks'] ?? 0) != 1) {
+            return false;
+        }
+
+        if (!file_exists(JPATH_ROOT.'/manifest.webmanifest')) {
+            return false;
+        }
+
+        $folderPath = JPATH_SITE.'/.well-known';
+        $filePath = $folderPath.'/assetlinks.json';
+
+        if (!Folder::exists($folderPath) && !Folder::create($folderPath)) {
+            return false;
+        }
+
+        $data = Data::$assetlinks ?? [];
+
+        $data['relation'] = ['delegate_permission/common.handle_all_urls'];
+        $data['target'] = [
+            'namespace' => 'android_app',
+            'package_name' => $params['assetlinks_package_name'] ?? '',
+            'sha256_cert_fingerprints' => self::prepareFingerprints($params['assetlinks_sha256'] ?? ''),
+        ];
+
+        $json = json_encode(
+            [$data],
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+        );
+
+        return File::write(
+            $filePath,
+            $json
+        );
+
+        /*
         $folder = JPATH_SITE.'/.well-known';
         $assetlinks = '/assetlinks.json';
         $file_assetlinks = $folder.$assetlinks;
 
         if ($option['param']['use_assetlinks'] == 1 && file_exists(JPATH_ROOT.'/manifest.webmanifest')) {
-            if (!(file_exists($folder) && is_dir($folder))) {
-                Folder::create($folder);
-            }
-
             $data = Data::$assetlinks;
             $data['relation'] = ['delegate_permission/common.handle_all_urls'];
             $data['target'] = [
@@ -48,6 +81,21 @@ class AssetLinks
             $data = json_encode([$data], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
             File::write($file_assetlinks, $data);
+        }*/
+    }
+
+    /**
+     * @param string $fingerprint
+     * @return array
+     *
+     * @since 1.0
+     */
+    private static function prepareFingerprints(string $fingerprint): array
+    {
+        if (empty($fingerprint)) {
+            return [];
         }
+
+        return array_map('trim', explode(',', $fingerprint));
     }
 }

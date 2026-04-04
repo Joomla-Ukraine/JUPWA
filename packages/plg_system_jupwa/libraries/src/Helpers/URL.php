@@ -16,45 +16,53 @@ use Joomla\CMS\Uri\Uri;
 
 class URL
 {
-	/**
-	 * @param string $url
-	 *
-	 * @return bool
-	 *
-	 * @since 1.0
-	 */
-	public static function is_url($url): bool
-	{
-		$html = false;
-		if(filter_var($url, FILTER_VALIDATE_URL))
-		{
-			$html = true;
-		}
+    /**
+     * @param string $url
+     *
+     * @return bool
+     *
+     * @since 1.0
+     */
+    public static function is_url($url): bool
+    {
+        return !empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false;
+    }
 
-		return $html;
-	}
+    /**
+     * @param $html
+     *
+     * @return string|string[]|null
+     *
+     * @since 1.0
+     */
+    public static function absolute(?string $html): string
+    {
+        if (empty($html)) {
+            return '';
+        }
 
-	/**
-	 * @param $html
-	 *
-	 * @return string|string[]|null
-	 *
-	 * @since 1.0
-	 */
-	public static function absolute($html): array|string|null
-	{
-		$root_url = Uri::base();
+        $root = Uri::root();
+        $scheme = Uri::getInstance()->getScheme().'://';
 
-		$html = str_replace([
-			'href="//',
-			'src="//'
-		], [
-			'href="https://',
-			'src="https://'
-		], $html);
+        $html = str_replace(
+            ['href="//', 'src="//'],
+            ['href="'.$scheme, 'src="'.$scheme],
+            $html
+        );
 
-		$html = preg_replace('@href="(?!http://)(?!https://)(?!mailto:)([^"]+)"@i', "href=\"$root_url\${1}\"", $html);
+        $pattern = '/(href|src)=["\'](?!(?:https?|mailto|tel|javascript|#|data:))([^"\']+)["\']/i';
 
-		return preg_replace('@src="(?!http://)(?!https://)([^"]+)"@i', "src=\"$root_url\${1}\"", $html);
-	}
+        return preg_replace_callback(
+            $pattern,
+            function ($matches) use ($root) {
+                $attr = $matches[1];
+                $path = $matches[2];
+
+                $path = ltrim($path, '/');
+
+                return $attr.'="'.$root.$path.'"';
+            },
+            $html
+        );
+    }
 }
