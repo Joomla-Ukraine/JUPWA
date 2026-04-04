@@ -63,6 +63,6 @@ class URL
                 return $attr.'="'.$root.$path.'"';
             },
             $html
-        );
+        ) ?? $html;
     }
 }
