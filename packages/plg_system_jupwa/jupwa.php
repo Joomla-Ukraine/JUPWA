@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
-use JUPWA\Helpers\Assetinks;
+use JUPWA\Helpers\AssetLinks;
 use JUPWA\Helpers\Facebook;
 use JUPWA\Helpers\HTML;
 use JUPWA\Helpers\Images;
@@ -113,7 +113,8 @@ class plgSystemJUPWA extends CMSPlugin
                 'site' => $this->app->get('sitename'),
                 'description' => $this->app->get('MetaDesc'),
             ]);
-            Assetinks::create(['param' => $post_param]);
+            
+            AssetLinks::create(['param' => $post_param]);
             Manifest::addVersion();
             ServiceWorker::create(['param' => $post_param]);
         }
