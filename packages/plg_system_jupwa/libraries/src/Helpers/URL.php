@@ -31,7 +31,7 @@ class URL
     /**
      * @param $html
      *
-     * @return string|string[]|null
+     * @return string
      *
      * @since 1.0
      */
@@ -63,6 +63,6 @@ class URL
                 return $attr.'="'.$root.$path.'"';
             },
             $html
-        );
+        ) ?? $html;
     }
 }
