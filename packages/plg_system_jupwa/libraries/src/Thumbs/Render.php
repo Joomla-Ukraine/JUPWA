@@ -21,122 +21,117 @@ use JUPWA\Utils\Image;
 
 class Render
 {
-	/**
-	 *
-	 * @param array $option
-	 * @param       $app
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function create(array $option = [], $app = ''): void
-	{
-		$path = JPATH_SITE . '/favicons';
-		if(file_exists($path) && is_dir($path))
-		{
-			Folder::delete($path);
-		}
+    /**
+     *
+     * @param array $option
+     * @param       $app
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function create(array $option = [], $app = ''): void
+    {
+        $path = JPATH_SITE.'/favicons';
+        if (file_exists($path) && is_dir($path)) {
+            Folder::delete($path);
+        }
 
-		Folder::create($path);
+        Folder::create($path);
 
-		$icon_sm = ($option[ 'source_icon_sm' ] ? : 'media/jupwa/image/logo.png');
+        $icon_sm = ($option['source_icon_sm'] ?: 'media/jupwa/image/logo.png');
 
-		$favicon     = self::ico([ 'source_icon_sm' => $icon_sm ]);
-		$source_icon = JPATH_SITE . '/' . $option[ 'source_icon' ];
+        $favicon = self::ico(['source_icon_sm' => $icon_sm]);
+        $source_icon = JPATH_SITE.'/'.$option['source_icon'];
 
-		$icons_s = self::icons([
-			'size' => Data::$icons_sm,
-			'icon' => $icon_sm
-		]);
+        $icons_s = self::icons([
+            'size' => Data::$icons_sm,
+            'icon' => $icon_sm,
+        ]);
 
-		$appleicons = self::appleicons([
-			'size'  => Data::$favicons[ 'apple-touch-icon' ],
-			'icon'  => $icon_sm,
-			'color' => $option[ 'maskiconcolor' ],
-		]);
+        $appleicons = self::appleicons([
+            'size' => Data::$favicons['apple-touch-icon'],
+            'icon' => $icon_sm,
+            'color' => $option['maskiconcolor'],
+        ]);
 
-		$json = [
-			'favicon_root'     => $favicon->root,
-			'favicon_favicons' => $favicon->favicons,
-			'icons'            => $icons_s,
-			'appleicons'       => $appleicons,
-			'manifest_icons'   => self::manifest_icons($icon_sm, $option),
-			'splash_icons'     => self::splash_icons($icon_sm),
-			'shortcuts'        => self::shortcuts($option)
-		];
+        $json = [
+            'favicon_root' => $favicon->root,
+            'favicon_favicons' => $favicon->favicons,
+            'icons' => $icons_s,
+            'appleicons' => $appleicons,
+            'manifest_icons' => self::manifest_icons($icon_sm, $option),
+            'splash_icons' => self::splash_icons($icon_sm),
+            'shortcuts' => self::shortcuts($option),
+        ];
 
-		$json_ext = [];
-		if($option[ 'source_icon' ] && !file_exists($source_icon))
-		{
-			$json_ext = [
-				'article_logo' => self::article_logo($option)
-			];
-		}
+        $json_ext = [];
+        if ($option['source_icon'] && !file_exists($source_icon)) {
+            $json_ext = [
+                'article_logo' => self::article_logo($option),
+            ];
+        }
 
-		$json = array_merge($json, $json_ext);
-		$json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        $json = array_merge($json, $json_ext);
+        $json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
-		File::write(JPATH_SITE . '/favicons/thumbs.json', $json);
+        File::write(JPATH_SITE.'/favicons/thumbs.json', $json);
 
-		if($app && !file_exists(JPATH_SITE . '/favicons/thumbs.json'))
-		{
-			$app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
-		}
-	}
+        if ($app && !file_exists(JPATH_SITE.'/favicons/thumbs.json')) {
+            $app->enqueueMessage(Text::_('PLG_JUPWA_THUMB_NOT_CREATED'), 'danger');
+        }
+    }
 
-	/**
-	 *
-	 * @param string $image
-	 *
-	 * @return string
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function image(string $image): string
-	{
-		if(strpos($image, '#joomlaImage') === false)
-		{
-			return $image;
-		}
+    /**
+     *
+     * @param string $image
+     *
+     * @return string
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function image(string $image): string
+    {
+        if (strpos($image, '#joomlaImage') === false) {
+            return $image;
+        }
 
-		$image = explode('#joomlaImage', $image);
+        $image = explode('#joomlaImage', $image);
 
-		return $image[ 0 ];
-	}
+        return $image[0];
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return string
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function article_logo(array $option = []): string
-	{
-		if(!$option[ 'source_icon' ])
-		{
-			return '';
-		}
+    /**
+     *
+     * @param array $option
+     *
+     * @return string
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function article_logo(array $option = []): string
+    {
+        if (!$option['source_icon']) {
+            return '';
+        }
 
-		$source = self::image($option[ 'source_icon' ]);
-		$width  = 600;
-		$height = 60;
-		$out    = 'favicons/logo_' . $width . 'x' . $height . '.png';
+        $source = self::image($option['source_icon']);
+        $width = 600;
+        $height = 60;
+        $out = 'favicons/logo_'.$width.'x'.$height.'.png';
 
-		return Image::render_image($source, $out, [
-			'width'    => $width,
-			'height'   => $height,
-			'position' => 'left',
-			'color'    => '#ffffff',
-			'ratio'    => 0.6,
-			'r'        => 15
-		]);
-	}
+        return Image::render_image($source, $out, [
+            'width' => $width,
+            'height' => $height,
+            'position' => 'left',
+            'color' => '#ffffff',
+            'ratio' => 0.6,
+            'r' => 15,
+        ]);
+    }
 
     /**
      *
@@ -179,159 +174,151 @@ class Render
         return $image;
     }
 
-	/**
-	 *
-	 * @param $icon_sm
-	 *
-	 * @return string
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function splash_icons($icon_sm): string
-	{
-		if(!$icon_sm)
-		{
-			return '';
-		}
+    /**
+     *
+     * @param $icon_sm
+     *
+     * @return string
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function splash_icons($icon_sm): string
+    {
+        if (!$icon_sm) {
+            return '';
+        }
 
-		$source = self::image($icon_sm);
-		$out    = 'favicons/sicon_512.png';
+        $source = self::image($icon_sm);
+        $out = 'favicons/sicon_512.png';
 
-		return Image::render($source, $out, [
-			'width'  => 512,
-			'height' => 512
-		]);
-	}
+        return Image::render($source, $out, [
+            'width' => 512,
+            'height' => 512,
+        ]);
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return array
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function appleicons(array $option = []): array
-	{
-		$icons  = $option[ 'size' ];
-		$source = self::image($option[ 'icon' ]);
-		$name   = (isset($option[ 'name' ]) && $option[ 'name' ] ? $option[ 'name' ] : 'icon');
+    /**
+     *
+     * @param array $option
+     *
+     * @return array
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function appleicons(array $option = []): array
+    {
+        $icons = $option['size'];
+        $source = self::image($option['icon']);
+        $name = (isset($option['name']) && $option['name'] ? $option['name'] : 'icon');
 
-		$image = [];
-		foreach($icons as $icon)
-		{
-			$out     = 'favicons/apple' . $name . '_' . $icon . '.png';
-			$image[] = Image::render_image($source, $out, [
-				'width'  => $icon,
-				'height' => $icon,
-				'ratio'  => 1.3,
-				'color'  => $option[ 'color' ] ? : null
-			]);
-		}
+        $image = [];
+        foreach ($icons as $icon) {
+            $out = 'favicons/apple'.$name.'_'.$icon.'.png';
+            $image[] = Image::render_image($source, $out, [
+                'width' => $icon,
+                'height' => $icon,
+                'ratio' => 1.3,
+                'color' => $option['color'] ?: null,
+            ]);
+        }
 
-		return $image;
-	}
+        return $image;
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return array
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function icons(array $option = []): array
-	{
-		$icons  = $option[ 'size' ];
-		$source = self::image($option[ 'icon' ]);
-		$name   = (isset($option[ 'name' ]) && $option[ 'name' ] ? $option[ 'name' ] : 'icon');
+    /**
+     *
+     * @param array $option
+     *
+     * @return array
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function icons(array $option = []): array
+    {
+        $icons = $option['size'];
+        $source = self::image($option['icon']);
+        $name = (isset($option['name']) && $option['name'] ? $option['name'] : 'icon');
 
-		$image = [];
-		foreach($icons as $icon)
-		{
-			$out     = 'favicons/' . $name . '_' . $icon . '.png';
-			$image[] = Image::render($source, $out, [
-				'width'  => $icon,
-				'height' => $icon
-			]);
-		}
+        $image = [];
+        foreach ($icons as $icon) {
+            $out = 'favicons/'.$name.'_'.$icon.'.png';
+            $image[] = Image::render($source, $out, [
+                'width' => $icon,
+                'height' => $icon,
+            ]);
+        }
 
-		return $image;
-	}
+        return $image;
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return array
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function shortcuts(array $option = []): array
-	{
-		$image     = [];
-		$shortcuts = $option[ 'shortcuts' ] ?? [];
+    /**
+     *
+     * @param array $option
+     *
+     * @return array
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function shortcuts(array $option = []): array
+    {
+        $image = [];
+        $shortcuts = $option['shortcuts'] ?? [];
 
-		if($shortcuts)
-		{
-			foreach($shortcuts as $key => $val)
-			{
-				$source = self::image($val[ 'icons' ]);
-				$out    = 'favicons/shortcut_' . $val[ 'item' ] . '.png';
+        if ($shortcuts) {
+            foreach ($shortcuts as $key => $val) {
+                $source = self::image($val['icons']);
+                $out = 'favicons/shortcut_'.$val['item'].'.png';
 
-				$image[] = Image::render($source, $out, [
-					'width'  => 96,
-					'height' => 96
-				]);
-			}
-		}
+                $image[] = Image::render($source, $out, [
+                    'width' => 96,
+                    'height' => 96,
+                ]);
+            }
+        }
 
-		return $image;
-	}
+        return $image;
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return object
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function ico(array $option = []): object
-	{
-		if($option[ 'source_icon_sm' ] !== '')
-		{
-			$source      = JPATH_SITE . '/' . self::image($option[ 'source_icon_sm' ]);
-			$destination = JPATH_SITE . '/favicon.ico';
-			$favicons    = JPATH_SITE . '/favicons/favicon.ico';
-			$ico_lib     = new PHP_ICO($source, [
-				[ 16, 16 ],
-				[ 32, 32 ],
-				[ 48, 48 ]
-			]);
+    /**
+     *
+     * @param array $option
+     *
+     * @return object
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function ico(array $option = []): object
+    {
+        if ($option['source_icon_sm'] !== '') {
+            $source = JPATH_SITE.'/'.self::image($option['source_icon_sm']);
+            $destination = JPATH_SITE.'/favicon.ico';
+            $favicons = JPATH_SITE.'/favicons/favicon.ico';
+            $ico_lib = new PHP_ICO($source, [
+                [16, 16],
+                [32, 32],
+                [48, 48],
+            ]);
 
-			$is_favicon = [ 'root' => '' ];
-			if($ico_lib->save_ico($destination))
-			{
-				File::copy($destination, $favicons);
+            $is_favicon = ['root' => ''];
+            if ($ico_lib->save_ico($destination)) {
+                File::copy($destination, $favicons);
 
-				$is_favicon = [ 'root' => 'favicon.ico' ];
-			}
+                $is_favicon = ['root' => 'favicon.ico'];
+            }
 
-			$is_favicons = [ 'favicons' => '' ];
-			if(file_exists($favicons))
-			{
-				$is_favicons = [ 'favicons' => 'favicons/favicon.ico' ];
-			}
+            $is_favicons = ['favicons' => ''];
+            if (file_exists($favicons)) {
+                $is_favicons = ['favicons' => 'favicons/favicon.ico'];
+            }
 
-			return (object) array_merge($is_favicon, $is_favicons);
-		}
+            return (object)array_merge($is_favicon, $is_favicons);
+        }
 
-		return (object) [ 'root' => '', 'favicons' => '' ];
-	}
+        return (object)['root' => '', 'favicons' => ''];
+    }
 }
