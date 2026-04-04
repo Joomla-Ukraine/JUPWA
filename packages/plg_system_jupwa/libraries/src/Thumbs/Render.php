@@ -138,40 +138,46 @@ class Render
 		]);
 	}
 
-	/**
-	 *
-	 * @param       $icon_sm
-	 * @param array $option
-	 *
-	 * @return array
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function manifest_icons($icon_sm, array $option = []): array
-	{
-		if(!$icon_sm)
-		{
-			return [];
-		}
+    /**
+     *
+     * @param       $icon_sm
+     * @param array $option
+     *
+     * @return array
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function manifest_icons($icon_sm, array $option = []): array
+    {
+        if (!$icon_sm) {
+            return [];
+        }
 
-		$icons  = Data::$manifest_icons;
-		$source = self::image($icon_sm);
+        $icons = Data::$manifest_icons;
+        $source = self::image($icon_sm);
 
-		$image = [];
-		foreach($icons as $icon)
-		{
-			$out     = 'favicons/micon_' . $icon . '.png';
-			$image[] = Image::render_image($source, $out, [
-				'width'  => $icon,
-				'height' => $icon,
-				'ratio'  => 1.45,
-				'color'  => $option[ 'manifest_icon_background_color' ] == 1 ? $option[ 'maskiconcolor' ] : null
-			]);
-		}
+        $image = [];
+        foreach ($icons as $icon) {
+            $out = 'favicons/micon_'.$icon.'.png';
+            $image[] = Image::render_image($source, $out, [
+                'width' => $icon,
+                'height' => $icon,
+                'ratio' => 1.1,
+                'color' => $option['manifest_icon_background_color'] == 1 ? $option['maskiconcolor'] : null,
+            ]);
 
-		return $image;
-	}
+            $out = 'favicons/maskable_'.$icon.'.png';
+            $image[] = Image::render_image($source, $out, [
+                'width' => $icon,
+                'height' => $icon,
+                'ratio' => 1.45,
+                'color' => $option['manifest_icon_background_color'] == 1 ? $option['maskiconcolor'] : '#ffffff',
+            ]);
+        }
+
+        return $image;
+    }
 
 	/**
 	 *
