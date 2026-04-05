@@ -157,7 +157,7 @@ class Manifest
 
             foreach ($files as $purpose => $filePath) {
                 if (file_exists($sitePath.$filePath)) {
-                    $v = self::getVersion();
+                    $v = filemtime($sitePath.$filePath);
 
                     $icons[] = [
                         'src' => $rootUri.$filePath.'?v='.$v,
