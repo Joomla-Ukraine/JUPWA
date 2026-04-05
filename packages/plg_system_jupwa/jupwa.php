@@ -98,10 +98,7 @@ class plgSystemJUPWA extends CMSPlugin
                     ];
 
                     if (!Util::checkFields($data)) {
-                        $this->app->enqueueMessage(
-                            Text::_('PLG_JUPWA_REQUIRED_FILEDS_FOR_PUSH'),
-                            'danger'
-                        );
+                        $this->app->enqueueMessage(Text::_('PLG_JUPWA_REQUIRED_FILEDS_FOR_PUSH'), 'danger');
                     }
 
                     Push::checkAjaxPlugin();
@@ -630,7 +627,7 @@ class plgSystemJUPWA extends CMSPlugin
      * @return  void
      * @since 1.0
      */
-    private function checkBuffer(string $buffer): void
+    private function checkBuffer(?string $buffer): void
     {
         if ($buffer === null) {
             switch (preg_last_error()) {
@@ -689,12 +686,12 @@ class plgSystemJUPWA extends CMSPlugin
 
     /**
      *
-     * @param
+     * @param string $str
      *
      * @return array
      * @since 1.0
      */
-    private function parseQueryString($str): array
+    private function parseQueryString(string $str): array
     {
         $op = [];
         $pairs = explode("&", $str);
