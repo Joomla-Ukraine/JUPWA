@@ -381,7 +381,7 @@ class META
 
         $app = Factory::getApplication();
         $doc = $app->getDocument();
-        $app_name = $params->get('manifest_name') ?: $params->get('manifest_name');
+        $app_name = $params->get('manifest_name');
         $icons = Data::$favicons;
 
         foreach ($icons['apple-touch-icon'] as $icon) {
