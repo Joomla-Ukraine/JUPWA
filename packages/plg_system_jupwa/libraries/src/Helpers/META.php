@@ -91,7 +91,7 @@ class META
         $doc = $app->getDocument();
 
         if ($params['source_icon_sm']) {
-            $icon = Uri::root().'favicons/sicon_512.png';
+            $icon = Uri::root(true).'/favicons/sicon_512.png';
 
             $pwaicons = [
                 'icon' => $icon,

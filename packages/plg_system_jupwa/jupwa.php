@@ -60,7 +60,7 @@ class plgSystemJUPWA extends CMSPlugin
 
         $this->loadLanguage();
 
-        $this->jupwa_js_version = '2.2.6';
+        $this->jupwa_js_version = '2.3.3';
 
         $this->app = Factory::getApplication();
         if ($this->app->isClient('site')) {
@@ -395,6 +395,25 @@ class plgSystemJUPWA extends CMSPlugin
                 ]
             );
         }
+
+        $wa->registerAndUseScript(
+            'splash',
+            Uri::root().'media/jupwa/js/splash.'.$this->jupwa_js_version.'.js',
+            ['version' => false],
+            [
+                'defer' => 'defer',
+                'fetchpriority' => 'auto',
+            ]
+        );
+
+        $doc->addHeadLink(
+            Uri::root().'media/jupwa/js/splash.'.$this->jupwa_js_version.'.js',
+            'preload prefetch',
+            'rel',
+            [
+                'as' => 'script',
+            ]
+        );
 
         if ($this->params->get('usepwainstall') == 1) {
             $wa->registerAndUseScript(
