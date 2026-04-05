@@ -396,25 +396,6 @@ class plgSystemJUPWA extends CMSPlugin
             );
         }
 
-        $wa->registerAndUseScript(
-            'splash',
-            Uri::root().'media/jupwa/js/splash.'.$this->jupwa_js_version.'.js',
-            ['version' => false],
-            [
-                'defer' => 'defer',
-                'fetchpriority' => 'auto',
-            ]
-        );
-
-        $doc->addHeadLink(
-            Uri::root().'media/jupwa/js/splash.'.$this->jupwa_js_version.'.js',
-            'preload prefetch',
-            'rel',
-            [
-                'as' => 'script',
-            ]
-        );
-
         if ($this->params->get('usepwainstall') == 1) {
             $wa->registerAndUseScript(
                 'jupwa',
