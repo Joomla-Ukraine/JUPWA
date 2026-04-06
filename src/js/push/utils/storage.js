@@ -31,15 +31,21 @@ export function getItemWithExpiry(key) {
 
     try {
         const item = JSON.parse(itemStr);
-        const now = new Date();
 
-        if (!item || typeof item.expiry !== "number" || !Number.isFinite(item.expiry) || now.getTime() > item.expiry) {
+        if (!item || typeof item !== 'object') {
+            return null;
+        }
+
+        const now = Date.now();
+
+        if (typeof item.expiry !== "number" || now > item.expiry) {
             localStorage.removeItem(key);
 
             return null;
         }
 
         return item.value;
+        
     } catch (error) {
         return null;
     }
