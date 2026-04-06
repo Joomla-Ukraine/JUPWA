@@ -311,7 +311,7 @@ class META
 
                 $doc->addHeadLink(
                     $preload->url,
-                    'preload prefetch',
+                    'preload',
                     'rel',
                     [$_preload]
                 );
@@ -345,7 +345,7 @@ class META
                 foreach ($val as $link) {
                     $doc->addHeadLink(
                         $link,
-                        'dns-prefetch preconnect'
+                        'preconnect'
                     );
                 }
             }
@@ -356,7 +356,7 @@ class META
             if ($preconnect->url) {
                 $doc->addHeadLink(
                     $preconnect->url,
-                    'dns-prefetch preconnect'
+                    'preconnect'
                 );
             }
         }
