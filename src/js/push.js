@@ -9,7 +9,7 @@ import jupwaNotification from "./push/utils/notification";
 import {getConfig, isIOSandNotStandalone, supportsPush, supportsSW} from "./push/utils/env";
 import {createButtonController} from "./push/ui/buttonController";
 import {createWidgetController} from "./push/ui/widgetController";
-import {onMessage} from "firebase/messaging";
+import {getToken, onMessage} from "firebase/messaging";
 import {sendToken} from "./push/sendToken";
 import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
 import {FCM_STORAGE_KEY, getItemWithExpiry} from "./push/utils/storage";

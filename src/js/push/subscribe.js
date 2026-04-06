@@ -2,6 +2,7 @@
 
 import {getToken} from "firebase/messaging";
 import jupwaNotification from "./utils/notification";
+import {sendToken} from "./sendToken";
 
 export async function subscribe(params = {}) {
     const {
