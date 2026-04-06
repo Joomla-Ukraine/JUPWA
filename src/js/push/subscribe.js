@@ -1,7 +1,6 @@
 "use strict";
 
 import {getToken} from "firebase/messaging";
-import {sendToken} from "./sendToken";
 import jupwaNotification from "./utils/notification";
 
 export async function subscribe(params = {}) {
@@ -41,6 +40,12 @@ export async function subscribe(params = {}) {
             return;
         }
 
+        await sendToken({
+            token,
+            csrfToken,
+            urlSubscribe,
+        });
+
         if (unsubscribeButton) {
             unsubscribeButton.hidden = false;
         }
@@ -53,11 +58,6 @@ export async function subscribe(params = {}) {
             widgetButton.classList.add("jupwa-button-subscrided");
         }
 
-        await sendToken({
-            token,
-            csrfToken,
-            urlSubscribe,
-        });
     } catch (err) {
         jupwaNotification(err?.message || "Subscribe error", "error");
     }

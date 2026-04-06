@@ -1,5 +1,8 @@
 "use strict";
 
+export const FCM_STORAGE_KEY = "jupwaFCMToken";
+export const FCM_TTL_MINUTES = 24 * 60;
+
 /**
  * @param {string} key
  * @param {any} value

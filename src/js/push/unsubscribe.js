@@ -54,7 +54,6 @@ export async function unsubscribe(params = {}) {
             urlUnSubscribe,
         });
 
-        localStorage.removeItem("jupwaFCMToken");
     } catch (err) {
         jupwaNotification(err?.message || "Unsubscribe error", "error");
     }

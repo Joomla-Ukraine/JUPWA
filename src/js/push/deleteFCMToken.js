@@ -2,7 +2,7 @@
 
 import wretch from 'wretch';
 import jupwaNotification from "./utils/notification";
-import {removeItem} from "./utils/storage";
+import {FCM_STORAGE_KEY, removeItem} from "./utils/storage";
 
 export async function deleteFCMToken(params = {}) {
     try {
@@ -17,7 +17,7 @@ export async function deleteFCMToken(params = {}) {
             .post()
             .res();
 
-        removeItem("jupwaFCMToken");
+        removeItem(FCM_STORAGE_KEY);
 
     } catch (err) {
         jupwaNotification(err.message || "Error when unsubscribing", "error");

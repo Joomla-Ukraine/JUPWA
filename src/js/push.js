@@ -12,6 +12,7 @@ import {createWidgetController} from "./push/ui/widgetController";
 import {onMessage} from "firebase/messaging";
 import {sendToken} from "./push/sendToken";
 import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
+import {FCM_STORAGE_KEY, getItemWithExpiry} from "./push/utils/storage";
 
 (() => {
     document.addEventListener("DOMContentLoaded", async () => {
@@ -30,23 +31,28 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
         } = cfg;
 
         const isNativeWebView = typeof window.PushManager?.getToken === 'function';
-        if (isNativeWebView) {
 
+        if (isNativeWebView) {
             const widget = document.getElementById('jupwa-widget');
+
             if (widget) {
                 widget.remove();
             }
 
             try {
-                getTokenNativeIOS().then(token => {
-                    if (token) {
-                        sendToken({
-                            token,
-                            csrfToken,
-                            urlSubscribe,
-                        });
-                    }
-                });
+                const savedToken = getItemWithExpiry(FCM_STORAGE_KEY);
+
+                getTokenNativeIOS()
+                    .then(token => {
+                        if (token && token !== savedToken) {
+                            sendToken({
+                                token,
+                                csrfToken,
+                                urlSubscribe,
+                            });
+                        }
+                    });
+
             } catch (err) {
                 jupwaNotification(lang.tokenNotLoad, "warning");
             }
@@ -109,6 +115,7 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
             }
 
             let swRegistration = null;
+
             try {
                 swRegistration = await registerSW(urlSW);
             } catch (e) {
@@ -141,7 +148,29 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
             }
 
             const messaging = initFirebase(firebaseConfig);
-            const tokenStorage = localStorage.getItem("jupwaFCMToken");
+
+            let tokenStorage = getItemWithExpiry(FCM_STORAGE_KEY);
+
+            if (Notification.permission === "granted" && !tokenStorage) {
+                try {
+                    const currentToken = await getToken(messaging, {
+                        serviceWorkerRegistration: swRegistration
+                    });
+
+                    if (currentToken) {
+                        await sendToken({
+                            token: currentToken,
+                            csrfToken,
+                            urlSubscribe,
+                        });
+
+                        tokenStorage = currentToken;
+                    }
+
+                } catch (err) {
+                    console.error("FCM Auto-refresh error:", err);
+                }
+            }
 
             if (Notification.permission === "granted" && tokenStorage) {
                 unsubscribeButton.hidden = false;
@@ -187,7 +216,6 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
 
             onMessage(messaging, (payload) => {
                 const notif = payload?.data;
-
                 if (!notif) {
                     return;
                 }
@@ -200,13 +228,16 @@ import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
 
                 if (document.visibilityState === "hidden") {
                     if (Notification.permission === "granted") {
-                        const notification = new Notification(title || '', {
-                            body: body || '',
-                            icon: image || '/favicon.ico',
-                            data: {
-                                url: click_action || ''
+                        const notification = new Notification(
+                            title || '',
+                            {
+                                body: body || '',
+                                icon: image || '/favicon.ico',
+                                data: {
+                                    url: click_action || ''
+                                }
                             }
-                        });
+                        );
 
                         notification.onclick = (event) => {
                             event.preventDefault();
