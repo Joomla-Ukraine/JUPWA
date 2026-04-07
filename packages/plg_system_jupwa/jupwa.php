@@ -60,7 +60,7 @@ class plgSystemJUPWA extends CMSPlugin
 
         $this->loadLanguage();
 
-        $this->jupwa_js_version = '2.4.2';
+        $this->jupwa_js_version = '2.4.4';
 
         $this->app = Factory::getApplication();
         if ($this->app->isClient('site')) {

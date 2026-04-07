@@ -45,7 +45,7 @@ export function getItemWithExpiry(key) {
         }
 
         return item.value;
-        
+
     } catch (error) {
         return null;
     }
