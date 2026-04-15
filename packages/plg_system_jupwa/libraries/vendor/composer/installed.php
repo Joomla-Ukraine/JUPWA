@@ -3,11 +3,11 @@
         'name' => 'joomla-ua/jupwa',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'cc4001377ae4a89931ca7b56483d7bac2be5d4f2',
+        'reference' => '34247b5f7a118818f1119bfac9e5690f77e86c27',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => false,
+        'dev' => true,
     ),
     'versions' => array(
         'firebase/php-jwt' => array(
@@ -67,7 +67,7 @@
         'joomla-ua/jupwa' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'cc4001377ae4a89931ca7b56483d7bac2be5d4f2',
+            'reference' => '34247b5f7a118818f1119bfac9e5690f77e86c27',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
