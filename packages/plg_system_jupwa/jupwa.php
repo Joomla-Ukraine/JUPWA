@@ -62,6 +62,8 @@ class plgSystemJUPWA extends CMSPlugin
             $config
         );
 
+        $this->loadLanguage();
+
         $this->app = Factory::getApplication();
 
         if ($this->app->isClient('administrator')) {
@@ -638,7 +640,7 @@ class plgSystemJUPWA extends CMSPlugin
         $pairs = explode("&", $str);
         foreach ($pairs as $pair) {
             $parts = explode("=", $pair);
-            
+
             if (count($parts) === 2) {
                 $op[urldecode($parts[0])] = urldecode($parts[1]);
             }
