@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\File;
+use stdClass;
 
 class Util
 {
@@ -28,49 +29,57 @@ class Util
     public static function addVersion(): void
     {
         $json = [
-            'version' => hash('crc32b', time()),
+            'version' => hash('crc32b', (string)time()),
         ];
 
-        $json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        $json_string = json_encode(
+            $json,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+        );
 
-        File::write(JPATH_SITE.'/favicons/assets.json', $json);
+        File::write(JPATH_SITE.'/favicons/assets.json', $json_string);
     }
 
     /**
-     * @param          $name
+     * @param string $name
      * @param array $variables
      *
      * @return string
      *
-     * @throws \Exception
      * @since 1.0
      */
     public static function tmpl(
-        $name,
+        string $name,
         array $variables = []
     ): string {
+        /** @var DatabaseInterface $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $query = $db->getQuery(true)
-            ->select('template')
-            ->from('#__template_styles')
-            ->where('client_id = 0')
-            ->where('home = 1');
+            ->select($db->quoteName('template'))
+            ->from($db->quoteName('#__template_styles'))
+            ->where($db->quoteName('client_id').' = 0')
+            ->where($db->quoteName('home').' = 1');
+
         $db->setQuery($query);
         $template = $db->loadResult();
 
+        $search = null;
         if ($template) {
-            $search = JPATH_SITE.'/templates/'.$template.'/html/jupwa/';
-            $tmpl = JPATH_SITE.'/plugins/system/jupwa/tmpl/';
-            $filename = $search.$name.'.php';
+            $path = JPATH_SITE.'/templates/'.$template.'/html/jupwa/';
 
-            if (file_exists($filename)) {
-                return (new FileLayout($name, $search))->render($variables);
+            if (is_dir($path) && file_exists($path.$name.'.php')) {
+                $search = $path;
             }
         }
 
-        return (new FileLayout($name, $tmpl))->render($variables);
+        $default_path = JPATH_SITE.'/plugins/system/jupwa/tmpl/';
+
+        $render_path = $search ?: $default_path;
+
+        return (new FileLayout($name, $render_path))->render($variables);
     }
+
 
     /**
      * @param array $json
@@ -81,36 +90,52 @@ class Util
      */
     public static function LD(array $json = []): string
     {
-        return '<script type="application/ld+json">'.json_encode(array_filter($json)).'</script>';
+        $data = array_filter($json, static function ($value) {
+            return $value !== null && $value !== '';
+        });
+
+        if (empty($data)) {
+            return '';
+        }
+
+        return '<script type="application/ld+json">'.json_encode($data, JSON_UNESCAPED_UNICODE).'</script>';
     }
 
+
     /**
-     * @return mixed
+     * @return stdClass|null
      *
      * @since 1.0
      */
-    public static function get_thumbs(): mixed
+    public static function get_thumbs(): ?stdClass
     {
-        $json = JPATH_SITE.'/favicons/thumbs.json';
+        $path = JPATH_SITE.'/favicons/thumbs.json';
 
-        if (file_exists($json)) {
-            $json = file_get_contents($json);
+        if (file_exists($path)) {
+            $content = file_get_contents($path);
+            if ($content) {
+                $decoded = json_decode($content);
 
-            return json_decode($json);
+                return $decoded instanceof stdClass ? $decoded : null;
+            }
         }
 
-        return '';
+        return null;
     }
 
     /**
-     * @param $url
+     * @param string|null $url
      *
      * @return bool|string
      *
      * @since 1.0
      */
-    public static function HTTP($url): bool|string
+    public static function HTTP(?string $url): string|bool
     {
+        if (empty($url)) {
+            return false;
+        }
+
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -121,9 +146,22 @@ class Util
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
-        $header = curl_exec($ch);
+        $response = curl_exec($ch);
 
-        return substr($header, 9, 3);
+        if ($response === false) {
+            curl_close($ch);
+
+            return false;
+        }
+
+        $httpCode = (string)curl_getinfo(
+            $ch,
+            CURLINFO_HTTP_CODE
+        );
+
+        curl_close($ch);
+
+        return $httpCode;
     }
 
     /**
@@ -139,7 +177,12 @@ class Util
         array $fields,
         bool $requireAll = true
     ): bool {
-        $filtered = array_filter($fields);
+        $filtered = array_filter(
+            $fields,
+            static function ($value) {
+                return $value !== null && $value !== '';
+            }
+        );
 
         return $requireAll ? count($filtered) === count($fields) : !empty($filtered);
     }

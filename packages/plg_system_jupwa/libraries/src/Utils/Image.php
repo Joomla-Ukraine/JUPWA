@@ -16,105 +16,135 @@ use Intervention\Image\ImageManagerStatic as IImage;
 
 class Image
 {
-	/**
-	 *
-	 * @param          $image
-	 * @param          $image_out
-	 * @param array    $option
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	public static function render($image, $image_out, array $option = []): string
-	{
-		$width    = $option[ 'width' ];
-		$height   = $option[ 'height' ];
-		$position = (isset($option[ 'position' ]) && $option[ 'position' ] ? $option[ 'position' ] : 'center');
-		$color    = (isset($option[ 'color' ]) && $option[ 'color' ] ? $option[ 'color' ] : null);
+    /**
+     *
+     * @param string $image
+     * @param string $image_out
+     * @param array $option
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public static function render(
+        string $image,
+        string $image_out,
+        array $option = []
+    ): string {
+        $width = $option['width'] ?? 100;
+        $height = $option['height'] ?? 100;
+        $position = (isset($option['position']) && $option['position'] ? $option['position'] : 'center');
+        $color = (isset($option['color']) && $option['color'] ? $option['color'] : null);
 
-		if(extension_loaded('imagick') && class_exists('Imagick'))
-		{
-			IImage::configure([ 'driver' => 'imagick' ]);
-		}
+        if (extension_loaded('imagick') && class_exists('Imagick')) {
+            IImage::configure(['driver' => 'imagick']);
+        }
 
-		$img = IImage::make(JPATH_SITE . '/' . $image);
+        $img = IImage::make(JPATH_SITE.'/'.$image);
 
-		if($img->width() > $width)
-		{
-			$img->resize($width, null, static function ($constraint)
-			{
-				$constraint->aspectRatio();
-			});
-		}
+        if ($img->width() > $width) {
+            $img->resize(
+                $width,
+                null,
+                static function ($constraint) {
+                    $constraint->aspectRatio();
+                }
+            );
+        }
 
-		if($img->height() > $height)
-		{
-			$img->resize(null, $height, static function ($constraint)
-			{
-				$constraint->aspectRatio();
-			});
-		}
+        if ($img->height() > $height) {
+            $img->resize(
+                null,
+                $height,
+                static function ($constraint) {
+                    $constraint->aspectRatio();
+                }
+            );
+        }
 
-		$img->resizeCanvas($width, $height, $position, false, $color);
-		$img->save(JPATH_SITE . '/' . $image_out);
+        $img->resizeCanvas(
+            $width,
+            $height,
+            $position,
+            false,
+            $color
+        );
 
-		return $image_out;
-	}
+        $img->save(JPATH_SITE.'/'.$image_out);
 
-	/**
-	 *
-	 * @param          $image
-	 * @param          $image_out
-	 * @param array    $option
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	public static function render_image($image, $image_out, array $option = []): string
-	{
-		$width    = $option[ 'width' ];
-		$height   = $option[ 'height' ];
-		$position = (isset($option[ 'position' ]) && $option[ 'position' ] ? $option[ 'position' ] : 'center');
-		$color    = (isset($option[ 'color' ]) && $option[ 'color' ] ? $option[ 'color' ] : null);
+        return $image_out;
+    }
 
-		$ratio = (1.2);
-		if(isset($option[ 'ratio' ]) && $option[ 'ratio' ])
-		{
-			$ratio = $option[ 'ratio' ];
-		}
+    /**
+     *
+     * @param          $image
+     * @param          $image_out
+     * @param array $option
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public static function render_image(
+        string $image,
+        string $image_out,
+        array $option = []
+    ): string {
+        $width = $option['width'] ?? 100;
+        $height = $option['height'] ?? 100;
+        $position = (isset($option['position']) && $option['position'] ? $option['position'] : 'center');
+        $color = (isset($option['color']) && $option['color'] ? $option['color'] : null);
 
-		$r = (isset($option[ 'r' ]) && $option[ 'r' ] ? $option[ 'r' ] : 0);
+        $ratio = (1.2);
+        if (isset($option['ratio']) && $option['ratio']) {
+            $ratio = $option['ratio'];
+        }
 
-		if(extension_loaded('imagick') && class_exists('Imagick'))
-		{
-			IImage::configure([ 'driver' => 'imagick' ]);
-		}
+        $r = (isset($option['r']) && $option['r'] ? $option['r'] : 0);
 
-		$img  = IImage::canvas($width, $height, $option[ 'color' ] ? : null);
-		$logo = IImage::make(JPATH_SITE . '/' . $image);
+        if (extension_loaded('imagick') && class_exists('Imagick')) {
+            IImage::configure(['driver' => 'imagick']);
+        }
 
-		if($logo->width() > $width)
-		{
-			$logo->resize($width / $ratio, null, static function ($constraint)
-			{
-				$constraint->aspectRatio();
-			});
-		}
+        $img = IImage::canvas(
+            $width,
+            $height,
+            $option['color'] ?: null
+        );
 
-		if($logo->height() > $height)
-		{
-			$logo->resize(null, $height / $ratio, static function ($constraint)
-			{
-				$constraint->aspectRatio();
-			});
-		}
+        $logo = IImage::make(JPATH_SITE.'/'.$image);
 
-		$logo->resizeCanvas($width, $height, $position, false, $color);
-		$img->insert($logo, 'center', $r);
-		$img->save(JPATH_SITE . '/' . $image_out);
+        if ($logo->width() > $width) {
+            $logo->resize(
+                $width / $ratio,
+                null,
+                static function ($constraint) {
+                    $constraint->aspectRatio();
+                }
+            );
+        }
 
-		return $image_out;
-	}
+        if ($logo->height() > $height) {
+            $logo->resize(
+                null,
+                $height / $ratio,
+                static function ($constraint) {
+                    $constraint->aspectRatio();
+                }
+            );
+        }
+
+        $logo->resizeCanvas(
+            $width,
+            $height,
+            $position,
+            false,
+            $color
+        );
+        
+        $img->insert($logo, 'center', $r);
+        $img->save(JPATH_SITE.'/'.$image_out);
+
+        return $image_out;
+    }
 }
