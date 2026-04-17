@@ -19,6 +19,7 @@ overrides:
   file-type@>=13.0.0 <21.3.1: '>=21.3.1'
   fast-xml-parser@>=4.0.0-beta.3 <=5.5.6: '>=5.5.7'
   serialize-javascript@<7.0.5: '>=7.0.5'
+  protobufjs@<7.5.5: '>=7.5.5'
 
 importers:
 
@@ -2915,8 +2916,8 @@ packages:
   proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
 
-  protobufjs@7.5.4:
-    resolution: {integrity: sha512-CvexbZtbov6jW2eXAvLukXjXUW1TzFaivC46BpWc/3BpcCysb5Vffu+B3XHMm8lVEuy2Mm4XGex8hBSg1yapPg==}
+  protobufjs@8.0.1:
+    resolution: {integrity: sha512-NWWCCscLjs+cOKF/s/XVNFRW7Yih0fdH+9brffR5NZCy8k42yRdl5KlWKMVXuI1vfCoy4o1z80XR/W/QUb3V3w==}
     engines: {node: '>=12.0.0'}
 
   prr@1.0.1:
@@ -3987,7 +3988,7 @@ snapshots:
     dependencies:
       lodash.camelcase: 4.3.0
       long: 5.3.2
-      protobufjs: 7.5.4
+      protobufjs: 8.0.1
       yargs: 17.7.2
 
   '@jest/pattern@30.0.1':
@@ -6559,7 +6560,7 @@ snapshots:
 
   proto-list@1.2.4: {}
 
-  protobufjs@7.5.4:
+  protobufjs@8.0.1:
     dependencies:
       '@protobufjs/aspromise': 1.1.2
       '@protobufjs/base64': 1.1.2

@@ -1,7 +1,7 @@
 {
   "name": "jupwa",
   "sideEffects": true,
-  "version": "2.4.5",
+  "version": "2.4.6",
   "description": "JUPWA",
   "private": true,
   "scripts": {
@@ -32,7 +32,8 @@
       "serialize-javascript@<=7.0.2": ">=7.0.3",
       "file-type@>=13.0.0 <21.3.1": ">=21.3.1",
       "fast-xml-parser@>=4.0.0-beta.3 <=5.5.6": ">=5.5.7",
-      "serialize-javascript@<7.0.5": ">=7.0.5"
+      "serialize-javascript@<7.0.5": ">=7.0.5",
+      "protobufjs@<7.5.5": ">=7.5.5"
     }
   },
   "devDependencies": {
