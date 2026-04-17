@@ -13,328 +13,281 @@
 namespace JUPWA\Helpers;
 
 use DOMDocument;
+use Exception;
 use FastImageSize\FastImageSize;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
-use JUPWA\Utils\Util;
 
 class Images
 {
-	/**
-	 * @param array $option
-	 *
-	 * @return string
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function image_storage(array $option = []): string
-	{
-		if(self::is_gallery($option[ 'text' ]))
-		{
-			$image = self::gallery($option[ 'text' ]);
-		}
-		elseif($_image = self::article($option[ 'article' ]->images))
-		{
-			$image = $_image;
-		}
-		elseif(self::is_html($option[ 'text' ]) === true)
-		{
-			$image = self::html($option[ 'text' ]);
-		}
-		elseif(self::is_YouTube($option[ 'alltxt' ]) === true)
-		{
-			$image = self::YouTube($option[ 'alltxt' ]);
-		}
-		else
-		{
-			$image = self::display_default($option[ 'params' ]->get('selectimg'), $option[ 'params' ]->get('image'), $option[ 'params' ]->get('imagemain'));
-		}
+    /**
+     * @param array $option
+     *
+     * @return string
+     *
+     * @throws Exception
+     * @since 1.0
+     */
+    public static function image_storage(array $option = []): string
+    {
+        $text = $option['text'] ?? '';
+        $article = $option['article'] ?? null;
+        $alltxt = $option['alltxt'] ?? '';
+        $params = $option['params'] ?? null;
 
-		return $image;
-	}
+        if (self::is_gallery($text)) {
+            $image = self::gallery($text);
+        } elseif ($article && ($_image = self::article($article->images ?? ''))) {
+            $image = $_image;
+        } elseif (self::is_html($text)) {
+            $image = self::html($text);
+        } elseif (self::is_YouTube($alltxt)) {
+            $image = self::YouTube($alltxt);
+        } else {
+            $image = self::display_default(
+                $params?->get('selectimg'),
+                $params?->get('image'),
+                $params?->get('imagemain')
+            );
+        }
 
-	/**
-	 * @param $image
-	 *
-	 * @return object
-	 *
-	 * @since 1.0
-	 */
-	public static function display($image): object
-	{
-		$width  = 0;
-		$height = 0;
-		$local  = true;
+        return (string)$image;
+    }
 
-		if(URL::is_url($image) === true)
-		{
-			$domain     = parse_url(Uri::base(), PHP_URL_HOST);
-			$img_domain = parse_url($image, PHP_URL_HOST);
+    /**
+     * @param string|null $image
+     *
+     * @return object
+     *
+     * @since 1.0
+     */
+    public static function display(?string $image): object
+    {
+        $width = 0;
+        $height = 0;
+        $local = true;
+        $image = $image ?? '';
 
-			$local = false;
-			if($domain === $img_domain)
-			{
-				$local = true;
-				$image = str_replace(Uri::base(), '', $image);
-			}
-		}
+        if (str_contains($image, 'http')) {
+            $domain = parse_url(Uri::base(), PHP_URL_HOST);
+            $img_domain = parse_url($image, PHP_URL_HOST);
 
-		if($local === true && $image)
-		{
-			$FastImageSize = new FastImageSize();
-			$image         = ltrim($image, '/');
-			$imageSize     = $FastImageSize->getImageSize(JPATH_SITE . '/' . $image);
+            if ($domain !== $img_domain) {
+                $local = false;
+            } else {
+                $image = str_replace(Uri::base(), '', $image);
+            }
+        }
 
-			if($imageSize !== false)
-			{
-				$width  = $imageSize[ 'width' ];
-				$height = $imageSize[ 'height' ];
-			}
-		}
+        if ($local && $image !== '') {
+            $FastImageSize = new FastImageSize();
+            $cleanImage = ltrim($image, '/');
+            $fullPath = JPATH_SITE.'/'.$cleanImage;
 
-		return (object) [
-			'image'  => Uri::base() . $image,
-			'width'  => $width,
-			'height' => $height,
-		];
-	}
+            if (is_file($fullPath)) {
+                $imageSize = $FastImageSize->getImageSize($fullPath);
+                if ($imageSize !== false) {
+                    $width = $imageSize['width'] ?? 0;
+                    $height = $imageSize['height'] ?? 0;
+                }
+            }
+        }
 
-	/**
-	 * @param $selectimg
-	 * @param $img
-	 * @param $imgmain
-	 *
-	 * @return string
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function display_default($selectimg, $img, $imgmain): string
-	{
-		$img     = HTMLHelper::cleanImageURL($img)->url;
-		$imgmain = HTMLHelper::cleanImageURL($imgmain)->url;
-		$image   = Uri::base() . 'media/jupwa/image/jupwa.png';
+        return (object)[
+            'image' => Uri::base().ltrim($image, '/'),
+            'width' => (int)$width,
+            'height' => (int)$height,
+        ];
+    }
 
-		if($selectimg == 1)
-		{
-			$rand_img = self::random();
-			if($rand_img !== '')
-			{
-				$image = Uri::base() . $rand_img;
-			}
-		}
+    /**
+     * @param $selectimg
+     * @param $img
+     * @param $imgmain
+     *
+     * @return string
+     *
+     * @throws Exception
+     * @since 1.0
+     */
+    public static function display_default(
+        $selectimg,
+        $img,
+        $imgmain
+    ): string {
+        $imgURL = (string)($img ? HTMLHelper::cleanImageURL($img)->url : '');
+        $imgMainURL = (string)($imgmain ? HTMLHelper::cleanImageURL($imgmain)->url : '');
+        $default = Uri::base().'media/jupwa/image/jupwa.png';
 
-		if($selectimg == 0 && ($img || $imgmain))
-		{
-			if(isset($img) && is_file(JPATH_SITE . '/' . $img))
-			{
-				$image = $img;
-			}
+        if ((int)$selectimg === 1) {
+            $rand_img = self::random();
 
-			if(isset($imgmain) && is_file(JPATH_SITE . '/' . $imgmain))
-			{
-				$image = HTMLHelper::cleanImageURL($imgmain)->url;
-			}
-		}
+            if ($rand_img !== '') {
+                return Uri::base().ltrim($rand_img, '/');
+            }
+        }
 
-		return $image;
-	}
+        if ((int)$selectimg === 0) {
+            if ($imgMainURL !== '' && is_file(JPATH_SITE.'/'.$imgMainURL)) {
+                return $imgMainURL;
+            }
 
-	/**
-	 * @param $text
-	 *
-	 * @return bool
-	 *
-	 * @since 1.0
-	 */
-	private static function is_gallery($text): bool
-	{
-		return strpos($text, '{gallery') !== false;
-	}
+            if ($imgURL !== '' && is_file(JPATH_SITE.'/'.$imgURL)) {
+                return $imgURL;
+            }
+        }
 
-	/**
-	 * @param $text
-	 *
-	 * @return mixed
-	 *
-	 * @since 1.0
-	 */
-	private static function gallery($text): mixed
-	{
-		if(strpos($text, '{gallery') === false)
-		{
-			return '';
-		}
+        return $default;
+    }
 
-		if(preg_match('/{gallery\s+(.*?)}/i', $text, $imgsource))
-		{
-			$folder_match = $imgsource[ 1 ];
-			$imglist      = explode('|', $folder_match);
-			$imgsource    = $imglist[ 0 ];
-			$root         = JPATH_BASE . '/';
-			$folder       = 'images/' . $imgsource;
-			$img_folder   = $root . $folder;
-			$galleries    = glob($img_folder . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+    /**
+     * @param string|null $text
+     *
+     * @return bool
+     *
+     * @since 1.0
+     */
+    private static function is_gallery(?string $text): bool
+    {
+        return $text !== null && str_contains($text, '{gallery');
+    }
 
-			if(count($galleries) > 0 && is_dir($img_folder))
-			{
-				$i    = 0;
-				$html = [];
-				natcasesort($galleries);
-				foreach($galleries as $gallery)
-				{
-					if($i > 0)
-					{
-						break;
-					}
+    /**
+     * @param string $text
+     *
+     * @return mixed
+     *
+     * @since 1.0
+     */
+    private static function gallery(string $text): string
+    {
+        if (preg_match('/{gallery\s+(.*?)}/i', $text, $matches)) {
+            $parts = explode('|', $matches[1]);
+            $folderPath = 'images/'.trim($parts[0], ' /');
+            $fullPath = JPATH_SITE.'/'.$folderPath;
 
-					$html[] = str_replace(JPATH_BASE . '/', '', $gallery);
-					$i++;
-				}
+            if (is_dir($fullPath)) {
+                $files = glob($fullPath.'/*.{jpg,jpeg,png,gif,webp,avif}', GLOB_BRACE);
 
-				return $html[ 0 ];
-			}
-		}
+                if ($files && count($files) > 0) {
+                    natcasesort($files);
+                    $firstImage = reset($files);
 
-		return '';
-	}
+                    return str_replace(JPATH_SITE.'/', '', $firstImage);
+                }
+            }
+        }
 
-	/**
-	 * @param $jsonimages
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	private static function article($jsonimages): string
-	{
-		$html   = '';
-		$images = json_decode($jsonimages);
+        return '';
+    }
 
-		if(isset($images))
-		{
-			$image_intro = ($images->image_intro ?? '');
-			$image_full  = ($images->image_fulltext ?? '');
+    /**
+     * @param string|null $jsonimages
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    private static function article(?string $jsonimages): string
+    {
+        if (empty($jsonimages)) {
+            return '';
+        }
 
-			$_intro = '';
-			if(!empty($image_intro))
-			{
-				$_intro = $image_intro;
-			}
+        $images = json_decode($jsonimages);
+        if (!$images) {
+            return '';
+        }
 
-			$_full = '';
-			if(!empty($image_full))
-			{
-				$_full = $image_full;
-			}
+        $intro = $images->image_intro ?? '';
+        $full = $images->image_fulltext ?? '';
 
-			$html .= ($_intro == '' ? $_full : $_intro);
-		}
+        return $intro !== '' ? $intro : $full;
+    }
 
-		return $html;
-	}
+    /**
+     * @param string|null $text
+     *
+     * @return bool
+     *
+     * @since 1.0
+     */
+    private static function is_html(?string $text): bool
+    {
+        return $text !== null && str_contains($text, '<img');
+    }
 
-	/**
-	 * @param $text
-	 *
-	 * @return bool
-	 *
-	 * @since 1.0
-	 */
-	private static function is_html($text): bool
-	{
-		return strpos($text, '<img') !== false;
-	}
+    /**
+     * @param string $text
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    private static function html(string $text): string
+    {
+        $dom = new DOMDocument();
+        $src = '';
 
-	/**
-	 * @param $text
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	private static function html($text): string
-	{
-		$dom            = new DOMDocument();
-		$internalErrors = libxml_use_internal_errors(true);
+        libxml_use_internal_errors(true);
+        $dom->loadHTML('<?xml encoding="UTF-8">'.$text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_use_internal_errors(false);
 
-		$dom->loadHTML($text);
-		libxml_use_internal_errors($internalErrors);
+        $images = $dom->getElementsByTagName('img');
+        if ($images->length > 0) {
+            $src = $images->item(0)->getAttribute('src');
+        }
 
-		$images = $dom->getElementsByTagName('img');
+        return (string)$src;
+    }
 
-		$i = 0;
-		foreach($images as $image)
-		{
-			if($i > 0)
-			{
-				break;
-			}
+    /**
+     * @param string|null $text
+     *
+     * @return bool
+     *
+     * @since 1.0
+     */
+    private static function is_YouTube(?string $text): bool
+    {
+        return $text !== null && (str_contains($text, 'youtube.com') || str_contains($text, 'youtu.be'));
+    }
 
-			$src = $image->getAttribute('src');
+    /**
+     * @param string $text
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
 
-			$i++;
-		}
+    private static function YouTube(string $text): string
+    {
+        $pattern = '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i';
 
-		return $src;
-	}
+        if (preg_match($pattern, $text, $match)) {
+            $videoId = $match[1];
 
-	/**
-	 * @param $text
-	 *
-	 * @return bool
-	 *
-	 * @since 1.0
-	 */
-	private static function is_YouTube($text): bool
-	{
-		return strpos($text, 'youtube.com') !== false;
-	}
+            return "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg";
+        }
 
-	/**
-	 * @param $text
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	private static function YouTube($text): string
-	{
-		$youtube = str_replace([
-			'//www.youtube.com',
-			'//youtube.com',
-			'https://www.youtube.com',
-			'https://youtube.com',
-			'http://www.youtube.com',
-			'http://youtube.com'
-		], 'https://www.youtube.com', $text);
+        return '';
+    }
 
-		$image = '';
-		if(preg_match_all('#(youtube.com)/embed/([0-9A-Za-z-_]+)#i', $youtube, $match))
-		{
-			$image = Util::HTTP('https://' . $match[ 0 ][ 0 ]);
-		}
+    /**
+     * @return string
+     *
+     * @since 1.0
+     */
+    private static function random(): string
+    {
+        $folder = 'images/jupwa/images';
+        $images = Folders::files($folder);
 
-		return $image;
-	}
+        if (!empty($images) && is_array($images)) {
+            return $images[array_rand($images)];
+        }
 
-	/**
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	private static function random(): string
-	{
-		$folder = '/images/jupwa/images';
-		$images = Folders::files($folder);
-
-		$html = '';
-		if($images)
-		{
-			$html = $images[ array_rand($images) ];
-		}
-
-		return $html;
-	}
+        return '';
+    }
 }

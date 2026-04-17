@@ -23,13 +23,13 @@ class URL
      *
      * @since 1.0
      */
-    public static function is_url($url): bool
+    public static function is_url(string $url): bool
     {
         return !empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false;
     }
 
     /**
-     * @param $html
+     * @param string|null $html
      *
      * @return string
      *
@@ -54,7 +54,7 @@ class URL
 
         return preg_replace_callback(
             $pattern,
-            function ($matches) use ($root) {
+            static function ($matches) use ($root) {
                 $attr = $matches[1];
                 $path = $matches[2];
 

@@ -20,6 +20,7 @@ class Facebook
     /**
      * @return bool
      *
+     * @throws Exception
      * @since 1.0
      */
     public static function bot(): bool

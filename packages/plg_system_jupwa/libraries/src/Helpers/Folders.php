@@ -13,26 +13,31 @@
 namespace JUPWA\Helpers;
 
 use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 
 class Folders
 {
     /**
-     * @param $path
+     * @param string|null $path
      *
      * @return array
      *
      * @since 1.0
      */
-    public static function files($path): array
+    public static function files(?string $path): array
     {
-        $cleanPath = trim($path, DIRECTORY_SEPARATOR.' ');
+        if (empty($path)) {
+            return [];
+        }
+
+        $cleanPath = trim((string)$path, DIRECTORY_SEPARATOR.' /');
         $fullPath = Path::clean(JPATH_SITE.DIRECTORY_SEPARATOR.$cleanPath);
 
         if (!Folder::exists($fullPath) && !Folder::create($fullPath)) {
             return [];
         }
 
-        $filter = '\.(?:jpg|jpeg|png|gif|webp)$';
+        $filter = '\.(?i:jpg|jpeg|png|gif|webp|avif)$';
         $files = Folder::files($fullPath, $filter);
 
         if (empty($files)) {

@@ -28,9 +28,9 @@ class AssetLinks
      */
     public static function create(array $option = []): bool
     {
-        $params = $options['param'] ?? [];
+        $params = $option['param'] ?? [];
 
-        if (($params['use_assetlinks'] ?? 0) != 1) {
+        if ((int)($params['use_assetlinks'] ?? 0) !== 1) {
             return false;
         }
 
@@ -50,8 +50,8 @@ class AssetLinks
         $data['relation'] = ['delegate_permission/common.handle_all_urls'];
         $data['target'] = [
             'namespace' => 'android_app',
-            'package_name' => $params['assetlinks_package_name'] ?? '',
-            'sha256_cert_fingerprints' => self::prepareFingerprints($params['assetlinks_sha256'] ?? ''),
+            'package_name' => (string)($params['assetlinks_package_name'] ?? ''),
+            'sha256_cert_fingerprints' => self::prepareFingerprints((string)($params['assetlinks_sha256'] ?? '')),
         ];
 
         $json = json_encode(
@@ -59,29 +59,14 @@ class AssetLinks
             JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
         );
 
+        if ($json === false) {
+            return false;
+        }
+
         return File::write(
             $filePath,
             $json
         );
-
-        /*
-        $folder = JPATH_SITE.'/.well-known';
-        $assetlinks = '/assetlinks.json';
-        $file_assetlinks = $folder.$assetlinks;
-
-        if ($option['param']['use_assetlinks'] == 1 && file_exists(JPATH_ROOT.'/manifest.webmanifest')) {
-            $data = Data::$assetlinks;
-            $data['relation'] = ['delegate_permission/common.handle_all_urls'];
-            $data['target'] = [
-                'namespace' => 'android_app',
-                'package_name' => $option['param']['assetlinks_package_name'],
-                'sha256_cert_fingerprints' => [$option['param']['assetlinks_sha256']],
-            ];
-
-            $data = json_encode([$data], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-
-            File::write($file_assetlinks, $data);
-        }*/
     }
 
     /**
@@ -92,10 +77,17 @@ class AssetLinks
      */
     private static function prepareFingerprints(string $fingerprint): array
     {
-        if (empty($fingerprint)) {
+        if ($fingerprint === null || trim($fingerprint) === '') {
             return [];
         }
 
-        return array_map('trim', explode(',', $fingerprint));
+        return array_values(
+            array_filter(
+                array_map(
+                    'trim',
+                    explode(',', $fingerprint)
+                )
+            )
+        );
     }
 }

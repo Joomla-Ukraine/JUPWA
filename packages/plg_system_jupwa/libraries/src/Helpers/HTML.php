@@ -16,155 +16,137 @@ use JUPWA\Classes\Minify;
 
 class HTML
 {
-	/**
-	 * @param string $text
-	 *
-	 * @return string|null
-	 *
-	 * @since 1.0
-	 */
-	public static function text($text): ?string
-	{
-		$text = rtrim($text, ' ');
-		$text = trim($text);
+    /**
+     * @param string|null $text
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public static function text(?string $text): string
+    {
+        if ($text === null) {
+            return '';
+        }
 
-		return str_replace([
-			"\n",
-			"\r",
-			"\t",
-			"\n\r"
-		], '', $text);
-	}
+        $text = trim($text);
 
-	/**
-	 * @param string|string[]|null $html
-	 *
-	 * @return mixed|string|string[]|null
-	 *
-	 * @since 1.0
-	 */
-	public static function html($html): mixed
-	{
-		if($html)
-		{
-			$html = self::clean($html);
-			$html = preg_replace('/<a(.*?)>(.*?)<\/a>/is', '\\2', $html);
-			$html = preg_replace('/<iframe.*?>(.*?)<\/iframe>/is', '', $html);
-			$html = preg_replace('#<p(.*)>"#is', '<p>', $html);
+        return str_replace(["\n", "\r", "\t", "\n\r"], '', $text);
+    }
 
-			if(preg_match('#<p[^>]*>(.*)<\/p>#isU', $html, $matches))
-			{
-				$html = $matches[ 0 ];
-			}
-		}
+    /**
+     * @param string|null $html
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public static function html(?string $html): string
+    {
+        if (empty($html)) {
+            return '';
+        }
 
-		return $html;
-	}
+        $html = self::clean($html);
+        $html = preg_replace('/<a\b[^>]*>(.*?)<\/a>/is', '$1', $html) ?? $html;
+        $html = preg_replace('/<iframe\b[^>]*>.*?<\/iframe>/is', '', $html) ?? $html;
+        $html = preg_replace('/<p\b[^>]*>"/is', '<p>', $html) ?? $html;
 
-	/**
-	 * @param string $html
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	public static function clean(string $html): string
-	{
-		$html = preg_replace('/<script.+?<\/script>/is', '', $html);
-		$html = preg_replace('/<script.*?>(.*?)<\/script>/is', '', $html);
-		$html = preg_replace('/<style.*?>(.*?)<\/style>/is', '', $html);
-		$html = preg_replace('/<noscript>.*?<\/noscript>/is', '', $html);
-		$html = preg_replace('/\sonload\s*=\s*[^\s>]*/i', '', $html);
-		$html = preg_replace('/\sonclick\s*=\s*[^\s>]*/i', '', $html);
-		$html = preg_replace('/\sondblclick\s*=\s*[^\s>]*/i', '', $html);
-		$html = preg_replace('/\sonchange\s*=\s*[^\s>]*/i', '', $html);
-		$html = preg_replace('/\sonmouseover\s*=\s*[^\s>]*/i', '', $html);
-		$html = preg_replace('/\sonmouseout\s*=\s*[^\s>]*/i', '', $html);
-		$html = preg_replace('/<p>\s*{([a-zA-Z0-9\-_]*)\s*(.*?)}\s*<\/p>/i', '', $html);
-		$html = preg_replace('/{([a-zA-Z0-9\-_]*)\s*(.*?)}/i', '', $html);
-		$html = preg_replace('/\[(.*?)\s?.*?\].*?\[\/(.*?)\]/i', '', $html);
-		$html = preg_replace('/::cck::(.*?)::\/cck::/i', '', $html);
-		$html = preg_replace('/::introtext::(.*?)::\/introtext::/i', '\\1', $html);
+        if (preg_match('/<p\b[^>]*>.*?<\/p>/is', $html, $matches)) {
+            $html = $matches[0];
+        }
 
-		return preg_replace('/::fulltext::(.*?)::\/fulltext::/i', '\\2', $html);
-	}
+        return $html;
+    }
 
-	/**
-	 * @param array $matches
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	public static function tag_html(array $matches = []): string
-	{
-		$buffer = $matches[ 1 ];
-		if(preg_match('#xml:lang=".*?"#is', $buffer))
-		{
-			$buffer = preg_replace('#xml:lang=".*?"#is', '', $buffer);
-		}
+    /**
+     * @param string $html
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public static function clean(string $html): string
+    {
+        $patterns = [
+            '/<script\b[^>]*>.*?<\/script>/is',
+            '/<style\b[^>]*>.*?<\/style>/is',
+            '/<noscript\b[^>]*>.*?<\/noscript>/is',
+            '/\son[a-z]+\s*=\s*[^\s>]*/i',
+            '/<p>\s*{[a-zA-Z0-9\-_]*\s*.*?}\s*<\/p>/i',
+            '/{[a-zA-Z0-9\-_]*\s*.*?}/i',
+            '/\[(.*?)\s?.*?\].*?\[\/(.*?)\]/i',
+            '/::cck::(.*?)::\/cck::/i',
+        ];
 
-		if(preg_match('#xmlns:fb="http://www\.facebook\.com/2008/fbml"#i', $buffer))
-		{
-			$buffer = preg_replace('#xmlns:fb="http://www\.facebook\.com/2008/fbml"#i', '', $buffer);
-		}
+        $html = preg_replace($patterns, '', $html) ?? $html;
 
-		if(preg_match('#prefix="fb: http://www\.facebook\.com/2008/fbml"#i', $buffer))
-		{
-			$buffer = preg_replace('#prefix="fb: http://www\.facebook\.com/2008/fbml"#i', '', $buffer);
-		}
+        $html = preg_replace('/::introtext::(.*?)::\/introtext::/i', '$1', $html) ?? $html;
 
-		if(preg_match('#xmlns:og="http://opengraphprotocol\.org/schema/"#i', $buffer))
-		{
-			$buffer = preg_replace('#xmlns:og="http://opengraphprotocol\.org/schema/"#i', '', $buffer);
-		}
+        return preg_replace('/::fulltext::(.*?)::\/fulltext::/i', '$1', $html) ?? $html;
+    }
 
-		if(preg_match('#prefix="og: http://opengraphprotocol\.org/schema/"#i', $buffer))
-		{
-			$buffer = preg_replace('#prefix="og: http://opengraphprotocol\.org/schema/"#i', '', $buffer);
-		}
+    /**
+     * @param array $matches
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public static function tag_html(array $matches = []): string
+    {
+        $buffer = $matches[1] ?? '';
 
-		if(preg_match('#prefix="og: http://ogp\.me/ns\#"#i', $buffer))
-		{
-			$buffer = preg_replace('#prefix="og: http://ogp\.me/ns\#"#i', '', $buffer);
-		}
+        $patterns = [
+            '#xml:lang=".*?"#is',
+            '#xmlns:fb="http://www\.facebook\.com/2008/fbml"#i',
+            '#prefix="fb: http://www\.facebook\.com/2008/fbml"#i',
+            '#xmlns:og="http://opengraphprotocol\.org/schema/"#i',
+            '#prefix="og: http://opengraphprotocol\.org/schema/"#i',
+            '#prefix="og: http://ogp\.me/ns\#"#i',
+        ];
 
-		$buffer = str_replace($buffer, $buffer . ' prefix="og: https://ogp.me/ns# fb: https:///www.facebook.com/2008/fbml og: https://opengraphprotocol.org/schema/"', $buffer);
+        $buffer = preg_replace($patterns, '', $buffer) ?? $buffer;
+        $buffer = rtrim($buffer);
 
-		return '<html' . $buffer . '>';
-	}
+        $prefix = ' prefix="og: https://ogp.me/ns# fb: https:///www.facebook.com/2008/fbml og: https://opengraphprotocol.org/schema/"';
 
-	/**
-	 * @param string $html
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	public static function compress(string $html): string
-	{
-		preg_match_all('!(<(?:code|pre|textarea|script).*?>.*?</(?:code|pre|textarea|script)>)!si', $html, $pre);
-		$html = preg_replace('!<(?:code|pre|textarea|script).*?>.*?</(?:code|pre|textarea|script)>!si', '#pre#', $html);
+        return '<html'.rtrim($buffer).$prefix.'>';
+    }
 
-		$html = Minify::minify($html, [
-			'jsMinifier' => [
-				'jsCleanComments',
-				'minify'
-			],
-		]);
+    /**
+     * @param string $html
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public static function compress(string $html): string
+    {
+        $preTagsPattern = '!(<(?:code|pre|textarea|script)\b[^>]*>.*?</(?:code|pre|textarea|script)>)!si';
+        preg_match_all($preTagsPattern, $html, $matches);
 
-		$html = preg_replace('/[\r\n\t]+/', ' ', $html);
+        $html = preg_replace($preTagsPattern, '#pre#', $html) ?? $html;
 
-		if(!empty($pre[ 0 ]))
-		{
-			foreach($pre[ 0 ] as $tag)
-			{
-				$html = preg_replace('!#pre#!', $tag, $html, 1);
-				$html = preg_replace('#</script>\s*#', '</script>', $html);
-				$html = preg_replace('#\s*<script#', '<script', $html);
-			}
-		}
+        $html = Minify::minify($html, [
+            'xhtml' => false,
+        ]);
 
-		return $html;
-	}
+        $html = preg_replace('/[\r\n\t]+/', ' ', $html) ?? $html;
+
+        if (!empty($matches[0])) {
+            foreach ($matches[0] as $tag) {
+                $html = preg_replace('/#pre#/', $tag, $html, 1) ?? $html;
+            }
+        }
+
+        return preg_replace(
+            [
+                '#</script>\s*#',
+                '#\s*<script#',
+            ],
+            ['</script>', '<script'],
+            $html
+        ) ?? $html;
+    }
 }

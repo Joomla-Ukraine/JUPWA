@@ -12,6 +12,7 @@
 
 namespace JUPWA\Helpers;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
 use JUPWA\Data\Data;
@@ -25,7 +26,7 @@ class ServiceWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
     public static function create(array $option = []): void
