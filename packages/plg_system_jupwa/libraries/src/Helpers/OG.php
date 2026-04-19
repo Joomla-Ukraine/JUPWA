@@ -127,7 +127,7 @@ class OG
                 );
             }
 
-            if (isset($option['article']->publish_up) !== '') {
+            if (isset($option['article']->publish_up) && $option['article']->publish_up !== '') {
                 $doc->setMetaData(
                     'article:published_time',
                     date('c', strtotime($option['article']->publish_up)),
@@ -135,7 +135,7 @@ class OG
                 );
             }
 
-            if (isset($option['article']->category_title) !== '') {
+            if (isset($option['article']->category_title) && $option['article']->category_title !== '') {
                 $doc->setMetaData(
                     'article:section',
                     $option['article']->category_title,
@@ -143,7 +143,7 @@ class OG
                 );
             }
 
-            if (isset($option['article']->metakey) != '') {
+            if (isset($option['article']->metakey) && $option['article']->metakey != '') {
                 if (Facebook::bot() === false) {
                     $doc->setMetaData(
                         'news_keywords',
