@@ -127,7 +127,7 @@ class OG
                 );
             }
 
-            if (isset($option['article']->publish_up) !== '') {
+            if (isset($option['article']->publish_up) && $option['article']->publish_up !== '') {
                 $doc->setMetaData(
                     'article:published_time',
                     date('c', strtotime($option['article']->publish_up)),
