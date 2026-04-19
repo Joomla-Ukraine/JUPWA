@@ -77,7 +77,7 @@ class AssetLinks
      */
     private static function prepareFingerprints(string $fingerprint): array
     {
-        if ($fingerprint === null || trim($fingerprint) === '') {
+        if (trim($fingerprint) === '') {
             return [];
         }
 
