@@ -123,7 +123,7 @@ class HTML
 
         $buffer = str_replace(
             $buffer,
-            $buffer.' prefix="og: https://ogp.me/ns# fb: https:///www.facebook.com/2008/fbml og: https://opengraphprotocol.org/schema/"',
+            $buffer.' prefix="og: https://ogp.me/ns# fb: https://www.facebook.com/2008/fbml og: https://opengraphprotocol.org/schema/"',
             $buffer
         );
 
