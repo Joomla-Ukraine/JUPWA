@@ -135,7 +135,7 @@ class OG
                 );
             }
 
-            if (isset($option['article']->category_title) !== '') {
+            if (isset($option['article']->category_title) && $option['article']->category_title !== '') {
                 $doc->setMetaData(
                     'article:section',
                     $option['article']->category_title,
