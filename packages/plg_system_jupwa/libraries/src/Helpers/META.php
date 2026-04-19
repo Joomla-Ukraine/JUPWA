@@ -12,7 +12,6 @@
 
 namespace JUPWA\Helpers;
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use JUPWA\Data\Data;
@@ -26,7 +25,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function render(array $option = []): void
@@ -77,7 +76,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function splash(array $option = []): void
@@ -111,7 +110,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function speculationrules(array $option = []): void
@@ -166,7 +165,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function appstore(array $option = []): void
@@ -191,7 +190,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function googleplay(array $option = []): void
@@ -219,7 +218,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function facebook(array $option = []): void
@@ -269,7 +268,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function preloads(array $option = []): void
@@ -326,7 +325,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function preconnect(array $option = []): void
@@ -369,7 +368,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function meta_apple(array $option = []): void
@@ -417,7 +416,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function meta_ms(array $option = []): void
@@ -458,7 +457,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function icons(array $option = []): void
@@ -505,10 +504,9 @@ class META
 
     /**
      *
-     * @param string $version
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function manifest(string $version): void
@@ -533,7 +531,7 @@ class META
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function pwa(array $option = []): void

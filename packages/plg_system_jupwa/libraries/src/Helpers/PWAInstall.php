@@ -16,32 +16,33 @@ use Joomla\CMS\Uri\Uri;
 
 class PWAInstall
 {
-	public static function panel($params): string
-	{
-		$disable_chrome = '';
-		if($params->get('pwainstall_disablechrome') == 1)
-		{
-			$disable_chrome = ' disable-chrome="true"';
-		}
+    public static function panel($params): string
+    {
+        if (!$params) {
+            return '';
+        }
 
-		$local_storage = '';
-		if($params->get('pwainstall_localstorage') == 1)
-		{
-			$local_storage = ' use-local-storage="true"';
-		}
+        $disable_chrome = '';
+        if ($params->get('pwainstall_disablechrome') == 1) {
+            $disable_chrome = ' disable-chrome="true"';
+        }
 
-		$name = '';
-		if($params->get('manifest_name'))
-		{
-			$name = ' name="' . htmlentities($params->get('manifest_name')) . '"';
-		}
+        $local_storage = '';
+        if ($params->get('pwainstall_localstorage') == 1) {
+            $local_storage = ' use-local-storage="true"';
+        }
 
-		$description = '';
-		if($params->get('manifest_desc'))
-		{
-			$description = ' description="' . htmlentities($params->get('manifest_desc')) . '"';
-		}
+        $name = '';
+        if ($params->get('manifest_name')) {
+            $name = ' name="'.htmlentities($params->get('manifest_name')).'"';
+        }
 
-		return '<pwa-install id="pwa-install"' . $name . $description . $disable_chrome . $local_storage . ' manifest-url="' . Uri::root() . 'manifest.webmanifest"></pwa-install>';
-	}
+        $description = '';
+        if ($params->get('manifest_desc')) {
+            $description = ' description="'.htmlentities($params->get('manifest_desc')).'"';
+        }
+
+        return '<pwa-install id="pwa-install"'.$name.$description.$disable_chrome.$local_storage.' manifest-url="'.Uri::root(
+            ).'manifest.webmanifest"></pwa-install>';
+    }
 }

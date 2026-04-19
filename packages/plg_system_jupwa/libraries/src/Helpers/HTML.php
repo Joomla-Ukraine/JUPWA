@@ -35,9 +35,9 @@ class HTML
     }
 
     /**
-     * @param string|null $html
+     * @param string|string[]|null $html
      *
-     * @return string
+     * @return mixed|string|string[]|null
      *
      * @since 1.0
      */
@@ -48,11 +48,11 @@ class HTML
         }
 
         $html = self::clean($html);
-        $html = preg_replace('/<a\b[^>]*>(.*?)<\/a>/is', '$1', $html) ?? $html;
-        $html = preg_replace('/<iframe\b[^>]*>.*?<\/iframe>/is', '', $html) ?? $html;
-        $html = preg_replace('/<p\b[^>]*>"/is', '<p>', $html) ?? $html;
+        $html = preg_replace('/<a(.*?)>(.*?)<\/a>/is', '\\2', $html);
+        $html = preg_replace('/<iframe.*?>(.*?)<\/iframe>/is', '', $html);
+        $html = preg_replace('#<p(.*)>"#is', '<p>', $html);
 
-        if (preg_match('/<p\b[^>]*>.*?<\/p>/is', $html, $matches)) {
+        if (preg_match('#<p[^>]*>(.*)<\/p>#isU', $html, $matches)) {
             $html = $matches[0];
         }
 
@@ -68,22 +68,23 @@ class HTML
      */
     public static function clean(string $html): string
     {
-        $patterns = [
-            '/<script\b[^>]*>.*?<\/script>/is',
-            '/<style\b[^>]*>.*?<\/style>/is',
-            '/<noscript\b[^>]*>.*?<\/noscript>/is',
-            '/\son[a-z]+\s*=\s*[^\s>]*/i',
-            '/<p>\s*{[a-zA-Z0-9\-_]*\s*.*?}\s*<\/p>/i',
-            '/{[a-zA-Z0-9\-_]*\s*.*?}/i',
-            '/\[(.*?)\s?.*?\].*?\[\/(.*?)\]/i',
-            '/::cck::(.*?)::\/cck::/i',
-        ];
+        $html = preg_replace('/<script.+?<\/script>/is', '', $html);
+        $html = preg_replace('/<script.*?>(.*?)<\/script>/is', '', $html);
+        $html = preg_replace('/<style.*?>(.*?)<\/style>/is', '', $html);
+        $html = preg_replace('/<noscript>.*?<\/noscript>/is', '', $html);
+        $html = preg_replace('/\sonload\s*=\s*[^\s>]*/i', '', $html);
+        $html = preg_replace('/\sonclick\s*=\s*[^\s>]*/i', '', $html);
+        $html = preg_replace('/\sondblclick\s*=\s*[^\s>]*/i', '', $html);
+        $html = preg_replace('/\sonchange\s*=\s*[^\s>]*/i', '', $html);
+        $html = preg_replace('/\sonmouseover\s*=\s*[^\s>]*/i', '', $html);
+        $html = preg_replace('/\sonmouseout\s*=\s*[^\s>]*/i', '', $html);
+        $html = preg_replace('/<p>\s*{([a-zA-Z0-9\-_]*)\s*(.*?)}\s*<\/p>/i', '', $html);
+        $html = preg_replace('/{([a-zA-Z0-9\-_]*)\s*(.*?)}/i', '', $html);
+        $html = preg_replace('/\[(.*?)\s?.*?\].*?\[\/(.*?)\]/i', '', $html);
+        $html = preg_replace('/::cck::(.*?)::\/cck::/i', '', $html);
+        $html = preg_replace('/::introtext::(.*?)::\/introtext::/i', '\\1', $html);
 
-        $html = preg_replace($patterns, '', $html) ?? $html;
-
-        $html = preg_replace('/::introtext::(.*?)::\/introtext::/i', '$1', $html) ?? $html;
-
-        return preg_replace('/::fulltext::(.*?)::\/fulltext::/i', '$1', $html) ?? $html;
+        return preg_replace('/::fulltext::(.*?)::\/fulltext::/i', '\\2', $html);
     }
 
     /**
@@ -95,23 +96,38 @@ class HTML
      */
     public static function tag_html(array $matches = []): string
     {
-        $buffer = $matches[1] ?? '';
+        $buffer = $matches[1];
+        if (preg_match('#xml:lang=".*?"#is', $buffer)) {
+            $buffer = preg_replace('#xml:lang=".*?"#is', '', $buffer);
+        }
 
-        $patterns = [
-            '#xml:lang=".*?"#is',
-            '#xmlns:fb="http://www\.facebook\.com/2008/fbml"#i',
-            '#prefix="fb: http://www\.facebook\.com/2008/fbml"#i',
-            '#xmlns:og="http://opengraphprotocol\.org/schema/"#i',
-            '#prefix="og: http://opengraphprotocol\.org/schema/"#i',
-            '#prefix="og: http://ogp\.me/ns\#"#i',
-        ];
+        if (preg_match('#xmlns:fb="http://www\.facebook\.com/2008/fbml"#i', $buffer)) {
+            $buffer = preg_replace('#xmlns:fb="http://www\.facebook\.com/2008/fbml"#i', '', $buffer);
+        }
 
-        $buffer = preg_replace($patterns, '', $buffer) ?? $buffer;
-        $buffer = rtrim($buffer);
+        if (preg_match('#prefix="fb: http://www\.facebook\.com/2008/fbml"#i', $buffer)) {
+            $buffer = preg_replace('#prefix="fb: http://www\.facebook\.com/2008/fbml"#i', '', $buffer);
+        }
 
-        $prefix = ' prefix="og: https://ogp.me/ns# fb: https:///www.facebook.com/2008/fbml og: https://opengraphprotocol.org/schema/"';
+        if (preg_match('#xmlns:og="http://opengraphprotocol\.org/schema/"#i', $buffer)) {
+            $buffer = preg_replace('#xmlns:og="http://opengraphprotocol\.org/schema/"#i', '', $buffer);
+        }
 
-        return '<html'.rtrim($buffer).$prefix.'>';
+        if (preg_match('#prefix="og: http://opengraphprotocol\.org/schema/"#i', $buffer)) {
+            $buffer = preg_replace('#prefix="og: http://opengraphprotocol\.org/schema/"#i', '', $buffer);
+        }
+
+        if (preg_match('#prefix="og: http://ogp\.me/ns\#"#i', $buffer)) {
+            $buffer = preg_replace('#prefix="og: http://ogp\.me/ns\#"#i', '', $buffer);
+        }
+
+        $buffer = str_replace(
+            $buffer,
+            $buffer.' prefix="og: https://ogp.me/ns# fb: https:///www.facebook.com/2008/fbml og: https://opengraphprotocol.org/schema/"',
+            $buffer
+        );
+
+        return '<html'.$buffer.'>';
     }
 
     /**
@@ -123,30 +139,26 @@ class HTML
      */
     public static function compress(string $html): string
     {
-        $preTagsPattern = '!(<(?:code|pre|textarea|script)\b[^>]*>.*?</(?:code|pre|textarea|script)>)!si';
-        preg_match_all($preTagsPattern, $html, $matches);
-
-        $html = preg_replace($preTagsPattern, '#pre#', $html) ?? $html;
+        preg_match_all('!(<(?:code|pre|textarea|script).*?>.*?</(?:code|pre|textarea|script)>)!si', $html, $pre);
+        $html = preg_replace('!<(?:code|pre|textarea|script).*?>.*?</(?:code|pre|textarea|script)>!si', '#pre#', $html);
 
         $html = Minify::minify($html, [
-            'xhtml' => false,
+            'jsMinifier' => [
+                'jsCleanComments',
+                'minify',
+            ],
         ]);
 
-        $html = preg_replace('/[\r\n\t]+/', ' ', $html) ?? $html;
+        $html = preg_replace('/[\r\n\t]+/', ' ', $html);
 
-        if (!empty($matches[0])) {
-            foreach ($matches[0] as $tag) {
-                $html = preg_replace('/#pre#/', $tag, $html, 1) ?? $html;
+        if (!empty($pre[0])) {
+            foreach ($pre[0] as $tag) {
+                $html = preg_replace('!#pre#!', $tag, $html, 1);
+                $html = preg_replace('#</script>\s*#', '</script>', $html);
+                $html = preg_replace('#\s*<script#', '<script', $html);
             }
         }
 
-        return preg_replace(
-            [
-                '#</script>\s*#',
-                '#\s*<script#',
-            ],
-            ['</script>', '<script'],
-            $html
-        ) ?? $html;
+        return $html;
     }
 }

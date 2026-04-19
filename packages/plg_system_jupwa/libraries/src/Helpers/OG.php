@@ -12,7 +12,6 @@
 
 namespace JUPWA\Helpers;
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -28,11 +27,13 @@ class OG
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
-    public static function tag(array $option = [], array $parameters = []): void
-    {
+    public static function tag(
+        array $option = [],
+        array $parameters = []
+    ): void {
         $app = Factory::getApplication();
         $doc = $app->getDocument();
 
@@ -104,7 +105,7 @@ class OG
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function tagArticle(array $option = []): void
@@ -171,7 +172,7 @@ class OG
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function twitter(array $option = []): void

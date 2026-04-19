@@ -12,7 +12,6 @@
 
 namespace JUPWA\Helpers;
 
-use Exception;
 use FastImageSize\FastImageSize;
 use GuzzleHttp\Psr7\MimeType;
 use Joomla\CMS\Factory;
@@ -30,7 +29,7 @@ class Manifest
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     public static function create(array $option = []): void
@@ -179,7 +178,7 @@ class Manifest
      *
      * @return array
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     private static function shortcuts(array $option = []): array
@@ -235,7 +234,7 @@ class Manifest
      *
      * @return array
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     private static function screenshots(array $option = []): array
@@ -271,7 +270,7 @@ class Manifest
      *
      * @return array
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     private static function related_applications(array $option = []): array
@@ -306,7 +305,7 @@ class Manifest
      *
      * @return array
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     private static function scope_extensions(array $option = []): array
@@ -331,7 +330,7 @@ class Manifest
      *
      * @return array
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 1.0
      */
     private static function launch_handler(array $option = []): array

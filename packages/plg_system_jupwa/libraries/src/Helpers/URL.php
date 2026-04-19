@@ -17,15 +17,19 @@ use Joomla\CMS\Uri\Uri;
 class URL
 {
     /**
-     * @param string $url
+     * @param string|null $url
      *
      * @return bool
      *
      * @since 1.0
      */
-    public static function is_url(string $url): bool
+    public static function is_url(?string $url): bool
     {
-        return !empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false;
+        if (empty($url)) {
+            return false;
+        }
+
+        return filter_var($url, FILTER_VALIDATE_URL) !== false;
     }
 
     /**
