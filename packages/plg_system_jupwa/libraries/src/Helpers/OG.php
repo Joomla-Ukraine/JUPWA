@@ -143,7 +143,7 @@ class OG
                 );
             }
 
-            if (isset($option['article']->metakey) != '') {
+            if (isset($option['article']->metakey) && $option['article']->metakey != '') {
                 if (Facebook::bot() === false) {
                     $doc->setMetaData(
                         'news_keywords',
