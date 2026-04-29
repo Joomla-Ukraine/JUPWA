@@ -12,7 +12,7 @@ export default function jupwaNotification(
     return new Notify({
         status,
         title: message,
-        text,
+        text: text ?? '',
         position,
         autotimeout: duration
     });
