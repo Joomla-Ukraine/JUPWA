@@ -146,33 +146,10 @@ const pluginClean = new CleanWebpackPlugin({
         ],
     }),
     pluginTerser = new TerserPlugin({
-        minify: TerserPlugin.swcMinify,
         terserOptions: {
-            compress: {
-                ecma: 5,
-                collapse_vars: false,
-                comparisons: false,
-                computed_props: false,
-                drop_console: false,
-                hoist_props: false,
-                inline: 2,
-                keep_classnames: undefined,
-                keep_fnames: true,
-                module: false,
-                negate_iife: false,
-                reduce_vars: false,
-                reduce_funcs: false,
-                typeofs: false,
-                unused: true
-            },
-            mangle: {
-                safari10: true,
-                toplevel: true,
-            },
-            keep_fnames: false,
-            toplevel: true,
-            output: {
-                ecma: 5,
+            compress: true,
+            mangle: true,
+            format: {
                 comments: false
             }
         },
@@ -192,7 +169,7 @@ const watchOptions = {
 const configProd = {
     mode: 'production',
     entry: entry,
-    target: ['web', 'es2020'],
+    target: ['web', 'es2022'],
     output: output,
     cache: {
         type: "filesystem"
