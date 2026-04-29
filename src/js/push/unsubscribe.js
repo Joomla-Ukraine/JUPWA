@@ -55,6 +55,6 @@ export async function unsubscribe(params = {}) {
         });
 
     } catch (err) {
-        jupwaNotification(err?.message || "Unsubscribe error", "error");
+        jupwaNotification(err?.message || "Unsubscribe error");
     }
 }

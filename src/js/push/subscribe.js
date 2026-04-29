@@ -21,7 +21,7 @@ export async function subscribe(params = {}) {
         const permission = await Notification.requestPermission();
 
         if (permission !== "granted") {
-            jupwaNotification(lang.permissionDenied, "error");
+            jupwaNotification(lang.permissionDenied);
 
             return;
         }
@@ -60,6 +60,6 @@ export async function subscribe(params = {}) {
         }
 
     } catch (err) {
-        jupwaNotification(err?.message || "Subscribe error", "error");
+        jupwaNotification(err?.message || "Subscribe error");
     }
 }

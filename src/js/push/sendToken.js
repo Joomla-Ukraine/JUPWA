@@ -25,7 +25,7 @@ export async function sendToken(params = {}) {
         setItemWithExpiry(FCM_STORAGE_KEY, params.token, FCM_TTL_MINUTES);
 
     } catch (err) {
-        jupwaNotification(err.message || "Subscription error", "error");
+        jupwaNotification(err.message || "Subscription error");
 
         throw err;
     }

@@ -20,7 +20,7 @@ export async function deleteFCMToken(params = {}) {
         removeItem(FCM_STORAGE_KEY);
 
     } catch (err) {
-        jupwaNotification(err.message || "Error when unsubscribing", "error");
+        jupwaNotification(err.message || "Error when unsubscribing");
 
         throw err;
     }
