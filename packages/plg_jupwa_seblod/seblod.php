@@ -118,44 +118,19 @@ class PlgJUPWASeblod extends CMSPlugin
 		}
 	}
 
-	/**
-	 * @param $article
-	 * @param $params
-	 * @param $context
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public function onJUPWAArticleTwitter($article, $params, $context): void
-	{
-		if($params->get('tw') == 1)
-		{
-			OG::twitter([
-				'params'       => $params,
-				'title'        => $this->core($article, $context)->title,
-				'image'        => $this->image($article, $params, $context)->image,
-				'image_width'  => $this->image($article, $params, $context)->width,
-				'image_height' => $this->image($article, $params, $context)->height,
-				'description'  => $this->core($article, $context)->description
-			]);
-		}
-	}
-
-	/**
-	 * @param $article
-	 * @param $params
-	 * @param $context
-	 *
-	 * @return false|object
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	private function image($article, $params, $context): object|bool
-	{
-		$image = $this->core($article, $context)->image;
+    /**
+     * @param $article
+     * @param $params
+     * @param $context
+     *
+     * @return false|object
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    private function image($article, $params, $context): object|bool
+    {
+        $image = $this->core($article, $context)->image;
 
 		if($image !== '')
 		{

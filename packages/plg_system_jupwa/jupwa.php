@@ -416,13 +416,6 @@ class plgSystemJUPWA extends CMSPlugin
                     'image_height' => $tags->img->height ?? '',
                     'description' => $tags->description,
                 ]);
-
-                OG::twitter([
-                    'params' => $this->params,
-                    'title' => $tags->title,
-                    'image' => $tags->image,
-                    'description' => $tags->description,
-                ]);
             }
         }
 
@@ -431,13 +424,6 @@ class plgSystemJUPWA extends CMSPlugin
             'onJUPWASchema',
             [$this->params]
         );
-
-        if ($this->params->get('tw') == 1) {
-            $this->app->triggerEvent(
-                'onJUPWATwitter',
-                [$this->params]
-            );
-        }
 
         if ($this->params->get('og') == 1) {
             $this->app->triggerEvent(
@@ -541,12 +527,6 @@ class plgSystemJUPWA extends CMSPlugin
             $context,
         ]);
 
-        $this->app->triggerEvent('onJUPWAArticleTwitter', [
-            $article,
-            $this->params,
-            $context,
-        ]);
-
         $this->app->triggerEvent('onJUPWAArticleOG', [
             $article,
             $this->params,
@@ -563,13 +543,6 @@ class plgSystemJUPWA extends CMSPlugin
                 'image' => $tags->img->image ?? '',
                 'image_width' => $tags->img->width ?? '',
                 'image_height' => $tags->img->height ?? '',
-                'description' => $tags->description ?? '',
-            ]);
-
-            OG::twitter([
-                'params' => $this->params,
-                'title' => $tags->title ?? '',
-                'image' => $tags->image ?? '',
                 'description' => $tags->description ?? '',
             ]);
         }

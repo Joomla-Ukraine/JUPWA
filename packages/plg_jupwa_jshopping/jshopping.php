@@ -163,45 +163,20 @@ class PlgJUPWAJShopping extends CMSPlugin
 		{
 			$jshopConfig = JSFactory::getConfig();
 
-			OG::tag([
-				'params'       => $params,
-				'type'         => 'product',
-				'title'        => $this->core()->title,
-				'image'        => $this->image($params)->image,
-				'image_width'  => $this->image($params)->width,
-				'image_height' => $this->image($params)->height,
-				'description'  => $this->core()->description
-			], [
-				'price:amount'   => $this->core()->price,
-				'price:currency' => htmlspecialchars($jshopConfig->currency_code_iso)
-			]);
-		}
-	}
-
-	/**
-	 * @param $params
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public function onJUPWATwitter($params): void
-	{
-		$id = $this->app->input->getInt('product_id');
-
-		if($id > 0 && $params->get('tw') == 1)
-		{
-			OG::twitter([
-				'params'       => $params,
-				'title'        => $this->core()->title,
-				'image'        => $this->image($params)->image,
-				'image_width'  => $this->image($params)->width,
-				'image_height' => $this->image($params)->height,
-				'description'  => $this->core()->intro
-			]);
-		}
-	}
+            OG::tag([
+                'params' => $params,
+                'type' => 'product',
+                'title' => $this->core()->title,
+                'image' => $this->image($params)->image,
+                'image_width' => $this->image($params)->width,
+                'image_height' => $this->image($params)->height,
+                'description' => $this->core()->description,
+            ], [
+                'price:amount' => $this->core()->price,
+                'price:currency' => htmlspecialchars($jshopConfig->currency_code_iso),
+            ]);
+        }
+    }
 
 	/**
 	 * @return false|object

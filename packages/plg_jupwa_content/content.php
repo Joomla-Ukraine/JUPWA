@@ -103,39 +103,14 @@ class PlgJUPWAContent extends CMSPlugin
 				'headline' => $this->core($article)->title
 			]);
 
-			if($og_type_website == 0)
-			{
-				OG::tagArticle([
-					'params'  => $params,
-					'article' => $article
-				]);
-			}
-		}
-	}
-
-	/**
-	 * @param $article
-	 * @param $params
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public function onJUPWAArticleTwitter($article, $params): void
-	{
-		if($params->get('tw') == 1)
-		{
-			OG::twitter([
-				'params'       => $params,
-				'title'        => $this->core($article)->title,
-				'image'        => $this->image($article, $params)->image,
-				'image_width'  => $this->image($article, $params)->width,
-				'image_height' => $this->image($article, $params)->height,
-				'description'  => $this->core($article)->description
-			]);
-		}
-	}
+            if ($og_type_website == 0) {
+                OG::tagArticle([
+                    'params' => $params,
+                    'article' => $article,
+                ]);
+            }
+        }
+    }
 
 	/**
 	 * @param $article
