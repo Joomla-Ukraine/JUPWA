@@ -15,7 +15,12 @@
 
 ## Download
 
-[JUPWA v 2.6.4](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.6.4/pkg_jupwa_v2.6.4.zip)
+[JUPWA v 2.6.5](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.6.5/pkg_jupwa_v2.6.5.zip)
+
+## Support versions
+
+* Joomla 5, 6
+* PHP 8.1-8.5
 
 ## Integration
 
