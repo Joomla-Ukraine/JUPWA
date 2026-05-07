@@ -74,7 +74,9 @@ class Images
         $width = 0;
         $height = 0;
         $local = true;
-        $image = $image ?: '';
+        $image = trim($image);
+        $image = rawurldecode($image);
+        $image = $image ?? '';
 
         if (URL::is_url($image)) {
             $baseHost = parse_url(Uri::base(), PHP_URL_HOST);
