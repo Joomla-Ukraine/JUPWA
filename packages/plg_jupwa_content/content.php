@@ -17,10 +17,7 @@ use JUPWA\Helpers\Images;
 use JUPWA\Helpers\OG;
 use JUPWA\Helpers\Schema;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
 
 #[AllowDynamicProperties]
 class PlgJUPWAContent extends CMSPlugin

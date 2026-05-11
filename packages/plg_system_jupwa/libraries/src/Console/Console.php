@@ -16,124 +16,127 @@ use stdClass;
 
 class Console
 {
-	/**
-	 *
-	 * @param array $result
-	 *
-	 * @return mixed
-	 * @throws \GuzzleHttp\Exception\GuzzleException
-	 * @since 1.0.0
-	 */
-	public static function send(array $result = []): mixed
-	{
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
+    /**
+     *
+     * @param array $result
+     *
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @since 1.0.0
+     */
+    public static function send(array $result = []): mixed
+    {
+        if (empty($result)) {
+            return [];
+        }
 
-		$items = self::tokens($result[ 'user' ]);
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-		foreach($items as $item)
-		{
-			$title = $result[ 'title' ] ? : '';
-			$desc  = $result[ 'desc' ] ? : '';
-			$link  = $result[ 'link' ] ? : '';
+        $items = self::tokens($result['user']);
+        
+        foreach ($items as $item) {
+            $title = $result['title'] ?: '';
+            $desc = $result['desc'] ?: '';
+            $link = $result['link'] ?: '';
 
-			$response = Push::send($item->fcm_token, $title, $desc, $link);
-			
-			if($response[ 'code' ] == 400 || $response[ 'code' ] == 404)
-			{
-				self::remove_tokens($item->fcm_token);
-			}
-		}
+            $response = Push::send($item->fcm_token, $title, $desc, $link);
 
-		$order               = new stdClass();
-		$order->status       = 1;
-		$order->object_group = 'com_content';
-		$order->object_id    = $result[ 'id' ];
-		$order->order_url    = $result[ 'link' ];
+            if ($response['code'] == 400 || $response['code'] == 404) {
+                self::remove_tokens($item->fcm_token);
+            }
+        }
 
-		return $db->insertObject('#__jupwa_push_orders', $order);
-	}
+        $order = new stdClass();
+        $order->status = 1;
+        $order->object_group = 'com_content';
+        $order->object_id = $result['id'];
+        $order->order_url = $result['link'];
 
-	/**
-	 *
-	 * @param string $token
-	 *
-	 * @since 1.0.0
-	 */
-	private static function remove_tokens(string $token): void
-	{
-		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-		$query->delete($db->quoteName('#__jupwa_push_users'));
-		$query->where($db->quoteName('fcm_token') . ' = ' . $db->Quote($token));
-		$db->setQuery($query);
-		$db->execute();
-	}
+        return $db->insertObject(
+            '#__jupwa_push_orders',
+            $order
+        );
+    }
 
-	/**
-	 *
-	 * @param int $user
-	 *
-	 * @return array
-	 * @since 1.0.0
-	 */
-	public static function tokens(int $user = 0): array
-	{
-		$db    = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
+    /**
+     *
+     * @param string $token
+     *
+     * @since 1.0.0
+     */
+    private static function remove_tokens(string $token): void
+    {
+        $db = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->getQuery(true);
+        $query->delete($db->quoteName('#__jupwa_push_users'));
+        $query->where($db->quoteName('fcm_token').' = '.$db->Quote($token));
+        $db->setQuery($query);
+        $db->execute();
+    }
 
-		$query->select([ 'fcm_token' ]);
-		$query->from($db->quoteName('#__jupwa_push_users'));
-		$query->where($db->quoteName('user_id') . ' = ' . $db->Quote($user));
-		$db->setQuery($query);
-		$db->execute();
+    /**
+     *
+     * @param int $user
+     *
+     * @return array
+     * @since 1.0.0
+     */
+    public static function tokens(int $user = 0): array
+    {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
 
-		return $db->loadObjectList();
-	}
+        $query->select(['fcm_token']);
+        $query->from($db->quoteName('#__jupwa_push_users'));
+        $query->where($db->quoteName('user_id').' = '.$db->Quote($user));
+        $db->setQuery($query);
+        $db->execute();
 
-	/**
-	 *
-	 * @param array $where
-	 *
-	 * @return int
-	 * @since 1.0.0
-	 */
-	public static function check(array $where = []): int
-	{
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
+        return $db->loadObjectList();
+    }
 
-		$query = $db->getQuery(true);
-		$query->select([ '*' ]);
-		$query->from('#__jupwa_push_orders');
+    /**
+     *
+     * @param array $where
+     *
+     * @return int
+     * @since 1.0.0
+     */
+    public static function check(array $where = []): int
+    {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-		foreach($where as $key => $value)
-		{
-			$query->where($db->quoteName($key) . '=' . $db->Quote($value));
-		}
+        $query = $db->getQuery(true);
+        $query->select(['*']);
+        $query->from('#__jupwa_push_orders');
 
-		$db->setQuery($query);
-		$db->execute();
+        foreach ($where as $key => $value) {
+            $query->where($db->quoteName($key).'='.$db->Quote($value));
+        }
 
-		return $db->getNumRows();
-	}
+        $db->setQuery($query);
+        $db->execute();
 
-	/**
-	 *
-	 * @param $params
-	 * @param $input
-	 * @param $command
-	 *
-	 * @return string|array|null
-	 * @since 1.0.0
-	 */
-	public static function command($params, $input, $command): array|string|null
-	{
-		$option = $params->get($command, null);
-		if($input->getOption($command))
-		{
-			$option = $input->getOption($command);
-			$option = ltrim($option, "=");
-		}
+        return $db->getNumRows();
+    }
 
-		return $option;
-	}
+    /**
+     *
+     * @param $params
+     * @param $input
+     * @param $command
+     *
+     * @return string|array|null
+     * @since 1.0.0
+     */
+    public static function command($params, $input, $command): array|string|null
+    {
+        $option = $params->get($command, null);
+        if ($input->getOption($command)) {
+            $option = $input->getOption($command);
+            $option = ltrim($option, "=");
+        }
+
+        return $option;
+    }
 }
