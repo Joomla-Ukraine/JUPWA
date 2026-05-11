@@ -116,7 +116,7 @@ class Manifest
     public static function addVersion(): void
     {
         $json = [
-            'version' => hash('crc32b', time()),
+            'version' => bin2hex(random_bytes(8)),
         ];
 
         $json = json_encode(
