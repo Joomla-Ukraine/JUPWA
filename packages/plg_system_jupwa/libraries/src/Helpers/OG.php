@@ -36,11 +36,9 @@ class OG
     ): void {
         $app = Factory::getApplication();
         $doc = $app->getDocument();
+        $lang = $app->getLanguage();
 
         if (isset($option['params']) && $option['params']->get('og') == 1) {
-            $app = Factory::getApplication();
-            $lang = $app->getLanguage();
-
             $plugin = PluginHelper::getPlugin('system', 'languagecode');
             $mapping = $plugin ? (new Registry($plugin->params))->toArray() : [];
             $currentCode = strtolower($lang->getTag());
@@ -73,12 +71,15 @@ class OG
                     'property'
                 );
 
-                if ((isset($option['image_width']) && $option['image_width'] > 0) || (isset($option['image_height']) && $option['image_height'] > 0)) {
+                if (isset($option['image_width']) && $option['image_width'] > 0) {
                     $doc->setMetaData(
                         'og:image:width',
                         $option['image_width'],
                         'property'
                     );
+                }
+
+                if (isset($option['image_height']) && $option['image_height'] > 0) {
                     $doc->setMetaData(
                         'og:image:height',
                         $option['image_height'],
@@ -143,7 +144,7 @@ class OG
                 );
             }
 
-            if (isset($option['article']->metakey) && $option['article']->metakey != '') {
+            if (isset($option['article']->metakey) && $option['article']->metakey !== '') {
                 if (Facebook::bot() === false) {
                     $doc->setMetaData(
                         'news_keywords',
