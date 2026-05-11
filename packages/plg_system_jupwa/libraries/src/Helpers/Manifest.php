@@ -12,6 +12,7 @@
 
 namespace JUPWA\Helpers;
 
+use Exception;
 use FastImageSize\FastImageSize;
 use GuzzleHttp\Psr7\MimeType;
 use Joomla\CMS\Factory;
@@ -25,74 +26,85 @@ class Manifest
 {
     /**
      *
-     * @param array $option
+     * @param array $options
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
-    public static function create(array $option = []): void
+    public static function create(array $options = []): void
     {
-        $manifest = '/manifest.webmanifest';
-        $file_manifest = JPATH_SITE.$manifest;
-
-        $utc = Uri::root().'?utm_source=pwa';
+        $manifestPath = JPATH_SITE.'/manifest.webmanifest';
 
         $data = Data::$manifest;
-        $data['name'] = ($option['param']['manifest_name'] ?: $option['site']);
-        $data['short_name'] = ($option['param']['manifest_sname'] ?: $option['site']);
-        $data['description'] = ($option['param']['manifest_desc'] ?: $option['description']);
-        $data['lang'] = ($option['param']['manifest_lang'] ?: 'en');
-        $data['dir'] = $option['param']['manifest_dir'];
-        $data['scope'] = ($option['param']['manifest_scope'] ?: Uri::root());
-        $data['display'] = $option['param']['manifest_display'];
-        $data['display_override'] = $option['param']['manifest_display_override'];
-        $data['orientation'] = $option['param']['manifest_orientation'];
-        $data['start_url'] = ($option['param']['manifest_start_url'] ?: $utc);
-        $data['id'] = ($option['param']['manifest_id'] ?: $utc);
-        $data['launch_handler'] = self::launch_handler($option['param']);
-        $data['background_color'] = ($option['param']['background_color'] ?: '#fafafa');
-        $data['theme_color'] = ($option['param']['theme_color'] ?: '#fafafa');
-        $data['prefer_related_applications'] = (bool)$option['param']['prefer_related_applications'];
-        $data['related_applications'] = self::related_applications($option['param']);
-        $data['scope_extensions'] = self::scope_extensions($option['param']);
-        $data['screenshots'] = self::screenshots($option['param']);
+        $param = $options['param'];
+
+        $data['name'] = $param['manifest_name'] ?? $options['site'] ?? '';
+        $data['short_name'] = $param['manifest_sname'] ?? $options['site'] ?? '';
+        $data['description'] = $param['manifest_desc'] ?? $options['description'] ?? '';
+        $data['lang'] = $param['manifest_lang'] ?? 'en';
+        $data['dir'] = $param['manifest_dir'] ?? 'ltr';
+        $data['scope'] = $param['manifest_scope'] ?? Uri::root();
+        $data['display'] = $param['manifest_display'] ?? 'standalone';
+        $data['start_url'] = $param['manifest_start_url'] ?? Uri::root().'?utm_source=pwa';
+        $data['id'] = $param['manifest_id'] ?? $data['start_url'];
+        $data['display_override'] = $param['manifest_display_override'] ?? null;
+        $data['orientation'] = $param['manifest_orientation'] ?? null;
+        $data['background_color'] = $param['background_color'] ?? '#fafafa';
+        $data['theme_color'] = $param['theme_color'] ?? '#fafafa';
+        $data['launch_handler'] = self::launch_handler($param ?? []);
+        $data['related_applications'] = self::related_applications($param ?? []);
+        $data['scope_extensions'] = self::scope_extensions($param ?? []);
+        $data['screenshots'] = self::screenshots($param ?? []);
         $data['icons'] = self::icons();
-        $data['shortcuts'] = self::shortcuts($option['param']);
-        $data['handle_links'] = ($option['param']['manifest_handle_links'] ?? []);
-        $data['categories'] = ($option['param']['manifest_categories'] ?? []);
-        $data['edge_side_panel']['preferred_width'] = (int)$option['param']['manifest_edge_side_panel_width'];
+        $data['shortcuts'] = self::shortcuts($param ?? []);
+        $data['handle_links'] = $param['manifest_handle_links'] ?? [];
+        $data['categories'] = $param['manifest_categories'] ?? [];
 
-        if (is_countable($data['screenshots']) && count($data['screenshots']) == 0) {
-            unset($data['screenshots']);
+        $data['edge_side_panel'] = [
+            'preferred_width' => (int)($param['manifest_edge_side_panel_width'] ?? 0),
+        ];
+
+        self::removeEmptyArrays($data, [
+            'screenshots',
+            'icons',
+            'shortcuts',
+            'categories',
+            'scope_extensions',
+        ]);
+
+        if (empty($data['edge_side_panel']['preferred_width'])) {
+            unset($data['edge_side_panel']);
         }
 
-        if (is_countable($data['icons']) && count($data['icons']) == 0) {
-            unset($data['icons']);
-        }
-
-        if (is_countable($data['shortcuts']) && count($data['shortcuts']) == 0) {
-            unset($data['shortcuts']);
-        }
-
-        if (is_countable($data['categories']) && count($data['categories']) == 0) {
-            unset($data['categories']);
-        }
-
-        if (is_countable($data['scope_extensions']) && count($data['scope_extensions']) == 0) {
-            unset($data['scope_extensions']);
-        }
-
-        $data = json_encode(
+        $json = json_encode(
             $data,
-            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR
         );
 
         File::write(
-            $file_manifest,
-            $data
+            $manifestPath,
+            $json
         );
+    }
+
+    /**
+     * @param array $data
+     * @param array $keys
+     *
+     *
+     * @since 1.0
+     */
+    private static function removeEmptyArrays(
+        array &$data,
+        array $keys
+    ): void {
+        foreach ($keys as $key) {
+            if (isset($data[$key]) && is_countable($data[$key]) && count($data[$key]) === 0) {
+                unset($data[$key]);
+            }
+        }
     }
 
     /**
@@ -174,151 +186,249 @@ class Manifest
 
     /**
      *
-     * @param array $option
-     *
+     * @param array $options
      * @return array
      *
-     * @throws \Exception
      * @since 1.0
      */
-    private static function shortcuts(array $option = []): array
+    private static function shortcuts(array $options = []): array
     {
+        $shortcutsConfig = $options['shortcuts'] ?? [];
+
+        if (empty($shortcutsConfig)) {
+            return [];
+        }
+
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-        $shortcuts = $option['shortcuts'] ?? [];
-        $item = [];
-        if ($shortcuts) {
-            foreach ($shortcuts as $key => $val) {
-                $language = '';
-                if (!($val['language'] === '' || $val['language'] === '*')) {
-                    $lang_code = explode('-', $val['language'])[0];
-                    $language = '/'.$lang_code.'/';
-                }
+        $menuIds = array_column(
+            $shortcutsConfig,
+            'item'
+        );
 
-                $query = $db->getQuery(true);
-                $query->select([
-                    'title',
-                    'path',
-                ]);
-                $query->from('#__menu');
-                $query->where($db->quoteName('id').'='.$db->Quote($val['item']));
-                $db->setQuery($query);
-                $row = $db->loadObject();
+        $menuItems = self::getMenuItems(
+            $db,
+            $menuIds
+        );
 
-                $icon = 'favicons/shortcut_'.$val['item'].'.png';
-                $file = '';
-                if (file_exists(JPATH_SITE.'/'.$icon)) {
-                    $file = Uri::root().$icon;
-                }
+        $result = [];
 
-                $item[] = [
-                    'name' => $row->title,
-                    'url' => $language.$row->path,
-                    'icons' => [
-                        [
-                            'src' => $file,
-                            'type' => 'image/png',
-                            'sizes' => '96x96',
-                        ],
+        foreach ($shortcutsConfig as $shortcut) {
+            $menuId = (int)($shortcut['item'] ?? 0);
+
+            if ($menuId === 0 || !isset($menuItems[$menuId])) {
+                continue;
+            }
+
+            $row = $menuItems[$menuId];
+            $languagePrefix = self::getLanguagePrefix($shortcut['language'] ?? '');
+            $iconUrl = self::getShortcutIconUrl($menuId);
+
+            $result[] = [
+                'name' => $row->title,
+                'url' => $languagePrefix.$row->path,
+                'icons' => [
+                    [
+                        'src' => $iconUrl,
+                        'type' => 'image/png',
+                        'sizes' => '96x96',
                     ],
-                ];
-            }
+                ],
+            ];
         }
 
-        return $item;
+        return $result;
+    }
+
+    /**
+     * @param DatabaseInterface $db
+     * @param array $ids
+     *
+     * @return array
+     *
+     * @since 1.0
+     */
+    private static function getMenuItems(
+        DatabaseInterface $db,
+        array $ids
+    ): array {
+        $ids = array_filter(array_map('intval', $ids));
+
+        if (empty($ids)) {
+            return [];
+        }
+
+        $query = $db->getQuery(true)
+            ->select(['id', 'title', 'path'])
+            ->from('#__menu')
+            ->whereIn($db->quoteName('id'), $ids);
+        $db->setQuery($query);
+
+        $items = $db->loadObjectList('id');
+
+        return $items ?: [];
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    private static function getLanguagePrefix(string $language): string
+    {
+        if ($language === '' || $language === '*') {
+            return '';
+        }
+
+        $langCode = explode('-', $language)[0] ?? '';
+
+        return $langCode ? '/'.$langCode.'/' : '';
+    }
+
+    /**
+     * @param int $menuId
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    private static function getShortcutIconUrl(int $menuId): string
+    {
+        $iconPath = 'favicons/shortcut_'.$menuId.'.png';
+        $fullPath = JPATH_SITE.'/'.$iconPath;
+
+        return file_exists($fullPath)
+            ? Uri::root().$iconPath
+            : '';
     }
 
     /**
      *
-     * @param array $option
-     *
+     * @param array $options
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
-    private static function screenshots(array $option = []): array
+    private static function screenshots(array $options = []): array
     {
-        $screenshots = $option['screenshots'] ?? [];
-        $screen = [];
+        $screenshotsConfig = $options['screenshots'] ?? [];
 
-        if ($screenshots) {
-            foreach ($screenshots as $screenshot) {
-                $file = Render::image($screenshot['screen']);
-                $FastImageSize = new FastImageSize();
-                $imageSize = $FastImageSize->getImageSize(JPATH_SITE.'/'.$file);
+        if (empty($screenshotsConfig)) {
+            return [];
+        }
 
-                $sizes = '';
-                if ($imageSize !== false) {
-                    $sizes = $imageSize['width'].'x'.$imageSize['height'];
-                }
+        static $fastImageSize = null;
+        if ($fastImageSize === null) {
+            $fastImageSize = new FastImageSize();
+        }
 
-                $screen[] = [
-                    'src' => Uri::root().$file,
-                    'sizes' => $sizes,
-                    'type' => MimeType::fromFilename(JPATH_ROOT.'/'.$file),
-                ];
+        $result = [];
+        foreach ($screenshotsConfig as $item) {
+            $screen = self::processScreenshot(
+                $item,
+                $fastImageSize
+            );
+
+            if ($screen !== null) {
+                $result[] = $screen;
             }
         }
 
-        return $screen;
+        return $result;
+    }
+
+    /**
+     * @param array $screenshot
+     * @param FastImageSize $fis
+     *
+     * @return array|null
+     *
+     * @throws Exception
+     * @since 1.0
+     */
+    private static function processScreenshot(
+        array $screenshot,
+        FastImageSize $fis
+    ): ?array {
+        $relativePath = Render::image($screenshot['screen'] ?? null);
+
+        if (empty($relativePath) || !file_exists(JPATH_SITE.'/'.$relativePath)) {
+            return null;
+        }
+
+        $fullPath = JPATH_SITE.'/'.$relativePath;
+        $imageSize = $fis->getImageSize($fullPath);
+        $sizes = ($imageSize !== false)
+            ? ($imageSize['width'].'x'.$imageSize['height'])
+            : '';
+
+        return [
+            'src' => Uri::root().$relativePath,
+            'sizes' => $sizes,
+            'type' => MimeType::fromFilename(JPATH_ROOT.'/'.$relativePath) ?: 'image/png',
+        ];
     }
 
     /**
      *
-     * @param array $option
-     *
+     * @param array $options
      * @return array
      *
-     * @throws \Exception
      * @since 1.0
      */
-    private static function related_applications(array $option = []): array
+    private static function related_applications(array $options = []): array
     {
-        $my_webapp_pwa = $option['my_webapp_pwa'] ?? 0;
-        $related_apps = $option['related_apps'] ?? [];
-        $item = [];
-
-        if ($my_webapp_pwa && file_exists(JPATH_ROOT.'/manifest.webmanifest')) {
-            $item[] = [
+        $related = [];
+        if (!empty($options['my_webapp_pwa']) && file_exists(JPATH_ROOT.'/manifest.webmanifest')) {
+            $related[] = [
                 'platform' => 'webapp',
                 'url' => Uri::root().'manifest.webmanifest',
             ];
         }
 
-        if ($related_apps) {
-            foreach ($related_apps as $related_app) {
-                $item[] = [
-                    'platform' => $related_app->related_apps_platforms ?? '',
-                    'url' => $related_app->related_apps_url ?? '',
-                    'id' => $related_app->related_apps_id ?? '',
-                ];
+        $relatedApps = $options['related_apps'] ?? [];
+        foreach ($relatedApps as $app) {
+            $platform = $app->related_apps_platforms ?? '';
+            $url = $app->related_apps_url ?? '';
+            $id = $app->related_apps_id ?? '';
+
+            if (empty($platform) || empty($url)) {
+                continue;
             }
+
+            $related[] = array_filter([
+                'platform' => $platform,
+                'url' => $url,
+                'id' => $id,
+            ], static fn($value) => $value !== '');
         }
 
-        return $item;
+        return $related;
     }
 
     /**
      *
-     * @param array $option
-     *
+     * @param array $options
      * @return array
      *
-     * @throws \Exception
      * @since 1.0
      */
-    private static function scope_extensions(array $option = []): array
+    private static function scope_extensions(array $options = []): array
     {
-        $scope_extensions = $option['manifest_scope_extensions'] ?? [];
+        $scopeExtensions = $options['manifest_scope_extensions'] ?? [];
+
+        if (empty($scopeExtensions)) {
+            return [];
+        }
+
         $item = [];
-
-        if ($scope_extensions) {
-            foreach ($scope_extensions as $scope) {
-                $item[] = [
-                    'origin' => $scope['domains'],
-                ];
-            }
+        foreach ($scopeExtensions as $scope) {
+            $item[] = [
+                'origin' => $scope['domains'],
+            ];
         }
 
         return $item;
@@ -326,17 +436,25 @@ class Manifest
 
     /**
      *
-     * @param array $option
+     * @param array $options
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      * @since 1.0
      */
-    private static function launch_handler(array $option = []): array
+    private static function launch_handler(array $options = []): array
     {
-        $launch_handler = $option['manifest_launch_handler'] ?? [];
+        $modes = $options['manifest_launch_handler'] ?? [];
 
-        return ['client_mode' => [implode(',', $launch_handler)]];
+        $cleanModes = array_values(
+            array_filter(
+                array_map('trim', (array)$modes)
+            )
+        );
+
+        return $cleanModes !== []
+            ? ['client_mode' => $cleanModes]
+            : [];
     }
 }
