@@ -29,8 +29,8 @@ importers:
         specifier: ^0.6.3
         version: 0.6.3(@lit/react@1.0.8(@types/react@19.2.14))(@types/dom-chromium-installation-events@101.0.4)(@types/web-app-manifest@1.0.9)(lit@3.3.2)
       firebase:
-        specifier: ^12.12.1
-        version: 12.12.1
+        specifier: ^12.13.0
+        version: 12.13.0
       ios-pwa-splash-screen:
         specifier: ^1.3.0
         version: 1.3.0
