@@ -417,7 +417,8 @@ class Manifest
     private static function related_applications(array $options = []): array
     {
         $related = [];
-        if (!empty($options['my_webapp_pwa']) && file_exists(JPATH_ROOT.'/manifest.webmanifest')) {
+
+        if ($options['my_webapp_pwa'] === 0 && file_exists(JPATH_ROOT.'/manifest.webmanifest')) {
             $related[] = [
                 'platform' => 'webapp',
                 'url' => Uri::root().'manifest.webmanifest',
@@ -426,19 +427,27 @@ class Manifest
 
         $relatedApps = $options['related_apps'] ?? [];
         foreach ($relatedApps as $app) {
-            $platform = $app->related_apps_platforms ?? '';
-            $url = $app->related_apps_url ?? '';
-            $id = $app->related_apps_id ?? '';
+            $platform = $app['related_apps_platforms'] ?? '';
+            $url = $app['related_apps_url'] ?? '';
+            $id = $app['related_apps_id'] ?? '';
 
-            if (empty($platform) || empty($url)) {
+            if (empty($platform)) {
                 continue;
             }
 
-            $related[] = array_filter([
+            $item = [
                 'platform' => $platform,
-                'url' => $url,
-                'id' => $id,
-            ], static fn($value) => $value !== '');
+            ];
+
+            if (!empty($id)) {
+                $item['id'] = $id;
+            }
+
+            if (!empty($url)) {
+                $item['url'] = $url;
+            }
+
+            $related[] = $item;
         }
 
         return $related;
