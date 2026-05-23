@@ -54,6 +54,7 @@ class Manifest
         $data['background_color'] = $param['background_color'] ?? '#fafafa';
         $data['theme_color'] = $param['theme_color'] ?? '#fafafa';
         $data['launch_handler'] = self::launch_handler($param ?? []);
+        $data['prefer_related_applications'] = $param['prefer_related_applications'] === 'true' ? true : false;
         $data['related_applications'] = self::related_applications($param ?? []);
         $data['scope_extensions'] = self::scope_extensions($param ?? []);
         $data['screenshots'] = self::screenshots($param ?? []);
