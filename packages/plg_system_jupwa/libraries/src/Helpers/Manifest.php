@@ -366,11 +366,45 @@ class Manifest
             ? ($imageSize['width'].'x'.$imageSize['height'])
             : '';
 
-        return [
+        $formFactor = self::getScreenshotFormFactor(
+            $fullPath,
+            $imageSize['width'],
+            $imageSize['height']
+        );
+
+        $screenshot = [
             'src' => Uri::root().$relativePath,
             'sizes' => $sizes,
             'type' => MimeType::fromFilename(JPATH_ROOT.'/'.$relativePath) ?: 'image/png',
         ];
+
+        if ($formFactor) {
+            $screenshot['form_factor'] = $formFactor;
+        }
+
+        return $screenshot;
+    }
+
+    private static function getScreenshotFormFactor(
+        string $imagePath,
+        int $width,
+        int $height
+    ): ?string {
+        if (!file_exists($imagePath)) {
+            return null;
+        }
+
+        $ratio = $width / $height;
+
+        if ($ratio >= 1.3) {
+            return 'wide';
+        }
+
+        if ($ratio <= 0.75) {
+            return 'narrow';
+        }
+
+        return $width > $height ? 'wide' : 'narrow';
     }
 
     /**
