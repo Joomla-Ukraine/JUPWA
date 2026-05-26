@@ -621,4 +621,45 @@ class plgSystemJUPWA extends CMSPlugin
 
         return $op;
     }
+
+    /**
+     *
+     * @return bool
+     *
+     * @since 1.0
+     */
+    private function isExcluded(): bool
+    {
+        $exclusions = $this->params->get('push_exclude', '');
+
+        if ($exclusions) {
+            $exclusions = str_replace(["\r\n", "\r"], "\n", $exclusions);
+            $exclusions = explode("\n", $exclusions);
+            $exclusions = array_map('trim', $exclusions);
+
+            $filterExpression = function ($x) {
+                return $x !== '';
+            };
+
+            $exclusions = array_filter(
+                $exclusions,
+                $filterExpression
+            );
+
+            if ($exclusions) {
+                foreach ($exclusions as $exclusion) {
+                    $pos = strpos(
+                        Uri::getInstance()->getPath(),
+                        $exclusion
+                    );
+
+                    if ($pos !== false) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 }
