@@ -312,6 +312,10 @@ class plgSystemJUPWA extends CMSPlugin
             return;
         }
 
+        if ($this->isExcluded() === true) {
+            return;
+        }
+
         $doc = $this->app->getDocument();
         if (!($doc instanceof HtmlDocument)) {
             return;
@@ -390,6 +394,10 @@ class plgSystemJUPWA extends CMSPlugin
         }
 
         if (strpos(Uri::current(), '/account') !== false) {
+            return;
+        }
+
+        if ($this->isExcluded() === true) {
             return;
         }
 
@@ -515,6 +523,10 @@ class plgSystemJUPWA extends CMSPlugin
         }
 
         if (strpos(Uri::current(), '/account') !== false) {
+            return false;
+        }
+
+        if ($this->isExcluded() === true) {
             return false;
         }
 
