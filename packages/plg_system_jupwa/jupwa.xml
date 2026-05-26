@@ -1033,6 +1033,16 @@
                     </field>
 
                     <field
+                            name="push_exclude"
+                            type="textarea"
+                            label="PLG_JUPWA_USEPUSH_EXCLUDE_LABEL"
+                            description="PLG_JUPWA_USEPUSH_EXCLUDE_DESC"
+                            rows="15"
+                            filter="raw"
+                            showon="usepush:1"
+                    />
+
+                    <field
                             name="push_widget_info"
                             type="subform"
                             multiple="true"
