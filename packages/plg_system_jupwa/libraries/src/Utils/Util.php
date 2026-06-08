@@ -29,7 +29,7 @@ class Util
     public static function addVersion(): void
     {
         $json = [
-            'version' => hash('crc32b', (string)time()),
+            'version' => bin2hex(random_bytes(8)),
         ];
 
         $json_string = json_encode(
