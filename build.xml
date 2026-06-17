@@ -3,7 +3,7 @@
          basedir=".">
 
     <property name="VERSION"
-              value="2.6.6"/>
+              value="2.6.7"/>
     <property name="JOOMLA"
               value="4.0"/>
 
@@ -71,25 +71,6 @@
 
         <!---->
 
-        <!--<copy file="packages/plg_console_jupwa_seblod/jupwa_seblod.xml"
-              todir="${temp}/temp/plg_console_jupwa_seblod">
-            <filterchain>
-                <replacetokens>
-                    <token key="version"
-                           value="${VERSION}" />
-                    <token key="date"
-                           value="${DATE}" />
-                    <token key="year"
-                           value="${YEAR}" />
-                </replacetokens>
-            </filterchain>
-        </copy>
-
-        <delete file="${temp}/plg_console_jupwa_seblod/jupwa_seblod.xml" />
-        <copy file="${temp}/temp/plg_console_jupwa_seblod/jupwa_seblod.xml"
-              todir="${temp}/plg_console_jupwa_seblod" />-->
-
-        <!---->
 
         <copy file="packages/plg_console_jupwa_content/jupwa_content.xml"
               todir="${temp}/temp/plg_console_jupwa_content">
