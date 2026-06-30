@@ -1,5 +1,15 @@
+allowBuilds:
+  '@firebase/util': true
+  '@parcel/watcher': true
+  '@swc/core': true
+  gifsicle: true
+  jpegtran-bin: true
+  optipng-bin: true
+  protobufjs: true
 ignoredBuiltDependencies:
   - plain-crypto-js
+minimumReleaseAgeExclude:
+  - webpack@5.108.3
 onlyBuiltDependencies:
   - '@firebase/util'
   - '@parcel/watcher'
