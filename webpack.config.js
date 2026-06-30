@@ -116,13 +116,21 @@ const pluginClean = new CleanWebpackPlugin({
     pluginImageMin = new ImageMinimizerPlugin({
         minimizer: [
             {
-                implementation: ImageMinimizerPlugin.imageminMinify,
+                implementation: ImageMinimizerPlugin.sharpMinify,
                 options: {
-                    plugins: [
-                        ["gifsicle", {interlaced: true}],
-                        ["jpegtran", {progressive: true}],
-                        ["optipng", {optimizationLevel: 5}],
-                    ],
+                    encodeOptions: {
+                        jpeg: {
+                            quality: 80,
+                            progressive: true
+                        },
+                        png: {
+                            quality: 80,
+                            compressionLevel: 9
+                        },
+                        webp: {
+                            quality: 80
+                        },
+                    },
                 },
             },
             {
