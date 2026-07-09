@@ -10,6 +10,11 @@ ignoredBuiltDependencies:
   - plain-crypto-js
 minimumReleaseAgeExclude:
   - webpack@5.108.3
+  - '@firebase/app-compat@0.5.15'
+  - '@firebase/app@0.15.1'
+  - '@firebase/remote-config-compat@0.2.27'
+  - '@firebase/remote-config@0.9.0'
+  - firebase@12.16.0
 onlyBuiltDependencies:
   - '@firebase/util'
   - '@parcel/watcher'

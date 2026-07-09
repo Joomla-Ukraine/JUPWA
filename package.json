@@ -1,7 +1,7 @@
 {
   "name": "jupwa",
   "sideEffects": true,
-  "version": "2.5.9",
+  "version": "2.6.0",
   "description": "JUPWA",
   "private": true,
   "scripts": {
@@ -34,20 +34,20 @@
     "rimraf": "^6.1.3",
     "sass": "^1.101.0",
     "sass-loader": "^17.0.0",
-    "sharp": "^0.35.2",
+    "sharp": "^0.35.3",
     "style-loader": "^4.0.0",
     "svg-sprite-loader": "^6.0.11",
     "svg-transform-loader": "^2.0.13",
     "svgo-loader": "^5.0.0",
     "tailwindcss": "^3.4.19",
     "terser-webpack-plugin": "^5.6.1",
-    "webpack": "^5.108.3",
-    "webpack-cli": "^7.1.0",
+    "webpack": "^5.108.4",
+    "webpack-cli": "^7.2.1",
     "yargs": "^18.0.0"
   },
   "dependencies": {
     "@khmyznikov/pwa-install": "^0.6.4",
-    "firebase": "^12.15.0",
+    "firebase": "^12.16.0",
     "ios-pwa-splash-screen": "^1.3.0",
     "simple-notify": "^1.0.6",
     "wretch": "^3.0.9"
