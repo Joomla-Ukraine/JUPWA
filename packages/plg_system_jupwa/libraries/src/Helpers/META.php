@@ -546,8 +546,7 @@ class META
         $doc = $app->getDocument();
 
         if ($params->get('usepwa', 0) == 1) {
-            $pwajs = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('".Uri::base(
-                )."sw.js".$option['pwa_version']."'); }); }";
+            $pwajs = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('".Uri::base()."sw.js".$option['pwa_version']."'); }); }";
 
             $doc->addScriptDeclaration($pwajs);
         }

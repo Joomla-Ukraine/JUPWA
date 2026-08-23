@@ -21,209 +21,218 @@ defined('_JEXEC') or die();
 
 class Schema
 {
-	/**
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function schema(array $option = []): void
-	{
-		self::article_news($option);
-		self::article($option);
-	}
+    /**
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function schema(array $option = []): void
+    {
+        self::article_news($option);
+        self::article($option);
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function article_news(array $option = []): void
-	{
-		$app    = Factory::getApplication();
-		$doc    = $app->getDocument();
-		$Itemid = $app->input->getInt('Itemid');
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function article_news(array $option = []): void
+    {
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+        $Itemid = $app->input->getInt('Itemid');
 
-		if(in_array($Itemid, $option[ 'params' ]->get('schema_news_article') ? : []))
-		{
-			$logo     = Uri::root() . Util::get_thumbs()->{'article_logo'};
-			$sitename = $app->get('sitename');
-			$url      = str_replace('[id]', $option[ 'article' ]->created_by, $option[ 'params' ]->get('schema_news_article_person', ''));
+        if (in_array($Itemid, $option['params']->get('schema_news_article') ?: [])) {
+            $logo = Uri::root().Util::get_thumbs()->{'article_logo'};
+            $sitename = $app->get('sitename');
+            $url = str_replace(
+                '[id]',
+                $option['article']->created_by,
+                $option['params']->get('schema_news_article_person', '')
+            );
 
-			$json = [
-				'@context'         => 'https://schema.org',
-				'@type'            => 'NewsArticle',
-				'headline'         => $option[ 'title' ],
-				'name'             => $option[ 'title' ],
-				'description'      => $option[ 'description' ],
-				'articleBody'      => StringHelper::substr(strip_tags($option[ 'intro' ]), 0, 260),
-				'mainEntityOfPage' => [
-					'@type' => 'WebPage',
-					'@id'   => Uri::current()
-				],
-				'thumbnailUrl'     => $option[ 'image' ],
-				'image'            => [
-					'@type'  => 'ImageObject',
-					'url'    => $option[ 'image' ],
-					'height' => $option[ 'image_height' ],
-					'width'  => $option[ 'image_width' ]
-				],
-				'dateCreated'      => date('c', strtotime($option[ 'article' ]->created)),
-				'dateModified'     => date('c', strtotime($option[ 'article' ]->modified)),
-				'datePublished'    => date('c', strtotime($option[ 'article' ]->publish_up)),
-				'interactionCount' => $option[ 'article' ]->hits,
-				'author'           => [
-					'@type' => 'Person',
-					'name'  => $option[ 'article' ]->author,
-					'url'   => ($url ? : '')
-				],
-				'publisher'        => [
-					'@type' => 'Organization',
-					'name'  => $sitename,
-					'logo'  => [
-						'@type'  => 'ImageObject',
-						'url'    => $logo,
-						'height' => 60,
-						'width'  => 600
-					],
-				]
-			];
+            $json = [
+                '@context' => 'https://schema.org',
+                '@type' => 'NewsArticle',
+                'headline' => $option['title'],
+                'name' => $option['title'],
+                'description' => $option['description'],
+                'articleBody' => StringHelper::substr(strip_tags($option['intro']), 0, 260),
+                'mainEntityOfPage' => [
+                    '@type' => 'WebPage',
+                    '@id' => Uri::current(),
+                ],
+                'thumbnailUrl' => $option['image'],
+                'image' => [
+                    '@type' => 'ImageObject',
+                    'url' => $option['image'],
+                    'height' => $option['image_height'],
+                    'width' => $option['image_width'],
+                ],
+                'dateCreated' => date('c', strtotime($option['article']->created)),
+                'dateModified' => date('c', strtotime($option['article']->modified)),
+                'datePublished' => date('c', strtotime($option['article']->publish_up)),
+                'interactionCount' => $option['article']->hits,
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => $option['article']->author,
+                    'url' => ($url ?: ''),
+                ],
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => $sitename,
+                    'logo' => [
+                        '@type' => 'ImageObject',
+                        'url' => $logo,
+                        'height' => 60,
+                        'width' => 600,
+                    ],
+                ],
+            ];
 
-			$doc->addCustomTag(Util::LD($json));
-		}
-	}
+            $doc->addCustomTag(Util::LD($json));
+        }
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function article_blogposting(array $option = []): void
-	{
-		$app    = Factory::getApplication();
-		$doc    = $app->getDocument();
-		$Itemid = $app->input->getInt('Itemid');
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function article_blogposting(array $option = []): void
+    {
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+        $Itemid = $app->input->getInt('Itemid');
 
-		if(in_array($Itemid, $option[ 'params' ]->get('schema_blogposting') ? : []))
-		{
-			$logo     = Uri::root() . Util::get_thumbs()->{'article_logo'};
-			$sitename = $app->get('sitename');
-			$url      = str_replace('[id]', $option[ 'article' ]->created_by, $option[ 'params' ]->get('schema_article_blogposting_person', ''));
+        if (in_array($Itemid, $option['params']->get('schema_blogposting') ?: [])) {
+            $logo = Uri::root().Util::get_thumbs()->{'article_logo'};
+            $sitename = $app->get('sitename');
+            $url = str_replace(
+                '[id]',
+                $option['article']->created_by,
+                $option['params']->get('schema_article_blogposting_person', '')
+            );
 
-			$json = [
-				'@context'         => 'https://schema.org',
-				'@type'            => 'BlogPosting',
-				'@id'              => Uri::current(),
-				'mainEntityOfPage' => [
-					'@type' => 'WebPage',
-					'@id'   => Uri::current()
-				],
-				'headline'         => $option[ 'title' ],
-				'name'             => $option[ 'title' ],
-				'description'      => $option[ 'description' ],
-				'dateCreated'      => date('c', strtotime($option[ 'article' ]->created)),
-				'datePublished'    => date('c', strtotime($option[ 'article' ]->publish_up)),
-				'dateModified'     => date('c', strtotime($option[ 'article' ]->modified)),
-				'author'           => [
-					'@type' => 'Person',
-					'name'  => $option[ 'article' ]->author,
-					'url'   => $url,
-				],
-				'publisher'        => [
-					'@type' => 'Organization',
-					'name'  => $sitename,
-					'logo'  => [
-						'@type'  => 'ImageObject',
-						'url'    => $logo,
-						'height' => 60,
-						'width'  => 600
-					],
-				],
-				'image'            => [
-					'@type'  => 'ImageObject',
-					'url'    => $option[ 'image' ],
-					'height' => $option[ 'image_height' ],
-					'width'  => $option[ 'image_width' ]
-				],
-				'url'              => Uri::current(),
-				'articleBody'      => StringHelper::substr(strip_tags($option[ 'intro' ]), 0),
-				'thumbnailUrl'     => $option[ 'image' ]
-			];
+            $json = [
+                '@context' => 'https://schema.org',
+                '@type' => 'BlogPosting',
+                '@id' => Uri::current(),
+                'mainEntityOfPage' => [
+                    '@type' => 'WebPage',
+                    '@id' => Uri::current(),
+                ],
+                'headline' => $option['title'],
+                'name' => $option['title'],
+                'description' => $option['description'],
+                'dateCreated' => date('c', strtotime($option['article']->created)),
+                'datePublished' => date('c', strtotime($option['article']->publish_up)),
+                'dateModified' => date('c', strtotime($option['article']->modified)),
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => $option['article']->author,
+                    'url' => $url,
+                ],
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => $sitename,
+                    'logo' => [
+                        '@type' => 'ImageObject',
+                        'url' => $logo,
+                        'height' => 60,
+                        'width' => 600,
+                    ],
+                ],
+                'image' => [
+                    '@type' => 'ImageObject',
+                    'url' => $option['image'],
+                    'height' => $option['image_height'],
+                    'width' => $option['image_width'],
+                ],
+                'url' => Uri::current(),
+                'articleBody' => StringHelper::substr(strip_tags($option['intro']), 0),
+                'thumbnailUrl' => $option['image'],
+            ];
 
-			$doc->addCustomTag(Util::LD($json));
-		}
-	}
+            $doc->addCustomTag(Util::LD($json));
+        }
+    }
 
-	/**
-	 *
-	 * @param array $option
-	 *
-	 * @return void
-	 *
-	 * @throws \Exception
-	 * @since 1.0
-	 */
-	public static function article(array $option = []): void
-	{
-		$app    = Factory::getApplication();
-		$doc    = $app->getDocument();
-		$Itemid = $app->input->getInt('Itemid');
+    /**
+     *
+     * @param array $option
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since 1.0
+     */
+    public static function article(array $option = []): void
+    {
+        $app = Factory::getApplication();
+        $doc = $app->getDocument();
+        $Itemid = $app->input->getInt('Itemid');
 
-		if(in_array($Itemid, $option[ 'params' ]->get('schema_article') ? : []))
-		{
-			$logo     = (isset(Util::get_thumbs()->{'article_logo'}) ? Uri::root() . Util::get_thumbs()->{'article_logo'} : '');
-			$sitename = $app->get('sitename');
-			$url      = str_replace('[id]', $option[ 'article' ]->created_by, $option[ 'params' ]->get('schema_article_person', ''));
+        if (in_array($Itemid, $option['params']->get('schema_article') ?: [])) {
+            $logo = (isset(Util::get_thumbs()->{'article_logo'}) ? Uri::root().Util::get_thumbs()->{'article_logo'} : '');
+            $sitename = $app->get('sitename');
+            $url = str_replace(
+                '[id]',
+                $option['article']->created_by,
+                $option['params']->get('schema_article_person', '')
+            );
 
-			$json = [
-				'@context'         => 'https://schema.org',
-				'@type'            => 'Article',
-				'name'             => $option[ 'title' ],
-				'url'              => Uri::current(),
-				'description'      => $option[ 'description' ],
-				'image'            => [
-					'@type'  => 'ImageObject',
-					'url'    => $option[ 'image' ],
-					'height' => $option[ 'image_height' ],
-					'width'  => $option[ 'image_width' ]
-				],
-				'publisher'        => [
-					'@type' => 'Organization',
-					'name'  => $sitename,
-					'logo'  => [
-						'@type'  => 'ImageObject',
-						'url'    => $logo,
-						'height' => 60,
-						'width'  => 600
-					],
-				],
-				'dateCreated'      => date('c', strtotime($option[ 'article' ]->created)),
-				'dateModified'     => date('c', strtotime($option[ 'article' ]->modified)),
-				'datePublished'    => date('c', strtotime($option[ 'article' ]->publish_up)),
-				'author'           => [
-					'@type' => 'Person',
-					'name'  => $option[ 'article' ]->author,
-					'url'   => $url,
-				],
-				'articleBody'      => StringHelper::substr(strip_tags($option[ 'intro' ]), 0, 260),
-				'mainEntityOfPage' => [
-					'@type' => 'WebPage',
-					'@id'   => Uri::current()
-				],
-				'headline'         => $option[ 'title' ]
-			];
+            $json = [
+                '@context' => 'https://schema.org',
+                '@type' => 'Article',
+                'name' => $option['title'],
+                'url' => Uri::current(),
+                'description' => $option['description'],
+                'image' => [
+                    '@type' => 'ImageObject',
+                    'url' => $option['image'],
+                    'height' => $option['image_height'],
+                    'width' => $option['image_width'],
+                ],
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => $sitename,
+                    'logo' => [
+                        '@type' => 'ImageObject',
+                        'url' => $logo,
+                        'height' => 60,
+                        'width' => 600,
+                    ],
+                ],
+                'dateCreated' => date('c', strtotime($option['article']->created)),
+                'dateModified' => date('c', strtotime($option['article']->modified)),
+                'datePublished' => date('c', strtotime($option['article']->publish_up)),
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => $option['article']->author,
+                    'url' => $url,
+                ],
+                'articleBody' => StringHelper::substr(strip_tags($option['intro']), 0, 260),
+                'mainEntityOfPage' => [
+                    '@type' => 'WebPage',
+                    '@id' => Uri::current(),
+                ],
+                'headline' => $option['title'],
+            ];
 
-			$doc->addCustomTag(Util::LD($json));
-		}
-	}
+            $doc->addCustomTag(Util::LD($json));
+        }
+    }
 }

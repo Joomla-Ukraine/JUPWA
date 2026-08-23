@@ -141,7 +141,7 @@ class Image
             false,
             $color
         );
-        
+
         $img->insert($logo, 'center', $r);
         $img->save(JPATH_SITE.'/'.$image_out);
 

@@ -42,7 +42,6 @@ class PWAInstall
             $description = ' description="'.htmlentities($params->get('manifest_desc')).'"';
         }
 
-        return '<pwa-install id="pwa-install"'.$name.$description.$disable_chrome.$local_storage.' manifest-url="'.Uri::root(
-            ).'manifest.webmanifest"></pwa-install>';
+        return '<pwa-install id="pwa-install"'.$name.$description.$disable_chrome.$local_storage.' manifest-url="'.Uri::root().'manifest.webmanifest"></pwa-install>';
     }
 }
