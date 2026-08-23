@@ -1,11 +1,14 @@
 <?php
 /**
- * @package     JUPWA\Console
- * @subpackage
+ * JUPWA plugin
  *
- * @copyright   A copyright
- * @license     A "Slug" license name e.g. GPL2
- */
+ * @version       1.x
+ * @package       JUPWA\Utils
+ * @author        Denys D. Nosov (denys@joomla-ua.org)
+ * @copyright (C) 2023-2026 by Denys D. Nosov (https://joomla-ua.org)
+ * @license       GNU General Public License version 2 or later; see LICENSE.md
+ *
+ **/
 
 namespace JUPWA\Console;
 
@@ -33,7 +36,7 @@ class Console
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $items = self::tokens($result['user']);
-        
+
         foreach ($items as $item) {
             $title = $result['title'] ?: '';
             $desc = $result['desc'] ?: '';
