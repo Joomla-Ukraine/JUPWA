@@ -3,8 +3,10 @@
            group="console"
            method="upgrade">
     <name>plg_console_jupwa_content</name>
-    <author>Denys Nosov</author>
     <creationDate>@date@</creationDate>
+    <author>Denys Nosov</author>
+    <authorEmail>denys@joomla-ua.org</authorEmail>
+    <authorUrl>https://joomla-ua.org</authorUrl>
     <copyright>(C) Denys Nosov</copyright>
     <license>GNU General Public License version 3 or later</license>
     <authorEmail>denys@joomla-ua.org</authorEmail>
@@ -13,49 +15,49 @@
     <namespace path="src">JU\Plugin\Console\JUPWAContent</namespace>
 
     <languages folder="language">
-		<language tag="en-GB">en-GB/plg_console_jupwa_content.ini</language>
-		<language tag="en-GB">en-GB/plg_console_jupwa_content.sys.ini</language>
-	</languages>
+        <language tag="en-GB">en-GB/plg_console_jupwa_content.ini</language>
+        <language tag="en-GB">en-GB/plg_console_jupwa_content.sys.ini</language>
+    </languages>
 
     <files>
         <folder plugin="jupwa_content">services</folder>
         <folder>src</folder>
     </files>
 
-	<config>
-		<fields name="params">
-			<fieldset name="basic">
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
                 <field
-		                name="live_site"
-		                type="text"
-		                label="PLG_CONSOLE_JUPWA_CONTENT_DOMAIN"
+                        name="live_site"
+                        type="text"
+                        label="PLG_CONSOLE_JUPWA_CONTENT_DOMAIN"
                 />
 
-				<field
-						name="catid"
-						type="category"
-						extension="com_content"
-						multiple="true"
-						size="10"
-						label="JCATEGORY"
-						layout="joomla.form.field.list-fancy-select"
-						filter="intarray"
-				>
+                <field
+                        name="catid"
+                        type="category"
+                        extension="com_content"
+                        multiple="true"
+                        size="10"
+                        label="JCATEGORY"
+                        layout="joomla.form.field.list-fancy-select"
+                        filter="intarray"
+                >
                     <option value="">JOPTION_ALL_CATEGORIES</option>
                 </field>
 
-				<field
-						name="featured"
-						type="radio"
-						layout="joomla.form.field.radio.switcher"
-						label="PLG_CONSOLE_JUPWA_CONTENT_FEATURED"
-						default="0"
-						filter="integer"
-				>
-                     <option value="0">JNO</option>
+                <field
+                        name="featured"
+                        type="radio"
+                        layout="joomla.form.field.radio.switcher"
+                        label="PLG_CONSOLE_JUPWA_CONTENT_FEATURED"
+                        default="0"
+                        filter="integer"
+                >
+                    <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-			</fieldset>
-		</fields>
-	</config>
+            </fieldset>
+        </fields>
+    </config>
 </extension>
