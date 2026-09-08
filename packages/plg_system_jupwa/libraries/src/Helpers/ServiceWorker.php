@@ -36,7 +36,6 @@ class ServiceWorker
         $projectId = trim($option['param']['projectId']) ?? '';
         $messagingSenderId = trim($option['param']['messagingSenderId']) ?? '';
         $appId = trim($option['param']['appId']) ?? '';
-        $firebaseServiceAccount = trim($option['param']['firebaseServiceAccount']) ?? '';
 
         $import_scripts = "";
         if ($option['param']['usepwa'] == 1) {
@@ -95,36 +94,17 @@ class ServiceWorker
                 JPATH_SITE.'/offline.php',
                 $pwa_offline
             );
-
-            if (
-                $option['param']['usepush'] == 1 &&
-                $firebaseServiceAccount !== ''
-            ) {
-                file_put_contents(
-                    JPATH_SITE.'/.well-known/jupwa/firebase-service-account.json',
-                    $firebaseServiceAccount
-                );
-            }
         } else {
             if (file_exists(JPATH_SITE.'/sw.js')) {
                 File::delete(JPATH_SITE.'/sw.js');
 
-                Factory::getApplication()->enqueueMessage('File sw.js deleted successfully.', 'error');
+                $app->enqueueMessage('File sw.js deleted successfully.', 'error');
             }
 
             if (file_exists(JPATH_SITE.'/offline.php')) {
                 File::delete(JPATH_SITE.'/offline.php');
 
-                Factory::getApplication()->enqueueMessage('File offline.php deleted successfully.', 'error');
-            }
-
-            if (file_exists(JPATH_SITE.'/.well-known/jupwa/firebase-service-account.json')) {
-                File::delete(JPATH_SITE.'/.well-known/jupwa/firebase-service-account.json');
-
-                Factory::getApplication()->enqueueMessage(
-                    'File firebase-service-account.json deleted successfully.',
-                    'error'
-                );
+                $app->enqueueMessage('File offline.php deleted successfully.', 'error');
             }
         }
     }

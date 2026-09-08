@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 
 class Pkg_JUPWAInstallerScript
@@ -51,6 +52,11 @@ class Pkg_JUPWAInstallerScript
 			$path . 'css',
 			$path . 'js'
 		];
+        $serviceKey = JPATH_SITE.'/.well-known/jupwa/firebase-service-account.json';
+        if (is_file($serviceKey)) {
+            File::delete($serviceKey);
+        }
+
 
 		foreach($folders as $folder)
 		{

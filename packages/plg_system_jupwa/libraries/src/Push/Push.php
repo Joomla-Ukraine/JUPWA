@@ -16,9 +16,11 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Registry\Registry;
 use JsonException;
 use JUPWA\Helpers\Manifest;
 use JUPWA\Utils\Util;
@@ -48,34 +50,28 @@ class Push
         string $domain = '',
         string $link = ''
     ): array {
-        $serviceAccountFile = JPATH_ROOT.'/.well-known/jupwa/firebase-service-account.json';
         $scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
 
-        if (!file_exists($serviceAccountFile)) {
+        $serviceAccountData = self::getServiceAccountData();
+
+        if ($serviceAccountData === null) {
             return [
                 'success' => false,
-                'error' => 'Service account file not found',
+                'error' => 'Service account data not found or invalid in plugin parameters',
                 'code' => 404,
             ];
         }
 
         try {
-            $serviceAccountData = json_decode(
-                file_get_contents($serviceAccountFile),
-                true,
-                512,
-                JSON_THROW_ON_ERROR
-            );
-
             $projectId = $serviceAccountData['project_id'] ?? '';
 
             if (!$projectId) {
-                throw new RuntimeException('Project ID missing in service account file');
+                throw new RuntimeException('Project ID missing in service account data');
             }
 
             $credentials = new ServiceAccountCredentials(
                 $scopes,
-                $serviceAccountFile
+                $serviceAccountData
             );
 
             $authToken = $credentials->fetchAuthToken();
@@ -293,6 +289,43 @@ class Push
             if ($result) {
                 Factory::getApplication()->enqueueMessage('Enable Ajax Plugin "JUPWA. Push"');
             }
+        }
+    }
+
+    /**
+     * @return array|null
+     *
+     * @since 2.x
+     */
+    private static function getServiceAccountData(): ?array
+    {
+        try {
+            $plugin = PluginHelper::getPlugin(
+                'system',
+                'jupwa'
+            );
+
+            if (!$plugin || empty($plugin->params)) {
+                return null;
+            }
+
+            $params = new Registry($plugin->params);
+            $json = trim((string)$params->get('firebaseServiceAccount', ''));
+
+            if ($json === '') {
+                return null;
+            }
+
+            $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
+            if (!is_array($data) || empty($data['private_key']) || empty($data['client_email'])) {
+                return null;
+            }
+
+            return $data;
+
+        } catch (Exception $e) {
+            return null;
         }
     }
 }   
