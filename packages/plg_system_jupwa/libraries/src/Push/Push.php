@@ -270,14 +270,21 @@ class Push
     public static function checkAjaxPlugin(): void
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true);
 
-        $query->select(['extension_id', 'enabled']);
-        $query->from($db->quoteName('#__extensions'));
-        $query->where($db->quoteName('name').' = '.$db->Quote('plg_ajax_jupwapush'));
-        $query->where($db->quoteName('folder').' = '.$db->Quote('ajax'));
+        $name = 'plg_ajax_jupwapush';
+        $folder = 'ajax';
+
+        $query = $db->getQuery(true)
+            ->select(['extension_id', 'enabled'])
+            ->from($db->quoteName('#__extensions'))
+            ->where($db->quoteName('name').' = :name')
+            ->where($db->quoteName('folder').' = :folder')
+            ->bind(':name', $name)
+            ->bind(':folder', $folder);
+
         $db->setQuery($query);
         $db->execute();
+
         $status = $db->loadObject();
 
         if ($status && $status->enabled == 0) {
