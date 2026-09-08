@@ -20,162 +20,151 @@ use Joomla\Filesystem\Folder;
 
 class Pkg_JUPWAInstallerScript
 {
-	/**
-	 * @return bool
-	 *
-	 * @throws \Exception
-	 * @since 7.0
-	 */
-	public function preflight()
-	{
-		$app = Factory::getApplication();
+    /**
+     * @return bool
+     *
+     * @throws \Exception
+     * @since 7.0
+     */
+    public function preflight()
+    {
+        $app = Factory::getApplication();
 
-		if(version_compare(JVERSION, '4.0', 'lt'))
-		{
-			$app->enqueueMessage('Update for Joomla! 4.0 +', 'error');
+        if (version_compare(JVERSION, '5.2', 'lt')) {
+            $app->enqueueMessage('Update for Joomla! 5.2 +', 'error');
 
-			return false;
-		}
+            return false;
+        }
 
-		Folder::create(JPATH_SITE . '/.well-known/jupwa');
-		Folder::create(JPATH_SITE . '/favicons');
-		Folder::create(JPATH_SITE . '/images/jupwa');
-		Folder::create(JPATH_SITE . '/images/jupwa/icon');
-		Folder::create(JPATH_SITE . '/images/jupwa/logos');
-		Folder::create(JPATH_SITE . '/images/jupwa/icons');
-		Folder::create(JPATH_SITE . '/images/jupwa/images');
-		Folder::create(JPATH_SITE . '/images/jupwa/screenshots');
-		Folder::create(JPATH_SITE . '/images/jupwa/watermark');
+        Folder::create(JPATH_SITE.'/favicons');
+        Folder::create(JPATH_SITE.'/images/jupwa');
+        Folder::create(JPATH_SITE.'/images/jupwa/icon');
+        Folder::create(JPATH_SITE.'/images/jupwa/logos');
+        Folder::create(JPATH_SITE.'/images/jupwa/icons');
+        Folder::create(JPATH_SITE.'/images/jupwa/images');
+        Folder::create(JPATH_SITE.'/images/jupwa/screenshots');
+        Folder::create(JPATH_SITE.'/images/jupwa/watermark');
 
-		$path    = JPATH_SITE . '/media/jupwa/';
-		$folders = [
-			$path . 'css',
-			$path . 'js'
-		];
         $serviceKey = JPATH_SITE.'/.well-known/jupwa/firebase-service-account.json';
         if (is_file($serviceKey)) {
             File::delete($serviceKey);
         }
 
+        $path = JPATH_SITE.'/media/jupwa/';
+        $folders = [
+            $path.'css',
+            $path.'js',
+        ];
 
-		foreach($folders as $folder)
-		{
-			if(is_dir($folder))
-			{
-				$this->unlinkRecursive($folder);
-			}
-		}
+        foreach ($folders as $folder) {
+            if (is_dir($folder)) {
+                $this->unlinkRecursive($folder);
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public function postflight($type, $parent)
-	{
-		$db   = Factory::getContainer()->get(DatabaseInterface::class);
-		$app  = Factory::getApplication();
-		$lang = $app->getLanguage();
+    public function postflight($type, $parent)
+    {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $app = Factory::getApplication();
+        $lang = $app->getLanguage();
 
-		$query = $db->getQuery(true);
-		$query->select('*');
-		$query->from('#__extensions');
-		$query->where($db->quoteName('folder') . ' = ' . $db->quote('jupwa'));
-		$db->setQuery($query);
-		$jupwa = $db->loadObjectList();
+        $query = $db->getQuery(true);
+        $query->select('*');
+        $query->from('#__extensions');
+        $query->where($db->quoteName('folder').' = '.$db->quote('jupwa'));
+        $db->setQuery($query);
+        $jupwa = $db->loadObjectList();
 
-		$query = $db->getQuery(true);
-		$query->select('*');
-		$query->from('#__extensions');
-		$query->where($db->quoteName('folder') . ' = ' . $db->quote('ajax'));
-		$query->where($db->quoteName('name') . ' LIKE ' . $db->quote('%jupwa%'));
-		$db->setQuery($query);
-		$ajax = $db->loadObjectList();
+        $query = $db->getQuery(true);
+        $query->select('*');
+        $query->from('#__extensions');
+        $query->where($db->quoteName('folder').' = '.$db->quote('ajax'));
+        $query->where($db->quoteName('name').' LIKE '.$db->quote('%jupwa%'));
+        $db->setQuery($query);
+        $ajax = $db->loadObjectList();
 
-		$query = $db->getQuery(true);
-		$query->select('*');
-		$query->from('#__extensions');
-		$query->where($db->quoteName('folder') . ' = ' . $db->quote('console'));
-		$query->where($db->quoteName('name') . ' LIKE ' . $db->quote('%jupwa%'));
-		$db->setQuery($query);
-		$console = $db->loadObjectList();
+        $query = $db->getQuery(true);
+        $query->select('*');
+        $query->from('#__extensions');
+        $query->where($db->quoteName('folder').' = '.$db->quote('console'));
+        $query->where($db->quoteName('name').' LIKE '.$db->quote('%jupwa%'));
+        $db->setQuery($query);
+        $console = $db->loadObjectList();
 
-		$query = $db->getQuery(true);
-		$query->select('*');
-		$query->from('#__extensions');
-		$query->where($db->quoteName('folder') . ' = ' . $db->quote('system'));
-		$query->where($db->quoteName('element') . ' = ' . $db->quote('jupwa'));
-		$db->setQuery($query);
-		$system = $db->loadObjectList();
+        $query = $db->getQuery(true);
+        $query->select('*');
+        $query->from('#__extensions');
+        $query->where($db->quoteName('folder').' = '.$db->quote('system'));
+        $query->where($db->quoteName('element').' = '.$db->quote('jupwa'));
+        $db->setQuery($query);
+        $system = $db->loadObjectList();
 
-		$results = (object) array_merge((array) $system, (array) $jupwa, (array) $console, (array) $ajax);
+        $results = (object)array_merge((array)$system, (array)$jupwa, (array)$console, (array)$ajax);
 
-		$html = '<div class="main-card p-4">
+        $html = '<div class="main-card p-4">
 		<table class="table">
 		  <thead>
 		    <tr>
-		      <th scope="col">' . Text::_('PLG_JUPWA_TITLE_EXTENSIONS') . '</th>
-		      <th scope="col">' . Text::_('PLG_JUPWA_TITLE_STATUS') . '</th>
+		      <th scope="col">'.Text::_('PLG_JUPWA_TITLE_EXTENSIONS').'</th>
+		      <th scope="col">'.Text::_('PLG_JUPWA_TITLE_STATUS').'</th>
 		    </tr>
 		  </thead>
 		<tbody>';
 
-		foreach($results as $result)
-		{
-			$lang->load($result->name, JPATH_ADMINISTRATOR);
-			$description = Text::_(json_decode($result->manifest_cache)->description);
+        foreach ($results as $result) {
+            $lang->load($result->name, JPATH_ADMINISTRATOR);
+            $description = Text::_(json_decode($result->manifest_cache)->description);
 
-			$html .= '<tr><td><strong><a href="index.php?option=com_plugins&task=plugin.edit&extension_id=' . $result->extension_id . '" target="_blank">' . Text::_($result->name) . '</a></strong><br><small class="form-text">' . $description . '</small></td><td>';
+            $html .= '<tr><td><strong><a href="index.php?option=com_plugins&task=plugin.edit&extension_id='.$result->extension_id.'" target="_blank">'.Text::_(
+                    $result->name
+                ).'</a></strong><br><small class="form-text">'.$description.'</small></td><td>';
 
-			if($result->enabled == 1)
-			{
-				$html .= '<span class="tbody-icon active"><i class="icon-publish" aria-hidden="true"></i></span>';
-			}
-			else
-			{
-				$html .= '<span class="tbody-icon"><i class="icon-unpublish" aria-hidden="true"></i></span>';
-			}
+            if ($result->enabled == 1) {
+                $html .= '<span class="tbody-icon active"><i class="icon-publish" aria-hidden="true"></i></span>';
+            } else {
+                $html .= '<span class="tbody-icon"><i class="icon-unpublish" aria-hidden="true"></i></span>';
+            }
 
-			$html .= '</td></tr>';
-		}
+            $html .= '</td></tr>';
+        }
 
-		$html .= '</tbody></table></div>';
+        $html .= '</tbody></table></div>';
 
-		echo $html;
+        echo $html;
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * @param $dir
-	 * @param $deleteRootToo
-	 *
-	 *
-	 * @since version
-	 */
-	private function unlinkRecursive($dir, $deleteRootToo = 1): void
-	{
-		if(!$dh = opendir($dir))
-		{
-			return;
-		}
+    /**
+     * @param $dir
+     * @param $deleteRootToo
+     *
+     *
+     * @since version
+     */
+    private function unlinkRecursive($dir, $deleteRootToo = 1): void
+    {
+        if (!$dh = opendir($dir)) {
+            return;
+        }
 
-		while(($obj = readdir($dh)) !== false)
-		{
-			if($obj === '.' || $obj === '..')
-			{
-				continue;
-			}
+        while (($obj = readdir($dh)) !== false) {
+            if ($obj === '.' || $obj === '..') {
+                continue;
+            }
 
-			if(!unlink($dir . '/' . $obj))
-			{
-				$this->unlinkRecursive($dir . '/' . $obj, true);
-			}
-		}
+            if (!unlink($dir.'/'.$obj)) {
+                $this->unlinkRecursive($dir.'/'.$obj, true);
+            }
+        }
 
-		closedir($dh);
+        closedir($dh);
 
-		if($deleteRootToo)
-		{
-			rmdir($dir);
-		}
-	}
+        if ($deleteRootToo) {
+            rmdir($dir);
+        }
+    }
 }
