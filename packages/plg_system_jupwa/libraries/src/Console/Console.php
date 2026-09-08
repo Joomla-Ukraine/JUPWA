@@ -14,6 +14,7 @@ namespace JUPWA\Console;
 
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 use JUPWA\Push\Push;
 use stdClass;
 
@@ -70,9 +71,12 @@ class Console
     private static function remove_tokens(string $token): void
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
-        $query->delete($db->quoteName('#__jupwa_push_users'));
-        $query->where($db->quoteName('fcm_token').' = '.$db->Quote($token));
+
+        $query = $db->getQuery(true)
+            ->delete($db->quoteName('#__jupwa_push_users'))
+            ->where($db->quoteName('fcm_token').' = :token')
+            ->bind(':token', $token);
+
         $db->setQuery($query);
         $db->execute();
     }
@@ -87,11 +91,12 @@ class Console
     public static function tokens(int $user = 0): array
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true);
+        $query = $db->getQuery(true)
+            ->select($db->quoteName('fcm_token'))
+            ->from($db->quoteName('#__jupwa_push_users'))
+            ->where($db->quoteName('user_id').' = :user_id')
+            ->bind(':user_id', $user, ParameterType::INTEGER);
 
-        $query->select(['fcm_token']);
-        $query->from($db->quoteName('#__jupwa_push_users'));
-        $query->where($db->quoteName('user_id').' = '.$db->Quote($user));
         $db->setQuery($query);
         $db->execute();
 
@@ -113,8 +118,11 @@ class Console
         $query->select(['*']);
         $query->from('#__jupwa_push_orders');
 
+        $i = 0;
         foreach ($where as $key => $value) {
-            $query->where($db->quoteName($key).'='.$db->Quote($value));
+            $param = ':where'.$i++;
+            $query->where($db->quoteName($key).' = '.$param)
+                ->bind($param, $value);
         }
 
         $db->setQuery($query);
