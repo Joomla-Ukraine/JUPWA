@@ -26,6 +26,7 @@ minimumReleaseAgeExclude:
   - cssnano-preset-default@8.0.8
   - cssnano@8.0.8
   - postcss-minify-gradients@8.0.5
+  - webpack@5.111.1
 onlyBuiltDependencies:
   - '@firebase/util'
   - '@parcel/watcher'
