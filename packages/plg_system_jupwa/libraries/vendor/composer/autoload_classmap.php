@@ -64,6 +64,7 @@ return array(
     'Google\\Auth\\Credentials\\RegionalAccessBoundaryTrait' => $vendorDir . '/google/auth/src/Credentials/RegionalAccessBoundaryTrait.php',
     'Google\\Auth\\Credentials\\ServiceAccountCredentials' => $vendorDir . '/google/auth/src/Credentials/ServiceAccountCredentials.php',
     'Google\\Auth\\Credentials\\ServiceAccountJwtAccessCredentials' => $vendorDir . '/google/auth/src/Credentials/ServiceAccountJwtAccessCredentials.php',
+    'Google\\Auth\\Credentials\\StaticCredentials' => $vendorDir . '/google/auth/src/Credentials/StaticCredentials.php',
     'Google\\Auth\\Credentials\\UserRefreshCredentials' => $vendorDir . '/google/auth/src/Credentials/UserRefreshCredentials.php',
     'Google\\Auth\\ExecutableHandler\\ExecutableHandler' => $vendorDir . '/google/auth/src/ExecutableHandler/ExecutableHandler.php',
     'Google\\Auth\\ExecutableHandler\\ExecutableResponseError' => $vendorDir . '/google/auth/src/ExecutableHandler/ExecutableResponseError.php',

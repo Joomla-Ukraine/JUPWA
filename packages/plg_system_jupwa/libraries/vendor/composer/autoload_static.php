@@ -170,6 +170,7 @@ class ComposerStaticInit71ae34f82165b1cf4f0ef95c2cc04a6b
         'Google\\Auth\\Credentials\\RegionalAccessBoundaryTrait' => __DIR__ . '/..' . '/google/auth/src/Credentials/RegionalAccessBoundaryTrait.php',
         'Google\\Auth\\Credentials\\ServiceAccountCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/ServiceAccountCredentials.php',
         'Google\\Auth\\Credentials\\ServiceAccountJwtAccessCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/ServiceAccountJwtAccessCredentials.php',
+        'Google\\Auth\\Credentials\\StaticCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/StaticCredentials.php',
         'Google\\Auth\\Credentials\\UserRefreshCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/UserRefreshCredentials.php',
         'Google\\Auth\\ExecutableHandler\\ExecutableHandler' => __DIR__ . '/..' . '/google/auth/src/ExecutableHandler/ExecutableHandler.php',
         'Google\\Auth\\ExecutableHandler\\ExecutableResponseError' => __DIR__ . '/..' . '/google/auth/src/ExecutableHandler/ExecutableResponseError.php',
