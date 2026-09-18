@@ -12,7 +12,7 @@ import {createWidgetController} from "./push/ui/widgetController";
 import {getToken, onMessage} from "firebase/messaging";
 import {sendToken} from "./push/sendToken";
 import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
-import {FCM_STORAGE_KEY, getItemWithExpiry} from "./push/utils/storage";
+import {FCM_STORAGE_KEY, FCM_UNSUBSCRIBED_KEY, getItemWithExpiry} from "./push/utils/storage";
 
 (() => {
     document.addEventListener("DOMContentLoaded", async () => {
