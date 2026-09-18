@@ -2,6 +2,8 @@
 
 export const FCM_STORAGE_KEY = "jupwaFCMToken";
 export const FCM_TTL_MINUTES = 7 * 24 * 60;
+export const FCM_UNSUBSCRIBED_KEY = "jupwaFCMUnsubscribed";
+export const FCM_UNSUBSCRIBED_TTL_MINUTES = 10 * 365 * 24 * 60;
 
 /**
  * @param {string} key
@@ -38,7 +40,7 @@ export function getItemWithExpiry(key) {
 
         const now = Date.now();
 
-        if (typeof item.expiry !== "number" || now > item.expiry) {
+        if (typeof item.expiry !== 'number' || now > item.expiry) {
             localStorage.removeItem(key);
 
             return null;

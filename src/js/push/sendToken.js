@@ -2,7 +2,14 @@
 
 import wretch from 'wretch';
 import jupwaNotification from "./utils/notification";
-import {FCM_STORAGE_KEY, FCM_TTL_MINUTES, getItemWithExpiry, setItemWithExpiry} from "./utils/storage";
+import {
+    FCM_STORAGE_KEY,
+    FCM_TTL_MINUTES,
+    FCM_UNSUBSCRIBED_KEY,
+    getItemWithExpiry,
+    removeItem,
+    setItemWithExpiry
+} from "./utils/storage";
 
 export async function sendToken(params = {}) {
     const savedToken = getItemWithExpiry(FCM_STORAGE_KEY);
@@ -22,7 +29,13 @@ export async function sendToken(params = {}) {
             .post()
             .res();
 
-        setItemWithExpiry(FCM_STORAGE_KEY, params.token, FCM_TTL_MINUTES);
+        setItemWithExpiry(
+            FCM_STORAGE_KEY,
+            params.token,
+            FCM_TTL_MINUTES
+        );
+
+        removeItem(FCM_UNSUBSCRIBED_KEY);
 
     } catch (err) {
         jupwaNotification(err.message || "Subscription error");

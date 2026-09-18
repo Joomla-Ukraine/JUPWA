@@ -151,7 +151,9 @@ import {FCM_STORAGE_KEY, getItemWithExpiry} from "./push/utils/storage";
 
             let tokenStorage = getItemWithExpiry(FCM_STORAGE_KEY);
 
-            if (Notification.permission === "granted" && !tokenStorage) {
+            const wasUnsubscribed = getItemWithExpiry(FCM_UNSUBSCRIBED_KEY);
+
+            if (Notification.permission === "granted" && !tokenStorage && !wasUnsubscribed) {
                 try {
                     const currentToken = await getToken(messaging, {
                         serviceWorkerRegistration: swRegistration
@@ -161,7 +163,7 @@ import {FCM_STORAGE_KEY, getItemWithExpiry} from "./push/utils/storage";
                         await sendToken({
                             token: currentToken,
                             csrfToken,
-                            urlSubscribe,
+                            urlSubscribe
                         });
 
                         tokenStorage = currentToken;
