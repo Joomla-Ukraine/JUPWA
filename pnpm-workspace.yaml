@@ -27,6 +27,13 @@ minimumReleaseAgeExclude:
   - cssnano@8.0.8
   - postcss-minify-gradients@8.0.5
   - webpack@5.111.1
+  - decode-uri-component@0.4.3
+  - serialize-javascript@7.1.2
+  - '@grpc/grpc-js@1.13.6'
+  - braces@3.0.4
+  - source-map-js@1.2.2
+  - postcss-selector-parser@7.1.6
+  - sharp@0.35.5
 onlyBuiltDependencies:
   - '@firebase/util'
   - '@parcel/watcher'
