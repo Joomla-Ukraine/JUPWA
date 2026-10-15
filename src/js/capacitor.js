@@ -76,6 +76,10 @@ async function loadModules() {
         tasks.push(loadModule('statusBar', modules.statusBar));
     }
 
+    if (modules.appReview) {
+        tasks.push(loadModule('appReview', modules.appReview));
+    }
+
     /*    if (modules.appUpdate) {
             tasks.push(loadModule('appUpdate', modules.appUpdate));
         }*/
