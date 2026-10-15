@@ -22,7 +22,8 @@ const {version} = require('./package.json'),
 
 const entry = {
         'jupwa': path.resolve(__dirname, './src/js/index.js'),
-        'push': path.resolve(__dirname, './src/js/push.js')
+        'push': path.resolve(__dirname, './src/js/push.js'),
+        'app': path.resolve(__dirname, './src/js/capacitor.js')
     },
     output = {
         filename: `./js/[name].${version}.js`,
