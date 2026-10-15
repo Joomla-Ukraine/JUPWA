@@ -46,6 +46,8 @@
     "yargs": "^18.1.0"
   },
   "dependencies": {
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/status-bar": "^8.0.4",
     "@khmyznikov/pwa-install": "^0.7.0",
     "firebase": "^12.19.0",
     "ios-pwa-splash-screen": "^1.4.0",

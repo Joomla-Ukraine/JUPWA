@@ -25,6 +25,12 @@ importers:
 
   .:
     dependencies:
+      '@capacitor/core':
+        specifier: ^8.5.3
+        version: 8.5.3
+      '@capacitor/status-bar':
+        specifier: ^8.0.4
+        version: 8.0.4(@capacitor/core@8.5.3)
       '@khmyznikov/pwa-install':
         specifier: ^0.7.0
         version: 0.7.0(@lit/react@1.0.8(@types/react@19.3.0))(@types/dom-chromium-installation-events@101.0.4)(@types/web-app-manifest@1.0.9)(lit@3.3.3)
@@ -133,6 +139,14 @@ packages:
   '@babel/helper-validator-identifier@7.29.7':
     resolution: {integrity: sha512-qehxGkRj55h/ff8EMaJ+cYhyaKlHIxqYDn682wQD7RNp9UujOQsHog2uS0r2vzr4pW+sXf90NeeayjcNaX3fFg==}
     engines: {node: '>=6.9.0'}
+
+  '@capacitor/core@8.5.3':
+    resolution: {integrity: sha512-oBE1oGuYE4ZzYYrulC75OuHdSsD6zLUy7d5o1tFwDLG4govGoubY15cxpiI5l0+q87Lm5p0bhbehMdzJg4aFag==}
+
+  '@capacitor/status-bar@8.0.4':
+    resolution: {integrity: sha512-ZMzBUyHBzwDUxcHadEhvOvmoPmMQGMZgaMRJu8ohELeI6IaxoVH9ZhdF/OHnY3/yykv3Glev8Tnbh4aZY/0B0w==}
+    peerDependencies:
+      '@capacitor/core': '>=8.0.0'
 
   '@colordx/core@5.8.0':
     resolution: {integrity: sha512-cG0QJAO6VkaRUlIb0zOzX9gfJgs1pjoOL9gZ/PK1kfvBs0GCkADu5oQh6gPxXgQnZ3gV575h+lQRC0NlMDTclA==}
@@ -3266,6 +3280,14 @@ snapshots:
       picocolors: 1.1.1
 
   '@babel/helper-validator-identifier@7.29.7': {}
+
+  '@capacitor/core@8.5.3':
+    dependencies:
+      tslib: 2.8.1
+
+  '@capacitor/status-bar@8.0.4(@capacitor/core@8.5.3)':
+    dependencies:
+      '@capacitor/core': 8.5.3
 
   '@colordx/core@5.8.0': {}
 
