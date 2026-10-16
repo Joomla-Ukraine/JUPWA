@@ -73,8 +73,12 @@ async function loadModules() {
 
     const tasks = [];
 
-    if (modules.push) {
-        tasks.push(loadModule('push', modules.push));
+    if (modules.splashScreen) {
+        tasks.push(loadModule('splashScreen', modules.splashScreen));
+    }
+
+    if (modules.statusBar) {
+        tasks.push(loadModule('statusBar', modules.statusBar));
     }
 
     if (modules.appReview) {
