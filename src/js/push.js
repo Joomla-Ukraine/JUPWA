@@ -3,6 +3,7 @@
 import "../scss/style.scss";
 import "../scss/notification.scss";
 
+import {Capacitor} from '@capacitor/core';
 import {initFirebase} from "./push/initFirebase";
 import {registerSW} from "./push/registerSW";
 import jupwaNotification from "./push/utils/notification";
@@ -30,7 +31,8 @@ import {FCM_STORAGE_KEY, FCM_UNSUBSCRIBED_KEY, getItemWithExpiry} from "./push/u
             api: {subscribe: urlSubscribe, unsubscribe: urlUnSubscribe} = {},
         } = cfg;
 
-        const isNativeWebView = typeof window.PushManager?.getToken === 'function';
+        const isPushManager = typeof window.PushManager?.getToken === 'function';
+        const isNativeWebView = (Capacitor.isNativePlatform() || isPushManager);
 
         if (isNativeWebView) {
             const widget = document.getElementById('jupwa-widget');
