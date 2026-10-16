@@ -29,11 +29,19 @@ async function appReview() {
     }
 }
 
-export default async function init() {
+export default function init() {
+    if (!Capacitor.isNativePlatform()) {
+        return;
+    }
+
+    if (!['ios', 'android'].includes(Capacitor.getPlatform())) {
+        return;
+    }
+
+    window.appReview = appReview;
+
     document.querySelectorAll('.jupwa-app-appreview')
         .forEach((element) => {
             element.hidden = false;
         });
 }
-
-window.appReview = appReview;
