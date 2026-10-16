@@ -25,6 +25,6 @@ export function isIOSandNotStandalone() {
     const ua = navigator.userAgent || "";
     const iOS = /iPhone|iPad|iPod/.test(ua);
     const standalone = window.navigator.standalone === true;
-    
+
     return iOS && !standalone;
 }
