@@ -30,8 +30,6 @@ async function appReview() {
 }
 
 export default async function init() {
-    await appReview();
-
     document.querySelectorAll('.jupwa-app-appreview')
         .forEach((element) => {
             element.hidden = false;
