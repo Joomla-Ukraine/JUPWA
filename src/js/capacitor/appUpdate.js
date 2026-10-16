@@ -56,6 +56,8 @@ function showForceOverlay(title, message, buttonLabel, onUpdate) {
 }
 
 async function openStore(options = {}) {
+    const {storeUrlAndroid, storeUrlIos} = options;
+
     try {
         await AppUpdate.openAppStore();
 
@@ -65,7 +67,7 @@ async function openStore(options = {}) {
     }
 
     const platformName = window.Capacitor?.getPlatform?.() || '';
-    const url = platformName === 'ios' ? options.storeUrlIos : options.storeUrlAndroid;
+    const url = platformName === 'ios' ? storeUrlIos : storeUrlAndroid;
 
     if (url) {
         window.location.href = url;

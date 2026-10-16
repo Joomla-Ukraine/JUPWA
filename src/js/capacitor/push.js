@@ -13,7 +13,7 @@ function exposeTokenApi() {
 }
 
 export default async function init(options = {}) {
-    const autoRegister = options.autoRegister !== false;
+    const {autoRegister = true} = options;
 
     exposeTokenApi();
 

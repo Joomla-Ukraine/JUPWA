@@ -5,31 +5,38 @@ import {StatusBar, Style} from '@capacitor/status-bar';
 export const platform = 'native';
 
 export default async function init(options = {}) {
+    const {
+        statusBarStyle,
+        backgroundColor,
+        overlaysWebView,
+        visible,
+    } = options;
+
     // --- Status Bar Style ---
-    if (options.statusBarStyle) {
+    if (statusBarStyle) {
         const styleMap = {
             DARK: Style.Dark,
             LIGHT: Style.Light,
             DEFAULT: Style.Default,
         };
 
-        const style = styleMap[options.statusBarStyle.toUpperCase()] || Style.Default;
+        const style = styleMap[statusBarStyle.toUpperCase()] || Style.Default;
         await StatusBar.setStyle({style});
     }
 
     // --- Background Color (Android) ---
-    if (options.backgroundColor) {
-        await StatusBar.setBackgroundColor({color: options.backgroundColor});
+    if (backgroundColor) {
+        await StatusBar.setBackgroundColor({color: backgroundColor});
     }
 
     // --- Overlays WebView ---
-    if (typeof options.overlaysWebView === 'boolean') {
-        await StatusBar.setOverlaysWebView({overlay: options.overlaysWebView});
+    if (typeof overlaysWebView === 'boolean') {
+        await StatusBar.setOverlaysWebView({overlay: overlaysWebView});
     }
 
     // --- Visible / Hidden ---
-    if (typeof options.visible === 'boolean') {
-        if (options.visible) {
+    if (typeof visible === 'boolean') {
+        if (visible) {
             await StatusBar.show();
         } else {
             await StatusBar.hide();
