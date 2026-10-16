@@ -159,6 +159,7 @@ class ComposerStaticInit71ae34f82165b1cf4f0ef95c2cc04a6b
         'Google\\Auth\\CredentialSource\\ExecutableSource' => __DIR__ . '/..' . '/google/auth/src/CredentialSource/ExecutableSource.php',
         'Google\\Auth\\CredentialSource\\FileSource' => __DIR__ . '/..' . '/google/auth/src/CredentialSource/FileSource.php',
         'Google\\Auth\\CredentialSource\\UrlSource' => __DIR__ . '/..' . '/google/auth/src/CredentialSource/UrlSource.php',
+        'Google\\Auth\\CredentialSource\\X509Source' => __DIR__ . '/..' . '/google/auth/src/CredentialSource/X509Source.php',
         'Google\\Auth\\CredentialsLoader' => __DIR__ . '/..' . '/google/auth/src/CredentialsLoader.php',
         'Google\\Auth\\Credentials\\AppIdentityCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/AppIdentityCredentials.php',
         'Google\\Auth\\Credentials\\ExternalAccountAuthorizedUserCredentials' => __DIR__ . '/..' . '/google/auth/src/Credentials/ExternalAccountAuthorizedUserCredentials.php',

@@ -53,6 +53,7 @@ return array(
     'Google\\Auth\\CredentialSource\\ExecutableSource' => $vendorDir . '/google/auth/src/CredentialSource/ExecutableSource.php',
     'Google\\Auth\\CredentialSource\\FileSource' => $vendorDir . '/google/auth/src/CredentialSource/FileSource.php',
     'Google\\Auth\\CredentialSource\\UrlSource' => $vendorDir . '/google/auth/src/CredentialSource/UrlSource.php',
+    'Google\\Auth\\CredentialSource\\X509Source' => $vendorDir . '/google/auth/src/CredentialSource/X509Source.php',
     'Google\\Auth\\CredentialsLoader' => $vendorDir . '/google/auth/src/CredentialsLoader.php',
     'Google\\Auth\\Credentials\\AppIdentityCredentials' => $vendorDir . '/google/auth/src/Credentials/AppIdentityCredentials.php',
     'Google\\Auth\\Credentials\\ExternalAccountAuthorizedUserCredentials' => $vendorDir . '/google/auth/src/Credentials/ExternalAccountAuthorizedUserCredentials.php',
