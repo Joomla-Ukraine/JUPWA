@@ -62,27 +62,28 @@ async function loadModule(name, config) {
 
 async function loadModules() {
     const modules = getAppSettings()?.modules;
+
     if (!modules) {
         return;
     }
 
+    if (modules.push) {
+        await loadModule("push", modules.push);
+    }
+
     const tasks = [];
 
-    /*    if (modules.push) {
-            tasks.push(loadModule('push', modules.push));
-        }*/
-
-    if (modules.statusBar) {
-        tasks.push(loadModule('statusBar', modules.statusBar));
+    if (modules.push) {
+        tasks.push(loadModule('push', modules.push));
     }
 
     if (modules.appReview) {
         tasks.push(loadModule('appReview', modules.appReview));
     }
 
-    /*    if (modules.appUpdate) {
-            tasks.push(loadModule('appUpdate', modules.appUpdate));
-        }*/
+    if (modules.appUpdate) {
+        tasks.push(loadModule('appUpdate', modules.appUpdate));
+    }
 
     await Promise.allSettled(tasks);
 }
