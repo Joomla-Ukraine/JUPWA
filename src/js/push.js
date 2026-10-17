@@ -11,8 +11,26 @@ import {createButtonController} from "./push/ui/buttonController";
 import {createWidgetController} from "./push/ui/widgetController";
 import {getToken, onMessage} from "firebase/messaging";
 import {sendToken} from "./push/sendToken";
+import {deleteFCMToken} from "./push/deleteFCMToken";
 import getTokenNativeIOS from "./push/utils/getTokenNativeIOS";
 import {FCM_STORAGE_KEY, FCM_UNSUBSCRIBED_KEY, getItemWithExpiry} from "./push/utils/storage";
+
+const nativeTokenRequests = new Map();
+
+function sendNativeToken(params) {
+    const existingRequest = nativeTokenRequests.get(params.token);
+
+    if (existingRequest) {
+        return existingRequest;
+    }
+
+    const request = sendToken(params).finally(() => {
+        nativeTokenRequests.delete(params.token);
+    });
+    nativeTokenRequests.set(params.token, request);
+
+    return request;
+}
 
 (() => {
     document.addEventListener("DOMContentLoaded", async () => {
@@ -41,17 +59,53 @@ import {FCM_STORAGE_KEY, FCM_UNSUBSCRIBED_KEY, getItemWithExpiry} from "./push/u
                 widget.remove();
             }
 
+            const nativePushHandlers = {
+                onToken: async (token) => {
+                    await sendNativeToken({
+                        token,
+                        csrfToken,
+                        urlSubscribe,
+                    });
+
+                    window.jupwaCapacitorPush?.setSubscriptionState(true);
+                },
+                onDisable: async (token) => {
+                    await deleteFCMToken({
+                        token,
+                        csrfToken,
+                        urlUnSubscribe,
+                    });
+
+                    window.jupwaCapacitorPush?.setSubscriptionState(false);
+                },
+            };
+
+            if (typeof window.jupwaCapacitorPush?.setHandlers === 'function') {
+                window.jupwaCapacitorPush.setHandlers(nativePushHandlers);
+            } else {
+                window.jupwaCapacitorPushHandlers = nativePushHandlers;
+            }
+
             try {
                 const savedToken = getItemWithExpiry(FCM_STORAGE_KEY);
 
                 getTokenNativeIOS()
-                    .then(token => {
+                    .then(async (token) => {
                         if (token && token !== savedToken) {
-                            sendToken({
-                                token,
-                                csrfToken,
-                                urlSubscribe,
-                            });
+                            try {
+                                await sendNativeToken({
+                                    token,
+                                    csrfToken,
+                                    urlSubscribe,
+                                });
+
+                                window.jupwaCapacitorPush?.setSubscriptionState(true);
+
+                            } catch (err) {
+                                window.jupwaCapacitorPush?.setRequestState({
+                                    error: err?.message || lang.tokenNotLoad,
+                                });
+                            }
                         }
                     });
 
