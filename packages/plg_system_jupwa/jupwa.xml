@@ -1198,7 +1198,10 @@
                     <option value="1">JYES</option>
                 </field>
 
-                <field type="spacer" name="spacer_usecapacitor" hr="true" showon="usecapacitor:1"/>
+                <field type="spacer"
+                       name="spacer_usecapacitor"
+                       hr="true"
+                       showon="usecapacitor:1"/>
 
                 <field
                         name="plgs_push"
@@ -1226,7 +1229,8 @@
 
                 <field type="spacer"
                        name="spacer_plgs_push"
-                       hr="true"/>
+                       hr="true"
+                       showon="usecapacitor:1"/>
 
                 <field
                         name="plg_splashScreen"
@@ -1260,8 +1264,8 @@
 
                 <field type="spacer"
                        name="spacer_plg_splashScreen"
-                       hr="true"/>
-
+                       hr="true"
+                       showon="usecapacitor:1"/>
 
                 <field
                         name="plg_statusBar"
@@ -1319,7 +1323,8 @@
 
                 <field type="spacer"
                        name="spacer_plg_statusBar"
-                       hr="true"/>
+                       hr="true"
+                       showon="usecapacitor:1"/>
 
                 <field
                         name="plg_appReview"
@@ -1335,7 +1340,8 @@
 
                 <field type="spacer"
                        name="spacer_plg_appReview"
-                       hr="true"/>
+                       hr="true"
+                       showon="usecapacitor:1"/>
 
                 <field
                         name="plg_appUpdate"
@@ -1394,7 +1400,8 @@
 
                 <field type="spacer"
                        name="spacer_plg_appUpdate"
-                       hr="true"/>
+                       hr="true"
+                       showon="usecapacitor:1"/>
 
             </fieldset>
 
