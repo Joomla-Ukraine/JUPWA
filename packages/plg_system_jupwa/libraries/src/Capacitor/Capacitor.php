@@ -19,6 +19,22 @@ class Capacitor
      *
      * @param array $option
      *
+     * @return bool
+     *
+     * @throws Exception
+     * @since 1.0
+     */
+    public static function isCapacitor(array $option = []): bool
+    {
+        $params = $option['params'] ?? null;
+
+        return !(!$params || $params->get('usecapacitor') != 1);
+    }
+
+    /**
+     *
+     * @param array $option
+     *
      * @return void
      *
      * @throws Exception

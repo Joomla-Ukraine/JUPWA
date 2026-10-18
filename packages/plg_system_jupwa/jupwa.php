@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use JUPWA\Capacitor\Capacitor;
 use JUPWA\Helpers\AssetLinks;
 use JUPWA\Helpers\Facebook;
 use JUPWA\Helpers\HTML;
@@ -25,7 +26,6 @@ use JUPWA\Helpers\META;
 use JUPWA\Helpers\OG;
 use JUPWA\Helpers\PWAInstall;
 use JUPWA\Helpers\ServiceWorker;
-use JUPWA\Capacitor\Capacitor;
 use JUPWA\Push\Push;
 use JUPWA\Thumbs\Render;
 use JUPWA\Utils\Util;
@@ -324,6 +324,18 @@ class plgSystemJUPWA extends CMSPlugin
 
         $wa = $doc->getWebAssetManager();
         $v = $this->jupwa_js_version;
+
+        if (Capacitor::isCapacitor(['params' => $this->params])) {
+            $wa->registerAndUseScript(
+                'app',
+                Uri::root().'media/jupwa/js/app.'.$v.'.js',
+                ['version' => false],
+                [
+                    'defer' => 'defer',
+                    'fetchpriority' => 'auto',
+                ]
+            );
+        }
 
         if (Push::isPush(['params' => $this->params])) {
             $wa->registerAndUseStyle(
