@@ -25,6 +25,7 @@ use JUPWA\Helpers\META;
 use JUPWA\Helpers\OG;
 use JUPWA\Helpers\PWAInstall;
 use JUPWA\Helpers\ServiceWorker;
+use JUPWA\Capacitor\Capacitor;
 use JUPWA\Push\Push;
 use JUPWA\Thumbs\Render;
 use JUPWA\Utils\Util;
@@ -448,6 +449,7 @@ class plgSystemJUPWA extends CMSPlugin
             );
         }
 
+        Capacitor::render(['params' => $this->params]);
         Push::render(['params' => $this->params]);
         META::render(['params' => $this->params]);
     }
