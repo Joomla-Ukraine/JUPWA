@@ -141,7 +141,7 @@ class plgSystemJUPWA extends CMSPlugin
         }
 
         $currentUri = Uri::getInstance()->getPath();
-        if (strpos($currentUri, '/account') !== false) {
+        if (str_contains($currentUri, '/account')) {
             return;
         }
 
@@ -183,7 +183,7 @@ class plgSystemJUPWA extends CMSPlugin
         if ($this->params->get('og') == 1) {
             $buffer = preg_replace_callback('#<html(.*?)>#m', [HTML::class, 'tag_html'], $buffer);
 
-            if (strpos($buffer, '<!DOCTYPE html>') !== false) {
+            if (str_contains($buffer, '<!DOCTYPE html>')) {
                 $buffer = str_replace(['xmlns="http://www.w3.org/1999/xhtml"', '  '], ['', ' '], $buffer);
             }
 
@@ -238,7 +238,7 @@ class plgSystemJUPWA extends CMSPlugin
             $urls = explode("\r\n", $exclusion);
             $current = Uri::current();
             foreach ($urls as $url) {
-                if ($url && strpos($current, $url) !== false) {
+                if ($url && str_contains($current, $url)) {
                     return;
                 }
             }
@@ -276,7 +276,7 @@ class plgSystemJUPWA extends CMSPlugin
             return;
         }
 
-        if (strpos(Uri::current(), '/account') !== false) {
+        if (str_contains(Uri::current(), '/account')) {
             return;
         }
 
@@ -309,7 +309,7 @@ class plgSystemJUPWA extends CMSPlugin
             return;
         }
 
-        if (strpos(Uri::current(), '/account') !== false) {
+        if (str_contains(Uri::current(), '/account')) {
             return;
         }
 
@@ -406,7 +406,7 @@ class plgSystemJUPWA extends CMSPlugin
             return;
         }
 
-        if (strpos(Uri::current(), '/account') !== false) {
+        if (str_contains(Uri::current(), '/account')) {
             return;
         }
 
@@ -523,7 +523,7 @@ class plgSystemJUPWA extends CMSPlugin
      * @param        $context
      * @param        $article
      *
-     * @return true|void
+     * @return bool|null
      *
      * @throws Exception
      * @since 1.0
@@ -536,7 +536,7 @@ class plgSystemJUPWA extends CMSPlugin
             return false;
         }
 
-        if (strpos(Uri::current(), '/account') !== false) {
+        if (str_contains(Uri::current(), '/account')) {
             return false;
         }
 
@@ -671,7 +671,7 @@ class plgSystemJUPWA extends CMSPlugin
             $exclusions = explode("\n", $exclusions);
             $exclusions = array_map('trim', $exclusions);
 
-            $filterExpression = function ($x) {
+            $filterExpression = static function ($x) {
                 return $x !== '';
             };
 
