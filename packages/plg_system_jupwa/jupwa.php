@@ -335,6 +335,15 @@ class plgSystemJUPWA extends CMSPlugin
                     'fetchpriority' => 'auto',
                 ]
             );
+
+            $doc->addHeadLink(
+                Uri::root().'media/jupwa/js/app.'.$v.'.js',
+                'preload',
+                'rel',
+                [
+                    'as' => 'script',
+                ]
+            );
         }
 
         if (Push::isPush(['params' => $this->params])) {
