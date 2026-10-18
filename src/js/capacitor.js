@@ -30,7 +30,7 @@ function getOptions(config) {
     return {};
 }
 
-async function loadModule(name, config) {
+async function loadModule(name, config, language = {}) {
     try {
         const mod = await import(
             /* webpackChunkName: "jupwa-app-[request]" */
@@ -52,7 +52,7 @@ async function loadModule(name, config) {
 
         const init = mod.default || mod.init;
         if (typeof init === 'function') {
-            await init(getOptions(config));
+            await init({...getOptions(config), language});
         }
 
     } catch (e) {
@@ -61,14 +61,15 @@ async function loadModule(name, config) {
 }
 
 async function loadModules() {
-    const modules = getAppSettings()?.modules;
+    const settings = getAppSettings();
+    const modules = settings?.modules;
 
     if (!modules) {
         return;
     }
 
     if (modules.push) {
-        await loadModule("push", modules.push);
+        await loadModule("push", modules.push, settings?.language);
     }
 
     const tasks = [];
@@ -86,7 +87,7 @@ async function loadModules() {
     }
 
     if (modules.appUpdate) {
-        tasks.push(loadModule('appUpdate', modules.appUpdate));
+        tasks.push(loadModule('appUpdate', modules.appUpdate, settings?.language));
     }
 
     await Promise.allSettled(tasks);

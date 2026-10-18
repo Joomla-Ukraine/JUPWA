@@ -83,7 +83,7 @@ export default async function init(options = {}) {
         autoOpenStore = false,
         storeUrlAndroid = '',
         storeUrlIos = '',
-        localisation = {},
+        language = {},
     } = options;
 
     // --- Force update ---
@@ -109,9 +109,9 @@ export default async function init(options = {}) {
 
         if (currentVersion && isVersionBelow(currentVersion, minVersion)) {
             showForceOverlay(
-                localisation.forceUpdateTitle || 'Update required',
-                localisation.forceUpdateMessage || 'Please update the app to continue.',
-                localisation.forceUpdateButton || 'Update',
+                language.forceUpdateTitle || 'Update required',
+                language.forceUpdateMessage || 'Please update the app to continue.',
+                language.forceUpdateButton || 'Update',
                 () => openStore({storeUrlAndroid, storeUrlIos})
             );
 
@@ -133,7 +133,7 @@ export default async function init(options = {}) {
                 return;
             }
 
-            const template = localisation.updateAvailableMessage || 'A new version{version} is available. Update now?';
+            const template = language.updateAvailableMessage || 'A new version{version} is available. Update now?';
             const versionPart = info.availableVersionName ? ` (${info.availableVersionName})` : '';
             const message = template.replace('{version}', versionPart);
 
