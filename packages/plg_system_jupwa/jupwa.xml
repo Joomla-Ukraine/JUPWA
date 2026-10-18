@@ -1185,6 +1185,220 @@
 
             </fieldset>
 
+            <fieldset name="CAPACITOR">
+
+                <field
+                        name="usecapacitor"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="0"
+                        label="PLG_JUPWA_PLG_USE_CAPACITOR"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field type="spacer" name="spacer_usecapacitor" hr="true" showon="usecapacitor:1"/>
+
+                <field
+                        name="plgs_push"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="0"
+                        label="PLG_JUPWA_PLGS_PUSH"
+                        showon="usecapacitor:1"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="plgs_push_autoRegister"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="false"
+                        label="PLG_JUPWA_PLGS_PUSH_AUTOREGISTER"
+                        showon="usecapacitor:1[AND]plgs_push:1"
+                >
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field type="spacer"
+                       name="spacer_plgs_push"
+                       hr="true"/>
+
+                <field
+                        name="plg_splashScreen"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="1"
+                        label="PLG_JUPWA_PLG_SPLASHSCREEN"
+                        showon="usecapacitor:1"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="plg_splashScreen_visible"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="false"
+                        label="PLG_JUPWA_PLG_SPLASHSCREEN_VISIBLE"
+                        showon="usecapacitor:1[AND]plg_splashScreen:1"
+                >
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field name="plg_splashScreen_fadeOutDuration"
+                       type="number"
+                       label="PLG_JUPWA_PLG_SPLASHSCREEN__FOD"
+                       showon="usecapacitor:1[AND]plg_splashScreen:1"
+                />
+
+                <field type="spacer"
+                       name="spacer_plg_splashScreen"
+                       hr="true"/>
+
+
+                <field
+                        name="plg_statusBar"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="0"
+                        label="PLG_JUPWA_PLG_STATUSBAR"
+                        showon="usecapacitor:1"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="plg_statusBar_statusBarStyle"
+                        type="list"
+                        default="0"
+                        label="PLG_JUPWA_PLG_STATUSBAR_STYLE"
+                        showon="usecapacitor:1[AND]plg_statusBar:1"
+                >
+                    <option value="DEFAULT">DEFAULT</option>
+                    <option value="LIGHT">LIGHT</option>
+                    <option value="DARK">DARK</option>
+                </field>
+
+                <field name="plg_statusBar_backgroundColor"
+                       type="color"
+                       label="PLG_JUPWA_PLG_STATUSBAR_BG"
+                       showon="usecapacitor:1[AND]plg_statusBar:1"
+                />
+
+                <field
+                        name="plg_statusBar_overlaysWebView"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="false"
+                        label="PLG_JUPWA_PLG_STATUSBAR_OVERLAYWEBVIEW"
+                        showon="usecapacitor:1[AND]plg_statusBar:1"
+                >
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field
+                        name="plg_statusBar_visible"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="true"
+                        label="PLG_JUPWA_PLG_STATUSBAR_VISIBLE"
+                        showon="usecapacitor:1[AND]plg_statusBar:1"
+                >
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field type="spacer"
+                       name="spacer_plg_statusBar"
+                       hr="true"/>
+
+                <field
+                        name="plg_appReview"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="0"
+                        label="PLG_JUPWA_PLG_APPREVIEW"
+                        showon="usecapacitor:1"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field type="spacer"
+                       name="spacer_plg_appReview"
+                       hr="true"/>
+
+                <field
+                        name="plg_appUpdate"
+                        layout="joomla.form.field.radio.switcher"
+                        type="radio"
+                        default="0"
+                        label="PLG_JUPWA_PLG_UPDATE"
+                        showon="usecapacitor:1"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="plg_appUpdate_checkOnStart"
+                        type="radio"
+                        layout="joomla.form.field.radio.switcher"
+                        default="1"
+                        label="PLG_JUPWA_PLG_UPDATE_CHECKONSTART"
+                        showon="usecapacitor:1[AND]plg_appUpdate:1"
+                >
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field name="plg_appUpdate_delayMs"
+                       type="number"
+                       default="2000"
+                       label="PLG_JUPWA_PLG_UPDATE_DELAYMS"
+                       showon="usecapacitor:1[AND]plg_appUpdate:1"
+                />
+
+                <field
+                        name="plg_appUpdate_force"
+                        type="radio"
+                        layout="joomla.form.field.radio.switcher"
+                        default="false"
+                        label="PLG_JUPWA_PLG_FORCE"
+                        showon="usecapacitor:1[AND]plg_appUpdate:1"
+                >
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field
+                        name="plg_appUpdate_autoOpenStore"
+                        type="radio"
+                        layout="joomla.form.field.radio.switcher"
+                        default="true"
+                        label="PLG_JUPWA_PLG_AUTOOPENSTORE"
+                        showon="usecapacitor:1[AND]plg_appUpdate:1"
+                >
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field type="spacer"
+                       name="spacer_plg_appUpdate"
+                       hr="true"/>
+
+            </fieldset>
+
+
         </fields>
     </config>
 </extension>
