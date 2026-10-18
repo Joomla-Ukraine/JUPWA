@@ -355,7 +355,7 @@ class plgSystemJUPWA extends CMSPlugin
 
             $doc->addHeadLink(
                 Uri::root().'media/jupwa/css/app.push.'.$v.'.css',
-                'preload prefetch',
+                'preload',
                 'rel',
                 ['as' => 'style']
             );
@@ -372,7 +372,7 @@ class plgSystemJUPWA extends CMSPlugin
 
             $doc->addHeadLink(
                 Uri::root().'media/jupwa/js/push.'.$v.'.js',
-                'preload prefetch',
+                'preload',
                 'rel',
                 [
                     'as' => 'script',
@@ -393,7 +393,7 @@ class plgSystemJUPWA extends CMSPlugin
 
             $doc->addHeadLink(
                 Uri::root().'media/jupwa/js/jupwa.'.$v.'.js',
-                'preload prefetch',
+                'preload',
                 'rel',
                 [
                     'as' => 'script',
