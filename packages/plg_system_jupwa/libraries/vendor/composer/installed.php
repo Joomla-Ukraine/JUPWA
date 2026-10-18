@@ -3,11 +3,11 @@
         'name' => 'joomla-ua/jupwa',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '7f85476c3175a2c2229b008c3d08763f0745743b',
+        'reference' => 'a7c143a7f65c7d37b777998e47042416e4a19129',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'firebase/php-jwt' => array(
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'google/auth' => array(
-            'pretty_version' => 'v1.55.1',
-            'version' => '1.55.1.0',
-            'reference' => 'ef1b92cb42470b09b3caaf23bb9b4bb9a2dc787e',
+            'pretty_version' => 'v1.55.2',
+            'version' => '1.55.2.0',
+            'reference' => '293fdf064cfc5b77a22bb7406b59f149b3fb70e8',
             'type' => 'library',
             'install_path' => __DIR__ . '/../google/auth',
             'aliases' => array(),
@@ -67,7 +67,7 @@
         'joomla-ua/jupwa' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '7f85476c3175a2c2229b008c3d08763f0745743b',
+            'reference' => 'a7c143a7f65c7d37b777998e47042416e4a19129',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

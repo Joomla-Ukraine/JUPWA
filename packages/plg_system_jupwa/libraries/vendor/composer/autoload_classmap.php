@@ -315,6 +315,7 @@ return array(
     'Intervention\\Image\\Point' => $vendorDir . '/intervention/image/src/Intervention/Image/Point.php',
     'Intervention\\Image\\Response' => $vendorDir . '/intervention/image/src/Intervention/Image/Response.php',
     'Intervention\\Image\\Size' => $vendorDir . '/intervention/image/src/Intervention/Image/Size.php',
+    'JUPWA\\Capacitor\\Capacitor' => $baseDir . '/src/Capacitor/Capacitor.php',
     'JUPWA\\Classes\\Minify' => $baseDir . '/src/Classes/Minify.php',
     'JUPWA\\Classes\\PHP_ICO' => $baseDir . '/src/Classes/PHP_ICO.php',
     'JUPWA\\Console\\Console' => $baseDir . '/src/Console/Console.php',

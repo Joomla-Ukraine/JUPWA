@@ -421,6 +421,7 @@ class ComposerStaticInit71ae34f82165b1cf4f0ef95c2cc04a6b
         'Intervention\\Image\\Point' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Point.php',
         'Intervention\\Image\\Response' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Response.php',
         'Intervention\\Image\\Size' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Size.php',
+        'JUPWA\\Capacitor\\Capacitor' => __DIR__ . '/../..' . '/src/Capacitor/Capacitor.php',
         'JUPWA\\Classes\\Minify' => __DIR__ . '/../..' . '/src/Classes/Minify.php',
         'JUPWA\\Classes\\PHP_ICO' => __DIR__ . '/../..' . '/src/Classes/PHP_ICO.php',
         'JUPWA\\Console\\Console' => __DIR__ . '/../..' . '/src/Console/Console.php',
