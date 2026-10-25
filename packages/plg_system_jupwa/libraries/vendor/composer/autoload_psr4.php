@@ -19,5 +19,6 @@ return array(
     'Google\\Auth\\' => array($vendorDir . '/google/auth/src'),
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
     'FastImageSize\\' => array($vendorDir . '/marc1706/fast-image-size/lib'),
+    'DeviceDetector\\' => array($vendorDir . '/matomo/device-detector'),
     'Curl\\' => array($vendorDir . '/php-curl-class/php-curl-class/src/Curl'),
 );
