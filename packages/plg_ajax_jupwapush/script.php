@@ -95,7 +95,7 @@ class plgAjaxJUPWAPushInstallerScript
     }
 
     /**
-     * Called during installation
+     * Called during extension update
      *
      * @param JAdapterInstance $adapter The object responsible for running this script
      *
@@ -120,56 +120,70 @@ class plgAjaxJUPWAPushInstallerScript
         try {
             $columns = $db->getTableColumns('#__jupwa_push_orders');
 
-        if (isset($columns['order_desc'])) {
-            $query = "ALTER TABLE `#__jupwa_push_orders` DROP `order_desc`";
-            $db->setQuery($query);
-            $db->execute();
-        }
-
-        if (isset($columns['user_id'])) {
-            $columnInfo = $columns['user_id'];
-
-            if (!(stripos($columnInfo->Type, 'int(11)') !== false && $columnInfo->Null === 'NO')) {
-                $query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `user_id` `user_id` INT(11) NOT NULL DEFAULT 0";
-                $db->setQuery($query);
-                $db->execute();
+            if (isset($columns['order_desc'])) {
+                $operation = 'dropping order_desc from #__jupwa_push_orders';
+                $query = "ALTER TABLE `#__jupwa_push_orders` DROP `order_desc`";
+                $db->setQuery($query)->execute();
             }
-        }
 
-        if (isset($columns['object_group'])) {
-            $columnInfo = $columns['object_group'];
+            if (isset($columns['user_id'])) {
+                $columnInfo = $columns['user_id'];
+                $columnType = preg_replace('/\(\d+\)/', '', strtolower($columnInfo->Type));
 
-            if (!(stripos(
-                    $columnInfo->Type,
-                    'varchar(155)'
-                ) !== false && $columnInfo->Null === 'YES' && $columnInfo->Default === null)) {
-                $query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `object_group` `object_group` VARCHAR(155) DEFAULT NULL";
-                $db->setQuery($query);
-                $db->execute();
+                if (!($columnType === 'int'
+                    && $columnInfo->Null === 'NO'
+                    && (string) $columnInfo->Default === '0')) {
+                    $operation = 'altering user_id in #__jupwa_push_orders';
+                    $query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `user_id` `user_id` INT(11) NOT NULL DEFAULT 0";
+                    $db->setQuery($query)->execute();
+                }
             }
-        }
 
-        if (isset($columns['order_id'])) {
-            $columnInfo = $columns['order_id'];
+            if (isset($columns['object_group'])) {
+                $columnInfo = $columns['object_group'];
 
-            if (!(stripos($columnInfo->Type, 'int(11)') !== false && $columnInfo->Null === 'NO')) {
-                $query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `order_id` `order_id` INT(11) NOT NULL DEFAULT 0";
-                $db->setQuery($query);
-                $db->execute();
+                if (!(stripos(
+                        $columnInfo->Type,
+                        'varchar(155)'
+                    ) !== false && $columnInfo->Null === 'YES' && $columnInfo->Default === null)) {
+                    $operation = 'altering object_group in #__jupwa_push_orders';
+                    $query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `object_group` `object_group` VARCHAR(155) DEFAULT NULL";
+                    $db->setQuery($query)->execute();
+                }
             }
-        }
 
-        if (isset($columns['order_url'])) {
-            $columnInfo = $columns['order_url'];
+            if (isset($columns['order_id'])) {
+                $columnInfo = $columns['order_id'];
+                $columnType = preg_replace('/\(\d+\)/', '', strtolower($columnInfo->Type));
 
-            if (!(stripos(
-                    $columnInfo->Type,
-                    'varchar(155)'
-                ) !== false && $columnInfo->Null === 'YES' && $columnInfo->Default === null)) {
-                $query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `order_url` `order_url` VARCHAR(255) DEFAULT NULL";
-                $db->setQuery($query);
-                $db->execute();
+                if (!($columnType === 'int'
+                    && $columnInfo->Null === 'NO'
+                    && (string) $columnInfo->Default === '0')) {
+                    $operation = 'altering order_id in #__jupwa_push_orders';
+                    $query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `order_id` `order_id` INT(11) NOT NULL DEFAULT 0";
+                    $db->setQuery($query)->execute();
+                }
             }
+
+            if (isset($columns['order_url'])) {
+                $columnInfo = $columns['order_url'];
+
+                if (!(stripos(
+                        $columnInfo->Type,
+                    'varchar(500)'
+                    ) !== false && $columnInfo->Null === 'YES' && $columnInfo->Default === null)) {
+                    $operation = 'altering order_url in #__jupwa_push_orders';
+                    $query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `order_url` `order_url` VARCHAR(500) DEFAULT NULL";
+                    $db->setQuery($query)->execute();
+                }
+            }
+        } catch (\Throwable $e) {
+            Factory::getApplication()->enqueueMessage(
+                'Failed while ' . $operation . ': ' . $e->getMessage(),
+                'error'
+            );
+
+            return false;
         }
 
         return true;

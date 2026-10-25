@@ -25,10 +25,7 @@ use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 use stdClass;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
 
 class Push extends CMSPlugin implements SubscriberInterface
 {
@@ -209,7 +206,7 @@ class Push extends CMSPlugin implements SubscriberInterface
     protected function checkUser(string $fcm_token): int
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        
+
         $query = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__jupwa_push_users'))
