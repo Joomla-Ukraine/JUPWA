@@ -242,7 +242,7 @@ async function createMenu() {
             }
 
             if (platformName === 'ios') {
-                window.location.href = 'app-settings:';
+                window.location.href = 'app-settings:notifications';
             }
 
         } catch (error) {
