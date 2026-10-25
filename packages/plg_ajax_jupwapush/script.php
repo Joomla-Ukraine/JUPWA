@@ -42,6 +42,10 @@ class plgAjaxJUPWAPushInstallerScript
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `user_id` INT(11) NOT NULL DEFAULT '0',
     		`fcm_token` varchar(500) NOT NULL,
+            `device` VARCHAR(64) DEFAULT NULL,
+            `os` VARCHAR(64) DEFAULT NULL,
+            `model` VARCHAR(64) DEFAULT NULL,
+            `browser` VARCHAR(64) DEFAULT NULL,
             `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`),
     		KEY `user_id` (`user_id`),
@@ -50,6 +54,8 @@ class plgAjaxJUPWAPushInstallerScript
 
         try {
             $db->setQuery($query)->execute();
+
+            $this->addPushUserColumns($db);
 
             Factory::getApplication()->enqueueMessage('Table #__jupwa_push_users created successfully.', 'message');
         } catch (\Exception $e) {
@@ -100,7 +106,19 @@ class plgAjaxJUPWAPushInstallerScript
     public function update($adapter): bool
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $columns = $db->getTableColumns('#__jupwa_push_orders');
+
+        try {
+            $this->addPushUserColumns($db);
+        } catch (\Exception $e) {
+            Factory::getApplication()->enqueueMessage('Failed to update #__jupwa_push_users table: '.$e->getMessage(), 'error');
+
+            return false;
+        }
+
+        $operation = 'reading #__jupwa_push_orders columns';
+
+        try {
+            $columns = $db->getTableColumns('#__jupwa_push_orders');
 
         if (isset($columns['order_desc'])) {
             $query = "ALTER TABLE `#__jupwa_push_orders` DROP `order_desc`";
@@ -155,6 +173,36 @@ class plgAjaxJUPWAPushInstallerScript
         }
 
         return true;
+    }
+
+    /**
+     * Add device information columns to the push users table when missing.
+     *
+     * @param DatabaseInterface $db The database driver
+     *
+     * @return void
+     * @throws \Exception
+     * @since  1.0.0
+     */
+    private function addPushUserColumns(DatabaseInterface $db): void
+    {
+        $columns = $db->getTableColumns('#__jupwa_push_users');
+        $newColumns = [
+            'device'  => 'VARCHAR(64) DEFAULT NULL',
+            'os'      => 'VARCHAR(64) DEFAULT NULL',
+            'model'   => 'VARCHAR(64) DEFAULT NULL',
+            'browser' => 'VARCHAR(64) DEFAULT NULL',
+        ];
+
+        foreach ($newColumns as $name => $definition) {
+            if (isset($columns[$name])) {
+                continue;
+            }
+
+            $query = 'ALTER TABLE ' . $db->quoteName('#__jupwa_push_users')
+                . ' ADD ' . $db->quoteName($name) . ' ' . $definition;
+            $db->setQuery($query)->execute();
+        }
     }
 
     /**

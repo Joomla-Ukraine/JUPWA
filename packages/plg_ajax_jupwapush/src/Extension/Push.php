@@ -12,6 +12,8 @@
 
 namespace JU\Plugin\Ajax\JUPWAPush\Extension;
 
+use DeviceDetector\ClientHints;
+use DeviceDetector\DeviceDetector;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -117,6 +119,14 @@ class Push extends CMSPlugin implements SubscriberInterface
                     'Тепер ви отримуватимете сповіщення!'
                 );
 
+                $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
+                $clientHints = ClientHints::factory($_SERVER);
+                $dd = new DeviceDetector(
+                    $userAgent,
+                    $clientHints
+                );
+                $dd->parse();
+
                 $obj = new stdClass();
 
                 if ($user->guest == 0) {
@@ -124,6 +134,12 @@ class Push extends CMSPlugin implements SubscriberInterface
                 }
 
                 $obj->fcm_token = $fcm_token;
+                $obj->os = $dd->getOs('name');
+                $obj->device = $dd->getDeviceName();
+                $obj->brand = $dd->getBrandName();
+                $obj->model = $dd->getModel();
+                $obj->browser = $dd->getClient('name');
+
                 $db->insertObject('#__jupwa_push_users', $obj);
 
                 $event->setArgument('result', Text::_('PLG_AJAX_JUPWAPUSH_SUBSCRIBE'));

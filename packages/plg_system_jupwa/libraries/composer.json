@@ -42,6 +42,7 @@
     "google/auth": "^1.47",
     "intervention/image": "^2.7",
     "marc1706/fast-image-size": "1.*",
+    "matomo/device-detector": "^6.5",
     "php-curl-class/php-curl-class": "^12.0"
   }
 }
