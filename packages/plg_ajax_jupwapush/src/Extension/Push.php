@@ -131,11 +131,11 @@ class Push extends CMSPlugin implements SubscriberInterface
                 }
 
                 $obj->fcm_token = $fcm_token;
-                $obj->os = $dd->getOs('name');
-                $obj->device = $dd->getDeviceName();
-                $obj->brand = $dd->getBrandName();
-                $obj->model = $dd->getModel();
-                $obj->browser = $dd->getClient('name');
+                $obj->os = $dd->getOs('name') ?? null;
+                $obj->device = $dd->getDeviceName() ?? null;
+                $obj->brand = $dd->getBrandName() ?? null;
+                $obj->model = $dd->getModel() ?? null;
+                $obj->browser = $dd->getClient('name') ?? null;
 
                 $db->insertObject('#__jupwa_push_users', $obj);
 
