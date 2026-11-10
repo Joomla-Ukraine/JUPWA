@@ -54,9 +54,14 @@ function sendNativeToken(params) {
 
         if (isNativeWebView) {
             const widget = document.getElementById('jupwa-widget');
+            const widgetButtons = document.getElementById('js-push-button');
 
             if (widget) {
                 widget.remove();
+            }
+
+            if (widgetButtons) {
+                widgetButtons.remove();
             }
 
             const nativePushHandlers = {
