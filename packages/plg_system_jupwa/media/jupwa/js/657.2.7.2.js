@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkjupwa||=[]).push([[657],{657(e,s,t){t.d(s,{InAppReviewWeb:()=>i});var n=t(144);class i extends n.E_{async requestReview(){throw this.unimplemented("Not implemented on web.")}}}}]);
