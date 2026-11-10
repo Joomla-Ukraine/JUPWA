@@ -1,6 +1,6 @@
 <project name="jupwa" default="dist" basedir=".">
 
-    <property name="VERSION" value="2.7.5"/>
+    <property name="VERSION" value="2.8.0"/>
     <property name="JOOMLA" value="5.2"/>
 
     <tstamp>

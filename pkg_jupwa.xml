@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="package"
-           version="4.0"
+           version="5.0"
            method="upgrade">
     <name>PKG_JUPWA</name>
     <packagename>jupwa</packagename>
@@ -12,7 +12,8 @@
     <authorEmail>denys@joomla-ua.org</authorEmail>
     <authorUrl>https://joomla-ua.org</authorUrl>
     <version>@version@</version>
-    <license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License</license>
+    <license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License
+    </license>
     <description>PKG_JUPWA_XML_DESCRIPTION</description>
 
     <scriptfile>script.php</scriptfile>
@@ -29,25 +30,31 @@
     <files folder="packages">
         <file type="plugin"
               id="plg_system_jupwa"
-              group="system">plg_system_jupwa.zip</file>
+              group="system">plg_system_jupwa.zip
+        </file>
         <file type="plugin"
               id="plg_jupwa_content"
-              group="jupwa">plg_jupwa_content.zip</file>
+              group="jupwa">plg_jupwa_content.zip
+        </file>
         <file type="plugin"
               id="plg_jupwa_jshopping"
-              group="jupwa">plg_jupwa_jshopping.zip</file>
+              group="jupwa">plg_jupwa_jshopping.zip
+        </file>
         <file type="plugin"
               id="plg_jupwa_seblod"
-              group="jupwa">plg_jupwa_seblod.zip</file>
+              group="jupwa">plg_jupwa_seblod.zip
+        </file>
         <file type="plugin"
               id="plg_ajax_jupwapush"
-              group="ajax">plg_ajax_jupwapush.zip</file>
+              group="ajax">plg_ajax_jupwapush.zip
+        </file>
         <file type="plugin"
               id="plg_console_jupwa_content"
-              group="console">plg_console_jupwa_content.zip</file>
-	    <!--<file type="plugin"
-			  id="plg_console_jupwa_seblod"
-			  group="console">plg_console_jupwa_seblod.zip</file>-->
+              group="console">plg_console_jupwa_content.zip
+        </file>
+        <!--<file type="plugin"
+              id="plg_console_jupwa_seblod"
+              group="console">plg_console_jupwa_seblod.zip</file>-->
     </files>
 
     <languages folder="language">
