@@ -21,7 +21,7 @@
         <client_id>0</client_id>
         <client>0</client>
         <targetplatform name="joomla"
-                        version="4\.*|5\.*" />
+                        version="5\.*|6\.*" />
         <php_minimum>8.1</php_minimum>
         <sha256>663abe25076ef1c0c76facc7e698873f3f32afcd79ef9194887ccb968ea268b4</sha256>
     </update>
