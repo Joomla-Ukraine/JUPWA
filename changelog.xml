@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelogs>
+    <changelog>
+        <element>pkg_jupwa</element>
+        <type>package</type>
+        <version>2.8.0</version>
+        <new>
+            <item>Added Capacitor integration for native applications, including JavaScript module loading and plugin settings.</item>
+            <item>Added native push notification support for iOS and Android.</item>
+            <item>Added Capacitor integrations for the status bar, splash screen, app updates and in-app reviews.</item>
+            <item>Added device and browser detection for push notifications and stored device data with push subscriptions.</item>
+            <item>Added a link to notification settings within the iPhone app.</item>
+        </new>
+        <fix>
+            <item>Improved native iOS push token retrieval by waiting for the token API to become available and handling temporary failures.</item>
+            <item>Fixed in-app review initialization and changed review requests to run on click.</item>
+        </fix>
+        <change>
+            <item>Removed web push notification control buttons from native Capacitor applications.</item>
+            <item>Removed script and stylesheet prefetching and added preloading for the Capacitor integration module.</item>
+            <item>Optimized Capacitor imports and refactored integration code.</item>
+            <item>Updated localization for Capacitor modules and removed unused language constants.</item>
+            <item>Updated Composer and JavaScript dependencies, including fixes for vulnerable Node.js dependencies, and rebuilt JavaScript and CSS bundles.</item>
+            <item>Added documentation for the release.</item>
+        </change>
+    </changelog>
+</changelogs>

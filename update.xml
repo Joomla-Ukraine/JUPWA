@@ -7,6 +7,7 @@
         <type>package</type>
         <version>2.8.0</version>
         <infourl title="Joomla! Ukraine">https://github.com/Joomla-Ukraine/JUPWA</infourl>
+        <changelogurl>https://raw.githubusercontent.com/Joomla-Ukraine/JUPWA/refs/heads/main/changelog.xml</changelogurl>
         <downloads>
             <downloadurl type="full"
                          format="zip">https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.8.0/pkg_jupwa_v2.8.0.zip</downloadurl>
@@ -22,6 +23,6 @@
         <targetplatform name="joomla"
                         version="4\.*|5\.*" />
         <php_minimum>8.1</php_minimum>
-        <sha256>89f368a45f04bdab98dbcbb73f86f6afebf065c331c0b0c9e094706655baffb8</sha256>
+        <sha256>663abe25076ef1c0c76facc7e698873f3f32afcd79ef9194887ccb968ea268b4</sha256>
     </update>
 </updates>
