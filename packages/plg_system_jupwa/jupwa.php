@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Event\Event;
 use JUPWA\Capacitor\Capacitor;
 use JUPWA\Helpers\AssetLinks;
 use JUPWA\Helpers\Facebook;
@@ -237,6 +238,7 @@ class plgSystemJUPWA extends CMSPlugin
         if ($exclusion !== '') {
             $urls = explode("\r\n", $exclusion);
             $current = Uri::current();
+
             foreach ($urls as $url) {
                 if ($url && str_contains($current, $url)) {
                     return;
@@ -430,9 +432,16 @@ class plgSystemJUPWA extends CMSPlugin
         }
 
         PluginHelper::importPlugin('jupwa');
-        $use_access = $this->app->triggerEvent(
+        $event = $this->app->getDispatcher()->dispatch(
             'onJUPWAAccess',
-            [$component]
+            new Event(
+                'onJUPWAAccess',
+                ['context' => $component]
+            )
+        );
+        $use_access = $event->getArgument(
+            'result',
+            []
         );
 
         if ($view !== 'article') {
@@ -458,15 +467,21 @@ class plgSystemJUPWA extends CMSPlugin
         }
 
         // Integration
-        $this->app->triggerEvent(
+        $this->app->getDispatcher()->dispatch(
             'onJUPWASchema',
-            [$this->params]
+            new Event(
+                'onJUPWASchema',
+                ['params' => $this->params]
+            )
         );
 
         if ($this->params->get('og') == 1) {
-            $this->app->triggerEvent(
+            $this->app->getDispatcher()->dispatch(
                 'onJUPWAOG',
-                [$this->params]
+                new Event(
+                    'onJUPWAOG',
+                    ['params' => $this->params]
+                )
             );
         }
 
@@ -516,6 +531,7 @@ class plgSystemJUPWA extends CMSPlugin
                 if ($resolvedImg) {
                     $imgData = $resolvedImg;
                 }
+
             } catch (Exception $e) {
             }
         }
@@ -557,26 +573,43 @@ class plgSystemJUPWA extends CMSPlugin
             return false;
         }
 
-        $integration = PluginHelper::importPlugin('jupwa');
-        $use_access = $this->app->triggerEvent('onJUPWAAccess', [$context]);
-
-        if ($context === 'com_finder.indexer' || ($integration && !in_array($context, $use_access))) {
+        if ($context === 'com_finder.indexer') {
             return true;
         }
 
-        $this->app->triggerEvent('onJUPWAArticleSchema', [
-            $article,
-            $this->params,
-            $context,
-        ]);
+        PluginHelper::importPlugin('jupwa');
+        $event = $this->app->getDispatcher()->dispatch(
+            'onJUPWAAccess',
+            new Event(
+                'onJUPWAAccess',
+                ['context' => $context]
+            )
+        );
+        $use_access = $event->getArgument(
+            'result',
+            []
+        );
+        $access = in_array(true, $use_access, true);
 
-        $this->app->triggerEvent('onJUPWAArticleOG', [
-            $article,
-            $this->params,
-            $context,
-        ]);
+        if ($access) {
+            $this->app->getDispatcher()->dispatch(
+                'onJUPWAArticleSchema',
+                new Event('onJUPWAArticleSchema', [
+                    'article' => $article,
+                    'params' => $this->params,
+                    'context' => $context,
+                ])
+            );
 
-        if ($integration === null) {
+            $this->app->getDispatcher()->dispatch(
+                'onJUPWAArticleOG',
+                new Event('onJUPWAArticleOG', [
+                    'article' => $article,
+                    'params' => $this->params,
+                    'context' => $context,
+                ])
+            );
+        } else {
             $tags = $this->coreTags();
 
             OG::tag([
