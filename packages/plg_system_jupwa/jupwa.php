@@ -39,7 +39,7 @@ require_once __DIR__.'/libraries/vendor/autoload.php';
 class plgSystemJUPWA extends CMSPlugin
 {
     protected $app;
-    protected string $jupwa_js_version = '2.7.2';
+    protected string $jupwa_js_version = '2.7.3';
     protected $option;
     protected $view;
     protected $layout;
@@ -254,7 +254,10 @@ class plgSystemJUPWA extends CMSPlugin
         }
 
         if ($this->params->get('expires', 0) == 1) {
-            $date = new DateTime('now', new DateTimeZone('GMT'));
+            $date = new DateTime(
+                'now',
+                new DateTimeZone('GMT')
+            );
             $date->setTimestamp(time() + $expirestime);
 
             $this->app->setHeader(
@@ -445,12 +448,7 @@ class plgSystemJUPWA extends CMSPlugin
         );
 
         if ($view !== 'article') {
-            $access = true;
-            foreach ($use_access as $ua) {
-                if ($ua === false) {
-                    $access = false;
-                }
-            }
+            $access = in_array(true, $use_access, true);
 
             if ($access === false) {
                 $tags = $this->coreTags();
