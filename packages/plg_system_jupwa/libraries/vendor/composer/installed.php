@@ -3,11 +3,11 @@
         'name' => 'joomla-ua/jupwa',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'f27ecea37600ec0785d95380d99761d16ed35030',
+        'reference' => '75f37082cc9a38af8e6ab3042f93d57f7613c7f6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'firebase/php-jwt' => array(
@@ -47,9 +47,9 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '2.13.2',
-            'version' => '2.13.2.0',
-            'reference' => 'adee536f95101929f262b8c59e8a61472f347d58',
+            'pretty_version' => '2.13.3',
+            'version' => '2.13.3.0',
+            'reference' => '6d3cd8285a97eaa352956a4ada92fa03ecce1c4e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
@@ -67,7 +67,7 @@
         'joomla-ua/jupwa' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'f27ecea37600ec0785d95380d99761d16ed35030',
+            'reference' => '75f37082cc9a38af8e6ab3042f93d57f7613c7f6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
