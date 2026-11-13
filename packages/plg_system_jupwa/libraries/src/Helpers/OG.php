@@ -34,69 +34,98 @@ class OG
         array $option = [],
         array $parameters = []
     ): void {
+        if (!isset($option['params']) || $option['params']->get('og') != 1) {
+            return;
+        }
+
         $app = Factory::getApplication();
         $doc = $app->getDocument();
         $lang = $app->getLanguage();
 
-        if (isset($option['params']) && $option['params']->get('og') == 1) {
-            $plugin = PluginHelper::getPlugin('system', 'languagecode');
-            $mapping = $plugin ? (new Registry($plugin->params))->toArray() : [];
-            $currentCode = strtolower($lang->getTag());
+        $plugin = PluginHelper::getPlugin('system', 'languagecode');
+        $mapping = $plugin ? (new Registry($plugin->params))->toArray() : [];
 
-            $local = $lang->getTag();
-            if (!empty($mapping[$currentCode])) {
-                $local = $mapping[$currentCode];
-            }
-            $local = str_replace('-', '_', $local);
+        $local = $lang->getTag();
+        $currentCode = strtolower($local);
 
-            $doc->setMetaData('og:locale', $local, 'property');
-            $doc->setMetaData('og:type', $option['type'], 'property');
-            $doc->setMetaData('og:title', $option['title'], 'property');
+        if (!empty($mapping[$currentCode])) {
+            $local = $mapping[$currentCode];
+        }
+
+        $local = str_replace('-', '_', $local);
+
+        $doc->setMetaData(
+            'og:locale',
+            $local,
+            'property'
+        );
+
+        $doc->setMetaData(
+            'og:type',
+            $option['type'],
+            'property'
+        );
+
+        $doc->setMetaData(
+            'og:title',
+            $option['title'],
+            'property'
+        );
+
+        $doc->setMetaData(
+            'og:description',
+            $option['description'],
+            'property'
+        );
+
+        $doc->setMetaData(
+            'og:url',
+            Uri::current(),
+            'property'
+        );
+
+        $doc->setMetaData(
+            'og:site_name',
+            $app->get('sitename'),
+            'property'
+        );
+
+        $image = isset($option['image'])
+            ? HTMLHelper::cleanImageURL(trim($option['image']))->url
+            : '';
+
+        if ($image !== '') {
             $doc->setMetaData(
-                'og:description',
-                $option['description'],
+                'og:image',
+                $image,
                 'property'
             );
-            $doc->setMetaData('og:url', Uri::current(), 'property');
+
+            if (isset($option['image_width']) && $option['image_width'] > 0) {
+                $doc->setMetaData(
+                    'og:image:width',
+                    $option['image_width'],
+                    'property'
+                );
+            }
+
+            if (isset($option['image_height']) && $option['image_height'] > 0) {
+                $doc->setMetaData(
+                    'og:image:height',
+                    $option['image_height'],
+                    'property'
+                );
+            }
+
             $doc->setMetaData(
-                'og:site_name',
-                $app->get('sitename'),
+                'og:image:alt',
+                $option['title'],
                 'property'
             );
+        }
 
-            if (isset($option['image'])) {
-                $doc->setMetaData(
-                    'og:image',
-                    HTMLHelper::cleanImageURL($option['image'])->url,
-                    'property'
-                );
-
-                if (isset($option['image_width']) && $option['image_width'] > 0) {
-                    $doc->setMetaData(
-                        'og:image:width',
-                        $option['image_width'],
-                        'property'
-                    );
-                }
-
-                if (isset($option['image_height']) && $option['image_height'] > 0) {
-                    $doc->setMetaData(
-                        'og:image:height',
-                        $option['image_height'],
-                        'property'
-                    );
-                }
-
-                $doc->setMetaData(
-                    'og:image:alt',
-                    $option['title'],
-                    'property'
-                );
-            }
-
-            foreach ($parameters as $k => $v) {
-                $doc->setMetaData('og:'.$k, $v, 'property');
-            }
+        foreach ($parameters as $k => $v) {
+            $doc->setMetaData('og:'.$k, $v, 'property');
         }
     }
 
@@ -111,58 +140,59 @@ class OG
      */
     public static function tagArticle(array $option = []): void
     {
+        if (!isset($option['params']) || $option['params']->get('og') != 1) {
+            return;
+        }
+
         $app = Factory::getApplication();
         $doc = $app->getDocument();
 
-        if (isset($option['params']) && $option['params']->get('og') == 1) {
-            if (isset($option['article']->modified) && !($option['article']->modified === '' || $option['article']->modified === '0000-00-00 00:00:00')) {
+        $modified = $option['article']->modified ?? '';
+        $modifiedTime = $modified !== '' && $modified !== '0000-00-00 00:00:00'
+            ? strtotime($modified)
+            : false;
+
+        if ($modifiedTime !== false) {
+            $modifiedDate = date('c', $modifiedTime);
+            $doc->setMetaData('og:updated_time', $modifiedDate, 'property');
+            $doc->setMetaData('article:modified_time', $modifiedDate, 'property');
+        }
+
+        $published = $option['article']->publish_up ?? '';
+        $publishedTime = $published !== '' && $published !== '0000-00-00 00:00:00'
+            ? strtotime($published)
+            : false;
+
+        if ($publishedTime !== false) {
+            $doc->setMetaData('article:published_time', date('c', $publishedTime), 'property');
+        }
+
+        if (isset($option['article']->category_title) && $option['article']->category_title !== '') {
+            $doc->setMetaData(
+                'article:section',
+                $option['article']->category_title,
+                'property'
+            );
+        }
+
+        if (isset($option['article']->metakey) && $option['article']->metakey !== '') {
+            if (Facebook::bot() === false) {
                 $doc->setMetaData(
-                    'og:updated_time',
-                    date('c', strtotime($option['article']->modified)),
-                    'property'
-                );
-                $doc->setMetaData(
-                    'article:modified_time',
-                    date('c', strtotime($option['article']->modified)),
+                    'news_keywords',
+                    $option['article']->metakey,
                     'property'
                 );
             }
 
-            if (isset($option['article']->publish_up) && $option['article']->publish_up !== '') {
+            $_metakeys = explode(',', $option['article']->metakey);
+            $i = 0;
+            foreach ($_metakeys as $_metakey) {
                 $doc->setMetaData(
-                    'article:published_time',
-                    date('c', strtotime($option['article']->publish_up)),
+                    'article:tag_'.$i.'_',
+                    trim($_metakey),
                     'property'
                 );
-            }
-
-            if (isset($option['article']->category_title) && $option['article']->category_title !== '') {
-                $doc->setMetaData(
-                    'article:section',
-                    $option['article']->category_title,
-                    'property'
-                );
-            }
-
-            if (isset($option['article']->metakey) && $option['article']->metakey !== '') {
-                if (Facebook::bot() === false) {
-                    $doc->setMetaData(
-                        'news_keywords',
-                        $option['article']->metakey,
-                        'property'
-                    );
-                }
-
-                $_metakeys = explode(',', $option['article']->metakey);
-                $i = 0;
-                foreach ($_metakeys as $_metakey) {
-                    $doc->setMetaData(
-                        'article:tag_'.$i.'_',
-                        trim($_metakey),
-                        'property'
-                    );
-                    $i++;
-                }
+                $i++;
             }
         }
     }

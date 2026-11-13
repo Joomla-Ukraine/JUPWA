@@ -117,7 +117,7 @@ class META
     {
         $params = $option['params'] ?? null;
 
-        if (!$params) {
+        if (!$params || $params->get('use_speculationrules', 0) != 1) {
             return;
         }
 
@@ -125,7 +125,7 @@ class META
         $user = $app->getIdentity();
         $doc = $app->getDocument();
 
-        if ($user->guest == 1 && $params->get('use_speculationrules') == 1) {
+        if ($user->guest == 1) {
             $prerender = [
                 'prerender' => [
                     [
@@ -143,8 +143,8 @@ class META
                 ],
             ];
 
-            if (trim($params->get('speculationrules_class')) !== '') {
-                $speculation_class = str_replace('.', '', trim($params->get('speculationrules_class')));
+            if (trim((string)$params->get('speculationrules_class', '')) !== '') {
+                $speculation_class = str_replace('.', '', trim((string)$params->get('speculationrules_class', '')));
 
                 $prerender['prerender'][0]['where']['and'][] = [
                     'not' => [
@@ -179,8 +179,9 @@ class META
         $app = Factory::getApplication();
         $doc = $app->getDocument();
 
-        if ($params->get('appstore') !== null) {
-            $doc->setMetaData('apple-itunes-app', 'app-id='.trim($params->get('appstore')));
+        $appstore = trim((string)$params->get('appstore', ''));
+        if ($appstore !== '') {
+            $doc->setMetaData('apple-itunes-app', 'app-id='.$appstore);
         }
     }
 
@@ -204,10 +205,11 @@ class META
         $app = Factory::getApplication();
         $doc = $app->getDocument();
 
-        if ($params->get('googleplay') !== null) {
+        $googleplay = trim((string)$params->get('googleplay', ''));
+        if ($googleplay !== '') {
             $doc->setMetaData(
                 'google-play-app',
-                'app-id='.trim($params->get('googleplay'))
+                'app-id='.$googleplay
             );
         }
     }
@@ -232,18 +234,20 @@ class META
         $app = Factory::getApplication();
         $doc = $app->getDocument();
 
-        if ($params->get('fbpage') !== null) {
+        $fbpage = trim((string)$params->get('fbpage', ''));
+        if ($fbpage !== '') {
             $doc->setMetaData(
                 'article:publisher',
-                $params->get('fbpage'),
+                $fbpage,
                 'property'
             );
         }
 
-        if ($params->get('fbapp') !== null) {
+        $fbapp = trim((string)$params->get('fbapp', ''));
+        if ($fbapp !== '') {
             $doc->setMetaData(
                 'fb:app_id',
-                $params->get('fbapp'),
+                $fbapp,
                 'property'
             );
         }
@@ -251,10 +255,11 @@ class META
         $fbadmins = (array)$params->get('fbadmin');
         $i = 0;
         foreach ($fbadmins as $fbadmin) {
-            if ($fbadmin->id) {
+            $id = trim((string)($fbadmin->id ?? ''));
+            if ($id !== '') {
                 $doc->setMetaData(
                     'fb:admins_'.($i + 1),
-                    $fbadmin->id,
+                    $id,
                     'property'
                 );
             }
@@ -285,35 +290,25 @@ class META
         $preloads = (array)$params->get('preloads');
         foreach ($preloads as $preload) {
             if ($preload->url) {
-                $preload_as = ['as' => $preload->as];
-                $preload_type = [];
+                $_preload = ['as' => $preload->as];
 
-                if ($preload->type) {
-                    $preload_type = ['type' => $preload->type];
+                if (!empty($preload->type)) {
+                    $_preload['type'] = $preload->type;
                 }
 
-                $preload_co = [];
-                if ($preload->crossorigin) {
-                    $preload_co = ['crossorigin' => $preload->crossorigin];
+                if (!empty($preload->crossorigin)) {
+                    $_preload['crossorigin'] = $preload->crossorigin;
                 }
 
-                $preload_media = [];
-                if ($preload->media) {
-                    $preload_media = ['media' => $preload->media];
+                if (!empty($preload->media)) {
+                    $_preload['media'] = $preload->media;
                 }
-
-                $_preload = array_merge(
-                    $preload_as,
-                    $preload_type,
-                    $preload_co,
-                    $preload_media
-                );
 
                 $doc->addHeadLink(
                     $preload->url,
                     'preload',
                     'rel',
-                    [$_preload]
+                    $_preload
                 );
             }
         }
@@ -391,16 +386,10 @@ class META
                 $href = Uri::root().$file.$option['pwa_version'];
 
                 $doc->addCustomTag('<link rel="apple-touch-icon" sizes="'.$icon.'x'.$icon.'" href="'.$href.'">');
-            }
-        }
 
-        foreach ($icons['apple-touch-icon'] as $icon) {
-            $file = 'favicons/appleicon_'.$icon.'.png';
-
-            if (file_exists(JPATH_SITE.'/'.$file) && $icon == 180) {
-                $href = Uri::root().$file.$option['pwa_version'];
-
-                $doc->addCustomTag('<link rel="apple-touch-icon" href="'.$href.'">');
+                if ($icon == 180) {
+                    $doc->addCustomTag('<link rel="apple-touch-icon" href="'.$href.'">');
+                }
             }
         }
 
@@ -538,17 +527,15 @@ class META
     {
         $params = $option['params'] ?? null;
 
-        if (!$params) {
+        if (!$params || $params->get('usepwa', 0) != 1) {
             return;
         }
 
         $app = Factory::getApplication();
         $doc = $app->getDocument();
 
-        if ($params->get('usepwa', 0) == 1) {
-            $pwajs = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('".Uri::base()."sw.js".$option['pwa_version']."'); }); }";
+        $pwajs = "if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('".Uri::base()."sw.js".$option['pwa_version']."'); }); }";
 
-            $doc->addScriptDeclaration($pwajs);
-        }
+        $doc->addScriptDeclaration($pwajs);
     }
 }

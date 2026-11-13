@@ -25,7 +25,10 @@ class Facebook
      */
     public static function bot(): bool
     {
-        return self::matchUserAgent('facebookscraper|facebookexternalhit|facebook|facebot');
+        $app = Factory::getApplication();
+        $ua = $app->input->server->getString('HTTP_USER_AGENT', '');
+
+        return self::matchUserAgent('facebookscraper|facebookexternalhit|facebook|facebot', $ua);
     }
 
     /**
@@ -36,9 +39,10 @@ class Facebook
      */
     public static function fix(): bool
     {
-        if (self::matchUserAgent('facebookexternalhit|linkedinbot')) {
-            $app = Factory::getApplication();
+        $app = Factory::getApplication();
+        $ua = $app->input->server->getString('HTTP_USER_AGENT', '');
 
+        if (self::matchUserAgent('facebookexternalhit|linkedinbot', $ua)) {
             if ($app->get('gzip') === 1) {
                 $app->set('gzip', 0);
 
@@ -51,15 +55,13 @@ class Facebook
 
     /**
      * @param string $pattern
+     * @param string $ua
      * @return bool
      *
-     * @throws Exception
      * @since 1.0
      */
-    private static function matchUserAgent(string $pattern): bool
+    private static function matchUserAgent(string $pattern, string $ua): bool
     {
-        $ua = Factory::getApplication()->input->server->getString('HTTP_USER_AGENT', '');
-
         if (empty($ua)) {
             return false;
         }
