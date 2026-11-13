@@ -1,7 +1,7 @@
 {
   "name": "jupwa",
   "sideEffects": true,
-  "version": "2.7.2",
+  "version": "2.7.3",
   "description": "JUPWA",
   "private": true,
   "scripts": {
@@ -32,7 +32,7 @@
     "postcss-sort-media-queries": "^6.7.1",
     "replace-in-file-webpack-plugin": "^1.0.6",
     "rimraf": "^6.1.4",
-    "sass": "^1.108.1",
+    "sass": "^1.108.2",
     "sass-loader": "^17.1.0",
     "sharp": "^0.35.5",
     "style-loader": "^4.0.0",
@@ -48,7 +48,7 @@
   "dependencies": {
     "@capacitor-community/in-app-review": "^8.0.0",
     "@capacitor-firebase/messaging": "^8.6.0",
-    "@capacitor/core": "^8.6.0",
+    "@capacitor/core": "^8.6.2",
     "@capacitor/splash-screen": "^8.0.2",
     "@capacitor/status-bar": "^8.0.4",
     "@capawesome/capacitor-app-update": "^8.1.1",
