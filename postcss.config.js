@@ -1,5 +1,7 @@
 "use strict";
 
+const advancedPreset = require('cssnano-preset-advanced');
+
 module.exports = {
     plugins: [
         require('tailwindcss'),
@@ -7,7 +9,8 @@ module.exports = {
         require('postcss-sort-media-queries'),
         require('cssnano')({
             preset: [
-                'advanced', {
+                advancedPreset,
+                {
                     discardComments: {
                         removeAll: true
                     },
@@ -18,7 +21,10 @@ module.exports = {
                     convertValues: true,
                     discardDuplicates: true,
                     discardOverridden: true,
-                    discardUnused: true,
+                    discardUnused: {
+                        fontFace: false,
+                        keyframes: false
+                    },
                     discardEmpty: true,
                     mergeIdents: true,
                     mergeLonghand: true,
@@ -45,6 +51,6 @@ module.exports = {
                     zindex: false
                 }
             ]
-        }),
+        })
     ]
 };
