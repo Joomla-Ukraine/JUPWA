@@ -39,7 +39,7 @@ require_once __DIR__.'/libraries/vendor/autoload.php';
 class plgSystemJUPWA extends CMSPlugin
 {
     protected $app;
-    protected string $jupwa_js_version = '2.7.3';
+    protected string $jupwa_js_version = '2.7.4';
     protected $option;
     protected $view;
     protected $layout;

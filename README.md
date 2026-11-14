@@ -15,7 +15,7 @@
 
 ## Download
 
-[JUPWA v 2.8.0](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.8.0/pkg_jupwa_v2.8.0.zip)
+[JUPWA v 2.8.3](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.8.3/pkg_jupwa_v2.8.3.zip)
 
 ## Supported versions
 
@@ -120,7 +120,7 @@ need. The corresponding native plugins must also be installed and configured in 
 
 Customize the offline page and Service Worker in your Joomla template:
 
-| Original file | Template override |
-| --- | --- |
+| Original file                            | Template override                               |
+|------------------------------------------|-------------------------------------------------|
 | `/plugins/system/jupwa/tmpl/offline.php` | `/templates/my_template/html/jupwa/offline.php` |
-| `/plugins/system/jupwa/tmpl/sw.php` | `/templates/my_template/html/jupwa/sw.php` |
+| `/plugins/system/jupwa/tmpl/sw.php`      | `/templates/my_template/html/jupwa/sw.php`      |
