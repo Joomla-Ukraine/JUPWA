@@ -15,7 +15,7 @@
 
 ## Download
 
-[JUPWA v 2.8.3](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.8.3/pkg_jupwa_v2.8.3.zip)
+[JUPWA v 2.8.4](https://github.com/Joomla-Ukraine/JUPWA/releases/download/2.8.4/pkg_jupwa_v2.8.4.zip)
 
 ## Supported versions
 
@@ -96,14 +96,13 @@ and iOS containers and access device features through plugins.
 Enable the integration in the JUPWA system plugin's **Capacitor** settings, then enable and configure the modules you
 need. The corresponding native plugins must also be installed and configured in your Capacitor app.
 
-| Plugin                                    | Integration and available JUPWA settings                                                                                                                                                   |
-|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `@capacitor-firebase/messaging`           | Native push notifications; enable or disable the module and automatic registration.                                                                                                        |
-| `@capawesome/capacitor-settings-launcher` | Opens the app's notification settings as part of the push integration; no separate JUPWA setting.                                                                                          |
-| `@capacitor/splash-screen`                | Enable or disable the module; configure splash screen visibility and fade-out duration.                                                                                                    |
-| `@capacitor/status-bar`                   | Enable or disable the module; configure style (`DEFAULT`, `LIGHT`, `DARK`), background color, WebView overlay, and visibility.                                                             |
-| `@capacitor-community/in-app-review`      | Enable or disable native in-app review requests.                                                                                                                                           |
-| `@capawesome/capacitor-app-update`        | Enable or disable the module; configure checks on startup, check delay, forced updates, and automatic store opening. Store links use the configured Android package name and App Store ID. |
+| Plugin                                    | Integration and available JUPWA settings                                                                                       |
+|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| `@capacitor-firebase/messaging`           | Native push notifications; enable or disable the module and automatic registration.                                            |
+| `@capawesome/capacitor-settings-launcher` | Opens the app's notification settings as part of the push integration; no separate JUPWA setting.                              |
+| `@capacitor/splash-screen`                | Enable or disable the module; configure splash screen visibility and fade-out duration.                                        |
+| `@capacitor/status-bar`                   | Enable or disable the module; configure style (`DEFAULT`, `LIGHT`, `DARK`), background color, WebView overlay, and visibility. |
+| `@capacitor-community/in-app-review`      | Enable or disable native in-app review requests.                                                                               |
 
 ## Browser support
 
