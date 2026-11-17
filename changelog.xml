@@ -3,6 +3,19 @@
     <changelog>
         <element>pkg_jupwa</element>
         <type>package</type>
+        <version>2.8.4</version>
+        <remove>
+            <item>Removed the Capacitor integration for checking native app updates.</item>
+        </remove>
+        <change>
+            <item>Updated Firebase to 13.4.0.</item>
+            <item>Updated Composer and JavaScript dependencies and rebuilt JavaScript and CSS bundles.</item>
+            <item>Updated the README and Capacitor documentation.</item>
+        </change>
+    </changelog>
+    <changelog>
+        <element>pkg_jupwa</element>
+        <type>package</type>
         <version>2.8.3</version>
         <fix>
             <item>Improved integration access checks and fallback metadata handling.</item>
