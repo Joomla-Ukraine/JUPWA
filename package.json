@@ -51,7 +51,6 @@
     "@capacitor/core": "^8.6.2",
     "@capacitor/splash-screen": "^8.0.2",
     "@capacitor/status-bar": "^8.0.4",
-    "@capawesome/capacitor-app-update": "^8.1.1",
     "@capawesome/capacitor-settings-launcher": "^0.1.2",
     "@khmyznikov/pwa-install": "^0.7.0",
     "firebase": "^13.3.0",

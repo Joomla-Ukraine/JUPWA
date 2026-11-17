@@ -86,10 +86,6 @@ async function loadModules() {
         tasks.push(loadModule('appReview', modules.appReview));
     }
 
-    if (modules.appUpdate) {
-        tasks.push(loadModule('appUpdate', modules.appUpdate, settings?.language));
-    }
-
     await Promise.allSettled(tasks);
 }
 

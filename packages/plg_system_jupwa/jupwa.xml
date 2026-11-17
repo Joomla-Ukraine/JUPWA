@@ -1343,66 +1343,6 @@
                        hr="true"
                        showon="usecapacitor:1"/>
 
-                <field
-                        name="plg_appUpdate"
-                        layout="joomla.form.field.radio.switcher"
-                        type="radio"
-                        default="0"
-                        label="PLG_JUPWA_PLG_UPDATE"
-                        showon="usecapacitor:1"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-
-                <field
-                        name="plg_appUpdate_checkOnStart"
-                        type="radio"
-                        layout="joomla.form.field.radio.switcher"
-                        default="1"
-                        label="PLG_JUPWA_PLG_UPDATE_CHECKONSTART"
-                        showon="usecapacitor:1[AND]plg_appUpdate:1"
-                >
-                    <option value="false">JNO</option>
-                    <option value="true">JYES</option>
-                </field>
-
-                <field name="plg_appUpdate_delayMs"
-                       type="number"
-                       default="2000"
-                       label="PLG_JUPWA_PLG_UPDATE_DELAYMS"
-                       showon="usecapacitor:1[AND]plg_appUpdate:1"
-                />
-
-                <field
-                        name="plg_appUpdate_force"
-                        type="radio"
-                        layout="joomla.form.field.radio.switcher"
-                        default="false"
-                        label="PLG_JUPWA_PLG_FORCE"
-                        showon="usecapacitor:1[AND]plg_appUpdate:1"
-                >
-                    <option value="false">JNO</option>
-                    <option value="true">JYES</option>
-                </field>
-
-                <field
-                        name="plg_appUpdate_autoOpenStore"
-                        type="radio"
-                        layout="joomla.form.field.radio.switcher"
-                        default="true"
-                        label="PLG_JUPWA_PLG_AUTOOPENSTORE"
-                        showon="usecapacitor:1[AND]plg_appUpdate:1"
-                >
-                    <option value="false">JNO</option>
-                    <option value="true">JYES</option>
-                </field>
-
-                <field type="spacer"
-                       name="spacer_plg_appUpdate"
-                       hr="true"
-                       showon="usecapacitor:1"/>
-
             </fieldset>
 
 

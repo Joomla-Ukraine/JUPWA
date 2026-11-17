@@ -116,35 +116,6 @@ class Capacitor
             ];
         }
 
-        if ((int)$params->get('plg_appUpdate') === 1) {
-            $appSettings['modules']['appUpdate'] = [
-                'checkOnStart' => filter_var(
-                    $params->get('plg_appUpdate_checkOnStart', 'true'),
-                    FILTER_VALIDATE_BOOLEAN
-                ),
-                'delayMs' => (int)$params->get('plg_appUpdate_delayMs', 2000),
-                'force' => filter_var(
-                    $params->get('plg_appUpdate_force', 'false'),
-                    FILTER_VALIDATE_BOOLEAN
-                ),
-                'autoOpenStore' => filter_var(
-                    $params->get('plg_appUpdate_autoOpenStore', 'true'),
-                    FILTER_VALIDATE_BOOLEAN
-                ),
-                'storeUrlAndroid' => 'https://play.google.com/store/apps/details?id='.$params->get(
-                        'assetlinks_package_name'
-                    ),
-                'storeUrlIos' => 'https://apps.apple.com/app/id'.$params->get('appstore'),
-            ];
-
-            $appSettings['language'] += [
-                'updateAvailableMessage' => Text::_('PLG_JUPWA_CAP_APP_UPDATE_AVAILABLE_MESSAGE'),
-                'forceUpdateTitle' => Text::_('PLG_JUPWA_CAP_FORCE_UPDATE_TITLE'),
-                'forceUpdateMessage' => Text::_('PLG_JUPWA_CAP_FORCE_UPDATE_MESSAGE'),
-                'forceUpdateButton' => Text::_('PLG_JUPWA_CAP_FORCE_UPDATE_BUTTON'),
-            ];
-        }
-
         $json = json_encode($appSettings);
 
         $doc->addCustomTag(
