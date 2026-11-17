@@ -19,7 +19,6 @@ Enable `usecapacitor` in the system plugin. The page receives a `jupwa-app-setti
 | Splash screen | `@capacitor/splash-screen` | `plg_splashScreen`, visibility, fade-out duration. |
 | Status bar | `@capacitor/status-bar` | `plg_statusBar`, style, background color, WebView overlay, visibility. |
 | In-app review | `@capacitor-community/in-app-review` | `plg_appReview` |
-| App update | `@capawesome/capacitor-app-update` | `plg_appUpdate`, startup check, delay, force flag, automatic store opening. |
 
 Use each provider's installation instructions in the native app, then synchronize and rebuild it. Verify enabled modules on a real native build; an ordinary browser does not exercise the native bridge.
 
@@ -62,14 +61,6 @@ When the module initializes on a supported native platform, it exposes `window.a
 
 The module exposes the request function rather than automatically requesting a review on every load. A successful request does not guarantee that the operating system displays a review dialog.
 
-## App updates
-
-Enable the update module and explicitly choose startup checking, delay, and automatic store behavior. The declared delay is 2000 milliseconds. Android store fallback URLs use `assetlinks_package_name`; iOS fallback URLs use the numeric `appstore` ID.
-
-**Force-update limitation:** JavaScript requires both `force` and a `minVersion` to enter its blocking update path. The current PHP settings renderer does not supply `minVersion`. In addition, `force` bypasses the normal soft update path. Do not enable the force flag expecting a complete minimum-version policy from the Joomla form alone.
-
-Test update behavior with versions actually available to the device through the relevant store or test channel. Opening a store does not install the update automatically.
-
 ## Related applications and store metadata
 
 Configure `related_apps` with platform, URL, and optional ID values, and review `prefer_related_applications`. These values enter the web manifest. `googleplay` and `appstore` also provide app-related page metadata. They do not publish an application or implement universal links.
@@ -86,6 +77,6 @@ Use the certificate corresponding to the installed app, including the correct di
 
 ## Native verification checklist
 
-Check a clean installation, permission rejection, offline launch, foreground/background notification delivery, notification links, status bar layout, splash dismissal, review controls, and update navigation on both target platforms. Review native logs as well as the website console.
+Check a clean installation, permission rejection, offline launch, foreground/background notification delivery, notification links, status bar layout, splash dismissal, and review controls on both target platforms. Review native logs as well as the website console.
 
-Source references: [settings renderer](../packages/plg_system_jupwa/libraries/src/Capacitor/Capacitor.php), [module loader](../src/js/capacitor.js), [update module](../src/js/capacitor/appUpdate.js).
+Source references: [settings renderer](../packages/plg_system_jupwa/libraries/src/Capacitor/Capacitor.php), [module loader](../src/js/capacitor.js).

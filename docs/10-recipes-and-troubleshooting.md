@@ -50,7 +50,6 @@ This is a development recipe, not an automatic order notification feature. Ensur
 | Old HTML or scripts persist | Browser HTTP cache, worker caches, Joomla cache, CDN, and versioned asset URLs. | Inspect each layer independently; do not clear only Joomla cache and assume the worker changed. |
 | Metadata is missing or wrong | Integration status, context dispatch, menu route, fallback data, and duplicate SEO output. | Inspect final source and the current Content integration caveats. |
 | Native controls do nothing | Native bridge, installed plugins, module settings, template IDs, and native logs. | Rebuild/sync the native project and test on its target platform. |
-| Force-update flag has no expected effect | Missing minimum-version value in rendered settings. | Review the documented update-module limitation before enabling force mode. |
 | Android links open in the browser | Package name, installed app certificate, association URL, and app intent filters. | Run the platform's App Links verification procedure. |
 
 ## Collect useful diagnostics
