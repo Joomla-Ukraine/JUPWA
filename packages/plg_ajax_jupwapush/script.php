@@ -118,13 +118,7 @@ class plgAjaxJUPWAPushInstallerScript
         $operation = 'reading #__jupwa_push_orders columns';
 
         try {
-            $columns = $db->getTableColumns('#__jupwa_push_orders');
-
-            if (isset($columns['order_desc'])) {
-                $operation = 'dropping order_desc from #__jupwa_push_orders';
-                $query = "ALTER TABLE `#__jupwa_push_orders` DROP `order_desc`";
-                $db->setQuery($query)->execute();
-            }
+            $columns = $db->getTableColumns('#__jupwa_push_orders', false);
 
             if (isset($columns['user_id'])) {
                 $columnInfo = $columns['user_id'];
@@ -176,6 +170,12 @@ class plgAjaxJUPWAPushInstallerScript
                     $query = "ALTER TABLE `#__jupwa_push_orders` CHANGE `order_url` `order_url` VARCHAR(500) DEFAULT NULL";
                     $db->setQuery($query)->execute();
                 }
+            }
+
+            if (isset($columns['order_desc'])) {
+                $operation = 'dropping order_desc from #__jupwa_push_orders';
+                $query = "ALTER TABLE `#__jupwa_push_orders` DROP `order_desc`";
+                $db->setQuery($query)->execute();
             }
         } catch (\Throwable $e) {
             Factory::getApplication()->enqueueMessage(
