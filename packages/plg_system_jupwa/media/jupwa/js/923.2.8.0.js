@@ -1,0 +1,1 @@
+"use strict";(Array.isArray(globalThis.webpackChunkjupwa)?globalThis.webpackChunkjupwa:globalThis.webpackChunkjupwa=[]).push([[923],{923(e,a,s){s.d(a,{InAppReviewWeb:()=>i});var p=s(598);class i extends p.E_{async requestReview(){throw this.unimplemented("Not implemented on web.")}}}}]);

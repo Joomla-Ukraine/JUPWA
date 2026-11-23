@@ -1,0 +1,1 @@
+"use strict";(Array.isArray(globalThis.webpackChunkjupwa)?globalThis.webpackChunkjupwa:globalThis.webpackChunkjupwa=[]).push([[765],{765(a,s,e){e.d(s,{SplashScreenWeb:()=>c});var h=e(598);class c extends h.E_{async show(a){}async hide(a){}}}}]);

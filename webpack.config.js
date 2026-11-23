@@ -105,7 +105,7 @@ const pluginClean = new CleanWebpackPlugin({
     pluginReplace = new ReplaceInFileWebpackPlugin([
         {
             dir: path.join(__dirname, '/packages/plg_system_jupwa'),
-            files: ['jupwa.php'],
+            files: ['src/Extension/JUPWA.php'],
             rules: [
                 {
                     search: /\$jupwa_js_version = '(.*?)';/ig,
