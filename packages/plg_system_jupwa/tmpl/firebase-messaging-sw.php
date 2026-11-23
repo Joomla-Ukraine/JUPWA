@@ -2,7 +2,7 @@
 /**
  * JUPWA plugin
  *
- * @version       1.x
+ * @version       2.x
  * @package       JUPWA
  * @author        Denys D. Nosov (denys@joomla-ua.org)
  * @copyright (C) 2023-2026 by Denys D. Nosov (https://joomla-ua.org)
@@ -15,6 +15,7 @@ use Joomla\CMS\Uri\Uri;defined('_JEXEC') or die();
 
 /** @var array $displayData */
 $data = (object) $displayData;
+
 $site = str_replace('/administrator','',Uri::base());
 
 ?>

@@ -2,7 +2,7 @@
 /**
  * JUPWA plugin
  *
- * @version       1.x
+ * @version       2.x
  * @package       JUPWA
  * @author        Denys D. Nosov (denys@joomla-ua.org)
  * @copyright (C) 2023-2026 by Denys D. Nosov (https://joomla-ua.org)
@@ -10,18 +10,16 @@
  *
  **/
 
+namespace JU\Plugin\System\JUPWA\Field;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-// phpcs:enable PSR1.Files.SideEffects
-
-#[AllowDynamicProperties]
-class JFormFieldIntegration extends FormField
+class IntegrationField extends FormField
 {
     protected $type = 'Integration';
 
@@ -29,7 +27,7 @@ class JFormFieldIntegration extends FormField
      *
      * @return string
      *
-     * @since 6.0
+     * @since 2.0
      */
     protected function getInput(): string
     {
@@ -68,8 +66,20 @@ class JFormFieldIntegration extends FormField
         return $html;
     }
 
-    protected function getPluginsTable($name, $results, $lang)
-    {
+    /**
+     * @param $name
+     * @param $results
+     * @param $lang
+     *
+     * @return string
+     *
+     * @since 2.0
+     */
+    protected function getPluginsTable(
+        $name,
+        $results,
+        $lang
+    ) {
         $html = '
 		<h3>'.$name.'</h3>
 		<table class="table">

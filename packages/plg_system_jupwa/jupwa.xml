@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="4.0"
-           type="plugin"
+<extension type="plugin"
            group="system"
            method="upgrade">
     <name>plg_system_jupwa</name>
@@ -13,9 +12,11 @@
     <copyright>(C) 2023-@year@ Joomla! Ukraine. All rights reserved.</copyright>
     <description>PLG_JUPWA_INFO</description>
 
+    <namespace path="src">JU\Plugin\System\JUPWA</namespace>
+
     <files>
-        <filename plugin="jupwa">jupwa.php</filename>
-        <folder>fields</folder>
+        <folder plugin="jupwa">services</folder>
+        <folder>src</folder>
         <folder>libraries</folder>
         <folder>tmpl</folder>
     </files>
@@ -35,7 +36,7 @@
         <language tag="uk-UA">language/uk-UA/plg_system_jupwa.sys.ini</language>
     </languages>
 
-    <config addfieldpath="/plugins/system/jupwa/fields">
+    <config addfieldprefix="JU\Plugin\System\JUPWA\Field">
 
         <fields name="params">
 
