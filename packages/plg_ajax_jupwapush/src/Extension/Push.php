@@ -166,44 +166,42 @@ class Push extends CMSPlugin implements SubscriberInterface
             $db = Factory::getContainer()->get(DatabaseInterface::class);
             $user = $app->getIdentity();
             $post = (object)$app->input->post->getArray();
-            $fcm_token = $post->fcm_token;
-            $chek = $this->checkUser($fcm_token);
+            $fcmToken = $post->fcm_token ?? null;
 
-            if ($chek > 0) {
-                $query = $db->getQuery(true)
-                    ->delete($db->quoteName('#__jupwa_push_users'));
+            if (!is_string($fcmToken) || trim($fcmToken) === '') {
+                $this->returnError($event, Text::_('PLG_AJAX_JUPWAPUSH_ERROR'), 400);
+            }
 
-                if ($user->guest == 1) {
-                    $query->where($db->quoteName('fcm_token').' = :fcm_token')
-                        ->bind(':fcm_token', $fcm_token);
-                } else {
-                    $query->where($db->quoteName('user_id').' = :user_id')
-                        ->where($db->quoteName('fcm_token').' = :fcm_token')
-                        ->bind(':user_id', $user->id, ParameterType::INTEGER)
-                        ->bind(':fcm_token', $fcm_token);
-                }
+            $userId = $user->guest ? 0 : (int) $user->id;
 
-                $db->setQuery($query);
-                $db->execute();
+            $query = $db->getQuery(true)
+                ->delete($db->quoteName('#__jupwa_push_users'))
+                ->where($db->quoteName('user_id').' = :user_id')
+                ->where($db->quoteName('fcm_token').' = :fcm_token')
+                ->bind(':user_id', $userId, ParameterType::INTEGER)
+                ->bind(':fcm_token', $fcmToken);
 
-                $event->setArgument('result', Text::_('PLG_AJAX_JUPWAPUSH_UNSUBSCRIBED'));
+            $db->setQuery($query);
+            $db->execute();
 
-            } else {
+            if ((int) $db->getAffectedRows() === 0) {
                 $this->returnError($event, Text::_('PLG_AJAX_JUPWAPUSH_NOT_UNSUBSCRIBED'), 200);
             }
+
+            $event->setArgument('result', Text::_('PLG_AJAX_JUPWAPUSH_UNSUBSCRIBED'));
         } else {
             $this->returnError($event, Text::_('PLG_AJAX_JUPWAPUSH_ERROR'), 400);
         }
     }
 
     /**
-     * @param string $fcm_token
+     * @param string $fcmToken
      *
      * @return int
      *
      * @since 1.0
      */
-    protected function checkUser(string $fcm_token): int
+    protected function checkUser(string $fcmToken): int
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
@@ -211,7 +209,7 @@ class Push extends CMSPlugin implements SubscriberInterface
             ->select('*')
             ->from($db->quoteName('#__jupwa_push_users'))
             ->where($db->quoteName('fcm_token').' = :fcm_token')
-            ->bind(':fcm_token', $fcm_token);
+            ->bind(':fcm_token', $fcmToken);
 
         $db->setQuery($query);
         $db->execute();
