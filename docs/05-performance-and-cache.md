@@ -52,8 +52,8 @@ These controls are separate from [Service Worker caches](04-service-worker.md).
 | --- | --- | --- |
 | `joomla_cache` | Off | Enables JUPWA's Joomla cache handling. |
 | `definitions` | `option=com_content` | Matching request definitions temporarily disable Joomla caching. |
-| `cachecontrol` | Off | Adds `Cache-Control: public, max-age=…`. |
-| `expires` | Off | Adds an expiration header. |
+| `cachecontrol` | Off | Adds `Cache-Control: public, max-age=…` for guests. |
+| `expires` | Off | Adds a future expiration header for guests. |
 | `expirestime` | `900` | Configured HTTP header lifetime in seconds; this is not the worker cache lifetime. |
 | `cache_exclusion` | Empty | URL fragments for skipping the final cache/header handling. |
 | `reenable_afterdispatch` | Off | Present in the form, but no corresponding use was found in the system plugin; do not rely on it to restore caching. |
@@ -75,10 +75,10 @@ The final cache exclusion check compares URL fragments with the current URL. The
 
 The system plugin also skips many hooks for paths containing `/account` and for path fragments in `push_exclude`. Despite its name, `push_exclude` affects more than the push widget. These skips do not remove an already controlling worker or change CDN rules.
 
-The route hook attempts to disable Joomla caching for signed-in users. However, the later header handler can still emit a public cache header when its switches are enabled. Do not treat that route hook as proof that private pages cannot be cached. Keep public headers disabled until authenticated responses and upstream caches have been checked on staging.
+For signed-in users, the route hook disables Joomla caching. When JUPWA handles cache headers for their HTML responses, it disables HTTP caching in Joomla and sets `Cache-Control: private, no-store`.
 
 ## Verification checklist
 
 Inspect both response HTML and headers for a guest and an authenticated test user. Test excluded URLs, forms, and logout. Compare a first load, a repeated load, and a worker-controlled load. Verify each cache layer independently.
 
-Source references: [resource hint helper](../packages/plg_system_jupwa/libraries/src/Helpers/META.php), [system cache handling](../packages/plg_system_jupwa/jupwa.php).
+Source references: [resource hint helper](../packages/plg_system_jupwa/libraries/src/Helpers/META.php), [system cache handling](../packages/plg_system_jupwa/src/Extension/JUPWA.php).

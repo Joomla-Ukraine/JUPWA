@@ -111,4 +111,4 @@ Packaging cleans its build/temp directories and updates tracked release metadata
 
 Lint modified PHP files, run available project checks, and exercise the Joomla lifecycle hooks affected by the change. For frontend changes, build with the existing toolchain and test the affected browser/native flow. For packaging changes, install the resulting archive on staging and inspect generated resources. Documentation-only changes do not require regenerating bundles.
 
-Source references: [system dispatcher](../packages/plg_system_jupwa/jupwa.php), [console command](../packages/plg_console_jupwa_content/src/Console/JUPWAContentCommand.php), [release build](../build.xml).
+Source references: [system dispatcher](../packages/plg_system_jupwa/src/Extension/JUPWA.php), [console command](../packages/plg_console_jupwa_content/src/Console/JUPWAContentCommand.php), [release build](../build.xml).
