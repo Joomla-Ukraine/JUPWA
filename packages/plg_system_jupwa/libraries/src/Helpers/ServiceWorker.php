@@ -32,36 +32,36 @@ class ServiceWorker
     {
         $app = Factory::getApplication();
 
-        $apiKey = trim($option['param']['apiKey']) ?? '';
-        $projectId = trim($option['param']['projectId']) ?? '';
-        $messagingSenderId = trim($option['param']['messagingSenderId']) ?? '';
-        $appId = trim($option['param']['appId']) ?? '';
+        $params = $option['param'] ?? [];
+        $apiKey = trim($params['apiKey'] ?? '');
+        $projectId = trim($params['projectId'] ?? '');
+        $messagingSenderId = trim($params['messagingSenderId'] ?? '');
+        $appId = trim($params['appId'] ?? '');
+        $usePwa = ($params['usepwa'] ?? 0) == 1;
+        $usePush = ($params['usepush'] ?? 0) == 1;
 
         $import_scripts = "";
-        if ($option['param']['usepwa'] == 1) {
+        if ($usePwa) {
             $import_scripts .= "importScripts('".Data::$workbox."');\n";
         }
 
-        if ($option['param']['usepush'] == 1) {
+        if ($usePush) {
             $import_scripts .= "importScripts('".Data::$firebase_app."');\n";
             $import_scripts .= "importScripts('".Data::$firebase_messaging."');\n";
         }
 
-        if (
-            $option['param']['usepwa'] == 1 ||
-            $option['param']['usepush'] == 1
-        ) {
+        if ($usePwa || $usePush) {
             $import_scripts .= "\n\n";
         }
 
-        if ($option['param']['usepwa'] == 1) {
+        if ($usePwa) {
             $pwa_data = Util::tmpl('sw', [
                 'pwa_version' => Manifest::getVersion(),
             ]);
 
             $pwa_firebase = '';
             if (
-                $option['param']['usepush'] == 1 &&
+                $usePush &&
                 $apiKey &&
                 $projectId &&
                 $messagingSenderId &&
