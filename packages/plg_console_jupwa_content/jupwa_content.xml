@@ -9,7 +9,6 @@
     <authorUrl>https://joomla-ua.org</authorUrl>
     <copyright>(C) Denys Nosov</copyright>
     <license>GNU General Public License version 3 or later</license>
-    <authorEmail>denys@joomla-ua.org</authorEmail>
     <version>@version@</version>
     <description>PLG_CONSOLE_JUPWA_CONTENT_DESCRIPTION</description>
     <namespace path="src">JU\Plugin\Console\JUPWAContent</namespace>
