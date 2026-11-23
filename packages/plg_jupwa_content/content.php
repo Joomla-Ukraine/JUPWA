@@ -49,6 +49,10 @@ class PlgJUPWAContent extends CMSPlugin
      */
     public function onJUPWAArticleSchema($article, $params): void
     {
+        if (!isset($article->title)) {
+            return;
+        }
+
         $option = [
             'params' => $this->params,
             'title' => $this->core($article)->title,
@@ -74,8 +78,14 @@ class PlgJUPWAContent extends CMSPlugin
      * @throws \Exception
      * @since 1.0
      */
-    public function onJUPWAArticleOG($article, $params): void
-    {
+    public function onJUPWAArticleOG(
+        $article,
+        $params
+    ): void {
+        if (!isset($article->title)) {
+            return;
+        }
+
         if ($params->get('og') == 1) {
             $itemid = $this->app->input->getInt('Itemid');
             $og_type_website = $this->params->get('og_type_website', 0);
