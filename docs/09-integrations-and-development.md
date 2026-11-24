@@ -88,7 +88,20 @@ php cli/joomla.php jupwa_content:run last --live_site=https://example.com --cati
 
 This command **sends real notifications and writes processing records**; it has no documented dry-run switch. Do not add it to cron before checking the selected article, audience, generated URL, and failure behavior.
 
-Current implementation limitations include incomplete category projection in some option combinations, a fourth-argument call that passes the article URL as the sender's domain rather than its fifth link argument, and processing records that do not prove delivery to every token. The helper can also remove tokens after particular error codes. Test this workflow before scheduling it; a normal process exit is not a delivery report.
+Current implementation limitations include incomplete category projection in some option combinations and processing records that do not prove delivery to every token. The helper removes tokens when FCM reports `UNREGISTERED`.
+
+## SEBLOD console command
+
+Enable the Console – JUPWA Seblod CCK plugin on a site with SEBLOD and the JUPWA system plugin enabled. The `jupwa_seblod:run` command uses the same guest subscription list and processing log as the Content command. It selects one published, guest-accessible Joomla article registered in SEBLOD with article storage.
+
+`last` selects the most recently created match and `random` selects a random match. Configure the public site URL, categories, featured filter, SEBLOD type, and optional site menu item in the plugin. The CLI can override those values with `--live_site`, `--catid`, `--featured`, `--seblod_type` (the type name), and `--seblod_menuitem` (the menu item ID). A blank type matches any SEBLOD article type. Use 0 for automatic menu selection. The featured filter defaults to 0, which selects unfeatured articles.
+
+```sh
+php cli/joomla.php jupwa_seblod:run --help
+php cli/joomla.php jupwa_seblod:run last --live_site=https://example.com --seblod_type=article
+```
+
+An article already logged with the same URL is skipped. A processing record tracks the send attempt. Verify the URL and push delivery with test subscribers before scheduling the command.
 
 ## Building from source
 
