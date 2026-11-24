@@ -15,6 +15,8 @@
     <languages folder="language">
 		<language tag="en-GB">en-GB/plg_console_jupwa_seblod.ini</language>
 		<language tag="en-GB">en-GB/plg_console_jupwa_seblod.sys.ini</language>
+		<language tag="uk-UA">uk-UA/plg_console_jupwa_seblod.ini</language>
+		<language tag="uk-UA">uk-UA/plg_console_jupwa_seblod.sys.ini</language>
 	</languages>
 
     <files>
@@ -43,18 +45,17 @@
 				>
                 </field>
 
-				<field addfieldpath="/libraries/cck/construction/field"
-				       name="seblod_type"
-				       type="cck"
-				       construction="core_content_type"
-				       label="COM_CCK_CONFIG_TYPE"
-				       id="jform_trigger_type"
-				       class="inputbox"
-				/>
+                <field name="seblod_type"
+                       type="seblodtype"
+                       addfieldprefix="JU\Plugin\Console\JUPWASeblod\Field"
+                       label="PLG_CONSOLE_JUPWA_SEBLOD_CONTENT_TYPE"
+                >
+                    <option value="">JALL</option>
+                </field>
 
 	            <field name="seblod_menuitem"
 	                   type="menuitem"
-	                   label="JMENU"
+	                   label="PLG_CONSOLE_JUPWA_SEBLOD_MENU_ITEM"
 	            >
 	                <option value="">JDEFAULT</option>
 	            </field>

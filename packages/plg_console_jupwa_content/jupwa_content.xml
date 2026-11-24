@@ -16,6 +16,8 @@
     <languages folder="language">
         <language tag="en-GB">en-GB/plg_console_jupwa_content.ini</language>
         <language tag="en-GB">en-GB/plg_console_jupwa_content.sys.ini</language>
+        <language tag="uk-UA">uk-UA/plg_console_jupwa_content.ini</language>
+        <language tag="uk-UA">uk-UA/plg_console_jupwa_content.sys.ini</language>
     </languages>
 
     <files>
