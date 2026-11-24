@@ -153,11 +153,20 @@ class Push
             $statusCode = $response ? $response->getStatusCode() : 0;
             $errorBody = $response ? json_decode($response->getBody()->getContents(), true) : [];
             $message = $errorBody['error']['message'] ?? $e->getMessage();
+            $unregistered = false;
+            foreach ($errorBody['error']['details'] ?? [] as $detail) {
+                if (($detail['@type'] ?? '') === 'type.googleapis.com/google.firebase.fcm.v1.FcmError'
+                    && ($detail['errorCode'] ?? '') === 'UNREGISTERED') {
+                    $unregistered = true;
+                    break;
+                }
+            }
 
             return [
                 'success' => false,
                 'error' => "FCM Error ($statusCode): $message",
                 'code' => $statusCode,
+                'unregistered' => $unregistered,
             ];
 
         } catch (Exception $e) {
@@ -335,4 +344,4 @@ class Push
             return null;
         }
     }
-}   
+}
