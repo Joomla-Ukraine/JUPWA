@@ -13,6 +13,7 @@
 namespace JUPWA\Console;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use JUPWA\Push\Push;
@@ -43,9 +44,15 @@ class Console
             $desc = $result['desc'] ?: '';
             $link = $result['link'] ?: '';
 
-            $response = Push::send($item->fcm_token, $title, $desc, $link);
+            $response = Push::send(
+                $item->fcm_token,
+                $title,
+                $desc,
+                $result['domain'] ?? rtrim(Uri::root(), '/'),
+                $link
+            );
 
-            if ($response['code'] == 400 || $response['code'] == 404) {
+            if ($response['unregistered'] ?? false) {
                 self::remove_tokens($item->fcm_token);
             }
         }
