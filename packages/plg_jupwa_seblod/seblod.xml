@@ -30,27 +30,27 @@
 
             <fieldset name="Basic">
 
-	            <fieldset name="FIELDS">
+	            <fieldset name="FIELDS" addfieldprefix="JU\Plugin\Jupwa\Seblod\Field">
 
 		            <field name="seblod_title"
-		                   size="50"
-		                   type="text"
+		                   type="seblodfields"
+		                   multiple="true"
 		                   label="PLG_JUPWA_SEBLOD_TITLE"
 		            />
 
 	                <field name="seblod_intro"
-	                       size="50"
-	                       type="text"
+	                       type="seblodfields"
+	                       multiple="true"
 	                       label="PLG_JUPWA_SEBLOD_INTRO" />
 
 		            <field name="seblod_images"
-		                   size="50"
-		                   type="text"
+		                   type="seblodfields"
+		                   multiple="true"
 		                   label="PLG_JUPWA_SEBLOD_IMAGES" />
 
 	                <field name="seblod_gallery"
-	                       size="50"
-	                       type="text"
+	                       type="seblodfields"
+	                       multiple="true"
 	                       label="PLG_JUPWA_SEBLOD_GALLERY" />
 
 	            </fieldset>
