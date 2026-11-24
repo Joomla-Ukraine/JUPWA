@@ -12,10 +12,12 @@
     <authorUrl>https://joomla-ua.org</authorUrl>
     <version>@version@</version>
 	<description>PLG_JUPWA_SEBLOD_XML_DESCRIPTION</description>
+	<namespace path="src">JU\Plugin\Jupwa\Seblod</namespace>
 
 	<files>
 		<filename plugin="seblod">seblod.php</filename>
 		<filename>SeblodAPI.php</filename>
+		<folder>src</folder>
 	</files>
 
 	<languages>

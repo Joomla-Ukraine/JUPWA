@@ -10,9 +10,7 @@
  *
  **/
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
 
 /**
  * Seblod API for JUPWA plugin
@@ -22,38 +20,40 @@
  */
 class SeblodAPI extends JCckContent
 {
-	/**
-	 * @param $id
-	 *
-	 * @return object|bool
-	 *
-	 * @since 3.0
-	 */
-	public function loadContent($id)
-	{
-		if($id === null)
-		{
-			return true;
-		}
+    /**
+     * @param $id
+     *
+     * @return object|bool
+     *
+     * @since 2.0
+     */
+    public function loadContent($id)
+    {
+        if ($id === null) {
+            return true;
+        }
 
-		$base = JCckDatabase::loadObject('SELECT id, cck, pk, storage_location FROM #__cck_core WHERE storage_location = "joomla_article" AND pk = ' . (int) $id);
+        $base = JCckDatabase::loadObject(
+            'SELECT id, cck, pk, storage_location FROM #__cck_core WHERE storage_location = "joomla_article" AND pk = '.(int)$id
+        );
 
-		$this->_type = $base->cck;
-		$this->_pk   = $base->pk;
-		$this->_id   = $base->id;
+        $this->_type = $base->cck;
+        $this->_pk = $base->pk;
+        $this->_id = $base->id;
 
-		if($this->_type || $this->_pk || $this->_id)
-		{
-			$this->_properties = JCckDatabase::loadObject('SELECT * FROM #__cck_store_form_' . $this->_type . ' WHERE id = ' . (int) $this->_pk);
+        if ($this->_type || $this->_pk || $this->_id) {
+            $this->_properties = JCckDatabase::loadObject(
+                'SELECT * FROM #__cck_store_form_'.$this->_type.' WHERE id = '.(int)$this->_pk
+            );
 
-			return (object) [
-				'cck'        => $base->cck,
-				'pk'         => $base->pk,
-				'id'         => $base->id,
-				'properties' => $this->_properties
-			];
-		}
+            return (object)[
+                'cck' => $base->cck,
+                'pk' => $base->pk,
+                'id' => $base->id,
+                'properties' => $this->_properties,
+            ];
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

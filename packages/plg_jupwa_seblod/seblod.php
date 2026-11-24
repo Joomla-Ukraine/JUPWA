@@ -18,9 +18,7 @@ use JUPWA\Helpers\Images;
 use JUPWA\Helpers\OG;
 use JUPWA\Helpers\Schema;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
 
 require_once __DIR__.'/SeblodAPI.php';
 
@@ -28,13 +26,11 @@ require_once __DIR__.'/SeblodAPI.php';
 class PlgJUPWASeblod extends CMSPlugin
 {
     /**
-     * PlgJUPWASeblod constructor.
-     *
      * @param $subject
      * @param $config
      *
      * @throws \Exception
-     * @since 1.0
+     * @since 2.0
      */
     public function __construct(&$subject, $config)
     {
@@ -52,7 +48,7 @@ class PlgJUPWASeblod extends CMSPlugin
      * @return void
      *
      * @throws \Exception
-     * @since 1.0
+     * @since 2.0
      */
     public function onJUPWAArticleSchema($article, $params, $context): void
     {
@@ -80,7 +76,7 @@ class PlgJUPWASeblod extends CMSPlugin
      * @return void
      *
      * @throws \Exception
-     * @since 1.0
+     * @since 2.0
      */
     public function onJUPWAArticleOG($article, $params, $context): void
     {
@@ -123,7 +119,7 @@ class PlgJUPWASeblod extends CMSPlugin
      * @return false|object
      *
      * @throws \Exception
-     * @since 1.0
+     * @since 2.0
      */
     private function image($article, $params, $context): object|bool
     {
@@ -142,8 +138,18 @@ class PlgJUPWASeblod extends CMSPlugin
         return Images::display($default_image);
     }
 
-    private function core($article, $context): object
-    {
+    /**
+     * @param $article
+     * @param $context
+     *
+     * @return object
+     *
+     * @since 2.0
+     */
+    private function core(
+        $article,
+        $context
+    ): object {
         $id = $this->app->input->getInt('id');
         $seblod = $this->seblod($id, [
             'params' => $this->params,
@@ -184,7 +190,7 @@ class PlgJUPWASeblod extends CMSPlugin
      *
      * @return bool
      *
-     * @since 1.0
+     * @since 2.0
      */
     public function onJUPWAAccess($context): bool
     {
@@ -196,12 +202,33 @@ class PlgJUPWASeblod extends CMSPlugin
     }
 
     /**
+     * @param $params
+     * @param string $name
+     *
+     * @return array
+     *
+     * @since 2.0
+     */
+    private function getSeblodFields($params, string $name): array
+    {
+        $value = $params->get($name);
+        $fields = is_string($value) ? explode(',', $value) : (array)$value;
+
+        return array_values(
+            array_filter(
+                array_map('trim', array_filter($fields, 'is_string')),
+                'strlen'
+            )
+        );
+    }
+
+    /**
      * @param      $id
      * @param null $attr
      *
      * @return array|bool
      *
-     * @since 4.0
+     * @since 2.0
      */
     private function seblod($id, $attr = null): bool|array
     {
@@ -214,10 +241,10 @@ class PlgJUPWASeblod extends CMSPlugin
             $cck = new SeblodAPI();
             $content = $cck->loadContent($id)->properties;
             $cck_id = $cck->loadContent($id)->id;
-            $seblod_images = $attr['params']->get('seblod_images') ?? '';
-            $seblod_gallery = $attr['params']->get('seblod_gallery') ?? '';
-            $seblod_title = $attr['params']->get('seblod_title') ?? '';
-            $seblod_intro = $attr['params']->get('seblod_intro') ?? '';
+            $seblod_images = $this->getSeblodFields($attr['params'], 'seblod_images');
+            $seblod_gallery = $this->getSeblodFields($attr['params'], 'seblod_gallery');
+            $seblod_title = $this->getSeblodFields($attr['params'], 'seblod_title');
+            $seblod_intro = $this->getSeblodFields($attr['params'], 'seblod_intro');
 
             if ($multilang === true) {
                 $lang_tag = $lang->getTag();
@@ -227,43 +254,31 @@ class PlgJUPWASeblod extends CMSPlugin
             }
 
             $data = [];
-            $_next = 1;
+            $image = [];
+            foreach ($seblod_images as $field) {
+                $_image = $content->{$field} ?? '';
 
-            if (isset($seblod_images)) {
-                $_rows = explode(',', $seblod_images);
-                $image = [];
-                foreach ($_rows as $_row) {
-                    $_image = trim($_row);
-                    $_image = $content->{$_image} ?? '';
-
-                    if ($_image) {
-                        if ($this->isJSON($_image)) {
-                            $jsonimages = json_decode($_image);
-                            $image[] = $jsonimages->image_location;
-                        } else {
-                            $image[] = $_image;
-                        }
+                if ($_image) {
+                    if ($this->isJSON($_image)) {
+                        $jsonimages = json_decode($_image);
+                        $image[] = $jsonimages->image_location ?? '';
+                    } else {
+                        $image[] = $_image;
                     }
-                }
-
-                $data['image'] = implode($image);
-                if ($data['image']) {
-                    $_next = 0;
                 }
             }
 
-            if ($seblod_gallery && $_next == 1) {
-                $_rows = explode(',', $seblod_gallery);
+            $data['image'] = implode($image);
 
+            if ($seblod_gallery && !$data['image']) {
                 $image = [];
-                foreach ($_rows as $_row) {
-                    $_image = trim($_row);
-                    $_image = $content->{$_image};
+                foreach ($seblod_gallery as $field) {
+                    $_image = $content->{$field} ?? '';
 
                     if ($_image) {
                         $fieldx = explode('|0|', $_image);
-                        $fx = explode('::', $fieldx[1]);
-                        $image[] = $fx[1];
+                        $fx = explode('::', $fieldx[1] ?? '');
+                        $image[] = $fx[1] ?? '';
                     }
                 }
 
@@ -271,12 +286,9 @@ class PlgJUPWASeblod extends CMSPlugin
             }
 
             if ($seblod_intro) {
-                $_rows = explode(',', $seblod_intro);
-
                 $intro = [];
-                foreach ($_rows as $_row) {
-                    $_intro = trim($_row);
-                    $_intro = $content->{$_intro};
+                foreach ($seblod_intro as $field) {
+                    $_intro = $content->{$field} ?? '';
                     if ($_intro) {
                         $intro[] = $_intro;
                     }
@@ -286,12 +298,9 @@ class PlgJUPWASeblod extends CMSPlugin
             }
 
             if ($seblod_title) {
-                $_rows = explode(',', $seblod_title);
-
                 $title = [];
-                foreach ($_rows as $_row) {
-                    $_title = trim($_row);
-                    $_title = $content->{$_title};
+                foreach ($seblod_title as $field) {
+                    $_title = $content->{$field} ?? '';
                     if ($_title) {
                         $title[] = $_title;
                     }
@@ -363,12 +372,13 @@ class PlgJUPWASeblod extends CMSPlugin
      *
      * @return bool
      *
-     * @since 1.0
+     * @since 2.0
      */
     private function isJSON($string): bool
     {
-        return is_string($string) && is_array(json_decode($string, true)) && (json_last_error(
-            ) == JSON_ERROR_NONE) ? true : false;
+        return is_string($string) && is_array(
+            json_decode($string, true)
+        ) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
     }
 
     /**
@@ -376,7 +386,7 @@ class PlgJUPWASeblod extends CMSPlugin
      *
      * @return mixed
      *
-     * @since 1.0
+     * @since 2.0
      */
     private function cck($cck_id): mixed
     {
@@ -395,7 +405,7 @@ class PlgJUPWASeblod extends CMSPlugin
      *
      * @return bool|string
      *
-     * @since 1.0
+     * @since 2.0
      */
     private function client($context, $cck, $article, $property): bool|string
     {
