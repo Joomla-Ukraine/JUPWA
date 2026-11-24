@@ -15,31 +15,32 @@ use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 use JU\Plugin\Console\JUPWASeblod\Extension\JUPWASeblod;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
 
 return new class implements ServiceProviderInterface {
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param Container $container The DI container.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0.0
-	 */
-	public function register(Container $container)
-	{
-		$container->set(PluginInterface::class, function (Container $container)
-		{
-			$dispatcher = $container->get(DispatcherInterface::class);
-			$plugin     = new JUPWASeblod($dispatcher, (array) PluginHelper::getPlugin('console', 'jupwa_seblod'));
+    /**
+     * @param Container $container The DI container.
+     *
+     * @return  void
+     *
+     * @since   2.0
+     */
+    public function register(Container $container): void
+    {
+        $container->set(PluginInterface::class, function (Container $container) {
+            $dispatcher = $container->get(DispatcherInterface::class);
+            $config = (array)PluginHelper::getPlugin('console', 'jupwa_seblod');
 
-			$plugin->setApplication(Factory::getApplication());
+            if (version_compare(JVERSION, '6.0.0', '<')) {
+                $plugin = new JUPWASeblod($dispatcher, $config);
+            } else {
+                $plugin = new JUPWASeblod($config);
+                $plugin->setDispatcher($dispatcher);
+            }
 
-			return $plugin;
-		});
-	}
+            $plugin->setApplication(Factory::getApplication());
+
+            return $plugin;
+        });
+    }
 };
