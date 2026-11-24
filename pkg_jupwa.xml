@@ -28,33 +28,13 @@
     </updateservers>
 
     <files folder="packages">
-        <file type="plugin"
-              id="plg_system_jupwa"
-              group="system">plg_system_jupwa.zip
-        </file>
-        <file type="plugin"
-              id="plg_jupwa_content"
-              group="jupwa">plg_jupwa_content.zip
-        </file>
-        <file type="plugin"
-              id="plg_jupwa_jshopping"
-              group="jupwa">plg_jupwa_jshopping.zip
-        </file>
-        <file type="plugin"
-              id="plg_jupwa_seblod"
-              group="jupwa">plg_jupwa_seblod.zip
-        </file>
-        <file type="plugin"
-              id="plg_ajax_jupwapush"
-              group="ajax">plg_ajax_jupwapush.zip
-        </file>
-        <file type="plugin"
-              id="plg_console_jupwa_content"
-              group="console">plg_console_jupwa_content.zip
-        </file>
-        <!--<file type="plugin"
-              id="plg_console_jupwa_seblod"
-              group="console">plg_console_jupwa_seblod.zip</file>-->
+        <file type="plugin" id="plg_system_jupwa" group="system">plg_system_jupwa.zip</file>
+        <file type="plugin" id="plg_jupwa_content" group="jupwa">plg_jupwa_content.zip</file>
+        <file type="plugin" id="plg_jupwa_jshopping" group="jupwa">plg_jupwa_jshopping.zip</file>
+        <file type="plugin" id="plg_jupwa_seblod" group="jupwa">plg_jupwa_seblod.zip</file>
+        <file type="plugin" id="jupwapush" group="ajax">plg_ajax_jupwapush.zip</file>
+        <file type="plugin" id="plg_console_jupwa_content" group="console">plg_console_jupwa_content.zip</file>
+        <file type="plugin" id="jupwa_seblod" group="console">plg_console_jupwa_seblod.zip</file>
     </files>
 
     <languages folder="language">
@@ -63,7 +43,7 @@
     </languages>
 
     <compatibility>
-        <version>4</version>
         <version>5</version>
+        <version>6</version>
     </compatibility>
 </extension>
